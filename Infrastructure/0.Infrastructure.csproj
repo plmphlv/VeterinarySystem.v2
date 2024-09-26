@@ -7,7 +7,13 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Application\02Application.csproj" />
+    <ProjectReference Include="..\Application\2.Application.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Settings\" />
+    <Folder Include="Services\" />
+    <Folder Include="Persistence\" />
   </ItemGroup>
 
 </Project>

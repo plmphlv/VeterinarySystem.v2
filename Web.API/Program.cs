@@ -1,4 +1,3 @@
-
 namespace Web.API;
 
 public class Program
