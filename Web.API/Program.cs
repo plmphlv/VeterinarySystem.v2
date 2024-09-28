@@ -1,34 +1,69 @@
+using Microsoft.EntityFrameworkCore;
+using Persistence;
+using Serilog;
+using Serilog.Exceptions;
+using System.Reflection;
+
 namespace Web.API;
 
 public class Program
 {
 	public static void Main(string[] args)
 	{
-		var builder = WebApplication.CreateBuilder(args);
+		WebApplicationBuilder builder = WebApplication.CreateBuilder(args);
 
-		// Add services to the container.
+		string environment = Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT")!;
 
-		builder.Services.AddControllers();
-		// Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
-		builder.Services.AddEndpointsApiExplorer();
-		builder.Services.AddSwaggerGen();
+		var configuration = new ConfigurationBuilder()
+			.AddJsonFile("appsettings.json", optional: false, reloadOnChange: true)
+			.AddJsonFile(
+				$"appsettings.{environment}.json",
+				optional: true)
+			.Build();
 
-		var app = builder.Build();
+		Log.Logger = new LoggerConfiguration()
+			.Enrich.FromLogContext()
+			.Enrich.WithExceptionDetails()
+			.WriteTo.Debug()
+			.WriteTo.Console()
+			.ReadFrom.Configuration(configuration)
+			.CreateLogger();
 
-		// Configure the HTTP request pipeline.
-		if (app.Environment.IsDevelopment())
+		var host = CreateHostBuilder(args).Build();
+
+		using (var scope = host.Services.CreateScope())
 		{
-			app.UseSwagger();
-			app.UseSwaggerUI();
+			var services = scope.ServiceProvider;
+
+			try
+			{
+				ApplicationDbContext context = services.GetRequiredService<ApplicationDbContext>();
+				context.Database.Migrate();
+			}
+			catch (Exception ex)
+			{
+				Log.Fatal($"An error occurred while migrating or seeding the database.", ex);
+				throw;
+			}
+
 		}
 
-		app.UseHttpsRedirection();
+		try
+		{
+			//await host.RunAsync();
+		}
+		catch (Exception ex)
+		{
+			Log.Fatal($"Failed to start {Assembly.GetExecutingAssembly().GetName().Name}", ex);
+			throw;
+		}
+	}
 
-		app.UseAuthorization();
-
-
-		app.MapControllers();
-
-		app.Run();
+	public static IHostBuilder CreateHostBuilder(string[] args)
+	{
+		return Host.CreateDefaultBuilder(args)
+			.ConfigureWebHostDefaults(webBuilder =>
+				webBuilder.UseStartup<Startup>())
+			.UseSerilog();
 	}
 }
