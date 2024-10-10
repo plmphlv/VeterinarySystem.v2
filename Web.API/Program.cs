@@ -8,7 +8,7 @@ namespace Web.API;
 
 public class Program
 {
-	public static void Main(string[] args)
+	public static async Task Main(string[] args)
 	{
 		WebApplicationBuilder builder = WebApplication.CreateBuilder(args);
 
@@ -38,7 +38,7 @@ public class Program
 			try
 			{
 				ApplicationDbContext context = services.GetRequiredService<ApplicationDbContext>();
-				context.Database.Migrate();
+				//context.Database.Migrate();
 			}
 			catch (Exception ex)
 			{
@@ -50,7 +50,7 @@ public class Program
 
 		try
 		{
-			//await host.RunAsync();
+			await host.RunAsync();
 		}
 		catch (Exception ex)
 		{

@@ -1,9 +1,15 @@
-﻿using Entities;
+﻿using Application.Common.Interfaces;
+using Common.Interfaces;
+using Entities;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Mvc.Infrastructure;
+using Microsoft.AspNetCore.Mvc.Routing;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Persistence;
+using Services;
 
 namespace Infrastructure;
 
@@ -30,6 +36,18 @@ public static class ConfigureServices
 			.AddRoles<IdentityRole>()
 			.AddEntityFrameworkStores<ApplicationDbContext>()
 			.AddDefaultTokenProviders();
+
+		services.AddScoped<IApplicationDbContext>(provider => provider.GetRequiredService<ApplicationDbContext>());
+		services.AddTransient<IDateTime, DateTimeService>();
+		services.AddTransient<ILocalizationServices, LocalizationServices>();
+
+		services.AddSingleton<IActionContextAccessor, ActionContextAccessor>();
+		services.AddScoped(x => {
+			ActionContext actionContext = x.GetRequiredService<IActionContextAccessor>()
+				.ActionContext!;
+			IUrlHelperFactory factory = x.GetRequiredService<IUrlHelperFactory>()!;
+			return factory.GetUrlHelper(actionContext);
+		});
 
 		return services;
 	}

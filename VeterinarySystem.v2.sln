@@ -3,13 +3,13 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.11.35303.130
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "1.Web.API", "Web.API\1.Web.API.csproj", "{527F74EB-B28A-49DE-A9C7-4230A43BE5DE}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Web.API", "Web.API\Web.API.csproj", "{527F74EB-B28A-49DE-A9C7-4230A43BE5DE}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "3.Domain", "Domain\3.Domain.csproj", "{384E93FD-3CFA-4C77-B7AA-C4F7DC84818E}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Domain", "Domain\Domain.csproj", "{384E93FD-3CFA-4C77-B7AA-C4F7DC84818E}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "2.Application", "Application\2.Application.csproj", "{DB30EDC0-4941-48B9-8875-543293FC6CB8}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Application", "Application\Application.csproj", "{DB30EDC0-4941-48B9-8875-543293FC6CB8}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "0.Infrastructure", "Infrastructure\0.Infrastructure.csproj", "{4F5F0E4B-4F63-46AA-BE22-19214140F9A8}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Infrastructure", "Infrastructure\Infrastructure.csproj", "{4F5F0E4B-4F63-46AA-BE22-19214140F9A8}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
