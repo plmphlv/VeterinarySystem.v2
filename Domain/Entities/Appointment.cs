@@ -1,6 +1,8 @@
-﻿namespace Entities;
+﻿using Domain.Common;
 
-public class Appointment
+namespace Domain.Entities;
+
+public class Appointment : AuditableEntity
 {
 	public int Id { get; set; }
 
@@ -10,7 +12,7 @@ public class Appointment
 
 	public int AnimalOwnerId { get; set; }
 
-	public AnimalOwner AnimalOwner { get; set; } = null!;
+	public User AnimalOwner { get; set; } = null!;
 
 	public bool IsUpcoming { get; set; }
 

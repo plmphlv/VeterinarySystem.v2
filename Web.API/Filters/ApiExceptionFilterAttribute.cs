@@ -1,12 +1,11 @@
 ﻿using Application.Common.Exceptions;
-using Common.Exceptions;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Filters;
 
 
-namespace Filters
+namespace Web.API.Filters
 {
-	public class ApiExceptionFilterAttribute: ExceptionFilterAttribute
+	public class ApiExceptionFilterAttribute : ExceptionFilterAttribute
 	{
 		private readonly IDictionary<Type, Action<ExceptionContext>> _exceptionHandlers;
 

@@ -1,8 +1,9 @@
-﻿using Entities;
+﻿using Domain.Common;
+using Entities;
 
 namespace Domain.Entities;
 
-public class Animal
+public class Animal : AuditableEntity
 {
 	public int Id { get; set; }
 
@@ -10,20 +11,15 @@ public class Animal
 
 	public int Age { get; set; }
 
-
 	public double Weight { get; set; }
-
 
 	public int AnimalTypeId { get; set; }
 
-
 	public AnimalType AnimalType { get; set; } = null!;
-
 
 	public int AnimalOwnerId { get; set; }
 
-
-	public AnimalOwner AnimalOwner { get; set; } = null!;
+	public User AnimalOwner { get; set; } = null!;
 
 	public ICollection<Procedure> Procedures { get; set; } = new List<Procedure>();
 

@@ -1,5 +1,5 @@
+using Infrastructure.Persistence;
 using Microsoft.EntityFrameworkCore;
-using Persistence;
 using Serilog;
 using Serilog.Exceptions;
 using System.Reflection;

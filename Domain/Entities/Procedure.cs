@@ -1,8 +1,8 @@
-﻿using Domain.Entities;
+﻿using Domain.Common;
 
-namespace Entities;
+namespace Domain.Entities;
 
-public class Procedure
+public class Procedure : AuditableEntity
 {
 	public int Id { get; set; }
 

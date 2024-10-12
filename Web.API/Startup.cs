@@ -1,16 +1,16 @@
 ﻿using Application;
-using Common.Interfaces;
-using Filters;
+using Application.Common.Interfaces;
 using FluentValidation.AspNetCore;
 using Infrastructure;
+using Infrastructure.Persistence;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.IdentityModel.Tokens;
 using NSwag;
 using NSwag.Generation.Processors.Security;
-using Persistence;
 using System.IdentityModel.Tokens.Jwt;
 using System.Text;
 using System.Text.Json.Serialization;
+using Web.API.Filters;
 using Web.API.Services;
 
 namespace Web.API;

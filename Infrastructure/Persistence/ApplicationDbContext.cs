@@ -1,11 +1,11 @@
-﻿using Common.Interfaces;
+﻿using Application.Common.Interfaces;
 using Domain.Entities;
 using Entities;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using System.Reflection;
 
-namespace Persistence;
+namespace Infrastructure.Persistence;
 
 public class ApplicationDbContext : IdentityDbContext<User>, IApplicationDbContext
 {
@@ -21,7 +21,6 @@ public class ApplicationDbContext : IdentityDbContext<User>, IApplicationDbConte
 		this.currentUserService = currentUserService;
 	}
 
-	public DbSet<AnimalOwner> AnimalOwners { get; set; } = null!;
 	public DbSet<Animal> Animals { get; set; } = null!;
 	public DbSet<Appointment> Appointments { get; set; } = null!;
 	public DbSet<Procedure> Procedures { get; set; } = null!;
