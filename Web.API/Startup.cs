@@ -69,7 +69,6 @@ public class Startup
 		});
 
 		//services.AddAuthorization();
-		//string key = Guid.NewGuid().ToString();
 		string key = Configuration.GetValue<string>("ApiKey")!;
 		services.AddAuthentication("Bearer")
 			.AddJwtBearer("Bearer", options =>

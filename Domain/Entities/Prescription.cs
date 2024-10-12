@@ -16,7 +16,7 @@ public class Prescription : AuditableEntity
 
 	public Animal Animal { get; set; } = null!;
 
-	public string StaffMemberId { get; set; } = null!;
+	public int StaffMemberId { get; set; }
 
-	public User StaffMember { get; set; } = null!;
+	public StaffProffile StaffMember { get; set; } = null!;
 }

@@ -1,5 +1,4 @@
 ﻿using Domain.Common;
-using Entities;
 
 namespace Domain.Entities;
 
@@ -7,17 +6,17 @@ public class Animal : AuditableEntity
 {
 	public int Id { get; set; }
 
-	public string Name { get; set; } = string.Empty;
+	public string? Name { get; set; }
 
-	public int Age { get; set; }
+	public int? Age { get; set; }
 
-	public double Weight { get; set; }
+	public decimal Weight { get; set; }
 
 	public int AnimalTypeId { get; set; }
 
 	public AnimalType AnimalType { get; set; } = null!;
 
-	public int AnimalOwnerId { get; set; }
+	public string AnimalOwnerId { get; set; } = null!;
 
 	public User AnimalOwner { get; set; } = null!;
 

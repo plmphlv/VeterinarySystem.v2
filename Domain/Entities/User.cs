@@ -14,7 +14,7 @@ public class User : IdentityUser
 
 	public ICollection<Animal> Animals { get; set; } = new List<Animal>();
 
-	public List<Appointment> Appointments { get; set; } = new List<Appointment>();
+	public ICollection<Appointment> OwnerAppointments { get; set; } = new List<Appointment>();
 
-	public List<Procedure> Procedures { get; set; } = new List<Procedure>();
+    public StaffProffile? StaffProfile { get; set; } = null;
 }
