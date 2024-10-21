@@ -60,13 +60,6 @@ public static class ApplicationDbContextSeed
 				new Claim(ClaimTypes.NameIdentifier, user.Id),
 				new Claim(ClaimTypes.Email, user.Email)
 			};
-
-			StaffProffile staffProffile = new StaffProffile
-			{
-				StaffMemberId = user.Id
-			};
-
-			await context.SaveChangesAsync();
 		}
 	}
 }
