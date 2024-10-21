@@ -1,16 +1,11 @@
-﻿using Common.Interfaces;
+﻿using Application.Common.Interfaces;
 using MediatR;
 using Microsoft.Extensions.Logging;
-using System;
-using System.Collections.Generic;
 using System.Diagnostics;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
-namespace Common.Behaviours;
+namespace Application.Common.Behaviours;
 
-public class PerformanceBehaviour<TRequest,TResponce> : IPipelineBehavior<TRequest,TResponce> where TRequest:notnull
+public class PerformanceBehaviour<TRequest, TResponce> : IPipelineBehavior<TRequest, TResponce> where TRequest : notnull
 {
 	private readonly Stopwatch timer;
 	private readonly ILogger<TRequest> logger;
@@ -18,11 +13,11 @@ public class PerformanceBehaviour<TRequest,TResponce> : IPipelineBehavior<TReque
 
 	public PerformanceBehaviour(ILogger<TRequest> logger,
 		ICurrentUserService currentUserService)
-    {
-        this.logger = logger;
+	{
+		this.logger = logger;
 		this.currentUserService = currentUserService;
-		this.timer = new Stopwatch();
-    }
+		timer = new Stopwatch();
+	}
 
 	public async Task<TResponce> Handle(TRequest request, RequestHandlerDelegate<TResponce> next, CancellationToken cancellationToken)
 	{

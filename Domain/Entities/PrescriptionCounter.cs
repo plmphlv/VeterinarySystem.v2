@@ -1,4 +1,4 @@
-﻿namespace Entities;
+﻿namespace Domain.Entities;
 
 public class PrescriptionCounter
 {

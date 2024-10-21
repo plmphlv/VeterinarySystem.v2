@@ -1,6 +1,4 @@
 ﻿using Application.Common.Interfaces;
-using Common.Interfaces;
-using Entities;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc.Infrastructure;
 using Microsoft.AspNetCore.Mvc.Routing;
@@ -8,8 +6,9 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using Persistence;
-using Services;
+using Domain.Entities;
+using Infrastructure.Services;
+using Infrastructure.Persistence;
 
 namespace Infrastructure;
 

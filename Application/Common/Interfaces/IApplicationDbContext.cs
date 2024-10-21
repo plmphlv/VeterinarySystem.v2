@@ -1,14 +1,11 @@
 ﻿using Domain.Entities;
-using Entities;
 using Microsoft.EntityFrameworkCore;
 
-namespace Common.Interfaces;
+namespace Application.Common.Interfaces;
 
 public interface IApplicationDbContext
 {
 	Task<int> SaveChangesAsync(CancellationToken cancellationToken);
-
-	DbSet<AnimalOwner> AnimalOwners { get; set; }
 
 	DbSet<Animal> Animals { get; set; }
 

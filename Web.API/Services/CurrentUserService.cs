@@ -1,4 +1,4 @@
-﻿using Common.Interfaces;
+﻿using Application.Common.Interfaces;
 using System.Security.Claims;
 
 namespace Web.API.Services

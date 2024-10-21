@@ -1,8 +1,8 @@
-﻿using Domain.Entities;
+﻿using Domain.Common;
 
-namespace Entities;
+namespace Domain.Entities;
 
-public class Prescription
+public class Prescription : AuditableEntity
 {
 	public int Id { get; set; }
 
@@ -16,7 +16,7 @@ public class Prescription
 
 	public Animal Animal { get; set; } = null!;
 
-	public string StaffMemberId { get; set; } = null!;
+	public int StaffMemberId { get; set; }
 
-	public User StaffMember { get; set; } = null!;
+	public StaffProffile StaffMember { get; set; } = null!;
 }

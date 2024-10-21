@@ -1,5 +1,5 @@
+using Infrastructure.Persistence;
 using Microsoft.EntityFrameworkCore;
-using Persistence;
 using Serilog;
 using Serilog.Exceptions;
 using System.Reflection;
@@ -38,7 +38,7 @@ public class Program
 			try
 			{
 				ApplicationDbContext context = services.GetRequiredService<ApplicationDbContext>();
-				//context.Database.Migrate();
+				context.Database.Migrate();
 			}
 			catch (Exception ex)
 			{

@@ -1,14 +1,14 @@
-﻿using Domain.Entities;
+﻿using Domain.Common;
 
-namespace Entities;
+namespace Domain.Entities;
 
-public class Procedure
+public class Procedure : AuditableEntity
 {
 	public int Id { get; set; }
 
-	public string Name { get; set; } = string.Empty;
+	public string Name { get; set; } = null!;
 
-	public string Description { get; set; } = string.Empty;
+	public string Description { get; set; } = null!;
 
 	public DateTime Date { get; set; }
 
@@ -16,7 +16,7 @@ public class Procedure
 
 	public Animal Animal { get; set; } = null!;
 
-	public string StaffMemberId { get; set; } = null!;
+	public int StaffMemberId { get; set; }
 
-	public User StaffMember { get; set; } = null!;
+	public StaffProffile StaffMember { get; set; } = null!;
 }

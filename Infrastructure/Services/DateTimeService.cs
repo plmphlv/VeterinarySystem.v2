@@ -1,6 +1,6 @@
-﻿using Common.Interfaces;
+﻿using Application.Common.Interfaces;
 
-namespace Services
+namespace Infrastructure.Services
 {
 	public class DateTimeService : IDateTime
 	{

@@ -1,7 +1,7 @@
 ﻿using Application.Common.Interfaces;
 using System.Globalization;
 
-namespace Services;
+namespace Infrastructure.Services;
 
 public class LocalizationServices : ILocalizationServices
 {
