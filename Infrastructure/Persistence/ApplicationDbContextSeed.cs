@@ -54,12 +54,17 @@ public static class ApplicationDbContextSeed
 
 			await userManager.CreateAsync(user, password);
 
+			await userManager.AddToRoleAsync(user, role);
+
 			List<Claim> claims = new List<Claim>
 			{
 				new Claim(ClaimTypes.Name, user.UserName),
 				new Claim(ClaimTypes.NameIdentifier, user.Id),
-				new Claim(ClaimTypes.Email, user.Email)
+				new Claim(ClaimTypes.Email, user.Email),
+				new Claim(ClaimTypes.Role, role)
 			};
+
+			await userManager.AddClaimsAsync(user, claims);
 		}
 	}
 }

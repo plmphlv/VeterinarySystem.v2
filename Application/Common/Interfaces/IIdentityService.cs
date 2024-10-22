@@ -9,7 +9,7 @@ public interface IIdentityService
 
 	Task<string> SetRefreshTokenAsync(string identifier, DateTime refreshTokenExpiryTime, CancellationToken cancellationToken);
 
-	Task<IEnumerable<Claim>> GetUserClaimsAsync(string identityCredential, CancellationToken cancellationToken);
+	Task<IEnumerable<Claim>> GetUserClaimsAsync(string userIdentifier, CancellationToken cancellationToken);
 
 	Task<string> RegisterUserAsync(User user, string password, CancellationToken cancellationToken);
 

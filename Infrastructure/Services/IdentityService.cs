@@ -55,10 +55,17 @@ public class IdentityService : IIdentityService
 		throw new NotImplementedException();
 	}
 
-	public Task<IEnumerable<Claim>> GetUserClaimsAsync(string identityCredential, CancellationToken cancellationToken)
+	public async Task<IEnumerable<Claim>> GetUserClaimsAsync(string userIdentifier, CancellationToken cancellationToken)
 	{
-		throw new NotImplementedException();
+		User? user = await FindUserByUsernameOrEmailAsync(userIdentifier);
+
+		if (user is null)
+		{
+			throw new NotFoundException(nameof(User), userIdentifier);
+		}
+
+		IEnumerable<Claim> claims = await userManager.GetClaimsAsync(user);
+
+		return claims;
 	}
-
-
 }
