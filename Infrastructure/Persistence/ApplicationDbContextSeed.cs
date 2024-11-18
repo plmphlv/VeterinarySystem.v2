@@ -70,7 +70,8 @@ public static class ApplicationDbContextSeed
 				new Claim(ClaimTypes.Name, user.UserName),
 				new Claim(ClaimTypes.NameIdentifier, user.Id),
 				new Claim(ClaimTypes.Email, user.Email),
-				new Claim(ClaimTypes.Role, role)
+				new Claim(ClaimTypes.Role, role),
+				new Claim(InfrastructureConstants.StaffId, staffProffile.Id.ToString())
 			};
 
 			await userManager.AddClaimsAsync(user, claims);
