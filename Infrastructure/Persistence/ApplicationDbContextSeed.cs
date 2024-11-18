@@ -56,6 +56,15 @@ public static class ApplicationDbContextSeed
 
 			await userManager.AddToRoleAsync(user, role);
 
+			StaffProffile staffProffile = new StaffProffile
+			{
+				StaffMember = user,
+			};
+
+			context.StaffProffiles.Add(staffProffile);
+
+			await context.SaveChangesAsync();
+
 			List<Claim> claims = new List<Claim>
 			{
 				new Claim(ClaimTypes.Name, user.UserName),
