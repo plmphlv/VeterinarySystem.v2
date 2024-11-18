@@ -1,4 +1,6 @@
+using Domain.Entities;
 using Infrastructure.Persistence;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Serilog;
 using Serilog.Exceptions;
@@ -39,6 +41,17 @@ public class Program
 			{
 				ApplicationDbContext context = services.GetRequiredService<ApplicationDbContext>();
 				context.Database.Migrate();
+
+				RoleManager<IdentityRole> roleManager = services.GetRequiredService<RoleManager<IdentityRole>>();
+				UserManager<User> userManager = services.GetRequiredService<UserManager<User>>();
+
+				await ApplicationDbContextSeed.SeedRoles(roleManager);
+
+				if (builder.Environment.IsDevelopment())
+				{
+					await ApplicationDbContextSeed.SeedDevelopmentData(context, userManager, configuration);
+				}
+
 			}
 			catch (Exception ex)
 			{

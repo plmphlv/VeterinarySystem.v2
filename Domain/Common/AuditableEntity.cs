@@ -6,13 +6,13 @@ public abstract class AuditableEntity
 
 	public DateTime CreationDate { get; set; }
 
-	public string LastModifiedBy { get; set; } = null!;
+	public string? LastModifiedBy { get; set; }
 
-	public DateTime LastModificationDate { get; set; }
+	public DateTime? LastModificationDate { get; set; }
 
 	public bool Deleted { get; set; }
 
-	public string DeletedBy { get; set; } = null!;
+	public string? DeletedBy { get; set; }
 
-	public DateTime DeletionDate { get; set; }
+	public DateTime? DeletionDate { get; set; }
 }

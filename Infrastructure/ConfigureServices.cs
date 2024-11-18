@@ -1,14 +1,14 @@
 ﻿using Application.Common.Interfaces;
+using Domain.Entities;
+using Infrastructure.Persistence;
+using Infrastructure.Services;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Infrastructure;
 using Microsoft.AspNetCore.Mvc.Routing;
-using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using Domain.Entities;
-using Infrastructure.Services;
-using Infrastructure.Persistence;
 
 namespace Infrastructure;
 
@@ -39,9 +39,11 @@ public static class ConfigureServices
 		services.AddScoped<IApplicationDbContext>(provider => provider.GetRequiredService<ApplicationDbContext>());
 		services.AddTransient<IDateTime, DateTimeService>();
 		services.AddTransient<ILocalizationServices, LocalizationServices>();
+		services.AddScoped<IIdentityService, IdentityService>();
 
 		services.AddSingleton<IActionContextAccessor, ActionContextAccessor>();
-		services.AddScoped(x => {
+		services.AddScoped(x =>
+		{
 			ActionContext actionContext = x.GetRequiredService<IActionContextAccessor>()
 				.ActionContext!;
 			IUrlHelperFactory factory = x.GetRequiredService<IUrlHelperFactory>()!;
