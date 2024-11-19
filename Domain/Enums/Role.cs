@@ -5,6 +5,6 @@
 		SuperAdministrator,
 		Administrator,
 		Manager,
-		Instructor
+		StaffMember
 	}
 }

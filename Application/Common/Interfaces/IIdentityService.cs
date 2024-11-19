@@ -1,4 +1,5 @@
 ﻿using Domain.Entities;
+using Microsoft.AspNetCore.Identity;
 using System.Security.Claims;
 
 namespace Application.Common.Interfaces;
@@ -14,4 +15,6 @@ public interface IIdentityService
 	Task<string> RegisterUserAsync(User user, string password, CancellationToken cancellationToken);
 
 	Task ChangePasswordAsync(string userId, string currentPassword, string newPassword, CancellationToken cancellationToken);
+
+	Task<IdentityResult> AddClaimsAsync(User user, IEnumerable<Claim> claims);
 }

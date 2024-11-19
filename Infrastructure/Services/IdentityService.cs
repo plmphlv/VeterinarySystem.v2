@@ -1,6 +1,7 @@
 ﻿using Application.Common.Exceptions;
 using Application.Common.Interfaces;
 using Domain.Entities;
+using FluentValidation.Results;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using System.Security.Claims;
@@ -40,9 +41,30 @@ public class IdentityService : IIdentityService
 		return isValidPassword;
 	}
 
-	public Task<string> RegisterUserAsync(User user, string password, CancellationToken cancellationToken)
+	public async Task<string> RegisterUserAsync(User user, string password, CancellationToken cancellationToken)
 	{
-		throw new NotImplementedException();
+		bool isExistingUser = await userManager.Users
+			.AnyAsync(u => u.Email == user.Email || u.UserName == user.UserName, cancellationToken);
+
+		if (isExistingUser)
+		{
+			throw new ValidationException(new List<ValidationFailure> {
+				new ValidationFailure{ ErrorMessage = "Username or email is already in use" } });
+		}
+
+		IdentityResult result = await userManager.CreateAsync(user, password);
+
+		if (!result.Succeeded)
+		{
+			IEnumerable<ValidationFailure> failures = result.Errors
+				.Select(e => new ValidationFailure(e.Code, e.Description));
+
+			throw new ValidationException(failures);
+		}
+
+		string token = await userManager.GenerateEmailConfirmationTokenAsync(user);
+
+		return token;
 	}
 
 	public Task ChangePasswordAsync(string userId, string currentPassword, string newPassword, CancellationToken cancellationToken)
@@ -67,5 +89,21 @@ public class IdentityService : IIdentityService
 		IEnumerable<Claim> claims = await userManager.GetClaimsAsync(user);
 
 		return claims;
+	}
+
+	public async Task<IdentityResult> AddClaimsAsync(User user, IEnumerable<Claim> claims)
+	{
+		IdentityResult claimsResult = await userManager.AddClaimsAsync(user, claims);
+
+		if (!claimsResult.Succeeded)
+		{
+			List<ValidationFailure> validationFailures = claimsResult.Errors
+				.Select(e => new ValidationFailure(nameof(Claim), e.Description))
+				.ToList();
+
+			throw new ValidationException(validationFailures);
+		}
+
+		return claimsResult;
 	}
 }
