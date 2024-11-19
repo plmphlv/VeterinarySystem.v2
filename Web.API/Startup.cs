@@ -69,7 +69,7 @@ public class Startup
 		});
 
 		//services.AddAuthorization();
-		string key = Configuration.GetValue<string>("ApiKey")!;
+		string key = Configuration.GetValue<string>("ApiKey");
 		services.AddAuthentication("Bearer")
 			.AddJwtBearer("Bearer", options =>
 			{
