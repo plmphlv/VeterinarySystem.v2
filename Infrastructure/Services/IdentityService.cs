@@ -106,4 +106,78 @@ public class IdentityService : IIdentityService
 
 		return claimsResult;
 	}
+
+	public async Task<IdentityResult> AddRoleAsync(string userId, string role)
+	{
+		User? user = await userManager.FindByIdAsync(userId);
+
+		if (user is null)
+		{
+			throw new NotFoundException(nameof(User), userId);
+		}
+
+		IdentityResult roleResult = await userManager.AddToRoleAsync(user, role);
+
+		if (!roleResult.Succeeded)
+		{
+			List<ValidationFailure> validationFailures = roleResult.Errors
+				.Select(e => new ValidationFailure(nameof(role), e.Description))
+				.ToList();
+
+			throw new ValidationException(validationFailures);
+		}
+
+		IdentityResult claimsResult = await userManager.AddClaimAsync(user, new Claim(ClaimTypes.Role, role));
+
+		if (!claimsResult.Succeeded)
+		{
+			await userManager.RemoveFromRoleAsync(user, role);
+
+			List<ValidationFailure> validationFailures = claimsResult.Errors
+				.Select(e => new ValidationFailure(nameof(role), e.Description))
+				.ToList();
+
+			throw new ValidationException(validationFailures);
+		}
+
+		return roleResult;
+	}
+
+	public async Task<IdentityResult> RemoveRoleAsync(string userId, string role)
+	{
+		User? user = await userManager.FindByIdAsync(userId);
+
+		if (user is null)
+		{
+			throw new NotFoundException(nameof(User), userId);
+		}
+
+		IdentityResult roleResult = await userManager
+			.RemoveFromRoleAsync(user, role);
+
+		if (!roleResult.Succeeded)
+		{
+			List<ValidationFailure> validationFailures = roleResult.Errors
+				.Select(e => new ValidationFailure(nameof(role), e.Description))
+				.ToList();
+
+			throw new ValidationException(validationFailures);
+		}
+
+		IdentityResult claimsResult = await userManager
+			.RemoveClaimAsync(user, new Claim(ClaimTypes.Role, role));
+
+		if (!claimsResult.Succeeded)
+		{
+			await userManager.RemoveFromRoleAsync(user, role);
+
+			List<ValidationFailure> validationFailures = claimsResult.Errors
+				.Select(e => new ValidationFailure(nameof(role), e.Description))
+				.ToList();
+
+			throw new ValidationException(validationFailures);
+		}
+
+		return roleResult;
+	}
 }

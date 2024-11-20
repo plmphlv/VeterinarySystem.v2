@@ -16,5 +16,5 @@ public class User : IdentityUser
 
 	public ICollection<Appointment> OwnerAppointments { get; set; } = new List<Appointment>();
 
-    public StaffProffile? StaffProfile { get; set; } = null;
+    public StaffProfile? StaffProfile { get; set; } = null;
 }

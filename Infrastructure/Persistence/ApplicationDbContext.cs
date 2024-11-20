@@ -26,7 +26,7 @@ public class ApplicationDbContext : IdentityDbContext<User>, IApplicationDbConte
 	public DbSet<Procedure> Procedures { get; set; } = null!;
 	public DbSet<Prescription> Prescriptions { get; set; } = null!;
 	public DbSet<AnimalType> AnimalTypes { get; set; } = null!;
-	public DbSet<StaffProffile> StaffProffiles { get; set; } = null!;
+	public DbSet<StaffProfile> StaffProfiles { get; set; } = null!;
 	public DbSet<PrescriptionCounter> PrescriptionCounters { get; set; } = null!;
 
 	public override async Task<int> SaveChangesAsync(CancellationToken cancellationToken = new CancellationToken())

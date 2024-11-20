@@ -2,7 +2,7 @@
 
 namespace Domain.Entities;
 
-public class StaffProffile : AuditableEntity
+public class StaffProfile : AuditableEntity
 {
 	public int Id { get; set; }
 

@@ -56,12 +56,12 @@ public static class ApplicationDbContextSeed
 
 			await userManager.AddToRoleAsync(user, role);
 
-			StaffProffile staffProffile = new StaffProffile
+			StaffProfile staffProffile = new StaffProfile
 			{
 				StaffMember = user,
 			};
 
-			context.StaffProffiles.Add(staffProffile);
+			context.StaffProfiles.Add(staffProffile);
 
 			await context.SaveChangesAsync();
 

@@ -5,9 +5,9 @@ using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace Infrastructure.Persistence.Configurations;
 
-public class StaffProffileConfiguration : AuditableEntityConfiguration<StaffProffile>
+public class StaffProffileConfiguration : AuditableEntityConfiguration<StaffProfile>
 {
-	public override void Configure(EntityTypeBuilder<StaffProffile> builder)
+	public override void Configure(EntityTypeBuilder<StaffProfile> builder)
 	{
 		base.Configure(builder);
 
@@ -18,7 +18,7 @@ public class StaffProffileConfiguration : AuditableEntityConfiguration<StaffProf
 
 		builder.HasOne(sp => sp.StaffMember)
 			.WithOne(sm => sm.StaffProfile)
-			.HasForeignKey<StaffProffile>(sp => sp.StaffMemberId)
+			.HasForeignKey<StaffProfile>(sp => sp.StaffMemberId)
 			.OnDelete(DeleteBehavior.Cascade)
 			.IsRequired();
 
