@@ -3,8 +3,6 @@ using Application.StaffProfiles.Commands.Delete;
 using Application.StaffProfiles.Queries.GetStaffMemberDetails;
 using Application.StaffProfiles.Queries.GetStaffMembers;
 using Microsoft.AspNetCore.Mvc;
-using static Microsoft.EntityFrameworkCore.DbLoggerCategory;
-using static Microsoft.EntityFrameworkCore.DbLoggerCategory.Database;
 
 namespace Web.API.Controllers;
 
