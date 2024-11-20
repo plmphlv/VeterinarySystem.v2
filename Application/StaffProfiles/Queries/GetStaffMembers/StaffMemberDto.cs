@@ -1,3 +1,8 @@
 ﻿namespace Application.StaffProfiles.Queries.GetStaffMembers;
 
-public class StaffMemberDto : StaffMemberModel;
+public class StaffMemberDto
+{
+	public int Id { get; set; }
+
+	public string Name { get; set; } = null!;
+}
