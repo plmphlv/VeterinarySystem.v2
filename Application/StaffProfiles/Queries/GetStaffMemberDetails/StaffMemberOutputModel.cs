@@ -1,10 +1,8 @@
-﻿namespace Application.StaffProfiles.Queries.GetStaffMemberDetails;
+﻿using Application.StaffProfiles.Common;
 
-public class StaffMemberOutputModel
+namespace Application.StaffProfiles.Queries.GetStaffMemberDetails;
+
+public class StaffMemberOutputModel : StaffMemberModel
 {
-	public int Id { get; set; }
-
-	public string Name { get; set; } = null!;
-
 	public string PhoneNumber { get; set; } = null!;
 }
