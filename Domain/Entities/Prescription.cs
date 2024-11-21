@@ -18,5 +18,5 @@ public class Prescription : AuditableEntity
 
 	public int StaffMemberId { get; set; }
 
-	public StaffProffile StaffMember { get; set; } = null!;
+	public StaffProfile StaffMember { get; set; } = null!;
 }

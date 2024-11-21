@@ -1,5 +1,4 @@
 ﻿using FluentValidation;
-using FluentValidation.Validators;
 
 namespace Application.Users.Commands.Register;
 
@@ -30,5 +29,11 @@ public class RegisterCommandValidator : AbstractValidator<RegisterCommand>
 		RuleFor(c => c.UserName)
 			.NotEmpty()
 			.WithMessage("User name is required");
+
+		RuleFor(c => c.PhoneNumber)
+			.NotEmpty()
+			.WithMessage("Phone number is required")
+			.Length(10)
+			.WithMessage("A valid phone number is reqired");
 	}
 }

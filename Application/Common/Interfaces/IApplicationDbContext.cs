@@ -21,4 +21,6 @@ public interface IApplicationDbContext
 	DbSet<AnimalType> AnimalTypes { get; set; }
 
 	DbSet<PrescriptionCounter> PrescriptionCounters { get; set; }
+
+	DbSet<StaffProfile> StaffProfiles { get; set; }
 }

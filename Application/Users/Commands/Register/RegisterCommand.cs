@@ -16,6 +16,8 @@ public class RegisterCommand : IRequest
 
 	public string LastName { get; set; } = null!;
 
+	public string PhoneNumber { get; set; } = null!;
+
 	public string Password { get; set; } = null!;
 
 	public string ConfirmPassword { get; set; } = null!;
@@ -42,7 +44,8 @@ public class RegisterCommandHandler : IRequestHandler<RegisterCommand>
 			Email = request.Email,
 			FirstName = request.FirstName,
 			LastName = request.LastName,
-			UserName = request.UserName
+			UserName = request.UserName,
+			PhoneNumber = request.PhoneNumber
 		};
 
 		string token = await identityService.RegisterUserAsync(user, request.Password, cancellationToken);

@@ -17,4 +17,8 @@ public interface IIdentityService
 	Task ChangePasswordAsync(string userId, string currentPassword, string newPassword, CancellationToken cancellationToken);
 
 	Task<IdentityResult> AddClaimsAsync(User user, IEnumerable<Claim> claims);
+
+	Task<IdentityResult> AddRoleAsync(string userId, string role);
+
+	Task<IdentityResult> RemoveRoleAsync(string userId, string role);
 }
