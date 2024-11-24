@@ -29,6 +29,34 @@ public static class ApplicationDbContextSeed
 
 	public static async Task SeedDevelopmentData(ApplicationDbContext context, UserManager<User> userManager, IConfiguration configuration)
 	{
+		await SeedUsers(context, userManager, configuration);
+		await SeedSampleData(context, userManager);
+	}
+
+	private static async Task SeedSampleData(ApplicationDbContext context, UserManager<User> userManager)
+	{
+		int animalTypesCount = await context.Animals.CountAsync();
+
+		if (animalTypesCount == 0)
+		{
+			List<AnimalType> animalTypes = new List<AnimalType>
+			{
+				new AnimalType{ Name = "Cat" },
+				new AnimalType{ Name = "Dog" },
+				new AnimalType{ Name = "Bird" },
+				new AnimalType{ Name = "Livestock" },
+				new AnimalType{ Name = "Transportation Animal" },
+				new AnimalType{ Name = "Other mammal" }
+			};
+
+			await context.AnimalTypes.AddRangeAsync(animalTypes);
+		}
+
+		await context.SaveChangesAsync();
+	}
+
+	private static async Task SeedUsers(ApplicationDbContext context, UserManager<User> userManager, IConfiguration configuration)
+	{
 		AccountSettings superAdminSettings = configuration.GetSection("SuperAdmin").Get<AccountSettings>();
 
 		string firstName = superAdminSettings.FirstName;
