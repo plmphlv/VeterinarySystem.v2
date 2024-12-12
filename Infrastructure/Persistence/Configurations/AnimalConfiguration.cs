@@ -23,6 +23,24 @@ public class AnimalConfiguration : AuditableEntityConfiguration<Animal>
 		builder.Property(a => a.Weight)
 			.IsRequired();
 
+		builder.Property(a => a.PassportNumber)
+			.IsRequired(false)
+			.HasMaxLength(15)
+			.HasColumnType("varchar(15)");
+
+		builder.HasIndex(a => a.PassportNumber)
+			.HasFilter("\"PassportNumber\" IS NOT NULL")
+			.IsUnique();
+
+		builder.Property(a => a.ChipNumber)
+			.IsRequired(false)
+			.HasMaxLength(15)
+			.HasColumnType("varchar(15)");
+
+		builder.HasIndex(a => a.ChipNumber)
+			.HasFilter("\"ChipNumber\" IS NOT NULL")
+			.IsUnique();
+
 		builder.HasOne(a => a.AnimalOwner)
 			.WithMany(ao => ao.Animals)
 			.HasForeignKey(a => a.AnimalOwnerId)

@@ -12,6 +12,10 @@ public class Animal : AuditableEntity
 
 	public decimal Weight { get; set; }
 
+	public string? PassportNumber { get; set; }
+
+	public string? ChipNumber { get; set; }
+
 	public int AnimalTypeId { get; set; }
 
 	public AnimalType AnimalType { get; set; } = null!;
