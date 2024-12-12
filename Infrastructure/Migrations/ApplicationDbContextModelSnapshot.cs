@@ -91,7 +91,7 @@ namespace Infrastructure.Migrations
                         .IsUnique()
                         .HasFilter("\"PassportNumber\" IS NOT NULL");
 
-                    b.ToTable("Animals");
+                    b.ToTable("Animals", (string)null);
                 });
 
             modelBuilder.Entity("Domain.Entities.AnimalType", b =>
@@ -131,7 +131,7 @@ namespace Infrastructure.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("AnimalTypes");
+                    b.ToTable("AnimalTypes", (string)null);
                 });
 
             modelBuilder.Entity("Domain.Entities.Appointment", b =>
@@ -186,7 +186,7 @@ namespace Infrastructure.Migrations
 
                     b.HasIndex("StaffMemberId");
 
-                    b.ToTable("Appointments");
+                    b.ToTable("Appointments", (string)null);
                 });
 
             modelBuilder.Entity("Domain.Entities.Prescription", b =>
@@ -245,7 +245,7 @@ namespace Infrastructure.Migrations
 
                     b.HasIndex("StaffMemberId");
 
-                    b.ToTable("Prescriptions");
+                    b.ToTable("Prescriptions", (string)null);
                 });
 
             modelBuilder.Entity("Domain.Entities.PrescriptionCounter", b =>
@@ -261,7 +261,7 @@ namespace Infrastructure.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("PrescriptionCounters");
+                    b.ToTable("PrescriptionCounters", (string)null);
                 });
 
             modelBuilder.Entity("Domain.Entities.Procedure", b =>
@@ -318,7 +318,7 @@ namespace Infrastructure.Migrations
 
                     b.HasIndex("StaffMemberId");
 
-                    b.ToTable("Procedures");
+                    b.ToTable("Procedures", (string)null);
                 });
 
             modelBuilder.Entity("Domain.Entities.StaffProfile", b =>
@@ -360,7 +360,7 @@ namespace Infrastructure.Migrations
                     b.HasIndex("StaffMemberId")
                         .IsUnique();
 
-                    b.ToTable("StaffProfiles");
+                    b.ToTable("StaffProfiles", (string)null);
                 });
 
             modelBuilder.Entity("Domain.Entities.User", b =>

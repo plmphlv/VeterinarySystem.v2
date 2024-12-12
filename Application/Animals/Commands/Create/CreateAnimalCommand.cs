@@ -10,6 +10,8 @@ namespace Application.Animals.Commands.Create;
 
 public class CreateAnimalCommand : AnimalModel, IRequest<int>
 {
+	public int AnimalTypeId { get; set; }
+
 	public string AnimalOwnerId { get; set; } = null!;
 }
 
@@ -41,7 +43,7 @@ public class CreateAnimalCommandHandler : IRequestHandler<CreateAnimalCommand, i
 			bool passportExists = await context.Animals
 				.AnyAsync(a => a.PassportNumber == passportNumber, cancellationToken);
 
-			if (!passportExists)
+			if (passportExists)
 			{
 				List<ValidationFailure> errors = new List<ValidationFailure>
 				{
@@ -59,7 +61,7 @@ public class CreateAnimalCommandHandler : IRequestHandler<CreateAnimalCommand, i
 			bool chipNumberExists = await context.Animals
 				.AnyAsync(a => a.PassportNumber == chipNumber, cancellationToken);
 
-			if (!chipNumberExists)
+			if (chipNumberExists)
 			{
 				List<ValidationFailure> errors = new List<ValidationFailure>
 				{

@@ -11,6 +11,8 @@ namespace Application.Animals.Commands.Update;
 public class UpdateAnimalCommand : AnimalModel, IRequest
 {
 	public int Id { get; set; }
+
+	public int AnimalTypeId { get; set; }
 }
 
 public class UpdateAnimalCommandHandler : IRequestHandler<UpdateAnimalCommand>
@@ -51,7 +53,7 @@ public class UpdateAnimalCommandHandler : IRequestHandler<UpdateAnimalCommand>
 			bool passportExists = await context.Animals
 				.AnyAsync(a => a.PassportNumber == passportNumber, cancellationToken);
 
-			if (!passportExists)
+			if (passportExists)
 			{
 				List<ValidationFailure> errors = new List<ValidationFailure>
 				{
@@ -69,7 +71,7 @@ public class UpdateAnimalCommandHandler : IRequestHandler<UpdateAnimalCommand>
 			bool chipNumberExists = await context.Animals
 				.AnyAsync(a => a.PassportNumber == chipNumber, cancellationToken);
 
-			if (!chipNumberExists)
+			if (chipNumberExists)
 			{
 				List<ValidationFailure> errors = new List<ValidationFailure>
 				{

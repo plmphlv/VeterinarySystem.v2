@@ -11,6 +11,4 @@ public abstract class AnimalModel
 	public string? PassportNumber { get; set; }
 
 	public string? ChipNumber { get; set; }
-
-	public int AnimalTypeId { get; set; }
 }
