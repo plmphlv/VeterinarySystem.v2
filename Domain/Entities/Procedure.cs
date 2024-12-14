@@ -16,7 +16,7 @@ public class Procedure : AuditableEntity
 
 	public Animal Animal { get; set; } = null!;
 
-	public int StaffMemberId { get; set; }
+	public string StaffMemberId { get; set; } = null!;
 
 	public StaffProfile StaffMember { get; set; } = null!;
 }

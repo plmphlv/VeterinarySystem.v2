@@ -13,9 +13,6 @@ public class StaffProffileConfiguration : AuditableEntityConfiguration<StaffProf
 
 		builder.HasKey(sp => sp.Id);
 
-		builder.Property(sp => sp.Id)
-			.UseIdentityColumn(1, 1);
-
 		builder.HasOne(sp => sp.StaffMember)
 			.WithOne(sm => sm.StaffProfile)
 			.HasForeignKey<StaffProfile>(sp => sp.StaffMemberId)
@@ -23,6 +20,5 @@ public class StaffProffileConfiguration : AuditableEntityConfiguration<StaffProf
 			.IsRequired();
 
 		builder.HasIndex(sp => sp.StaffMemberId);
-			//.HasFilter("\"StaffMemberId\" IS NOT NULL"); 
 	}
 }

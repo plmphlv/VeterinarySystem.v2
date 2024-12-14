@@ -8,7 +8,7 @@ namespace Application.StaffProfiles.Queries.GetStaffMemberDetails;
 
 public class GetStaffMemberDetailsQuery : IRequest<StaffMemberOutputModel>
 {
-	public int Id { get; set; }
+	public string Id { get; set; } = null!;
 }
 
 public class GetStaffMemberDetailsQueryHandler : IRequestHandler<GetStaffMemberDetailsQuery, StaffMemberOutputModel>
@@ -22,7 +22,7 @@ public class GetStaffMemberDetailsQueryHandler : IRequestHandler<GetStaffMemberD
 
 	public async Task<StaffMemberOutputModel> Handle(GetStaffMemberDetailsQuery request, CancellationToken cancellationToken)
 	{
-		int id = request.Id;
+		string id = request.Id;
 
 		StaffMemberOutputModel? result = await context.StaffProfiles
 			.Where(sp => sp.Id == id)

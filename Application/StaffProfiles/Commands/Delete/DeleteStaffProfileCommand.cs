@@ -4,40 +4,49 @@ using Domain.Entities;
 using Domain.Enums;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
+using System.Security.Claims;
 
 namespace Application.StaffProfiles.Commands.Delete;
 
 public class DeleteStaffProfileCommand : IRequest
 {
-	public int Id { get; set; }
+    public string Id { get; set; } = null!;
 }
 
 public class DeleteStaffProfileCommandHandler : IRequestHandler<DeleteStaffProfileCommand>
 {
-	private readonly IApplicationDbContext context;
-	private readonly IIdentityService identityService;
+    private readonly IApplicationDbContext context;
+    private readonly IIdentityService identityService;
 
-	public DeleteStaffProfileCommandHandler(IApplicationDbContext context, IIdentityService identityService)
-	{
-		this.context = context;
-		this.identityService = identityService;
-	}
+    public DeleteStaffProfileCommandHandler(IApplicationDbContext context, IIdentityService identityService)
+    {
+        this.context = context;
+        this.identityService = identityService;
+    }
 
-	public async Task Handle(DeleteStaffProfileCommand request, CancellationToken cancellationToken)
-	{
-		int staffId = request.Id;
+    public async Task Handle(DeleteStaffProfileCommand request, CancellationToken cancellationToken)
+    {
+        string staffId = request.Id;
 
-		StaffProfile? staffProfile = await context.StaffProfiles
-			.FirstOrDefaultAsync(sp => sp.Id == staffId, cancellationToken);
+        StaffProfile? staffProfile = await context.StaffProfiles
+            .FirstOrDefaultAsync(sp => sp.Id == staffId, cancellationToken);
 
-		if (staffProfile is null)
-		{
-			throw new NotFoundException(nameof(StaffProfiles), staffId);
-		}
+        if (staffProfile is null)
+        {
+            throw new NotFoundException(nameof(StaffProfiles), staffId);
+        }
 
-		context.StaffProfiles.Remove(staffProfile);
-		await context.SaveChangesAsync(cancellationToken);
+        context.StaffProfiles.Remove(staffProfile);
+        await context.SaveChangesAsync(cancellationToken);
 
-		await identityService.RemoveRoleAsync(staffProfile.StaffMemberId, Role.StaffMember.ToString());
-	}
+        string role = Role.StaffMember.ToString();
+
+        IEnumerable<Claim> staffClaims = new List<Claim>
+        {
+            new Claim(ProjectConstants.StaffId, staffProfile.Id),
+            new Claim(ClaimTypes.Role, role)
+        };
+
+        await identityService.RemoveRoleAsync(staffProfile.StaffMemberId, role, staffClaims);
+    }
 }

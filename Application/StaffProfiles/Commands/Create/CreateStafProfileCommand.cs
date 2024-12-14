@@ -1,40 +1,48 @@
-﻿using Application.Common.Interfaces;
-using Domain.Entities;
-using Domain.Enums;
-using MediatR;
+﻿using Domain.Enums;
+using System.Data;
+using System.Security.Claims;
 
 namespace Application.StaffProfiles.Commands.Create;
 
-public class CreateStafProfileCommand : IRequest<int>
+public class CreateStafProfileCommand : IRequest<string>
 {
-	public string UserId { get; set; } = null!;
+    public string UserId { get; set; } = null!;
 }
 
-public class CreateStafMemberCommandHandler : IRequestHandler<CreateStafProfileCommand, int>
+public class CreateStafMemberCommandHandler : IRequestHandler<CreateStafProfileCommand, string>
 {
-	private readonly IApplicationDbContext context;
-	private readonly IIdentityService identityService;
+    private readonly IApplicationDbContext context;
+    private readonly IIdentityService identityService;
 
-	public CreateStafMemberCommandHandler(IApplicationDbContext context, IIdentityService identityService)
-	{
-		this.context = context;
-		this.identityService = identityService;
-	}
+    public CreateStafMemberCommandHandler(IApplicationDbContext context, IIdentityService identityService)
+    {
+        this.context = context;
+        this.identityService = identityService;
+    }
 
-	public async Task<int> Handle(CreateStafProfileCommand request, CancellationToken cancellationToken)
-	{
-		string userId = request.UserId;
+    public async Task<string> Handle(CreateStafProfileCommand request, CancellationToken cancellationToken)
+    {
+        string userId = request.UserId;
 
-		StaffProfile staffProfile = new StaffProfile
-		{
-			StaffMemberId = request.UserId
-		};
+        StaffProfile staffProfile = new StaffProfile
+        {
+            Id = Guid.NewGuid().ToString(),
+            StaffMemberId = request.UserId
+        };
 
-		context.StaffProfiles.Add(staffProfile);
-		await context.SaveChangesAsync(cancellationToken);
+        context.StaffProfiles.Add(staffProfile);
+        await context.SaveChangesAsync(cancellationToken);
 
-		await identityService.AddRoleAsync(userId, Role.StaffMember.ToString());
+        string role = Role.StaffMember.ToString();
 
-		return staffProfile.Id;
-	}
+        IEnumerable<Claim>  staffClaims = new List<Claim>
+        {
+            new Claim(ProjectConstants.StaffId, staffProfile.Id),
+            new Claim(ClaimTypes.Role, role)
+        };
+
+        await identityService.AddRoleAsync(userId, role, staffClaims);
+
+        return staffProfile.Id;
+    }
 }

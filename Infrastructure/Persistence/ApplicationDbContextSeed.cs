@@ -86,6 +86,7 @@ public static class ApplicationDbContextSeed
 
             StaffProfile staffProffile = new StaffProfile
             {
+                Id = Guid.NewGuid().ToString(),
                 StaffMember = user,
             };
 
@@ -99,7 +100,7 @@ public static class ApplicationDbContextSeed
                 new Claim(ClaimTypes.NameIdentifier, user.Id),
                 new Claim(ClaimTypes.Email, user.Email),
                 new Claim(ClaimTypes.Role, role),
-                new Claim(InfrastructureConstants.StaffId, staffProffile.Id.ToString())
+                new Claim(InfrastructureConstants.StaffId, staffProffile.Id)
             };
 
             await userManager.AddClaimsAsync(user, claims);
