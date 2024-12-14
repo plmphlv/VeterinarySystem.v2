@@ -1,6 +1,5 @@
 ﻿using Application.Common.Exceptions;
 using Application.Common.Interfaces;
-using Application.Users.Commands.Register;
 using Domain.Entities;
 using FluentValidation.Results;
 using Microsoft.AspNetCore.Identity;
@@ -11,184 +10,174 @@ namespace Infrastructure.Services;
 
 public class IdentityService : IIdentityService
 {
-    private readonly UserManager<User> userManager;
-    private readonly IApplicationDbContext context;
+	private readonly UserManager<User> userManager;
+	private readonly IApplicationDbContext context;
 
-    public IdentityService(UserManager<User> userManager, IApplicationDbContext context)
-    {
-        this.userManager = userManager;
-        this.context = context;
-    }
+	public IdentityService(UserManager<User> userManager, IApplicationDbContext context)
+	{
+		this.userManager = userManager;
+		this.context = context;
+	}
 
-    private async Task<User?> FindUserByUsernameOrEmailAsync(string userIdentifier)
-    {
-        User? user = await userManager.Users
-            .FirstOrDefaultAsync(u => u.UserName == userIdentifier || u.Email == userIdentifier);
+	private async Task<User?> FindUserByUsernameOrEmailAsync(string userIdentifier)
+	{
+		User? user = await userManager.Users
+			.FirstOrDefaultAsync(u => u.UserName == userIdentifier || u.Email == userIdentifier);
 
-        return user;
-    }
+		return user;
+	}
 
-    public async Task<bool> ValidateLoginAsync(string userIdentifier, string password, CancellationToken cancellationToken)
-    {
-        User? user = await FindUserByUsernameOrEmailAsync(userIdentifier);
+	public async Task<bool> ValidateLoginAsync(string userIdentifier, string password, CancellationToken cancellationToken)
+	{
+		User? user = await FindUserByUsernameOrEmailAsync(userIdentifier);
 
-        if (user is null)
-        {
-            throw new NotFoundException(nameof(User), userIdentifier);
-        }
+		if (user is null)
+		{
+			throw new NotFoundException(nameof(User), userIdentifier);
+		}
 
-        bool isValidPassword = await userManager.CheckPasswordAsync(user, password);
+		bool isValidPassword = await userManager.CheckPasswordAsync(user, password);
 
-        return isValidPassword;
-    }
+		return isValidPassword;
+	}
 
-    public async Task<string> RegisterUserAsync(RegisterCommand command, CancellationToken cancellationToken)
-    {
-        User user = new User
-        {
-            Email = command.Email,
-            UserName = command.UserName
-        };
+	public async Task<string> RegisterUserAsync(User user, string password, CancellationToken cancellationToken)
+	{
+		bool isExistingUser = await userManager.Users
+			.AnyAsync(u => u.Email == user.Email || u.UserName == user.UserName, cancellationToken);
 
-        bool isExistingUser = await userManager.Users
-            .AnyAsync(u => u.Email == user.Email || u.UserName == user.UserName, cancellationToken);
+		if (isExistingUser)
+		{
+			throw new ValidationException(new List<ValidationFailure> {
+				new ValidationFailure{ ErrorMessage = "Username or email is already in use" } });
+		}
 
-        if (isExistingUser)
-        {
-            throw new ValidationException(new List<ValidationFailure> {
-                new ValidationFailure{ ErrorMessage = "Username or email is already in use" } });
-        }
+		IdentityResult result = await userManager.CreateAsync(user, password);
 
-        string password = command.Password;
+		if (!result.Succeeded)
+		{
+			IEnumerable<ValidationFailure> failures = result.Errors
+				.Select(e => new ValidationFailure(e.Code, e.Description));
 
-        IdentityResult result = await userManager.CreateAsync(user, password);
+			throw new ValidationException(failures);
+		}
 
-        if (!result.Succeeded)
-        {
-            IEnumerable<ValidationFailure> failures = result.Errors
-                .Select(e => new ValidationFailure(e.Code, e.Description));
+		string token = await userManager.GenerateEmailConfirmationTokenAsync(user);
 
-            throw new ValidationException(failures);
-        }
+		return token;
+	}
 
-        IEnumerable<Claim> claims = new List<Claim>
-        {
-            new Claim (ClaimTypes.Name,user.UserName),
-            new Claim (ClaimTypes.NameIdentifier,user.Id),
-            new Claim (ClaimTypes.Email,user.Email),
-        };
+	public Task ChangePasswordAsync(string userId, string currentPassword, string newPassword, CancellationToken cancellationToken)
+	{
+		throw new NotImplementedException();
+	}
 
-        IdentityResult claimsResult = await userManager.AddClaimsAsync(user, claims);
+	public Task<string> SetRefreshTokenAsync(string identifier, DateTime refreshTokenExpiryTime, CancellationToken cancellationToken)
+	{
+		throw new NotImplementedException();
+	}
 
-        if (!claimsResult.Succeeded)
-        {
-            List<ValidationFailure> validationFailures = claimsResult.Errors
-                .Select(e => new ValidationFailure(nameof(Claim), e.Description))
-                .ToList();
+	public async Task<IEnumerable<Claim>> GetUserClaimsAsync(string userIdentifier, CancellationToken cancellationToken)
+	{
+		User? user = await FindUserByUsernameOrEmailAsync(userIdentifier);
 
-            throw new ValidationException(validationFailures);
-        }
+		if (user is null)
+		{
+			throw new NotFoundException(nameof(User), userIdentifier);
+		}
 
-        string token = await userManager.GenerateEmailConfirmationTokenAsync(user);
+		IEnumerable<Claim> claims = await userManager.GetClaimsAsync(user);
 
-        return token;
-    }
+		return claims;
+	}
 
-    public Task ChangePasswordAsync(string userId, string currentPassword, string newPassword, CancellationToken cancellationToken)
-    {
-        throw new NotImplementedException();
-    }
+	public async Task<IdentityResult> AddClaimsAsync(User user, IEnumerable<Claim> claims)
+	{
+		IdentityResult claimsResult = await userManager.AddClaimsAsync(user, claims);
 
-    public Task<string> SetRefreshTokenAsync(string identifier, DateTime refreshTokenExpiryTime, CancellationToken cancellationToken)
-    {
-        throw new NotImplementedException();
-    }
+		if (!claimsResult.Succeeded)
+		{
+			List<ValidationFailure> validationFailures = claimsResult.Errors
+				.Select(e => new ValidationFailure(nameof(Claim), e.Description))
+				.ToList();
 
-    public async Task<IEnumerable<Claim>> GetUserClaimsAsync(string userIdentifier, CancellationToken cancellationToken)
-    {
-        User? user = await FindUserByUsernameOrEmailAsync(userIdentifier);
+			throw new ValidationException(validationFailures);
+		}
 
-        if (user is null)
-        {
-            throw new NotFoundException(nameof(User), userIdentifier);
-        }
+		return claimsResult;
+	}
 
-        IEnumerable<Claim> claims = await userManager.GetClaimsAsync(user);
+	public async Task<IdentityResult> AddRoleAsync(string userId, string role)
+	{
+		User? user = await userManager.FindByIdAsync(userId);
 
-        return claims;
-    }
+		if (user is null)
+		{
+			throw new NotFoundException(nameof(User), userId);
+		}
 
-    public async Task<IdentityResult> AddRoleAsync(string userId, string role, IEnumerable<Claim> claims)
-    {
-        User? user = await userManager.FindByIdAsync(userId);
+		IdentityResult roleResult = await userManager.AddToRoleAsync(user, role);
 
-        if (user is null)
-        {
-            throw new NotFoundException(nameof(User), userId);
-        }
+		if (!roleResult.Succeeded)
+		{
+			List<ValidationFailure> validationFailures = roleResult.Errors
+				.Select(e => new ValidationFailure(nameof(role), e.Description))
+				.ToList();
 
-        IdentityResult roleResult = await userManager.AddToRoleAsync(user, role);
+			throw new ValidationException(validationFailures);
+		}
 
-        if (!roleResult.Succeeded)
-        {
-            List<ValidationFailure> validationFailures = roleResult.Errors
-                .Select(e => new ValidationFailure(nameof(role), e.Description))
-                .ToList();
+		IdentityResult claimsResult = await userManager.AddClaimAsync(user, new Claim(ClaimTypes.Role, role));
 
-            throw new ValidationException(validationFailures);
-        }
+		if (!claimsResult.Succeeded)
+		{
+			await userManager.RemoveFromRoleAsync(user, role);
 
-        IdentityResult claimsResult = await userManager.AddClaimsAsync(user, claims);
+			List<ValidationFailure> validationFailures = claimsResult.Errors
+				.Select(e => new ValidationFailure(nameof(role), e.Description))
+				.ToList();
 
-        if (!claimsResult.Succeeded)
-        {
-            await userManager.RemoveFromRoleAsync(user, role);
+			throw new ValidationException(validationFailures);
+		}
 
-            List<ValidationFailure> validationFailures = claimsResult.Errors
-                .Select(e => new ValidationFailure(nameof(role), e.Description))
-                .ToList();
+		return roleResult;
+	}
 
-            throw new ValidationException(validationFailures);
-        }
+	public async Task<IdentityResult> RemoveRoleAsync(string userId, string role)
+	{
+		User? user = await userManager.FindByIdAsync(userId);
 
-        return roleResult;
-    }
+		if (user is null)
+		{
+			throw new NotFoundException(nameof(User), userId);
+		}
 
-    public async Task<IdentityResult> RemoveRoleAsync(string userId, string role, IEnumerable<Claim> claims)
-    {
-        User? user = await userManager.FindByIdAsync(userId);
+		IdentityResult roleResult = await userManager
+			.RemoveFromRoleAsync(user, role);
 
-        if (user is null)
-        {
-            throw new NotFoundException(nameof(User), userId);
-        }
+		if (!roleResult.Succeeded)
+		{
+			List<ValidationFailure> validationFailures = roleResult.Errors
+				.Select(e => new ValidationFailure(nameof(role), e.Description))
+				.ToList();
 
-        IdentityResult roleResult = await userManager
-            .RemoveFromRoleAsync(user, role);
+			throw new ValidationException(validationFailures);
+		}
 
-        if (!roleResult.Succeeded)
-        {
-            List<ValidationFailure> validationFailures = roleResult.Errors
-                .Select(e => new ValidationFailure(nameof(role), e.Description))
-                .ToList();
+		IdentityResult claimsResult = await userManager
+			.RemoveClaimAsync(user, new Claim(ClaimTypes.Role, role));
 
-            throw new ValidationException(validationFailures);
-        }
+		if (!claimsResult.Succeeded)
+		{
+			await userManager.RemoveFromRoleAsync(user, role);
 
-        IdentityResult claimsResult = await userManager
-            .RemoveClaimsAsync(user, claims);
+			List<ValidationFailure> validationFailures = claimsResult.Errors
+				.Select(e => new ValidationFailure(nameof(role), e.Description))
+				.ToList();
 
-        if (!claimsResult.Succeeded)
-        {
-            await userManager.RemoveFromRoleAsync(user, role);
+			throw new ValidationException(validationFailures);
+		}
 
-            List<ValidationFailure> validationFailures = claimsResult.Errors
-                .Select(e => new ValidationFailure(nameof(role), e.Description))
-                .ToList();
-
-            throw new ValidationException(validationFailures);
-        }
-
-        return roleResult;
-    }
+		return roleResult;
+	}
 }

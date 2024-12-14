@@ -16,7 +16,7 @@ public class Appointment : AuditableEntity
 
 	public User AnimalOwner { get; set; } = null!;
 
-    public string StaffMemberId { get; set; } = null!;
+	public int StaffMemberId { get; set; }
 
-    public StaffProfile StaffMember { get; set; } = null!;
+	public StaffProfile StaffMember { get; set; } = null!;
 }

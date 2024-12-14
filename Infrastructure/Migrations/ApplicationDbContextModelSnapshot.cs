@@ -91,7 +91,7 @@ namespace Infrastructure.Migrations
                         .IsUnique()
                         .HasFilter("\"PassportNumber\" IS NOT NULL");
 
-                    b.ToTable("Animals");
+                    b.ToTable("Animals", (string)null);
                 });
 
             modelBuilder.Entity("Domain.Entities.AnimalType", b =>
@@ -131,9 +131,7 @@ namespace Infrastructure.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("Name");
-
-                    b.ToTable("AnimalTypes");
+                    b.ToTable("AnimalTypes", (string)null);
                 });
 
             modelBuilder.Entity("Domain.Entities.Appointment", b =>
@@ -179,9 +177,8 @@ namespace Infrastructure.Migrations
                     b.Property<string>("LastModifiedBy")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("StaffMemberId")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(450)");
+                    b.Property<int>("StaffMemberId")
+                        .HasColumnType("int");
 
                     b.HasKey("Id");
 
@@ -189,7 +186,7 @@ namespace Infrastructure.Migrations
 
                     b.HasIndex("StaffMemberId");
 
-                    b.ToTable("Appointments");
+                    b.ToTable("Appointments", (string)null);
                 });
 
             modelBuilder.Entity("Domain.Entities.Prescription", b =>
@@ -236,9 +233,8 @@ namespace Infrastructure.Migrations
                         .HasMaxLength(6)
                         .HasColumnType("varchar(6)");
 
-                    b.Property<string>("StaffMemberId")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(450)");
+                    b.Property<int>("StaffMemberId")
+                        .HasColumnType("int");
 
                     b.HasKey("Id");
 
@@ -249,7 +245,7 @@ namespace Infrastructure.Migrations
 
                     b.HasIndex("StaffMemberId");
 
-                    b.ToTable("Prescriptions");
+                    b.ToTable("Prescriptions", (string)null);
                 });
 
             modelBuilder.Entity("Domain.Entities.PrescriptionCounter", b =>
@@ -265,7 +261,7 @@ namespace Infrastructure.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("PrescriptionCounters");
+                    b.ToTable("PrescriptionCounters", (string)null);
                 });
 
             modelBuilder.Entity("Domain.Entities.Procedure", b =>
@@ -313,9 +309,8 @@ namespace Infrastructure.Migrations
                         .HasMaxLength(1000)
                         .HasColumnType("nvarchar(1000)");
 
-                    b.Property<string>("StaffMemberId")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(450)");
+                    b.Property<int>("StaffMemberId")
+                        .HasColumnType("int");
 
                     b.HasKey("Id");
 
@@ -323,13 +318,16 @@ namespace Infrastructure.Migrations
 
                     b.HasIndex("StaffMemberId");
 
-                    b.ToTable("Procedures");
+                    b.ToTable("Procedures", (string)null);
                 });
 
             modelBuilder.Entity("Domain.Entities.StaffProfile", b =>
                 {
-                    b.Property<string>("Id")
-                        .HasColumnType("nvarchar(450)");
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<string>("CreatedBy")
                         .IsRequired()
@@ -362,7 +360,7 @@ namespace Infrastructure.Migrations
                     b.HasIndex("StaffMemberId")
                         .IsUnique();
 
-                    b.ToTable("StaffProfiles");
+                    b.ToTable("StaffProfiles", (string)null);
                 });
 
             modelBuilder.Entity("Domain.Entities.User", b =>
@@ -625,8 +623,8 @@ namespace Infrastructure.Migrations
 
                     b.HasOne("Domain.Entities.StaffProfile", "StaffMember")
                         .WithMany("Prescriptions")
-                        .HasForeignKey("StaffMemberId")
-                        .OnDelete(DeleteBehavior.SetNull)
+                        .HasForeignKey("AnimalId")
+                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
                     b.Navigation("Animal");

@@ -9,13 +9,13 @@ namespace Web.API.Controllers;
 public class StaffProfileController : ApiControllerBase
 {
 	[HttpPost]
-	public async Task<ActionResult<string>> CreateStaffProfile([FromBody] CreateStafProfileCommand command)
+	public async Task<ActionResult<int>> CreateStaffProfile([FromBody] CreateStafProfileCommand command)
 	{
 		return await Mediator.Send(command);
 	}
 
 	[HttpDelete("{id}")]
-	public async Task<ActionResult> DeleteStaffProfile([FromRoute] string id)
+	public async Task<ActionResult> DeleteStaffProfile([FromRoute] int id)
 	{
 		await Mediator.Send(new DeleteStaffProfileCommand { Id = id });
 
@@ -23,7 +23,7 @@ public class StaffProfileController : ApiControllerBase
 	}
 
 	[HttpGet("{id}")]
-	public async Task<ActionResult<StaffMemberOutputModel>> GetStaffMemberDetails([FromRoute] string id)
+	public async Task<ActionResult<StaffMemberOutputModel>> GetStaffMemberDetails([FromRoute] int id)
 	{
 		return await Mediator.Send(new GetStaffMemberDetailsQuery { Id = id });
 	}

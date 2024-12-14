@@ -4,7 +4,7 @@ namespace Domain.Entities;
 
 public class StaffProfile : AuditableEntity
 {
-	public string Id { get; set; } = null!;
+	public int Id { get; set; }
 
 	public string StaffMemberId { get; set; } = null!;
 
