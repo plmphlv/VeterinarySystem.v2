@@ -6,7 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace Web.API.Controllers;
 
-public class StaffProfileController : ApiControllerBase
+public class StaffProfilesController : ApiControllerBase
 {
 	[HttpPost]
 	public async Task<ActionResult<int>> CreateStaffProfile([FromBody] CreateStafProfileCommand command)
