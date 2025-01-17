@@ -1,10 +1,10 @@
 ﻿using FluentValidation;
 
-namespace Application.Procedures.Commands.Create;
+namespace Application.Procedures.Commands.Update;
 
-public class CreateProcedureCommandValidator : AbstractValidator<CreateProcedureCommand>
+public class UpdateProcedureCommandValidator : AbstractValidator<UpdateProcedureCommand>
 {
-    public CreateProcedureCommandValidator()
+    public UpdateProcedureCommandValidator()
     {
         RuleFor(c => c.Name)
             .NotEmpty()
@@ -21,9 +21,5 @@ public class CreateProcedureCommandValidator : AbstractValidator<CreateProcedure
         RuleFor(c => c.Date)
            .NotEmpty()
            .WithMessage("Procedure date is required.");
-
-        RuleFor(c => c.AnimalId)
-           .NotEmpty()
-           .WithMessage("Animal Id is required.");
     }
 }

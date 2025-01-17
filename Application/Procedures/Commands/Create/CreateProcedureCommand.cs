@@ -30,7 +30,7 @@ public class CreateProcedureCommandHandler : IRequestHandler<CreateProcedureComm
         int staffId = int.Parse(staffClaim);
         bool staffMemberExists = await context.StaffProfiles.AnyAsync(sp => sp.Id == staffId);
 
-        if (staffMemberExists)
+        if (!staffMemberExists)
         {
             throw new NotFoundException(nameof(StaffProfile), staffId);
         }
@@ -38,7 +38,7 @@ public class CreateProcedureCommandHandler : IRequestHandler<CreateProcedureComm
         int animalId = request.AnimalId;
         bool animalExists = await context.Animals.AnyAsync(a => a.Id == animalId);
 
-        if (animalExists)
+        if (!animalExists)
         {
             throw new NotFoundException(nameof(Animal), animalId);
         }

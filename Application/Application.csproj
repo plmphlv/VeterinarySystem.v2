@@ -18,10 +18,4 @@
     <PackageReference Include="System.IdentityModel.Tokens.Jwt" Version="8.1.2" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Procedures\Commands\Delete\" />
-    <Folder Include="Procedures\Commands\Update\" />
-    <Folder Include="Procedures\Queries\" />
-  </ItemGroup>
-
 </Project>
