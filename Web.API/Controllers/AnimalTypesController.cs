@@ -5,7 +5,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace Web.API.Controllers;
 
-public class AnimalTypeController : ApiControllerBase
+public class AnimalTypesController : ApiControllerBase
 {
     [HttpPost]
     public async Task<ActionResult<int>> CreateAnimalType([FromBody] CreateAnimalTypeCommand command)
