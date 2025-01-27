@@ -21,7 +21,7 @@ public class ProcedureConfiguration : AuditableEntityConfiguration<Procedure>
 			.HasColumnType("nvarchar(90)")
 			.IsRequired();
 
-		builder.Property(p => p.Name)
+		builder.Property(p => p.Description)
 			.HasMaxLength(1000)
 			.HasColumnType("nvarchar(1000)")
 			.IsRequired();

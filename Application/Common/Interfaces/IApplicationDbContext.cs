@@ -6,21 +6,23 @@ namespace Application.Common.Interfaces;
 
 public interface IApplicationDbContext
 {
-	Task<int> SaveChangesAsync(CancellationToken cancellationToken);
+    Task<int> SaveChangesAsync(CancellationToken cancellationToken);
 
-	DatabaseFacade Database { get; }
+    DatabaseFacade Database { get; }
 
-	DbSet<Animal> Animals { get; set; }
+    DbSet<Animal> Animals { get; set; }
 
-	DbSet<Appointment> Appointments { get; set; }
+    DbSet<Appointment> Appointments { get; set; }
 
-	DbSet<Procedure> Procedures { get; set; }
+    DbSet<Procedure> Procedures { get; set; }
 
-	DbSet<Prescription> Prescriptions { get; set; }
+    DbSet<Prescription> Prescriptions { get; set; }
 
-	DbSet<AnimalType> AnimalTypes { get; set; }
+    DbSet<AnimalType> AnimalTypes { get; set; }
 
-	DbSet<PrescriptionCounter> PrescriptionCounters { get; set; }
+    DbSet<PrescriptionCounter> PrescriptionCounters { get; set; }
 
-	DbSet<StaffProfile> StaffProfiles { get; set; }
+    DbSet<StaffProfile> StaffProfiles { get; set; }
+
+    DbSet<User> Users { get; set; }
 }
