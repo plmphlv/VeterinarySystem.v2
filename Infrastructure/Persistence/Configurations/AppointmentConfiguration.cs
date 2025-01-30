@@ -19,8 +19,14 @@ namespace Infrastructure.Persistence.Configurations
             builder.Property(a => a.Date)
                 .IsRequired();
 
-            builder.Property(a => a.IsUpcoming)
-                .IsRequired();
+            builder.Property(a => a.Status)
+                .IsRequired()
+                .HasConversion<string>();
+
+            builder.Property(p => p.Desctiption)
+                .HasMaxLength(255)
+                .HasColumnType("nvarchar(255)")
+                .IsRequired(false);
 
             builder.HasOne(a => a.AnimalOwner)
                 .WithMany(ao => ao.OwnerAppointments)

@@ -1,4 +1,5 @@
 ﻿using Domain.Common;
+using Domain.Enums;
 
 namespace Domain.Entities;
 
@@ -10,7 +11,7 @@ public class Appointment : AuditableEntity
 
 	public string? Desctiption { get; set; }
 
-	public bool IsUpcoming { get; set; }
+	public AppointmentStatus Status { get; set; }
 
 	public string AnimalOwnerId { get; set; } = null!;
 
