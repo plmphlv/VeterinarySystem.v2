@@ -27,6 +27,44 @@ public static class ApplicationDbContextSeed
         }
     }
 
+    public static async Task SeedPrescriptionCounter(ApplicationDbContext context, IConfiguration configuration)
+    {
+        bool counterExists = await context.PrescriptionCounters.AnyAsync();
+
+        if (!counterExists)
+        {
+            PrescriptionCounter? counter = null;
+
+            int lastPrescriptionNumber = await context.Prescriptions
+                .OrderBy(p => p.Number)
+                .Select(p => int.Parse(p.Number))
+                .LastOrDefaultAsync();
+
+            if (lastPrescriptionNumber > 0)
+            {
+                counter = new PrescriptionCounter
+                {
+                    CurrentNumber = lastPrescriptionNumber
+                };
+            }
+            else
+            {
+                PrescriptionCounterOptions options = configuration
+                    .GetSection("PrescriptionCounter")
+                    .Get<PrescriptionCounterOptions>()!;
+
+                counter = new PrescriptionCounter
+                {
+                    CurrentNumber = options.DefaultStartingNumber
+                };
+            }
+
+            context.PrescriptionCounters.Add(counter);
+
+            await context.SaveChangesAsync();
+        }
+    }
+
     public static async Task SeedDevelopmentData(ApplicationDbContext context, UserManager<User> userManager, IConfiguration configuration)
     {
         await SeedUsers(context, userManager, configuration);
@@ -105,4 +143,6 @@ public static class ApplicationDbContextSeed
             await userManager.AddClaimsAsync(user, claims);
         }
     }
+
+
 }
