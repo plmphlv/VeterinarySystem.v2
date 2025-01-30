@@ -37,19 +37,25 @@ public class GetAppointmentsQueryHandler : IRequestHandler<GetAppointmentsQuery,
         }
 
         DateTime? startDate = request.StartDate;
-
-        if (startDate is not null)
-        {
-            appointments = appointments
-                .Where(ap => ap.Date.Date >= startDate);
-        }
-
         DateTime? endDate = request.EndDate;
 
-        if (endDate is not null)
+        if (startDate is not null || endDate is not null)
         {
-            appointments = appointments
-                .Where(ap => ap.Date.Date <= endDate);
+            if (startDate is not null && endDate is not null)
+            {
+                appointments = appointments
+                    .Where(ap => ap.Date >= startDate && ap.Date <= endDate);
+            }
+            else if (startDate is not null)
+            {
+                appointments = appointments
+                    .Where(ap => ap.Date >= startDate);
+            }
+            else if (endDate is not null)
+            {
+                appointments = appointments
+                    .Where(ap => ap.Date <= endDate);
+            }
         }
 
         string? ownerId = request.OwnerId;

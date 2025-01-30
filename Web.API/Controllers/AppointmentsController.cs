@@ -34,7 +34,7 @@ public class AppointmentsController : ApiControllerBase
     [HttpPost("RequestAppointment")]
     public async Task<ActionResult<int>> RequestAppointment([FromBody] RequestAppointmentCommand command)
     {
-        return await Mediator.Send(command); //Test
+        return await Mediator.Send(command);
     }
 
     [HttpPut("UpdateAppointmentRequest/{id}")]
@@ -45,7 +45,7 @@ public class AppointmentsController : ApiControllerBase
             return BadRequest();
         }
 
-        await Mediator.Send(command); //Test
+        await Mediator.Send(command);
 
         return NoContent();
     }
@@ -57,15 +57,15 @@ public class AppointmentsController : ApiControllerBase
     }
 
     [HttpGet("GetAppointments")]
-    public async Task<List<AppointmentDto>> GetAppointments([FromBody] GetAppointmentsQuery query)
+    public async Task<List<AppointmentDto>> GetAppointments([FromQuery] GetAppointmentsQuery query)
     {
-        return await Mediator.Send(query); //Test
+        return await Mediator.Send(query);
     }
 
-    [HttpPut("ClearAppointment/{id}")]
-    public async Task<ActionResult<int>> ClearAppointment([FromRoute] int id)
+    [HttpPut("CompleteAppointment/{id}")]
+    public async Task<ActionResult<int>> CompleteAppointment([FromRoute] int id)
     {
-        await Mediator.Send(new ClearAppointmentCommand { Id = id });
+        await Mediator.Send(new CompleteAppointmentCommand { Id = id });
 
         return NoContent();
     }

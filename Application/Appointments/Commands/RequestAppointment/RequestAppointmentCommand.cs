@@ -1,5 +1,4 @@
-﻿
-using Application.Appointments.Common;
+﻿using Application.Appointments.Common;
 using Domain.Enums;
 
 namespace Application.Appointments.Commands.RequestAppointment;
