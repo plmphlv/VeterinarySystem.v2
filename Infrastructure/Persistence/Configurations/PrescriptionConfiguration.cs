@@ -17,8 +17,8 @@ public class PrescriptionConfiguration : AuditableEntityConfiguration<Prescripti
 			.UseIdentityColumn(1, 1);
 
 		builder.Property(p => p.Number)
-			.HasMaxLength(8)
-			.HasColumnType("varchar(8)")
+			.HasMaxLength(6)
+			.HasColumnType("varchar(6)")
 			.IsRequired();
 
 		builder.HasIndex(p => p.Number)

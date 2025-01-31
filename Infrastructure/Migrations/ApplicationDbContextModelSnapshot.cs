@@ -234,8 +234,8 @@ namespace Infrastructure.Migrations
 
                     b.Property<string>("Number")
                         .IsRequired()
-                        .HasMaxLength(8)
-                        .HasColumnType("varchar(8)");
+                        .HasMaxLength(6)
+                        .HasColumnType("varchar(6)");
 
                     b.Property<int>("StaffMemberId")
                         .HasColumnType("int");
@@ -262,17 +262,6 @@ namespace Infrastructure.Migrations
 
                     b.Property<int>("CurrentNumber")
                         .HasColumnType("int");
-
-                    b.Property<string>("Prefix")
-                        .HasMaxLength(3)
-                        .HasColumnType("varchar(3)");
-
-                    b.Property<string>("Separator")
-                        .HasMaxLength(2)
-                        .HasColumnType("varchar(2)");
-
-                    b.Property<bool>("ShowPrefix")
-                        .HasColumnType("bit");
 
                     b.HasKey("Id");
 
