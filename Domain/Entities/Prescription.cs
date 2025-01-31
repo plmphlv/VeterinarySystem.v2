@@ -10,7 +10,7 @@ public class Prescription : AuditableEntity
 
 	public string? Description { get; set; }
 
-	public DateTime IssueDate { get; set; } = DateTime.Now;
+	public DateTime IssueDate { get; set; }
 
 	public int AnimalId { get; set; }
 
