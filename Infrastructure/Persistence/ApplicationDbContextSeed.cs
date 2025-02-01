@@ -29,40 +29,59 @@ public static class ApplicationDbContextSeed
 
     public static async Task SeedPrescriptionCounter(ApplicationDbContext context, IConfiguration configuration)
     {
-        bool counterExists = await context.PrescriptionCounters.AnyAsync();
+        PrescriptionCounter? counter = await context.PrescriptionCounters.FirstOrDefaultAsync();
 
-        if (!counterExists)
-        {
-            PrescriptionCounter? counter = null;
-
-            int lastPrescriptionNumber = await context.Prescriptions
-                .OrderBy(p => p.Number)
-                .Select(p => int.Parse(p.Number))
-                .LastOrDefaultAsync();
-
-            if (lastPrescriptionNumber > 0)
-            {
-                counter = new PrescriptionCounter
-                {
-                    CurrentNumber = lastPrescriptionNumber
-                };
-            }
-            else
-            {
-                PrescriptionCounterOptions options = configuration
+        PrescriptionCounterOptions options = configuration
                     .GetSection("PrescriptionCounter")
                     .Get<PrescriptionCounterOptions>()!;
 
+        if (counter is null)
+        {
+            string? lastPrescriptionNumber = await context.Prescriptions
+            .OrderByDescending(p => p.CreationDate)
+            .Select(p => p.Number)
+            .FirstOrDefaultAsync();
+
+            if (!string.IsNullOrEmpty(lastPrescriptionNumber))
+            {
+                counter = new PrescriptionCounter();
+
+                if (char.IsLetter(lastPrescriptionNumber[0]) || char.IsSymbol(lastPrescriptionNumber[0]))
+                {
+                    counter.CurrentNumber = int.Parse(lastPrescriptionNumber.Substring(2));
+                }
+                else
+                {
+                    counter.CurrentNumber = int.Parse(lastPrescriptionNumber);
+                }
+            }
+            else
+            {
                 counter = new PrescriptionCounter
                 {
-                    CurrentNumber = options.DefaultStartingNumber
+                    CurrentNumber = options.StartingNumber,
                 };
             }
 
             context.PrescriptionCounters.Add(counter);
-
-            await context.SaveChangesAsync();
         }
+
+        if (counter.ShowPrefix != options.ShowPrefix)
+        {
+            counter.ShowPrefix = options.ShowPrefix;
+        }
+
+        if (!string.IsNullOrEmpty(options.Prefix) && counter.Prefix != options.Prefix)
+        {
+            counter.Prefix = options.Prefix;
+        }
+
+        if (!string.IsNullOrEmpty(options.Separator) && counter.Separator != options.Separator)
+        {
+            counter.Separator = options.Separator;
+        }
+
+        await context.SaveChangesAsync();
     }
 
     public static async Task SeedDevelopmentData(ApplicationDbContext context, UserManager<User> userManager, IConfiguration configuration)

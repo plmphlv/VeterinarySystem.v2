@@ -49,7 +49,16 @@ public class CreatePrescriptionCommandHandler : IRequestHandler<CreatePrescripti
 
         counter.CurrentNumber++;
 
-        string prescriptionNumber = $"P-{counter.CurrentNumber:D6}";
+        string prescriptionNumber = string.Empty;
+
+        if (counter.ShowPrefix)
+        {
+            prescriptionNumber = $"{counter.Prefix}{counter.Separator}{counter.CurrentNumber:D6}";
+        }
+        else
+        {
+            prescriptionNumber = $"{counter.CurrentNumber:D6}";
+        }
 
         bool prescriptionNumberExists = await context.Prescriptions
             .AnyAsync(p => p.Number == prescriptionNumber, cancellationToken);
