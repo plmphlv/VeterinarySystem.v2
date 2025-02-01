@@ -27,6 +27,63 @@ public static class ApplicationDbContextSeed
         }
     }
 
+    public static async Task SeedPrescriptionCounter(ApplicationDbContext context, IConfiguration configuration)
+    {
+        PrescriptionCounter? counter = await context.PrescriptionCounters.FirstOrDefaultAsync();
+
+        PrescriptionCounterOptions options = configuration
+                    .GetSection("PrescriptionCounter")
+                    .Get<PrescriptionCounterOptions>()!;
+
+        if (counter is null)
+        {
+            string? lastPrescriptionNumber = await context.Prescriptions
+            .OrderByDescending(p => p.CreationDate)
+            .Select(p => p.Number)
+            .FirstOrDefaultAsync();
+
+            if (!string.IsNullOrEmpty(lastPrescriptionNumber))
+            {
+                counter = new PrescriptionCounter();
+
+                if (char.IsLetter(lastPrescriptionNumber[0]) || char.IsSymbol(lastPrescriptionNumber[0]))
+                {
+                    counter.CurrentNumber = int.Parse(lastPrescriptionNumber.Substring(2));
+                }
+                else
+                {
+                    counter.CurrentNumber = int.Parse(lastPrescriptionNumber);
+                }
+            }
+            else
+            {
+                counter = new PrescriptionCounter
+                {
+                    CurrentNumber = options.StartingNumber,
+                };
+            }
+
+            context.PrescriptionCounters.Add(counter);
+        }
+
+        if (counter.ShowPrefix != options.ShowPrefix)
+        {
+            counter.ShowPrefix = options.ShowPrefix;
+        }
+
+        if (!string.IsNullOrEmpty(options.Prefix) && counter.Prefix != options.Prefix)
+        {
+            counter.Prefix = options.Prefix;
+        }
+
+        if (!string.IsNullOrEmpty(options.Separator) && counter.Separator != options.Separator)
+        {
+            counter.Separator = options.Separator;
+        }
+
+        await context.SaveChangesAsync();
+    }
+
     public static async Task SeedDevelopmentData(ApplicationDbContext context, UserManager<User> userManager, IConfiguration configuration)
     {
         await SeedUsers(context, userManager, configuration);
@@ -105,4 +162,6 @@ public static class ApplicationDbContextSeed
             await userManager.AddClaimsAsync(user, claims);
         }
     }
+
+
 }

@@ -4,6 +4,7 @@ using Infrastructure.Persistence;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Infrastructure.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20250131201859_Increasing_PrescriptionNumber_Lenght")]
+    partial class Increasing_PrescriptionNumber_Lenght
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -262,17 +265,6 @@ namespace Infrastructure.Migrations
 
                     b.Property<int>("CurrentNumber")
                         .HasColumnType("int");
-
-                    b.Property<string>("Prefix")
-                        .HasMaxLength(1)
-                        .HasColumnType("varchar(1)");
-
-                    b.Property<string>("Separator")
-                        .HasMaxLength(1)
-                        .HasColumnType("varchar(1)");
-
-                    b.Property<bool>("ShowPrefix")
-                        .HasColumnType("bit");
 
                     b.HasKey("Id");
 
@@ -639,7 +631,7 @@ namespace Infrastructure.Migrations
 
                     b.HasOne("Domain.Entities.StaffProfile", "StaffMember")
                         .WithMany("Prescriptions")
-                        .HasForeignKey("StaffMemberId")
+                        .HasForeignKey("AnimalId")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
