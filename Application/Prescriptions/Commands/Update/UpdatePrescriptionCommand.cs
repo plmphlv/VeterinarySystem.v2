@@ -24,7 +24,7 @@ public class UpdatePrescriptionCommandHandler : IRequestHandler<UpdatePrescripti
         int id = request.Id;
 
         Prescription? prescription = await context.Prescriptions
-            .FirstOrDefaultAsync(x => x.Id == id, cancellationToken);
+            .FirstOrDefaultAsync(p => p.Id == id, cancellationToken);
 
         if (prescription is null)
         {
