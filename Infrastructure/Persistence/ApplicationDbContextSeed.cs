@@ -93,9 +93,17 @@ public static class ApplicationDbContextSeed
     private static async Task SeedSampleData(ApplicationDbContext context, UserManager<User> userManager)
     {
         #region UsersAndAccounts
+
         User? staffUser = await userManager.FindByEmailAsync("staffmember@vetsystem.com");
 
         if (staffUser is null)
+        {
+            return;
+        }
+
+        User? ownerUser = await userManager.FindByEmailAsync("testuser@vetsystem.com");
+
+        if (ownerUser is null)
         {
             return;
         }
@@ -111,7 +119,7 @@ public static class ApplicationDbContextSeed
 
         Account? ownerAccount = await context.Accounts
             .AsNoTracking()
-            .FirstOrDefaultAsync(ac => ac.UserId == staffUser.Id);
+            .FirstOrDefaultAsync(ac => ac.UserId == ownerUser.Id);
 
         if (ownerAccount is null)
         {
