@@ -9,35 +9,35 @@ namespace Application.StaffProfiles.Commands.Delete;
 
 public class DeleteStaffProfileCommand : IRequest
 {
-	public int Id { get; set; }
+    public string Id { get; set; } = null!;
 }
 
 public class DeleteStaffProfileCommandHandler : IRequestHandler<DeleteStaffProfileCommand>
 {
-	private readonly IApplicationDbContext context;
-	private readonly IIdentityService identityService;
+    private readonly IApplicationDbContext context;
+    private readonly IIdentityService identityService;
 
-	public DeleteStaffProfileCommandHandler(IApplicationDbContext context, IIdentityService identityService)
-	{
-		this.context = context;
-		this.identityService = identityService;
-	}
+    public DeleteStaffProfileCommandHandler(IApplicationDbContext context, IIdentityService identityService)
+    {
+        this.context = context;
+        this.identityService = identityService;
+    }
 
-	public async Task Handle(DeleteStaffProfileCommand request, CancellationToken cancellationToken)
-	{
-		int staffId = request.Id;
+    public async Task Handle(DeleteStaffProfileCommand request, CancellationToken cancellationToken)
+    {
+        string staffId = request.Id;
 
-		StaffProfile? staffProfile = await context.StaffProfiles
-			.FirstOrDefaultAsync(sp => sp.Id == staffId, cancellationToken);
+        StaffAccount? staffProfile = await context.StaffAccounts
+            .FirstOrDefaultAsync(sp => sp.Id == staffId, cancellationToken);
 
-		if (staffProfile is null)
-		{
-			throw new NotFoundException(nameof(StaffProfiles), staffId);
-		}
+        if (staffProfile is null)
+        {
+            throw new NotFoundException(nameof(StaffProfiles), staffId);
+        }
 
-		context.StaffProfiles.Remove(staffProfile);
-		await context.SaveChangesAsync(cancellationToken);
+        context.StaffAccounts.Remove(staffProfile);
+        await context.SaveChangesAsync(cancellationToken);
 
-		await identityService.RemoveRoleAsync(staffProfile.StaffMemberId, Role.StaffMember.ToString());
-	}
+        await identityService.RemoveRoleAsync(staffProfile.AccountId, Role.StaffMember.ToString());
+    }
 }

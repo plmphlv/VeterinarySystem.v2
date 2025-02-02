@@ -25,7 +25,7 @@ public class GetStaffMembersQueryHandler : IRequestHandler<GetStaffMembersQuery,
 
 	public async Task<List<StaffMemberDto>> Handle(GetStaffMembersQuery request, CancellationToken cancellationToken)
 	{
-		IQueryable<StaffProfile> staffQuery = context.StaffProfiles;
+		IQueryable<StaffAccount> staffQuery = context.StaffAccounts;
 
 		string? name = request.Name;
 
@@ -33,9 +33,9 @@ public class GetStaffMembersQueryHandler : IRequestHandler<GetStaffMembersQuery,
 		{
 			name = name.Trim().ToLower();
 
-			staffQuery = staffQuery.Where(sp => sp.StaffMember.FirstName.Contains(name) ||
-			sp.StaffMember.LastName.ToLower().Contains(name) ||
-			(sp.StaffMember.FirstName + " " + sp.StaffMember.LastName).ToLower().Contains(name)
+			staffQuery = staffQuery.Where(sp => sp.Account.FirstName.Contains(name) ||
+			sp.Account.LastName.ToLower().Contains(name) ||
+			(sp.Account.FirstName + " " + sp.Account.LastName).ToLower().Contains(name)
 			);
 		}
 
@@ -43,7 +43,7 @@ public class GetStaffMembersQueryHandler : IRequestHandler<GetStaffMembersQuery,
 
 		if (!string.IsNullOrWhiteSpace(phoneNumber))
 		{
-			staffQuery = staffQuery.Where(sp => sp.StaffMember.PhoneNumber.Equals(phoneNumber));
+			staffQuery = staffQuery.Where(sp => sp.Account.PhoneNumber!.Equals(phoneNumber));
 		}
 
 		string? email = request.Email;
@@ -52,14 +52,14 @@ public class GetStaffMembersQueryHandler : IRequestHandler<GetStaffMembersQuery,
 		{
 			email = email.ToLower();
 
-			staffQuery = staffQuery.Where(sp => sp.StaffMember.Email.ToLower().Equals(email));
+			staffQuery = staffQuery.Where(sp => sp.Account.User!.Email!.ToLower().Equals(email));
 		}
 
 		List<StaffMemberDto> staffMembers = await staffQuery
 			.Select(sp => new StaffMemberDto
 			{
 				Id = sp.Id,
-				Name = $"{sp.StaffMember.FirstName} {sp.StaffMember.LastName}"
+				Name = $"{sp.Account.FirstName} {sp.Account.LastName}"
 			})
 			.ToListAsync(cancellationToken);
 

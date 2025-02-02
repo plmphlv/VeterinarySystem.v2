@@ -48,19 +48,19 @@ public class UpdateAppointmentRequestCommandHandler : IRequestHandler<UpdateAppo
             }
         }
 
-        int staffMemberId = request.StaffMemberId;
+        string staffMemberId = request.StaffId;
 
-        bool staffMemberExists = await context.StaffProfiles
+        bool staffMemberExists = await context.StaffAccounts
             .AnyAsync(sp => sp.Id == staffMemberId, cancellationToken);
 
         if (!staffMemberExists)
         {
-            throw new NotFoundException(nameof(StaffProfile), staffMemberExists);
+            throw new NotFoundException(nameof(StaffAccount), staffMemberExists);
         }
 
         appointment.Date = request.Date;
         appointment.Desctiption = request.Desctiption;
-        appointment.StaffMemberId = staffMemberId;
+        appointment.StaffId = staffMemberId;
 
         await context.SaveChangesAsync(cancellationToken);
     }

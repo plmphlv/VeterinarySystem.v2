@@ -20,9 +20,9 @@ public class Animal : AuditableEntity
 
 	public AnimalType AnimalType { get; set; } = null!;
 
-	public string AnimalOwnerId { get; set; } = null!;
+	public string OwnerId { get; set; } = null!;
 
-	public User AnimalOwner { get; set; } = null!;
+	public Account Owner { get; set; } = null!;
 
 	public ICollection<Procedure> Procedures { get; set; } = new List<Procedure>();
 

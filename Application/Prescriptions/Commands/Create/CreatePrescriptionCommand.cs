@@ -2,9 +2,11 @@
 
 public class CreatePrescriptionCommand : IRequest<int>
 {
-    public string? Description { get; set; }
+    public string StaffId { get; set; } = null!;
 
     public int AnimalId { get; set; }
+
+    public string Description { get; set; } = null!;
 }
 
 public class CreatePrescriptionCommandHandler : IRequestHandler<CreatePrescriptionCommand, int>
@@ -22,6 +24,15 @@ public class CreatePrescriptionCommandHandler : IRequestHandler<CreatePrescripti
 
     public async Task<int> Handle(CreatePrescriptionCommand request, CancellationToken cancellationToken)
     {
+        string? staffId = request.StaffId;
+
+        bool staffMemberExists = await context.StaffAccounts.AnyAsync(sp => sp.AccountId == staffId, cancellationToken);
+
+        if (!staffMemberExists)
+        {
+            throw new NotFoundException(nameof(StaffAccount), staffId);
+        }
+
         int animalId = request.AnimalId;
 
         bool animalExists = await context.Animals.AnyAsync(a => a.Id == animalId, cancellationToken);
@@ -29,15 +40,6 @@ public class CreatePrescriptionCommandHandler : IRequestHandler<CreatePrescripti
         if (!animalExists)
         {
             throw new NotFoundException(nameof(Animal), animalId);
-        }
-
-        int staffId = int.Parse(currentUserService.StaffId ?? "0");
-
-        bool staffMemberExists = await context.StaffProfiles.AnyAsync(sp => sp.Id == staffId, cancellationToken);
-
-        if (!staffMemberExists)
-        {
-            throw new NotFoundException(nameof(StaffProfile), staffId);
         }
 
         PrescriptionCounter? counter = await context.PrescriptionCounters.SingleOrDefaultAsync(cancellationToken);
@@ -79,7 +81,7 @@ public class CreatePrescriptionCommandHandler : IRequestHandler<CreatePrescripti
             Description = request.Description,
             IssueDate = dateTime.Now,
             AnimalId = animalId,
-            StaffMemberId = staffId
+            StaffId = staffId
         };
 
         context.Prescriptions.Add(prescription);

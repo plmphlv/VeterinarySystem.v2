@@ -21,7 +21,7 @@ public static class ApplicationDbContextSeed
 
             if (!isExistingRole)
             {
-                //Create new role if result is unsuccessful
+                //If result is unsuccessful log information after implementing logging
                 IdentityResult result = await roleManager.CreateAsync(new IdentityRole(role));
             }
         }
@@ -109,19 +109,68 @@ public static class ApplicationDbContextSeed
             await context.AnimalTypes.AddRangeAsync(animalTypes);
         }
 
+        User? staffUser = await userManager.FindByEmailAsync("staffmember@vetsystem.com");
+
+        if (staffUser is null)
+        {
+            return;
+        }
+
+        Account? staffAccount = await context.Accounts
+            .FirstOrDefaultAsync(ac => ac.UserId == staffUser.Id);
+
+        if (staffAccount is null)
+        {
+            return;
+        }
+
+        bool staffExists = await context.StaffAccounts
+            .AnyAsync(s => s.AccountId == staffAccount.Id);
+
+        if (!staffExists)
+        {
+            StaffAccount staff = new StaffAccount
+            {
+                Id = Guid.NewGuid().ToString(),
+                AccountId = staffAccount.Id,
+            };
+
+            context.StaffAccounts.Add(staff);
+        }
+
         await context.SaveChangesAsync();
     }
 
     private static async Task SeedUsers(ApplicationDbContext context, UserManager<User> userManager, IConfiguration configuration)
     {
-        AccountSettings superAdminSettings = configuration.GetSection("SuperAdmin").Get<AccountSettings>();
+        IConfiguration? usersData = configuration.GetSection("SeedingUserData");
 
-        string firstName = superAdminSettings.FirstName;
-        string lastName = superAdminSettings.LastName;
-        string username = superAdminSettings.Username;
-        string email = superAdminSettings.Email;
-        string password = superAdminSettings.Password;
-        string? role = superAdminSettings.Role;
+        if (usersData is null)
+        {
+            return;
+        }
+
+        List<AccountSettings>? accountSettings = usersData.Get<List<AccountSettings>>();
+
+        if (accountSettings is null)
+        {
+            return;
+        }
+
+        foreach (AccountSettings setteing in accountSettings)
+        {
+            await CreateUser(userManager, context, setteing);
+        }
+    }
+
+    private static async Task CreateUser(UserManager<User> userManager, ApplicationDbContext context, AccountSettings settings)
+    {
+        string firstName = settings.FirstName;
+        string lastName = settings.LastName;
+        string username = settings.Username;
+        string email = settings.Email;
+        string password = settings.Password;
+        string? role = settings.Role;
 
         bool isExistingUser = await userManager.Users
             .AnyAsync(u => u.UserName == username);
@@ -130,24 +179,27 @@ public static class ApplicationDbContextSeed
         {
             User user = new User
             {
-                FirstName = firstName,
-                LastName = lastName,
                 UserName = username,
                 Email = email,
                 EmailConfirmed = true,
             };
 
-            await userManager.CreateAsync(user, password);
+            IdentityResult result = await userManager.CreateAsync(user, password);
 
-            await userManager.AddToRoleAsync(user, role);
-
-            StaffProfile staffProffile = new StaffProfile
+            if (!result.Succeeded)
             {
-                StaffMember = user,
+                return;
+            }
+
+            Account account = new Account
+            {
+                Id = Guid.NewGuid().ToString(),
+                FirstName = firstName,
+                LastName = lastName,
+                UserId = user.Id,
             };
 
-            context.StaffProfiles.Add(staffProffile);
-
+            context.Accounts.Add(account);
             await context.SaveChangesAsync();
 
             List<Claim> claims = new List<Claim>
@@ -155,13 +207,19 @@ public static class ApplicationDbContextSeed
                 new Claim(ClaimTypes.Name, user.UserName),
                 new Claim(ClaimTypes.NameIdentifier, user.Id),
                 new Claim(ClaimTypes.Email, user.Email),
-                new Claim(ClaimTypes.Role, role),
-                new Claim(InfrastructureConstants.StaffId, staffProffile.Id.ToString())
+                new Claim(InfrastructureConstants.AccountId, account.Id.ToString())
             };
+
+            if (!string.IsNullOrEmpty(role))
+            {
+                //TODO: Log in case the result is unsuccessful
+                IdentityResult addRoleResult = await userManager.AddToRoleAsync(user, role);
+
+                claims.Add(new Claim(ClaimTypes.Role, role));
+                claims.Add(new Claim(InfrastructureConstants.StaffId, role));
+            }
 
             await userManager.AddClaimsAsync(user, claims);
         }
     }
-
-
 }

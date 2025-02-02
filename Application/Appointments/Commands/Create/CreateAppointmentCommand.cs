@@ -5,7 +5,7 @@ namespace Application.Appointments.Commands.Create;
 
 public class CreateAppointmentCommand : AppointmentModel, IRequest<int>
 {
-    public string AnimalOwnerId { get; set; } = null!;
+    public string OwnerId { get; set; } = null!;
 }
 
 public class CreateAppointmentCommandHadler : IRequestHandler<CreateAppointmentCommand, int>
@@ -34,24 +34,24 @@ public class CreateAppointmentCommandHadler : IRequestHandler<CreateAppointmentC
             throw new ValidationException(validationFailures);
         }
 
-        string userId = request.AnimalOwnerId;
+        string ownerId = request.OwnerId;
 
-        bool ownerExists = await context.Users
-            .AnyAsync(u => u.Id == userId, cancellationToken);
+        bool ownerExists = await context.Accounts
+            .AnyAsync(o => o.Id == ownerId, cancellationToken);
 
         if (!ownerExists)
         {
-            throw new NotFoundException(nameof(User), userId);
+            throw new NotFoundException(nameof(Account), ownerId);
         }
 
-        int staffMemberId = request.StaffMemberId;
+        string staffMemberId = request.StaffId;
 
-        bool staffMemberExists = await context.StaffProfiles
+        bool staffMemberExists = await context.StaffAccounts
             .AnyAsync(sp => sp.Id == staffMemberId, cancellationToken);
 
         if (!staffMemberExists)
         {
-            throw new NotFoundException(nameof(StaffProfile), staffMemberId);
+            throw new NotFoundException(nameof(StaffAccount), staffMemberId);
         }
 
         Appointment appointment = new Appointment
@@ -59,8 +59,8 @@ public class CreateAppointmentCommandHadler : IRequestHandler<CreateAppointmentC
             Date = request.Date,
             Desctiption = request.Desctiption,
             Status = AppointmentStatus.Confirmed,
-            AnimalOwnerId = userId,
-            StaffMemberId = staffMemberId,
+            AnimalOwnerId = ownerId,
+            StaffId = staffMemberId,
         };
 
         context.Appointments.Add(appointment);

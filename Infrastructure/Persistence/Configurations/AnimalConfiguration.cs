@@ -41,12 +41,12 @@ public class AnimalConfiguration : AuditableEntityConfiguration<Animal>
 			.HasFilter("\"ChipNumber\" IS NOT NULL")
 			.IsUnique();
 
-		builder.HasOne(a => a.AnimalOwner)
+		builder.HasOne(a => a.Owner)
 			.WithMany(ao => ao.Animals)
-			.HasForeignKey(a => a.AnimalOwnerId)
+			.HasForeignKey(a => a.OwnerId)
 			.OnDelete(DeleteBehavior.Cascade);
 
-		builder.HasIndex(a => a.AnimalOwnerId);
+		builder.HasIndex(a => a.OwnerId);
 
 		builder.HasOne(a => a.AnimalType)
 			.WithMany(at => at.Animals)

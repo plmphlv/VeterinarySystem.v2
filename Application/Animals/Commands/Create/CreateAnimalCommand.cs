@@ -1,91 +1,102 @@
 ﻿using Application.Animals.Common;
-using Application.Common.Exceptions;
-using Application.Common.Interfaces;
-using Domain.Entities;
-using FluentValidation.Results;
-using MediatR;
-using Microsoft.EntityFrameworkCore;
 
 namespace Application.Animals.Commands.Create;
 
 public class CreateAnimalCommand : AnimalModel, IRequest<int>
 {
-	public int AnimalTypeId { get; set; }
+    public int AnimalTypeId { get; set; }
 
-	public string AnimalOwnerId { get; set; } = null!;
+    public string? OwnerId { get; set; }
 }
 
 public class CreateAnimalCommandHandler : IRequestHandler<CreateAnimalCommand, int>
 {
-	private readonly IApplicationDbContext context;
+    private readonly IApplicationDbContext context;
+    private readonly ICurrentUserService currentUserService;
 
-	public CreateAnimalCommandHandler(IApplicationDbContext context)
-	{
-		this.context = context;
-	}
+    public CreateAnimalCommandHandler(IApplicationDbContext context, ICurrentUserService currentUserService)
+    {
+        this.context = context;
+        this.currentUserService = currentUserService;
+    }
 
-	public async Task<int> Handle(CreateAnimalCommand request, CancellationToken cancellationToken)
-	{
-		int animalTypeId = request.AnimalTypeId;
+    public async Task<int> Handle(CreateAnimalCommand request, CancellationToken cancellationToken)
+    {
+        string? ownerId = request.OwnerId;
 
-		bool animalTypeExists = await context.AnimalTypes
-			.AnyAsync(at => at.Id == animalTypeId, cancellationToken);
+        if (string.IsNullOrEmpty(ownerId))
+        {
+            ownerId = currentUserService.AccountId!;
+        }
 
-		if (!animalTypeExists)
-		{
-			throw new NotFoundException(nameof(AnimalType), animalTypeId);
-		}
+        bool ownerExists = await context.Accounts
+            .AnyAsync(ao => ao.Id == ownerId);
 
-		string? passportNumber = request.PassportNumber;
+        if (!ownerExists)
+        {
+            throw new NotFoundException(nameof(Account), ownerId);
+        }
 
-		if (!string.IsNullOrWhiteSpace(passportNumber))
-		{
-			bool passportExists = await context.Animals
-				.AnyAsync(a => a.PassportNumber == passportNumber, cancellationToken);
+        int animalTypeId = request.AnimalTypeId;
 
-			if (passportExists)
-			{
-				List<ValidationFailure> errors = new List<ValidationFailure>
-				{
-					new ValidationFailure(nameof(request.PassportNumber),"Passport has been registred")
-				};
+        bool animalTypeExists = await context.AnimalTypes
+            .AnyAsync(at => at.Id == animalTypeId, cancellationToken);
 
-				throw new ValidationException(errors);
-			}
-		}
+        if (!animalTypeExists)
+        {
+            throw new NotFoundException(nameof(AnimalType), animalTypeId);
+        }
 
-		string? chipNumber = request.ChipNumber;
+        string? passportNumber = request.PassportNumber;
 
-		if (!string.IsNullOrWhiteSpace(chipNumber))
-		{
-			bool chipNumberExists = await context.Animals
-				.AnyAsync(a => a.PassportNumber == chipNumber, cancellationToken);
+        if (!string.IsNullOrWhiteSpace(passportNumber))
+        {
+            bool passportExists = await context.Animals
+                .AnyAsync(a => a.PassportNumber == passportNumber, cancellationToken);
 
-			if (chipNumberExists)
-			{
-				List<ValidationFailure> errors = new List<ValidationFailure>
-				{
-					new ValidationFailure(nameof(request.ChipNumber),"Chip number has been registred")
-				};
+            if (passportExists)
+            {
+                List<ValidationFailure> errors = new List<ValidationFailure>
+                {
+                    new ValidationFailure(nameof(request.PassportNumber),"Passport has been registred")
+                };
 
-				throw new ValidationException(errors);
-			}
-		}
+                throw new ValidationException(errors);
+            }
+        }
 
-		Animal animals = new Animal
-		{
-			Name = request.Name,
-			Age = request.Age,
-			Weight = request.Weight,
-			ChipNumber = chipNumber,
-			PassportNumber = passportNumber,
-			AnimalTypeId = request.AnimalTypeId,
-			AnimalOwnerId = request.AnimalOwnerId
-		};
+        string? chipNumber = request.ChipNumber;
 
-		context.Animals.Add(animals);
-		await context.SaveChangesAsync(cancellationToken);
+        if (!string.IsNullOrWhiteSpace(chipNumber))
+        {
+            bool chipNumberExists = await context.Animals
+                .AnyAsync(a => a.PassportNumber == chipNumber, cancellationToken);
 
-		return animals.Id;
-	}
+            if (chipNumberExists)
+            {
+                List<ValidationFailure> errors = new List<ValidationFailure>
+                {
+                    new ValidationFailure(nameof(request.ChipNumber),"Chip number has been registred")
+                };
+
+                throw new ValidationException(errors);
+            }
+        }
+
+        Animal animals = new Animal
+        {
+            Name = request.Name,
+            Age = request.Age,
+            Weight = request.Weight,
+            ChipNumber = chipNumber,
+            PassportNumber = passportNumber,
+            AnimalTypeId = animalTypeId,
+            OwnerId = ownerId
+        };
+
+        context.Animals.Add(animals);
+        await context.SaveChangesAsync(cancellationToken);
+
+        return animals.Id;
+    }
 }

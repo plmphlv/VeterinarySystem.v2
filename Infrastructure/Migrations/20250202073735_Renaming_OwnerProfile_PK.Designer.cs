@@ -4,6 +4,7 @@ using Infrastructure.Persistence;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Infrastructure.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20250202073735_Renaming_OwnerProfile_PK")]
+    partial class Renaming_OwnerProfile_PK
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -21,61 +24,6 @@ namespace Infrastructure.Migrations
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
-
-            modelBuilder.Entity("Domain.Entities.Account", b =>
-                {
-                    b.Property<string>("Id")
-                        .HasColumnType("nvarchar(450)");
-
-                    b.Property<string>("Address")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("CreatedBy")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<DateTime>("CreationDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<bool>("Deleted")
-                        .HasColumnType("bit");
-
-                    b.Property<string>("DeletedBy")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<DateTime?>("DeletionDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("FirstName")
-                        .IsRequired()
-                        .HasMaxLength(69)
-                        .HasColumnType("nvarchar(69)");
-
-                    b.Property<DateTime?>("LastModificationDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("LastModifiedBy")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("LastName")
-                        .IsRequired()
-                        .HasMaxLength(69)
-                        .HasColumnType("nvarchar(69)");
-
-                    b.Property<string>("PhoneNumber")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("UserId")
-                        .HasColumnType("nvarchar(450)");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("UserId")
-                        .IsUnique()
-                        .HasFilter("[UserId] IS NOT NULL");
-
-                    b.ToTable("Accounts");
-                });
 
             modelBuilder.Entity("Domain.Entities.Animal", b =>
                 {
@@ -249,6 +197,36 @@ namespace Infrastructure.Migrations
                     b.ToTable("Appointments");
                 });
 
+            modelBuilder.Entity("Domain.Entities.OwnerProfile", b =>
+                {
+                    b.Property<string>("Id")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("Address")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("FirstName")
+                        .IsRequired()
+                        .HasMaxLength(69)
+                        .HasColumnType("nvarchar(69)");
+
+                    b.Property<string>("LastName")
+                        .IsRequired()
+                        .HasMaxLength(69)
+                        .HasColumnType("nvarchar(69)");
+
+                    b.Property<string>("UserId")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("UserId")
+                        .IsUnique()
+                        .HasFilter("[UserId] IS NOT NULL");
+
+                    b.ToTable("OwnerProfiles");
+                });
+
             modelBuilder.Entity("Domain.Entities.Prescription", b =>
                 {
                     b.Property<int>("Id")
@@ -395,13 +373,9 @@ namespace Infrastructure.Migrations
                     b.ToTable("Procedures");
                 });
 
-            modelBuilder.Entity("Domain.Entities.StaffAccount", b =>
+            modelBuilder.Entity("Domain.Entities.StaffProfile", b =>
                 {
                     b.Property<string>("Id")
-                        .HasColumnType("nvarchar(450)");
-
-                    b.Property<string>("AccountId")
-                        .IsRequired()
                         .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("CreatedBy")
@@ -426,12 +400,16 @@ namespace Infrastructure.Migrations
                     b.Property<string>("LastModifiedBy")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<string>("UserId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
+
                     b.HasKey("Id");
 
-                    b.HasIndex("AccountId")
+                    b.HasIndex("UserId")
                         .IsUnique();
 
-                    b.ToTable("StaffAccounts");
+                    b.ToTable("StaffProfiles");
                 });
 
             modelBuilder.Entity("Domain.Entities.User", b =>
@@ -453,8 +431,16 @@ namespace Infrastructure.Migrations
                     b.Property<bool>("EmailConfirmed")
                         .HasColumnType("bit");
 
+                    b.Property<string>("FirstName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<bool>("IsDisabled")
                         .HasColumnType("bit");
+
+                    b.Property<string>("LastName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<bool>("LockoutEnabled")
                         .HasColumnType("bit");
@@ -641,16 +627,6 @@ namespace Infrastructure.Migrations
                     b.ToTable("AspNetUserTokens", (string)null);
                 });
 
-            modelBuilder.Entity("Domain.Entities.Account", b =>
-                {
-                    b.HasOne("Domain.Entities.User", "User")
-                        .WithOne("Account")
-                        .HasForeignKey("Domain.Entities.Account", "UserId")
-                        .OnDelete(DeleteBehavior.SetNull);
-
-                    b.Navigation("User");
-                });
-
             modelBuilder.Entity("Domain.Entities.Animal", b =>
                 {
                     b.HasOne("Domain.Entities.AnimalType", "AnimalType")
@@ -659,7 +635,7 @@ namespace Infrastructure.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("Domain.Entities.Account", "Owner")
+                    b.HasOne("Domain.Entities.OwnerProfile", "Owner")
                         .WithMany("Animals")
                         .HasForeignKey("OwnerId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -672,13 +648,13 @@ namespace Infrastructure.Migrations
 
             modelBuilder.Entity("Domain.Entities.Appointment", b =>
                 {
-                    b.HasOne("Domain.Entities.Account", "Owner")
+                    b.HasOne("Domain.Entities.OwnerProfile", "Owner")
                         .WithMany("OwnerAppointments")
                         .HasForeignKey("AnimalOwnerId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("Domain.Entities.StaffAccount", "StaffAccount")
+                    b.HasOne("Domain.Entities.StaffProfile", "StaffProfile")
                         .WithMany("StaffAppointments")
                         .HasForeignKey("StaffId")
                         .OnDelete(DeleteBehavior.Restrict)
@@ -686,7 +662,17 @@ namespace Infrastructure.Migrations
 
                     b.Navigation("Owner");
 
-                    b.Navigation("StaffAccount");
+                    b.Navigation("StaffProfile");
+                });
+
+            modelBuilder.Entity("Domain.Entities.OwnerProfile", b =>
+                {
+                    b.HasOne("Domain.Entities.User", "User")
+                        .WithOne("OwnerAccount")
+                        .HasForeignKey("Domain.Entities.OwnerProfile", "UserId")
+                        .OnDelete(DeleteBehavior.Cascade);
+
+                    b.Navigation("User");
                 });
 
             modelBuilder.Entity("Domain.Entities.Prescription", b =>
@@ -697,7 +683,7 @@ namespace Infrastructure.Migrations
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
-                    b.HasOne("Domain.Entities.StaffAccount", "StaffProfile")
+                    b.HasOne("Domain.Entities.StaffProfile", "StaffProfile")
                         .WithMany("Prescriptions")
                         .HasForeignKey("StaffId")
                         .OnDelete(DeleteBehavior.Restrict)
@@ -716,7 +702,7 @@ namespace Infrastructure.Migrations
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
-                    b.HasOne("Domain.Entities.StaffAccount", "StaffProfile")
+                    b.HasOne("Domain.Entities.StaffProfile", "StaffProfile")
                         .WithMany("Procedures")
                         .HasForeignKey("StaffId")
                         .OnDelete(DeleteBehavior.Restrict)
@@ -727,15 +713,15 @@ namespace Infrastructure.Migrations
                     b.Navigation("StaffProfile");
                 });
 
-            modelBuilder.Entity("Domain.Entities.StaffAccount", b =>
+            modelBuilder.Entity("Domain.Entities.StaffProfile", b =>
                 {
-                    b.HasOne("Domain.Entities.Account", "Account")
-                        .WithOne("StaffAccount")
-                        .HasForeignKey("Domain.Entities.StaffAccount", "AccountId")
+                    b.HasOne("Domain.Entities.User", "User")
+                        .WithOne("StaffProfile")
+                        .HasForeignKey("Domain.Entities.StaffProfile", "UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("Account");
+                    b.Navigation("User");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
@@ -789,15 +775,6 @@ namespace Infrastructure.Migrations
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("Domain.Entities.Account", b =>
-                {
-                    b.Navigation("Animals");
-
-                    b.Navigation("OwnerAppointments");
-
-                    b.Navigation("StaffAccount");
-                });
-
             modelBuilder.Entity("Domain.Entities.Animal", b =>
                 {
                     b.Navigation("Prescriptions");
@@ -810,7 +787,14 @@ namespace Infrastructure.Migrations
                     b.Navigation("Animals");
                 });
 
-            modelBuilder.Entity("Domain.Entities.StaffAccount", b =>
+            modelBuilder.Entity("Domain.Entities.OwnerProfile", b =>
+                {
+                    b.Navigation("Animals");
+
+                    b.Navigation("OwnerAppointments");
+                });
+
+            modelBuilder.Entity("Domain.Entities.StaffProfile", b =>
                 {
                     b.Navigation("Prescriptions");
 
@@ -821,8 +805,10 @@ namespace Infrastructure.Migrations
 
             modelBuilder.Entity("Domain.Entities.User", b =>
                 {
-                    b.Navigation("Account")
+                    b.Navigation("OwnerAccount")
                         .IsRequired();
+
+                    b.Navigation("StaffProfile");
                 });
 #pragma warning restore 612, 618
         }

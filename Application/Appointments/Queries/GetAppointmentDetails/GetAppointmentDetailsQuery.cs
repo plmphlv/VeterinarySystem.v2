@@ -26,8 +26,8 @@ public class GetAppointmentDetailsQueryHandler : IRequestHandler<GetAppointmentD
                 Id = ap.Id,
                 AppointmentStatus = ap.Status.ToString(),
                 Date = ap.Date,
-                AnimalOwnerName = $"{ap.AnimalOwner.FirstName} {ap.AnimalOwner.LastName}",
-                StaffMemberName = $"{ap.StaffMember.StaffMember.FirstName} {ap.StaffMember.StaffMember.LastName}",
+                AnimalOwnerName = $"{ap.Owner.FirstName} {ap.Owner.LastName}",
+                StaffMemberName = $"{ap.StaffAccount.Account.FirstName} {ap.StaffAccount.Account.LastName}",
                 Desctiption = ap.Desctiption
             })
             .FirstOrDefaultAsync(cancellationToken);

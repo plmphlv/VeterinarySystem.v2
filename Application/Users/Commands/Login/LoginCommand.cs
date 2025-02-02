@@ -10,65 +10,65 @@ namespace Application.Users.Commands.Login;
 
 public class LoginCommand : IRequest<LoginResponce>
 {
-	public string IdentifyingCredential { get; set; } = null!;
+    public string IdentifyingCredential { get; set; } = null!;
 
-	public string Password { get; set; } = null!;
+    public string Password { get; set; } = null!;
 }
 
 public class LoginCommandHandler : IRequestHandler<LoginCommand, LoginResponce>
 {
-	private readonly IDateTime dateTime;
-	private readonly IConfiguration configuration;
-	private readonly IIdentityService identityService;
+    private readonly IDateTime dateTime;
+    private readonly IConfiguration configuration;
+    private readonly IIdentityService identityService;
 
-	public LoginCommandHandler(IDateTime dateTime, IConfiguration configuration, IIdentityService identityService)
-	{
-		this.dateTime = dateTime;
-		this.configuration = configuration;
-		this.identityService = identityService;
-	}
+    public LoginCommandHandler(IDateTime dateTime, IConfiguration configuration, IIdentityService identityService)
+    {
+        this.dateTime = dateTime;
+        this.configuration = configuration;
+        this.identityService = identityService;
+    }
 
-	public async Task<LoginResponce> Handle(LoginCommand request, CancellationToken cancellationToken)
-	{
-		string identifyingCredential = request.IdentifyingCredential;
-		string password = request.Password;
+    public async Task<LoginResponce> Handle(LoginCommand request, CancellationToken cancellationToken)
+    {
+        string identifyingCredential = request.IdentifyingCredential;
+        string password = request.Password;
 
-		bool isValidLogin = await identityService
-			.ValidateLoginAsync(identifyingCredential, password, cancellationToken);
+        bool isValidLogin = await identityService
+            .ValidateLoginAsync(identifyingCredential, password, cancellationToken);
 
-		if (!isValidLogin)
-		{
-			return new LoginResponce
-			{
-				IsSuccessful = false,
-				ErrorMessage = UserMessages.InvalidUser
-			};
-		}
+        if (!isValidLogin)
+        {
+            return new LoginResponce
+            {
+                IsSuccessful = false,
+                ErrorMessage = UserMessages.InvalidUser
+            };
+        }
 
-		string apiKey = configuration.GetSection(ProjectConstants.ApiKey).Value;
+        string apiKey = configuration.GetSection(ProjectConstants.ApiKey).Value;
 
-		IEnumerable<Claim> claims = await identityService
-			.GetUserClaimsAsync(identifyingCredential, cancellationToken);
+        IEnumerable<Claim> claims = await identityService
+            .GetUserClaimsAsync(identifyingCredential, cancellationToken);
 
-		SymmetricSecurityKey key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(apiKey));
-		SigningCredentials credentials = new SigningCredentials(key, SecurityAlgorithms.HmacSha512Signature);
+        SymmetricSecurityKey key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(apiKey));
+        SigningCredentials credentials = new SigningCredentials(key, SecurityAlgorithms.HmacSha512Signature);
 
-		DateTime expiration = DateTime.Now
-			.AddMinutes(45);
+        DateTime expiration = dateTime.Now
+            .AddMinutes(45);
 
-		JwtSecurityToken token = new JwtSecurityToken(
-			claims: claims,
-			expires: expiration,
-			signingCredentials: credentials);
+        JwtSecurityToken token = new JwtSecurityToken(
+            claims: claims,
+            expires: expiration,
+            signingCredentials: credentials);
 
-		string jwt = new JwtSecurityTokenHandler().WriteToken(token);
+        string jwt = new JwtSecurityTokenHandler().WriteToken(token);
 
-		LoginResponce responce = new LoginResponce()
-		{
-			AccessToken = jwt,
-			IsSuccessful = true
-		};
+        LoginResponce responce = new LoginResponce()
+        {
+            AccessToken = jwt,
+            IsSuccessful = true
+        };
 
-		return responce;
-	}
+        return responce;
+    }
 }

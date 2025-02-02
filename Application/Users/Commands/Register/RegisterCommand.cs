@@ -36,29 +36,29 @@ public class RegisterCommandHandler : IRequestHandler<RegisterCommand>
 
 	public async Task Handle(RegisterCommand request, CancellationToken cancellationToken)
 	{
-		using IDbContextTransaction transaction = await context.Database
-			.BeginTransactionAsync(cancellationToken);
+		//using IDbContextTransaction transaction = await context.Database
+		//	.BeginTransactionAsync(cancellationToken);
 
-		User user = new User
-		{
-			Email = request.Email,
-			FirstName = request.FirstName,
-			LastName = request.LastName,
-			UserName = request.UserName,
-			PhoneNumber = request.PhoneNumber
-		};
+		//User user = new User
+		//{
+		//	Email = request.Email,
+		//	FirstName = request.FirstName,
+		//	LastName = request.LastName,
+		//	UserName = request.UserName,
+		//	PhoneNumber = request.PhoneNumber
+		//};
 
-		string token = await identityService.RegisterUserAsync(user, request.Password, cancellationToken);
+		//string token = await identityService.RegisterUserAsync(user, request.Password, cancellationToken);
 
-		List<Claim> claims = new List<Claim>
-		{
-			new Claim (ClaimTypes.Name,user.UserName),
-			new Claim (ClaimTypes.Name,user.Id),
-			new Claim (ClaimTypes.Email,user.Email)
-		};
+		//List<Claim> claims = new List<Claim>
+		//{
+		//	new Claim (ClaimTypes.Name,user.UserName),
+		//	new Claim (ClaimTypes.Name,user.Id),
+		//	new Claim (ClaimTypes.Email,user.Email)
+		//};
 
-		await identityService.AddClaimsAsync(user, claims);
+		//await identityService.AddClaimsAsync(user, claims);
 
-		await transaction.CommitAsync(cancellationToken);
+		//await transaction.CommitAsync(cancellationToken);
 	}
 }

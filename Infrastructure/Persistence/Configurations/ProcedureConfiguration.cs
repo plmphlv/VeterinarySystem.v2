@@ -36,11 +36,11 @@ public class ProcedureConfiguration : AuditableEntityConfiguration<Procedure>
 
 		builder.HasIndex(p => p.AnimalId);
 
-		builder.HasOne(p => p.StaffMember)
+		builder.HasOne(p => p.StaffProfile)
 			.WithMany(sm => sm.Procedures)
-			.HasForeignKey(p => p.StaffMemberId)
+			.HasForeignKey(p => p.StaffId)
 			.OnDelete(DeleteBehavior.Restrict);
 
-		builder.HasIndex(p => p.StaffMemberId);
+		builder.HasIndex(p => p.StaffId);
 	}
 }

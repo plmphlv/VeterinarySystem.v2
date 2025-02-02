@@ -14,7 +14,7 @@ namespace Application.Appointments.Commands.Update
                 .NotEmpty()
                 .WithMessage("Appointment Date is required");
 
-            RuleFor(c => c.StaffMemberId)
+            RuleFor(c => c.StaffId)
                 .NotEmpty()
                 .WithMessage("StaffMemberId is required.");
 
