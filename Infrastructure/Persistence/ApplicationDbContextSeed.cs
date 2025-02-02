@@ -288,7 +288,7 @@ public static class ApplicationDbContextSeed
                 Desctiption = "Leukemia vaccination for adult cat",
                 StaffId = staff.Id,
                 Status = AppointmentStatus.Pending_Review,
-                OwnerId = ownerAccount.Id
+                AnimalOwnerId = ownerAccount.Id
             };
 
             Appointment appointment2 = new Appointment
@@ -297,7 +297,7 @@ public static class ApplicationDbContextSeed
                 Desctiption = "General checkup on dog",
                 StaffId = staff.Id,
                 Status = AppointmentStatus.Confirmed,
-                OwnerId = ownerAccount.Id
+                AnimalOwnerId = ownerAccount.Id
             };
 
             context.AddRange(appointment1, appointment2);
