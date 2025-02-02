@@ -101,6 +101,13 @@ public static class ApplicationDbContextSeed
             return;
         }
 
+        User? ownerUser = await userManager.FindByEmailAsync("testuser@vetsystem.com");
+
+        if (ownerUser is null)
+        {
+            return;
+        }
+
         Account? staffAccount = await context.Accounts
             .AsNoTracking()
             .FirstOrDefaultAsync(ac => ac.UserId == staffUser.Id);
@@ -112,7 +119,7 @@ public static class ApplicationDbContextSeed
 
         Account? ownerAccount = await context.Accounts
             .AsNoTracking()
-            .FirstOrDefaultAsync(ac => ac.UserId == staffUser.Id);
+            .FirstOrDefaultAsync(ac => ac.UserId == ownerUser.Id);
 
         if (ownerAccount is null)
         {
