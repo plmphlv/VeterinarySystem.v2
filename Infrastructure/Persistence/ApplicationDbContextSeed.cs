@@ -93,6 +93,7 @@ public static class ApplicationDbContextSeed
     private static async Task SeedSampleData(ApplicationDbContext context, UserManager<User> userManager)
     {
         #region UsersAndAccounts
+
         User? staffUser = await userManager.FindByEmailAsync("staffmember@vetsystem.com");
 
         if (staffUser is null)
