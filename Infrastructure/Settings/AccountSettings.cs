@@ -12,5 +12,7 @@ public class AccountSettings
 
     public string Username { get; set; } = null!;
 
+    public string PhoneNumber { get; set; } = null!;
+
     public string? Role { get; set; } = null!;
 }

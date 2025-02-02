@@ -108,7 +108,7 @@ public static class ApplicationDbContextSeed
             return;
         }
 
-        Account? staffAccount = await context.Accounts
+        OwnerAccount? staffAccount = await context.OwnerAccounts
             .AsNoTracking()
             .FirstOrDefaultAsync(ac => ac.UserId == staffUser.Id);
 
@@ -117,7 +117,7 @@ public static class ApplicationDbContextSeed
             return;
         }
 
-        Account? ownerAccount = await context.Accounts
+        OwnerAccount? ownerAccount = await context.OwnerAccounts
             .AsNoTracking()
             .FirstOrDefaultAsync(ac => ac.UserId == ownerUser.Id);
 
@@ -127,21 +127,21 @@ public static class ApplicationDbContextSeed
         }
 
 
-        Account? unregiteredOwner = await context.Accounts
+        OwnerAccount? unregiteredOwner = await context.OwnerAccounts
             .AsNoTracking()
             .FirstOrDefaultAsync(uo => uo.User == null);
 
         if (unregiteredOwner is null)
         {
-            unregiteredOwner = new Account
+            unregiteredOwner = new OwnerAccount
             {
                 Id = Guid.NewGuid().ToString(),
                 FirstName = "Kiril",
                 LastName = "Draganov",
-                PhoneNumber = "0886669999"
+                PhoneNumber = "088 666 9004"
             };
 
-            context.Accounts.Add(unregiteredOwner);
+            context.OwnerAccounts.Add(unregiteredOwner);
         }
 
         StaffAccount? staff = await context.StaffAccounts
@@ -345,6 +345,7 @@ public static class ApplicationDbContextSeed
         string username = settings.Username;
         string email = settings.Email;
         string password = settings.Password;
+        string phoneNumber = settings.PhoneNumber;
         string? role = settings.Role;
 
         bool isExistingUser = await userManager.Users
@@ -366,15 +367,16 @@ public static class ApplicationDbContextSeed
                 return;
             }
 
-            Account account = new Account
+            OwnerAccount account = new OwnerAccount
             {
                 Id = Guid.NewGuid().ToString(),
                 FirstName = firstName,
                 LastName = lastName,
-                UserId = user.Id,
+                PhoneNumber = phoneNumber,
+                UserId = user.Id
             };
 
-            context.Accounts.Add(account);
+            context.OwnerAccounts.Add(account);
             await context.SaveChangesAsync();
 
             List<Claim> claims = new List<Claim>

@@ -24,7 +24,7 @@ public interface IApplicationDbContext
 
     DbSet<StaffAccount> StaffAccounts { get; set; }
 
-    DbSet<Account> Accounts { get; set; }
+    DbSet<OwnerAccount> OwnerAccounts { get; set; }
 
     DbSet<User> Users { get; set; }
 }

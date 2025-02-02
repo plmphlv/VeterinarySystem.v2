@@ -29,12 +29,12 @@ public class CreateAnimalCommandHandler : IRequestHandler<CreateAnimalCommand, i
             ownerId = currentUserService.AccountId!;
         }
 
-        bool ownerExists = await context.Accounts
+        bool ownerExists = await context.OwnerAccounts
             .AnyAsync(ao => ao.Id == ownerId);
 
         if (!ownerExists)
         {
-            throw new NotFoundException(nameof(Account), ownerId);
+            throw new NotFoundException(nameof(OwnerAccount), ownerId);
         }
 
         int animalTypeId = request.AnimalTypeId;
