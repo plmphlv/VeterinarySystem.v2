@@ -4,7 +4,7 @@ public class GetPrescriptionQuery : IRequest<List<PrescriptionDto>>
 {
     public int? AnimalId { get; set; }
 
-    public int? StaffId { get; set; }
+    public string? StaffId { get; set; }
 
     public DateTime? StartDate { get; set; }
 
@@ -34,12 +34,12 @@ public class GGetPrescriptionQueryHandler : IRequestHandler<GetPrescriptionQuery
                 .Where(p => p.AnimalId == animalId);
         }
 
-        int? staffId = request.StaffId;
+        string? staffId = request.StaffId;
 
-        if (staffId.HasValue)
+        if (!string.IsNullOrEmpty(staffId))
         {
             prescriptions = prescriptions
-                .Where(p => p.StaffMemberId == staffId);
+                .Where(p => p.StaffId == staffId);
         }
 
         DateTime? startDate = request.StartDate;
@@ -78,7 +78,7 @@ public class GGetPrescriptionQueryHandler : IRequestHandler<GetPrescriptionQuery
                 Id = p.Id,
                 Number = p.Number,
                 IssueDate = p.IssueDate,
-                StaffName = $"{p.StaffMember.StaffMember.FirstName} {p.StaffMember.StaffMember.LastName}"
+                StaffName = $"{p.StaffProfile.Account.FirstName} {p.StaffProfile.Account.LastName}"
             })
             .ToListAsync(cancellationToken);
 

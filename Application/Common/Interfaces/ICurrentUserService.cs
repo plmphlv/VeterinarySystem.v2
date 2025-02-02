@@ -2,9 +2,9 @@
 
 public interface ICurrentUserService
 {
-	string? UserId { get; }
+    string? UserId { get; }
 
-    public string? UserName { get; }
+    string? UserName { get; }
 
-    string? StaffId { get; }
+    string? AccountId { get; }
 }

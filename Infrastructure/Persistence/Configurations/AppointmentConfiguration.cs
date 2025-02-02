@@ -28,19 +28,19 @@ namespace Infrastructure.Persistence.Configurations
                 .HasColumnType("nvarchar(255)")
                 .IsRequired(false);
 
-            builder.HasOne(a => a.AnimalOwner)
+            builder.HasOne(a => a.Owner)
                 .WithMany(ao => ao.OwnerAppointments)
                 .HasForeignKey(a => a.AnimalOwnerId)
                 .OnDelete(DeleteBehavior.Cascade);
 
             builder.HasIndex(a => a.AnimalOwnerId);
 
-            builder.HasOne(a => a.StaffMember)
+            builder.HasOne(a => a.StaffAccount)
                 .WithMany(sm => sm.StaffAppointments)
-                .HasForeignKey(a => a.StaffMemberId)
+                .HasForeignKey(a => a.StaffId)
                 .OnDelete(DeleteBehavior.Restrict);
 
-            builder.HasIndex(a => a.StaffMemberId);
+            builder.HasIndex(a => a.StaffId);
         }
     }
 }

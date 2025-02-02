@@ -21,7 +21,7 @@ public class GetOwnersAnimalsQueryHandler : IRequestHandler<GetOwnersAnimalsQuer
 	public async Task<List<AnimalDto>> Handle(GetOwnersAnimalsQuery request, CancellationToken cancellationToken)
 	{
 		List<AnimalDto> animals = await context.Animals
-			.Where(a => a.AnimalOwnerId == request.OwnerId)
+			.Where(a => a.OwnerId == request.OwnerId)
 			.Select(a => new AnimalDto
 			{
 				Id = a.Id,

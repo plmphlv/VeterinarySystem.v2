@@ -27,7 +27,7 @@ public class CreateAnimalCommandValidator : AbstractValidator<CreateAnimalComman
            .When(c => !string.IsNullOrEmpty(c.ChipNumber))
            .WithMessage("Chip number cannot be longer than 15 characters.");
 
-        RuleFor(c => c.AnimalOwnerId)
+        RuleFor(c => c.OwnerId)
             .NotEmpty()
             .WithMessage("Animal owner is required.");
 

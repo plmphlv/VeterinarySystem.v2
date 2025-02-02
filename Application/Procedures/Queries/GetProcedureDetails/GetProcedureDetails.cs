@@ -28,7 +28,7 @@ public class GetProcedureDetailsQueryHandler : IRequestHandler<GetProcedureDetai
                 Date = p.Date,
                 AnimalId = p.AnimalId,
                 AnimalName = p.Animal.Name!,
-                StaffMemberName = $"{p.StaffMember.StaffMember.FirstName} {p.StaffMember.StaffMember.LastName}"
+                StaffMemberName = $"{p.StaffProfile.Account.FirstName} {p.StaffProfile.Account.LastName}"
             })
             .FirstOrDefaultAsync(cancellationToken);
 

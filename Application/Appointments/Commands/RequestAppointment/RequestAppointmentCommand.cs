@@ -34,24 +34,24 @@ public class RequestAppointmentCommandHandler : IRequestHandler<RequestAppointme
             throw new ValidationException(validationFailures);
         }
 
-        string? userId = currentUserService.UserId;
+        string? ownerId = currentUserService.AccountId;
 
-        bool ownerExists = await context.Users
-            .AnyAsync(u => u.Id == userId, cancellationToken);
+        bool ownerExists = await context.Accounts
+            .AnyAsync(u => u.Id == ownerId, cancellationToken);
 
         if (!ownerExists)
         {
-            throw new NotFoundException(nameof(User), userId);
+            throw new NotFoundException(nameof(Account), ownerId);
         }
 
-        int staffMemberId = request.StaffMemberId;
+        string staffMemberId = request.StaffId;
 
-        bool staffMemberExists = await context.StaffProfiles
+        bool staffMemberExists = await context.StaffAccounts
             .AnyAsync(sp => sp.Id == staffMemberId, cancellationToken);
 
         if (!staffMemberExists)
         {
-            throw new NotFoundException(nameof(StaffProfile), staffMemberExists);
+            throw new NotFoundException(nameof(StaffAccount), staffMemberExists);
         }
 
         Appointment appointment = new Appointment
@@ -59,8 +59,8 @@ public class RequestAppointmentCommandHandler : IRequestHandler<RequestAppointme
             Date = request.Date,
             Desctiption = request.Desctiption,
             Status = AppointmentStatus.Pending_Review,
-            AnimalOwnerId = userId!,
-            StaffMemberId = staffMemberId,
+            AnimalOwnerId = ownerId!,
+            StaffId = staffMemberId,
         };
 
         context.Appointments.Add(appointment);

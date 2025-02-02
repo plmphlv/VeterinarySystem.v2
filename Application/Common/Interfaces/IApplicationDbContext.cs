@@ -22,7 +22,9 @@ public interface IApplicationDbContext
 
     DbSet<PrescriptionCounter> PrescriptionCounters { get; set; }
 
-    DbSet<StaffProfile> StaffProfiles { get; set; }
+    DbSet<StaffAccount> StaffAccounts { get; set; }
+
+    DbSet<Account> Accounts { get; set; }
 
     DbSet<User> Users { get; set; }
 }

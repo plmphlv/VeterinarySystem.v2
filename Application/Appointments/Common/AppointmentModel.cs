@@ -6,5 +6,5 @@ public abstract class AppointmentModel
 
     public string? Desctiption { get; set; }
 
-    public int StaffMemberId { get; set; }
+    public string StaffId { get; set; } = null!;
 }

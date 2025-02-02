@@ -34,7 +34,7 @@ public class GetAnimalDetailsQueryHandler : IRequestHandler<GetAnimalDetailsQuer
                 PassportNumber = a.PassportNumber,
                 ChipNumber = a.ChipNumber,
                 AnimalType = a.AnimalType.Name,
-                OwnerName = $"{a.AnimalOwner.FirstName} {a.AnimalOwner.LastName}"
+                OwnerName = $"{a.Owner.FirstName} {a.Owner.LastName}"
             })
             .FirstOrDefaultAsync(cancellationToken);
 

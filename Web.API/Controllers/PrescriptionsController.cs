@@ -3,7 +3,6 @@ using Application.Prescriptions.Commands.Delete;
 using Application.Prescriptions.Commands.Update;
 using Application.Prescriptions.Queries.GetPrescription;
 using Application.Prescriptions.Queries.GetPrescriptionDetails;
-using Application.Procedures.Commands.Update;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Web.API.Controllers;

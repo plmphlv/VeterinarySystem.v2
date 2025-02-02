@@ -10,11 +10,11 @@ public class CreateAppointmentCommandValidator : AbstractValidator<CreateAppoint
             .NotEmpty()
             .WithMessage("Appointment Date is required");
 
-        RuleFor(c => c.StaffMemberId)
+        RuleFor(c => c.StaffId)
             .NotEmpty()
             .WithMessage("StaffMemberId is required.");
 
-        RuleFor(c => c.AnimalOwnerId)
+        RuleFor(c => c.OwnerId)
             .NotEmpty()
             .WithMessage("AnimalOwnerId is required.");
 

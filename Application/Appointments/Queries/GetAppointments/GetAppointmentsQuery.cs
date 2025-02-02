@@ -6,7 +6,7 @@ public class GetAppointmentsQuery : IRequest<List<AppointmentDto>>
 {
     public string? OwnerId { get; set; }
 
-    public int? StaffMemberId { get; set; }
+    public string? StaffId { get; set; }
 
     public AppointmentStatus? Status { get; set; }
 
@@ -66,12 +66,12 @@ public class GetAppointmentsQueryHandler : IRequestHandler<GetAppointmentsQuery,
                 .Where(ap => ap.AnimalOwnerId == ownerId);
         }
 
-        int? staffId = request.StaffMemberId;
+        string? staffId = request.StaffId;
 
-        if (staffId.HasValue)
+        if (!string.IsNullOrWhiteSpace(staffId))
         {
             appointments = appointments
-                .Where(ap => ap.StaffMemberId == staffId);
+                .Where(ap => ap.StaffId == staffId);
         }
 
         List<AppointmentDto> appointmentDtos = await appointments
@@ -80,7 +80,7 @@ public class GetAppointmentsQueryHandler : IRequestHandler<GetAppointmentsQuery,
                 Id = ap.Id,
                 Status = ap.Status,
                 Date = ap.Date,
-                StaffMemberName = $"{ap.StaffMember.StaffMember.FirstName} {ap.StaffMember.StaffMember.LastName}"
+                StaffMemberName = $"{ap.StaffAccount.Account.FirstName} {ap.StaffAccount.Account.LastName}"
             })
             .ToListAsync(cancellationToken);
 

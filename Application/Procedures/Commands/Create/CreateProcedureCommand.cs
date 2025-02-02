@@ -5,6 +5,7 @@ namespace Application.Procedures.Commands.Create;
 public class CreateProcedureCommand : ProcedureModel, IRequest<int>
 {
     public int AnimalId { get; set; }
+    public string StaffId { get; set; } = null!;
 }
 
 public class CreateProcedureCommandHandler : IRequestHandler<CreateProcedureCommand, int>
@@ -20,23 +21,20 @@ public class CreateProcedureCommandHandler : IRequestHandler<CreateProcedureComm
 
     public async Task<int> Handle(CreateProcedureCommand request, CancellationToken cancellationToken)
     {
-        string? staffClaim = currentUserService.StaffId;
+        string? staffId = request.StaffId;
 
-        if (string.IsNullOrWhiteSpace(staffClaim))
+        bool staffExists = await context.StaffAccounts
+            .AnyAsync(sp => sp.Id == staffId);
+
+        if (!staffExists)
         {
-            throw new UnauthorizedAccessException("Opperation has beel terminated due to invalid user credentials.");
-        }
-
-        int staffId = int.Parse(staffClaim);
-        bool staffMemberExists = await context.StaffProfiles.AnyAsync(sp => sp.Id == staffId);
-
-        if (!staffMemberExists)
-        {
-            throw new NotFoundException(nameof(StaffProfile), staffId);
+            throw new NotFoundException(nameof(StaffAccount), staffId);
         }
 
         int animalId = request.AnimalId;
-        bool animalExists = await context.Animals.AnyAsync(a => a.Id == animalId);
+
+        bool animalExists = await context.Animals
+            .AnyAsync(a => a.Id == animalId);
 
         if (!animalExists)
         {
@@ -49,10 +47,11 @@ public class CreateProcedureCommandHandler : IRequestHandler<CreateProcedureComm
             Description = request.Description,
             Date = request.Date,
             AnimalId = animalId,
-            StaffMemberId = staffId
+            StaffId = staffId
         };
 
         context.Procedures.Add(procedure);
+
         await context.SaveChangesAsync(cancellationToken);
 
         return procedure.Id;

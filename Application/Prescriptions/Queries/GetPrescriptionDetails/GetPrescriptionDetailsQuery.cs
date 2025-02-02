@@ -27,11 +27,11 @@ public class GetPrescriptionDetailsQueryHandler : IRequestHandler<GetPrescriptio
                 Id = p.Id,
                 Number = p.Number,
                 IssueDate = p.IssueDate,
-                StaffName = $"{p.StaffMember.StaffMember.FirstName} {p.StaffMember.StaffMember.LastName}",
+                StaffName = $"{p.StaffProfile.Account.FirstName} {p.StaffProfile.Account.LastName}",
                 Description = p.Description,
                 AnimalId = p.AnimalId,
                 AnimalName = p.Animal.Name ?? $"Unnamed {p.Animal.AnimalType.Name}",
-                OwnerName = $"{p.Animal.AnimalOwner.FirstName} {p.Animal.AnimalOwner.LastName}"
+                OwnerName = $"{p.Animal.Owner.FirstName} {p.Animal.Owner.LastName}"
             })
             .FirstOrDefaultAsync(cancellationToken);
 

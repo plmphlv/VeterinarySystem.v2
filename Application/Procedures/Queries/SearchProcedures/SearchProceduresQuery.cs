@@ -2,7 +2,9 @@
 
 public class SearchProceduresQuery : IRequest<List<ProcedureDto>>
 {
-    public string? StaffMemberName { get; set; }
+    public string? StaffId { get; set; }
+
+    public int? AnimalId { get; set; }
 
     public string? ProcedureName { get; set; }
 
@@ -28,18 +30,20 @@ public class SearchProceduresQueryHandler : IRequestHandler<SearchProceduresQuer
     {
         IQueryable<Procedure> proceduresQuery = context.Procedures;
 
-        string? staffMemberName = request.StaffMemberName;
+        string? staffId = request.StaffId;
 
-        if (!string.IsNullOrEmpty(staffMemberName))
+        if (!string.IsNullOrEmpty(staffId))
         {
-            staffMemberName = staffMemberName
-                .Trim()
-                .ToLower();
+            proceduresQuery = proceduresQuery
+                .Where(p => p.StaffId == staffId);
+        }
 
-            proceduresQuery = proceduresQuery.Where(p =>
-            p.StaffMember.StaffMember.FirstName.ToLower().Contains(staffMemberName) ||
-            p.StaffMember.StaffMember.LastName.ToLower().Contains(staffMemberName) ||
-            (p.StaffMember.StaffMember.FirstName + " " + p.StaffMember.StaffMember.LastName).ToLower().Contains(staffMemberName));
+        int? animalId = request.AnimalId;
+
+        if (animalId.HasValue)
+        {
+            proceduresQuery = proceduresQuery
+               .Where(p => p.AnimalId == animalId);
         }
 
         string? procedureName = request.ProcedureName;

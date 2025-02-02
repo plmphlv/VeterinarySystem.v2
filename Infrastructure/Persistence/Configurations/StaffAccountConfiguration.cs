@@ -5,24 +5,21 @@ using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace Infrastructure.Persistence.Configurations;
 
-public class StaffProffileConfiguration : AuditableEntityConfiguration<StaffProfile>
+public class StaffAccountConfiguration : AuditableEntityConfiguration<StaffAccount>
 {
-	public override void Configure(EntityTypeBuilder<StaffProfile> builder)
+	public override void Configure(EntityTypeBuilder<StaffAccount> builder)
 	{
 		base.Configure(builder);
 
 		builder.HasKey(sp => sp.Id);
 
-		builder.Property(sp => sp.Id)
-			.UseIdentityColumn(1, 1);
-
-		builder.HasOne(sp => sp.StaffMember)
-			.WithOne(sm => sm.StaffProfile)
-			.HasForeignKey<StaffProfile>(sp => sp.StaffMemberId)
+		builder.HasOne(sp => sp.Account)
+			.WithOne(sm => sm.StaffAccount)
+			.HasForeignKey<StaffAccount>(sp => sp.AccountId)
 			.OnDelete(DeleteBehavior.Cascade)
 			.IsRequired();
 
-		builder.HasIndex(sp => sp.StaffMemberId);
+		builder.HasIndex(sp => sp.AccountId);
 			//.HasFilter("\"StaffMemberId\" IS NOT NULL"); 
 	}
 }
