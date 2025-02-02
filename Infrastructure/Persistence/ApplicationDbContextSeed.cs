@@ -92,23 +92,7 @@ public static class ApplicationDbContextSeed
 
     private static async Task SeedSampleData(ApplicationDbContext context, UserManager<User> userManager)
     {
-        int animalTypesCount = await context.AnimalTypes.CountAsync();
-
-        if (animalTypesCount == 0)
-        {
-            List<AnimalType> animalTypes = new List<AnimalType>
-            {
-                new AnimalType{ Name = "Cat" },
-                new AnimalType{ Name = "Dog" },
-                new AnimalType{ Name = "Bird" },
-                new AnimalType{ Name = "Livestock" },
-                new AnimalType{ Name = "Transportation Animal" },
-                new AnimalType{ Name = "Other mammal" }
-            };
-
-            await context.AnimalTypes.AddRangeAsync(animalTypes);
-        }
-
+        #region UsersAndAccounts
         User? staffUser = await userManager.FindByEmailAsync("staffmember@vetsystem.com");
 
         if (staffUser is null)
@@ -117,6 +101,7 @@ public static class ApplicationDbContextSeed
         }
 
         Account? staffAccount = await context.Accounts
+            .AsNoTracking()
             .FirstOrDefaultAsync(ac => ac.UserId == staffUser.Id);
 
         if (staffAccount is null)
@@ -124,12 +109,40 @@ public static class ApplicationDbContextSeed
             return;
         }
 
-        bool staffExists = await context.StaffAccounts
-            .AnyAsync(s => s.AccountId == staffAccount.Id);
+        Account? ownerAccount = await context.Accounts
+            .AsNoTracking()
+            .FirstOrDefaultAsync(ac => ac.UserId == staffUser.Id);
 
-        if (!staffExists)
+        if (ownerAccount is null)
         {
-            StaffAccount staff = new StaffAccount
+            return;
+        }
+
+
+        Account? unregiteredOwner = await context.Accounts
+            .AsNoTracking()
+            .FirstOrDefaultAsync(uo => uo.User == null);
+
+        if (unregiteredOwner is null)
+        {
+            unregiteredOwner = new Account
+            {
+                Id = Guid.NewGuid().ToString(),
+                FirstName = "Kiril",
+                LastName = "Draganov",
+                PhoneNumber = "0886669999"
+            };
+
+            context.Accounts.Add(unregiteredOwner);
+        }
+
+        StaffAccount? staff = await context.StaffAccounts
+            .AsNoTracking()
+            .FirstOrDefaultAsync(s => s.AccountId == staffAccount.Id);
+
+        if (staff is null)
+        {
+            staff = new StaffAccount
             {
                 Id = Guid.NewGuid().ToString(),
                 AccountId = staffAccount.Id,
@@ -137,6 +150,160 @@ public static class ApplicationDbContextSeed
 
             context.StaffAccounts.Add(staff);
         }
+
+        int animalTypesCount = await context.AnimalTypes.CountAsync();
+
+        int animalsCount = await context.Animals.CountAsync();
+
+        #endregion
+
+        if (animalTypesCount == 0 && animalsCount == 0)
+        {
+            #region AnimalTypes
+
+            AnimalType catType = new AnimalType { Name = "Cat" };
+            AnimalType dogType = new AnimalType { Name = "Dog" };
+            AnimalType parrotType = new AnimalType { Name = "Parrot" };
+
+
+            List<AnimalType> animalTypes = new List<AnimalType>
+            {
+                catType,
+                dogType,
+                parrotType,
+                new AnimalType { Name = "Bird" },
+                new AnimalType{ Name = "Livestock" },
+                new AnimalType{ Name = "Transportation Animal" },
+                new AnimalType{ Name = "Other mammal" }
+            };
+
+            await context.AnimalTypes.AddRangeAsync(animalTypes);
+
+            #endregion
+
+            #region Animals
+
+            Animal dog = new Animal
+            {
+                Name = "Bobo",
+                Age = 13,
+                Weight = 5.8m,
+                AnimalType = dogType,
+                OwnerId = ownerAccount.Id
+            };
+
+            Animal cat = new Animal
+            {
+                Name = "Jusan",
+                Age = 2,
+                Weight = 3.8m,
+                AnimalType = catType,
+                OwnerId = ownerAccount.Id
+            };
+
+            Animal parrot = new Animal
+            {
+                Name = "Koko",
+                Age = 1,
+                Weight = 1.1m,
+                AnimalType = parrotType,
+                OwnerId = unregiteredOwner.Id
+            };
+
+            context.Animals.AddRange(dog, cat, parrot);
+
+            #endregion
+
+            #region Prcedures
+
+            int proceduresCount = await context.Procedures.CountAsync();
+
+            if (proceduresCount == 0)
+            {
+                Procedure procedure1 = new Procedure
+                {
+                    StaffId = staff.Id,
+                    Name = "Tooth extraction",
+                    Description = "Surgical removal of a broken forth upper right Premolar tooth",
+                    Date = DateTime.Parse("2024-04-03T13:00"),
+                    Animal = dog
+                };
+
+                Procedure procedure2 = new Procedure
+                {
+                    StaffId = staff.Id,
+                    Name = "Nail clipping",
+                    Description = "Snip only the white part of the claw to prevent nail overgrowth.",
+                    Date = DateTime.Parse("2024-06-14T10:25"),
+                    Animal = cat
+                };
+
+                context.Procedures.AddRange(procedure1, procedure2);
+            }
+
+            #endregion
+
+            #region Prescription
+
+            PrescriptionCounter? counter = await context.PrescriptionCounters
+                .FirstOrDefaultAsync();
+
+            if (counter is null)
+            {
+                return;
+            }
+
+            Prescription prescription1 = new Prescription
+            {
+                Number = counter.ShowPrefix ? $"{counter.Prefix}{counter.Separator}{counter.CurrentNumber++:D6}" : $"{counter.CurrentNumber++:D6}",
+                IssueDate = DateTime.Parse("2024-07-02"),
+                Description = "Generic Anti-parasitic medicine for dogs - Take half a tablet once every week for 4 weeks",
+                Animal = dog,
+                StaffId = staff.Id,
+            };
+
+            Prescription prescription2 = new Prescription
+            {
+                Number = counter.ShowPrefix ? $"{counter.Prefix}{counter.Separator}{counter.CurrentNumber++:D6}" : $"{counter.CurrentNumber++:D6}",
+                IssueDate = DateTime.Parse("2024-07-13"),
+                Description = "Generic cat vitamins for cats at age 2 or more - Take one tablet every day for 10 days",
+                Animal = cat,
+                StaffId = staff.Id,
+            };
+
+            context.Prescriptions.AddRange(prescription1, prescription2);
+
+            #endregion
+        }
+
+        #region Appointments
+
+        int appointmentsCount = await context.Appointments.CountAsync();
+
+        if (appointmentsCount == 0)
+        {
+            Appointment appointment1 = new Appointment
+            {
+                Date = DateTime.Parse("2025-02-12T14:20"),
+                Desctiption = "Leukemia vaccination for adult cat",
+                StaffId = staff.Id,
+                Status = AppointmentStatus.Pending_Review,
+                OwnerId = ownerAccount.Id
+            };
+
+            Appointment appointment2 = new Appointment
+            {
+                Date = DateTime.Parse("2025-02-21T11:00:00"),
+                Desctiption = "General checkup on dog",
+                StaffId = staff.Id,
+                Status = AppointmentStatus.Confirmed,
+                OwnerId = ownerAccount.Id
+            };
+
+            context.AddRange(appointment1, appointment2);
+        }
+
+        #endregion
 
         await context.SaveChangesAsync();
     }
