@@ -1,13 +1,16 @@
 ﻿using Domain.Entities;
+using Infrastructure.Persistence.Configurations.Common;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace Infrastructure.Persistence.Configurations;
 
-public class AccountConfiguration : IEntityTypeConfiguration<OwnerAccount>
+public class OwnerAccountConfiguration : AuditableEntityConfiguration<OwnerAccount>
 {
-    public void Configure(EntityTypeBuilder<OwnerAccount> builder)
+    public override void Configure(EntityTypeBuilder<OwnerAccount> builder)
     {
+        base.Configure(builder);
+
         builder.HasKey(oc => oc.Id);
 
         builder.Property(oc => oc.FirstName)

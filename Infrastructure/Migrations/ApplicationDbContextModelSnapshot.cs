@@ -91,7 +91,7 @@ namespace Infrastructure.Migrations
                         .IsUnique()
                         .HasFilter("\"PassportNumber\" IS NOT NULL");
 
-                    b.ToTable("Animals");
+                    b.ToTable("Animals", (string)null);
                 });
 
             modelBuilder.Entity("Domain.Entities.AnimalType", b =>
@@ -133,7 +133,7 @@ namespace Infrastructure.Migrations
 
                     b.HasIndex("Name");
 
-                    b.ToTable("AnimalTypes");
+                    b.ToTable("AnimalTypes", (string)null);
                 });
 
             modelBuilder.Entity("Domain.Entities.Appointment", b =>
@@ -191,7 +191,7 @@ namespace Infrastructure.Migrations
 
                     b.HasIndex("StaffId");
 
-                    b.ToTable("Appointments");
+                    b.ToTable("Appointments", (string)null);
                 });
 
             modelBuilder.Entity("Domain.Entities.OwnerAccount", b =>
@@ -249,7 +249,7 @@ namespace Infrastructure.Migrations
                         .IsUnique()
                         .HasFilter("[UserId] IS NOT NULL");
 
-                    b.ToTable("OwnerAccounts");
+                    b.ToTable("OwnerAccounts", (string)null);
                 });
 
             modelBuilder.Entity("Domain.Entities.Prescription", b =>
@@ -309,7 +309,7 @@ namespace Infrastructure.Migrations
 
                     b.HasIndex("StaffId");
 
-                    b.ToTable("Prescriptions");
+                    b.ToTable("Prescriptions", (string)null);
                 });
 
             modelBuilder.Entity("Domain.Entities.PrescriptionCounter", b =>
@@ -336,7 +336,7 @@ namespace Infrastructure.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("PrescriptionCounters");
+                    b.ToTable("PrescriptionCounters", (string)null);
                 });
 
             modelBuilder.Entity("Domain.Entities.Procedure", b =>
@@ -395,7 +395,7 @@ namespace Infrastructure.Migrations
 
                     b.HasIndex("StaffId");
 
-                    b.ToTable("Procedures");
+                    b.ToTable("Procedures", (string)null);
                 });
 
             modelBuilder.Entity("Domain.Entities.StaffAccount", b =>
@@ -434,7 +434,7 @@ namespace Infrastructure.Migrations
                     b.HasIndex("AccountId")
                         .IsUnique();
 
-                    b.ToTable("StaffAccounts");
+                    b.ToTable("StaffAccounts", (string)null);
                 });
 
             modelBuilder.Entity("Domain.Entities.User", b =>
