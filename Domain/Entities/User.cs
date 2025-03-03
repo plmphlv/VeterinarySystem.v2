@@ -10,5 +10,5 @@ public class User : IdentityUser
 
     public bool IsDisabled { get; set; } = false;
 
-    public Account Account { get; set; } = null!;
+    public OwnerAccount Account { get; set; } = null!;
 }

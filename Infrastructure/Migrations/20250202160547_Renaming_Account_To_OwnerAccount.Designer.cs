@@ -4,6 +4,7 @@ using Infrastructure.Persistence;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Infrastructure.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20250202160547_Renaming_Account_To_OwnerAccount")]
+    partial class Renaming_Account_To_OwnerAccount
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -91,7 +94,7 @@ namespace Infrastructure.Migrations
                         .IsUnique()
                         .HasFilter("\"PassportNumber\" IS NOT NULL");
 
-                    b.ToTable("Animals", (string)null);
+                    b.ToTable("Animals");
                 });
 
             modelBuilder.Entity("Domain.Entities.AnimalType", b =>
@@ -133,7 +136,7 @@ namespace Infrastructure.Migrations
 
                     b.HasIndex("Name");
 
-                    b.ToTable("AnimalTypes", (string)null);
+                    b.ToTable("AnimalTypes");
                 });
 
             modelBuilder.Entity("Domain.Entities.Appointment", b =>
@@ -191,7 +194,7 @@ namespace Infrastructure.Migrations
 
                     b.HasIndex("StaffId");
 
-                    b.ToTable("Appointments", (string)null);
+                    b.ToTable("Appointments");
                 });
 
             modelBuilder.Entity("Domain.Entities.OwnerAccount", b =>
@@ -249,7 +252,7 @@ namespace Infrastructure.Migrations
                         .IsUnique()
                         .HasFilter("[UserId] IS NOT NULL");
 
-                    b.ToTable("OwnerAccounts", (string)null);
+                    b.ToTable("OwnerAccounts");
                 });
 
             modelBuilder.Entity("Domain.Entities.Prescription", b =>
@@ -309,7 +312,7 @@ namespace Infrastructure.Migrations
 
                     b.HasIndex("StaffId");
 
-                    b.ToTable("Prescriptions", (string)null);
+                    b.ToTable("Prescriptions");
                 });
 
             modelBuilder.Entity("Domain.Entities.PrescriptionCounter", b =>
@@ -336,7 +339,7 @@ namespace Infrastructure.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("PrescriptionCounters", (string)null);
+                    b.ToTable("PrescriptionCounters");
                 });
 
             modelBuilder.Entity("Domain.Entities.Procedure", b =>
@@ -395,7 +398,7 @@ namespace Infrastructure.Migrations
 
                     b.HasIndex("StaffId");
 
-                    b.ToTable("Procedures", (string)null);
+                    b.ToTable("Procedures");
                 });
 
             modelBuilder.Entity("Domain.Entities.StaffAccount", b =>
@@ -434,7 +437,7 @@ namespace Infrastructure.Migrations
                     b.HasIndex("AccountId")
                         .IsUnique();
 
-                    b.ToTable("StaffAccounts", (string)null);
+                    b.ToTable("StaffAccounts");
                 });
 
             modelBuilder.Entity("Domain.Entities.User", b =>

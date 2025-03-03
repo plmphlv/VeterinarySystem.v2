@@ -8,7 +8,7 @@ public class StaffAccount : AuditableEntity
 
     public string AccountId { get; set; } = null!;
 
-    public Account Account { get; set; } = null!;
+    public OwnerAccount Account { get; set; } = null!;
 
     public ICollection<Procedure> Procedures { get; set; } = new List<Procedure>();
 

@@ -2,7 +2,7 @@
 
 namespace Domain.Entities;
 
-public class Account : AuditableEntity
+public class OwnerAccount : AuditableEntity
 {
     public string Id { get; set; } = null!;
 
@@ -12,7 +12,7 @@ public class Account : AuditableEntity
 
     public string? Address { get; set; }
 
-    public string? PhoneNumber { get; set; }
+    public string PhoneNumber { get; set; } = null!;
 
     public StaffAccount? StaffAccount { get; set; } = null;
 

@@ -22,7 +22,7 @@ public class Animal : AuditableEntity
 
 	public string OwnerId { get; set; } = null!;
 
-	public Account Owner { get; set; } = null!;
+	public OwnerAccount Owner { get; set; } = null!;
 
 	public ICollection<Procedure> Procedures { get; set; } = new List<Procedure>();
 

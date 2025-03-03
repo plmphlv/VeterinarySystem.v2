@@ -36,12 +36,12 @@ public class RequestAppointmentCommandHandler : IRequestHandler<RequestAppointme
 
         string? ownerId = currentUserService.AccountId;
 
-        bool ownerExists = await context.Accounts
+        bool ownerExists = await context.OwnerAccounts
             .AnyAsync(u => u.Id == ownerId, cancellationToken);
 
         if (!ownerExists)
         {
-            throw new NotFoundException(nameof(Account), ownerId);
+            throw new NotFoundException(nameof(OwnerAccount), ownerId);
         }
 
         string staffMemberId = request.StaffId;
