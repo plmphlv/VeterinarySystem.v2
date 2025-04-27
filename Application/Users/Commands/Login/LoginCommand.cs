@@ -17,14 +17,13 @@ public class LoginCommand : IRequest<LoginResponce>
 
 public class LoginCommandHandler : IRequestHandler<LoginCommand, LoginResponce>
 {
-    private readonly IDateTime dateTime;
-    private readonly IConfiguration configuration;
+
+    private readonly IJwtManager jwtManager;
     private readonly IIdentityService identityService;
 
-    public LoginCommandHandler(IDateTime dateTime, IConfiguration configuration, IIdentityService identityService)
+    public LoginCommandHandler(IJwtManager jwtManager, IIdentityService identityService)
     {
-        this.dateTime = dateTime;
-        this.configuration = configuration;
+        this.jwtManager = jwtManager;
         this.identityService = identityService;
     }
 
@@ -45,30 +44,14 @@ public class LoginCommandHandler : IRequestHandler<LoginCommand, LoginResponce>
             };
         }
 
-        string apiKey = configuration.GetSection(ProjectConstants.ApiKey).Value;
+        string accessToken = await jwtManager.GenerateAccessTokenAsync(identifyingCredential);
+        string refreshToken = await jwtManager.GenerateRefreshTokenAsync(identifyingCredential);
 
-        IEnumerable<Claim> claims = await identityService
-            .GetUserClaimsAsync(identifyingCredential, cancellationToken);
-
-        SymmetricSecurityKey key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(apiKey));
-        SigningCredentials credentials = new SigningCredentials(key, SecurityAlgorithms.HmacSha512Signature);
-
-        DateTime expiration = dateTime.Now
-            .AddMinutes(45);
-
-        JwtSecurityToken token = new JwtSecurityToken(
-            claims: claims,
-            expires: expiration,
-            signingCredentials: credentials);
-
-        string jwt = new JwtSecurityTokenHandler().WriteToken(token);
-
-        LoginResponce responce = new LoginResponce()
+        return new LoginResponce
         {
-            AccessToken = jwt,
+            AccessToken = accessToken,
+            RefreshToken = refreshToken,
             IsSuccessful = true
         };
-
-        return responce;
     }
 }

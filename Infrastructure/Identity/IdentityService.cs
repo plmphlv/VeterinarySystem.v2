@@ -8,7 +8,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using System.Security.Claims;
 
-namespace Infrastructure.Services;
+namespace Infrastructure.Identity;
 
 public class IdentityService : IIdentityService
 {

@@ -1,6 +1,5 @@
 ﻿using Application.Common.Behaviours;
 using FluentValidation;
-using MediatR;
 using Microsoft.Extensions.DependencyInjection;
 using System.Reflection;
 
@@ -16,7 +15,6 @@ public static class ConfigureServices
 		services.AddTransient(typeof(IPipelineBehavior<,>), typeof(ValidationBehaviour<,>));
 		services.AddTransient(typeof(IPipelineBehavior<,>), typeof(PerformanceBehaviour<,>));
 		services.AddAutoMapper(Assembly.GetExecutingAssembly());
-
 
 		return services;
 	}

@@ -1,10 +1,19 @@
+using Application;
+using Application.Common.Interfaces;
 using Domain.Entities;
+using Infrastructure;
 using Infrastructure.Persistence;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using NSwag;
+using NSwag.Generation.Processors.Security;
 using Serilog;
-using Serilog.Exceptions;
-using System.Reflection;
+using System.Text.Json.Serialization;
+using Web.API.Extensions;
+using Web.API.Filters;
+using Web.API.Services;
+using Web.API.Setup;
 
 namespace Web.API;
 
@@ -12,72 +21,92 @@ public class Program
 {
     public static async Task Main(string[] args)
     {
-        WebApplicationBuilder builder = WebApplication.CreateBuilder(args);
+        WebApplicationBuilder builder = WebApplication.CreateBuilder(args).ConfigureLogger();
 
-        string environment = Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT")!;
-
-        var configuration = new ConfigurationBuilder()
-            .AddJsonFile("appsettings.json", optional: false, reloadOnChange: true)
-            .AddJsonFile(
-                $"appsettings.{environment}.json",
-                optional: true)
-            .Build();
-
-        Log.Logger = new LoggerConfiguration()
-            .Enrich.FromLogContext()
-            .Enrich.WithExceptionDetails()
-            .WriteTo.Debug()
-            .WriteTo.Console()
-            .ReadFrom.Configuration(configuration)
-            .CreateLogger();
-
-        var host = CreateHostBuilder(args).Build();
-
-        using (var scope = host.Services.CreateScope())
-        {
-            var services = scope.ServiceProvider;
-
-            try
+        builder.Services.AddControllers(c => c.Filters.Add(new ApiExceptionFilterAttribute()))
+            .AddJsonOptions(options =>
             {
-                ApplicationDbContext context = services.GetRequiredService<ApplicationDbContext>();
-                context.Database.Migrate();
+                options.JsonSerializerOptions.Converters.Add(new JsonStringEnumConverter());
+                options.JsonSerializerOptions.DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull;
+            });
 
-                RoleManager<IdentityRole> roleManager = services.GetRequiredService<RoleManager<IdentityRole>>();
-                UserManager<User> userManager = services.GetRequiredService<UserManager<User>>();
+        builder.Services.AddScoped<ICurrentUserService, CurrentUserService>();
 
-                await ApplicationDbContextSeed.SeedRoles(roleManager);
-                await ApplicationDbContextSeed.SeedPrescriptionCounter(context, configuration);
-
-                if (builder.Environment.IsDevelopment())
+        builder.Services
+            .AddApplication()
+            .AddInfrastructure(builder.Configuration)
+            .AddHttpContextAccessor()
+            .AddCors(builder.Environment)
+            .AddOpenApiDocument(configure =>
+            {
+                configure.Title = "VeterinarySystem Web.API";
+                configure.AddSecurity("JWT", Enumerable.Empty<string>(), new OpenApiSecurityScheme
                 {
-                    await ApplicationDbContextSeed.SeedDevelopmentData(context, userManager, configuration);
-                }
+                    Scheme = JwtBearerDefaults.AuthenticationScheme,
+                    Type = OpenApiSecuritySchemeType.ApiKey,
+                    In = OpenApiSecurityApiKeyLocation.Header,
+                    BearerFormat = "JWT",
+                    Name = "Authorization",
+                    Description = "Type into the textbox: Bearer {your JWT token}."
+                });
 
-            }
-            catch (Exception ex)
-            {
-                Log.Fatal($"An error occurred while migrating or seeding the database.", ex);
-                throw;
-            }
+                configure.OperationProcessors.Add(new AspNetCoreOperationSecurityScopeProcessor("JWT"));
+            });
 
+        builder.Services.AddHealthChecks();
+
+        WebApplication app = builder.Build();
+
+        app.UseCors();
+
+        app.UseSerilogRequestLogging();
+
+        if (app.Environment.IsDevelopment())
+        {
+            app.UseOpenApi();
+            app.UseSwaggerUi();
         }
 
         try
         {
-            await host.RunAsync();
+            using IServiceScope scope = app.Services.CreateScope();
+
+            IApplicationDbContext context = scope.ServiceProvider.GetRequiredService<IApplicationDbContext>();
+
+            UserManager<User> userManager = scope.ServiceProvider.GetRequiredService<UserManager<User>>();
+            RoleManager<IdentityRole> roleManager = scope.ServiceProvider.GetRequiredService<RoleManager<IdentityRole>>();
+
+            await context.Database.MigrateAsync();
+
+            await ApplicationDbContextSeed.SeedRoles(roleManager);
+
+            if (app.Environment.IsDevelopment())
+            {
+                await ApplicationDbContextSeed.SeedDevelopmentData((ApplicationDbContext)context, userManager, builder.Configuration);
+            }
         }
         catch (Exception ex)
         {
-            Log.Fatal($"Failed to start {Assembly.GetExecutingAssembly().GetName().Name}", ex);
+            Log.Fatal("An error occurred while migrating or seeding the database.", ex);
+
             throw;
         }
-    }
 
-    public static IHostBuilder CreateHostBuilder(string[] args)
-    {
-        return Host.CreateDefaultBuilder(args)
-            .ConfigureWebHostDefaults(webBuilder =>
-                webBuilder.UseStartup<Startup>())
-            .UseSerilog();
+        app.UseAuthentication();
+        app.UseAuthorization();
+
+        app.MapControllers();
+        app.UseHealthChecks("/health");
+
+        try
+        {
+            await app.RunAsync();
+        }
+        catch (Exception ex)
+        {
+            Log.Fatal(ex, "Host terminated unexpectedly");
+
+            throw;
+        }
     }
 }
