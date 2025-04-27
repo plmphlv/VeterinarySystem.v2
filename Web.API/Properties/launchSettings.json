@@ -14,7 +14,10 @@
       "launchBrowser": false,
       "launchUrl": "swagger",
       "environmentVariables": {
-        "ASPNETCORE_ENVIRONMENT": "Development"
+        "ASPNETCORE_ENVIRONMENT": "Development",
+        "JWT_SECURITY_KEY": "JpRFffMNblLSqbx3S5znpEpGLHtg8kOtmT2kQGVste8QtgfBCKUsBwjntpNfYotnV3YGJ6fDktc/Zj5DK5A46A==",
+        "JWT_ISSUER": "https://localhost:44348/",
+        "JWT_AUDIENCE": "https://localhost:44348/"
       }
     },
     "Web.API": {
