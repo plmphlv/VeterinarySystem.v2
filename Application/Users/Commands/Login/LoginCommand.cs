@@ -1,12 +1,4 @@
-﻿using Application.Common.Interfaces;
-using MediatR;
-using Microsoft.Extensions.Configuration;
-using Microsoft.IdentityModel.Tokens;
-using System.IdentityModel.Tokens.Jwt;
-using System.Security.Claims;
-using System.Text;
-
-namespace Application.Users.Commands.Login;
+﻿namespace Application.Users.Commands.Login;
 
 public class LoginCommand : IRequest<LoginResponce>
 {
