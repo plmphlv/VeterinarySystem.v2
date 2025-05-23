@@ -1,6 +1,4 @@
-﻿using Application.Prescriptions.Commands.Delete;
-
-namespace Application.Prescriptions.Queries.GetPrescriptionDetails;
+﻿namespace Application.Prescriptions.Queries.GetPrescriptionDetails;
 
 public class GetPrescriptionDetailsQuery : IRequest<PrescriptionOutputModel>
 {

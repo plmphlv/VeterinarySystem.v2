@@ -1,7 +1,4 @@
-﻿using Application.Common.Interfaces;
-using Domain.Entities;
-using Domain.Enums;
-using MediatR;
+﻿using Domain.Enums;
 
 namespace Application.StaffProfiles.Commands.Create;
 

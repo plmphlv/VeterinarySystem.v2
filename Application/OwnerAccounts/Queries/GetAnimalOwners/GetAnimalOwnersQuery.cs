@@ -1,6 +1,4 @@
-﻿using Application.OwnerAccounts.Queries.GetOwnerAccountDetails;
-
-namespace Application.OwnerAccounts.Queries.GetAnimalOwners;
+﻿namespace Application.OwnerAccounts.Queries.GetAnimalOwners;
 
 public class GetAnimalOwnersQuery : IRequest<List<OwnerAccountDto>>
 {

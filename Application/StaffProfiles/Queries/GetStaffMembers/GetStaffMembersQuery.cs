@@ -1,9 +1,4 @@
-﻿using Application.Common.Interfaces;
-using Domain.Entities;
-using MediatR;
-using Microsoft.EntityFrameworkCore;
-
-namespace Application.StaffProfiles.Queries.GetStaffMembers;
+﻿namespace Application.StaffProfiles.Queries.GetStaffMembers;
 
 public class GetStaffMembersQuery : IRequest<List<StaffMemberDto>>
 {

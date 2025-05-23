@@ -1,6 +1,7 @@
 ﻿using Application.Common.Exceptions;
 using Application.Common.Interfaces;
 using Application.Common.Models;
+using Application.Users.Commands.Register;
 using Domain.Entities;
 using FluentValidation.Results;
 using Infrastructure.Extensions;
@@ -19,6 +20,54 @@ public class IdentityService : IIdentityService
     {
         this.userManager = userManager;
         this.context = context;
+    }
+
+    public async Task<(Result, string?)> CreateUserAsync(RegisterCommand command, CancellationToken cancellationToken)
+    {
+        User user = new User
+        {
+            UserName = command.UserName,
+            Email = command.Email,
+        };
+
+        IdentityResult result = await userManager.CreateAsync(user, command.Password);
+
+        if (!result.Succeeded)
+        {
+            return (result.ToApplicationResult(), user.Id);
+        }
+
+        OwnerAccount account = new OwnerAccount
+        {
+            Id = Guid.NewGuid().ToString(),
+            FirstName = command.FirstName,
+            LastName = command.LastName,
+            UserId = user.Id,
+            PhoneNumber = command.PhoneNumber
+        };
+
+        context.OwnerAccounts.Add(account);
+
+        List<Claim> claims = new List<Claim>
+        {
+            new Claim(ClaimTypes.Name,user.UserName),
+            new Claim(ClaimTypes.NameIdentifier,user.Id),
+            new Claim(ClaimTypes.Email,user.Email),
+            new Claim(InfrastructureConstants.AccountId,account.Id)
+        };
+
+        IdentityResult claimsResult = await userManager.AddClaimsAsync(user, claims);
+
+        if (!claimsResult.Succeeded)
+        {
+            return (claimsResult.ToApplicationResult(), user.Id);
+        }
+
+        await context.SaveChangesAsync(cancellationToken);
+
+        string token = await userManager.GenerateEmailConfirmationTokenAsync(user);
+
+        return (Result.Success(), token);
     }
 
     private async Task<User?> FindUserByUsernameOrEmailAsync(string userIdentifier)

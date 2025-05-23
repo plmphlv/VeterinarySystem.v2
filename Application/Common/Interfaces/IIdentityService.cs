@@ -1,5 +1,5 @@
 ﻿using Application.Common.Models;
-using Domain.Entities;
+using Application.Users.Commands.Register;
 using Microsoft.AspNetCore.Identity;
 using System.Security.Claims;
 
@@ -7,6 +7,8 @@ namespace Application.Common.Interfaces;
 
 public interface IIdentityService
 {
+    Task<(Result, string?)> CreateUserAsync(RegisterCommand command, CancellationToken cancellationToken);
+
     Task<bool> ValidateLoginAsync(string userIdentifier, string password, CancellationToken cancellationToken);
 
     Task<string> SetRefreshTokenAsync(string identifier, DateTime refreshTokenExpiryTime, CancellationToken cancellationToken);

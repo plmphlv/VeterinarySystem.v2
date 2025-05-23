@@ -1,6 +1,4 @@
-﻿using Domain.Enums;
-
-namespace Application.Appointments.Queries.GetAppointmentDetails;
+﻿namespace Application.Appointments.Queries.GetAppointmentDetails;
 
 public class AppointmentOutputModel
 {

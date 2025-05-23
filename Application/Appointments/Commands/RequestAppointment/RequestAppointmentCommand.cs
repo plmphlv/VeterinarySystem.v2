@@ -19,21 +19,6 @@ public class RequestAppointmentCommandHandler : IRequestHandler<RequestAppointme
 
     public async Task<int> Handle(RequestAppointmentCommand request, CancellationToken cancellationToken)
     {
-        DateTime appointmentTime = request.Date;
-
-        bool isTimeSlotTaken = await context.Appointments
-            .AnyAsync(ap => ap.Date == appointmentTime, cancellationToken);
-
-        if (isTimeSlotTaken)
-        {
-            List<ValidationFailure> validationFailures = new List<ValidationFailure>
-            {
-                new ValidationFailure(nameof(appointmentTime),"Time slot is unavailable",appointmentTime)
-            };
-
-            throw new ValidationException(validationFailures);
-        }
-
         string? ownerId = currentUserService.AccountId;
 
         bool ownerExists = await context.OwnerAccounts

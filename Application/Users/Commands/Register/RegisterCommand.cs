@@ -1,8 +1,4 @@
-﻿using Application.Common.Interfaces;
-using Domain.Entities;
-using MediatR;
-using Microsoft.EntityFrameworkCore.Storage;
-using System.Security.Claims;
+﻿using Application.Common.Models;
 
 namespace Application.Users.Commands.Register;
 
@@ -36,29 +32,12 @@ public class RegisterCommandHandler : IRequestHandler<RegisterCommand>
 
 	public async Task Handle(RegisterCommand request, CancellationToken cancellationToken)
 	{
-		//using IDbContextTransaction transaction = await context.Database
-		//	.BeginTransactionAsync(cancellationToken);
+        (Result result, string? token) = await identityService.CreateUserAsync(request, cancellationToken);
 
-		//User user = new User
-		//{
-		//	Email = request.Email,
-		//	FirstName = request.FirstName,
-		//	LastName = request.LastName,
-		//	UserName = request.UserName,
-		//	PhoneNumber = request.PhoneNumber
-		//};
-
-		//string token = await identityService.RegisterUserAsync(user, request.Password, cancellationToken);
-
-		//List<Claim> claims = new List<Claim>
-		//{
-		//	new Claim (ClaimTypes.Name,user.UserName),
-		//	new Claim (ClaimTypes.Name,user.Id),
-		//	new Claim (ClaimTypes.Email,user.Email)
-		//};
-
-		//await identityService.AddClaimsAsync(user, claims);
-
-		//await transaction.CommitAsync(cancellationToken);
-	}
+        if (!result.Succeeded)
+        {
+            throw new ValidationException(
+                result.Errors.Select(e => new ValidationFailure(nameof(RegisterCommand), e)));
+        }
+    }
 }
