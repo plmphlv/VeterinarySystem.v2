@@ -1,9 +1,4 @@
-﻿using Application.Common.Exceptions;
-using Application.Common.Interfaces;
-using Domain.Entities;
-using Domain.Enums;
-using MediatR;
-using Microsoft.EntityFrameworkCore;
+﻿using Domain.Enums;
 
 namespace Application.StaffProfiles.Commands.Delete;
 

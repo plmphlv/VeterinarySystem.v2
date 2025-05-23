@@ -1,10 +1,4 @@
-﻿using Application.Common.Exceptions;
-using Application.Common.Interfaces;
-using Domain.Entities;
-using MediatR;
-using Microsoft.EntityFrameworkCore;
-
-namespace Application.Animals.Commands.Delete;
+﻿namespace Application.Animals.Commands.Delete;
 
 public class DeleteAnimalCommand : IRequest
 {

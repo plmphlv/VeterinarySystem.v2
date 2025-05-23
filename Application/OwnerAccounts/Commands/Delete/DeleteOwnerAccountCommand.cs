@@ -1,5 +1,4 @@
-﻿
-namespace Application.OwnerAccounts.Commands.Delete;
+﻿namespace Application.OwnerAccounts.Commands.Delete;
 
 public class DeleteOwnerAccountCommand : IRequest
 {

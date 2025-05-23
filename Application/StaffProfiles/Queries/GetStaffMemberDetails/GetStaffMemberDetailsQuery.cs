@@ -1,10 +1,4 @@
-﻿using Application.Common.Exceptions;
-using Application.Common.Interfaces;
-using Domain.Entities;
-using MediatR;
-using Microsoft.EntityFrameworkCore;
-
-namespace Application.StaffProfiles.Queries.GetStaffMemberDetails;
+﻿namespace Application.StaffProfiles.Queries.GetStaffMemberDetails;
 
 public class GetStaffMemberDetailsQuery : IRequest<StaffMemberOutputModel>
 {

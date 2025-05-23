@@ -1,5 +1,4 @@
-﻿
-namespace Application.Procedures.Commands.Delete;
+﻿namespace Application.Procedures.Commands.Delete;
 
 public class DeleteProcedureCommand : IRequest
 {

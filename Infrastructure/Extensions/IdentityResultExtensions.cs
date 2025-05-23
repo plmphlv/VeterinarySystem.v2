@@ -1,5 +1,4 @@
 ﻿using Application.Common.Models;
-using FluentValidation.Results;
 using Microsoft.AspNetCore.Identity;
 
 namespace Infrastructure.Extensions

@@ -1,5 +1,4 @@
-﻿
-namespace Application.Prescriptions.Commands.Update;
+﻿namespace Application.Prescriptions.Commands.Update;
 
 public class UpdatePrescriptionCommand : IRequest
 {

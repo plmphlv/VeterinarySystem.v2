@@ -1,5 +1,4 @@
-﻿
-namespace Application.Prescriptions.Commands.Delete;
+﻿namespace Application.Prescriptions.Commands.Delete;
 
 public class DeletePrescriptionCommand : IRequest
 {

@@ -1,6 +1,4 @@
-﻿using FluentValidation.Results;
-
-namespace Application.AnimalTypes.Commands.Update;
+﻿namespace Application.AnimalTypes.Commands.Update;
 
 public class UpdateAnimalTypeCommand : IRequest
 {
