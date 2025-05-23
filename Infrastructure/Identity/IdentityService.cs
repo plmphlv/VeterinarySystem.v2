@@ -37,14 +37,29 @@ public class IdentityService : IIdentityService
             return (result.ToApplicationResult(), user.Id);
         }
 
-        OwnerAccount account = new OwnerAccount
+        string firstName = command.FirstName;
+        string lastName = command.LastName;
+        string phoneNumber = command.PhoneNumber;
+
+        OwnerAccount? account = await context.OwnerAccounts
+            .FirstOrDefaultAsync(oa =>
+        oa.FirstName == firstName &&
+        oa.LastName == lastName &&
+        oa.PhoneNumber == phoneNumber,
+        cancellationToken);
+
+        if (account is null)
         {
-            Id = Guid.NewGuid().ToString(),
-            FirstName = command.FirstName,
-            LastName = command.LastName,
-            UserId = user.Id,
-            PhoneNumber = command.PhoneNumber
-        };
+            account = new OwnerAccount
+            {
+                Id = Guid.NewGuid().ToString(),
+                FirstName = firstName,
+                LastName = lastName,
+                PhoneNumber = phoneNumber
+            };
+        }
+
+        account.UserId = user.Id;
 
         context.OwnerAccounts.Add(account);
 
@@ -90,32 +105,6 @@ public class IdentityService : IIdentityService
         bool isValidPassword = await userManager.CheckPasswordAsync(user, password);
 
         return isValidPassword;
-    }
-
-    public async Task<string> RegisterUserAsync(User user, string password, CancellationToken cancellationToken)
-    {
-        bool isExistingUser = await userManager.Users
-            .AnyAsync(u => u.Email == user.Email || u.UserName == user.UserName, cancellationToken);
-
-        if (isExistingUser)
-        {
-            throw new ValidationException(new List<ValidationFailure> {
-                new ValidationFailure{ ErrorMessage = "Username or email is already in use" } });
-        }
-
-        IdentityResult result = await userManager.CreateAsync(user, password);
-
-        if (!result.Succeeded)
-        {
-            IEnumerable<ValidationFailure> failures = result.Errors
-                .Select(e => new ValidationFailure(e.Code, e.Description));
-
-            throw new ValidationException(failures);
-        }
-
-        string token = await userManager.GenerateEmailConfirmationTokenAsync(user);
-
-        return token;
     }
 
     public Task ChangePasswordAsync(string userId, string currentPassword, string newPassword, CancellationToken cancellationToken)
