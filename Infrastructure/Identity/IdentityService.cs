@@ -108,18 +108,9 @@ public class IdentityService : IIdentityService
         return isValidPassword;
     }
 
-    public async Task<Result> ChangePasswordAsync(string userId, string currentPassword, string newPassword, CancellationToken cancellationToken)
+    public Task ChangePasswordAsync(string userId, string currentPassword, string newPassword, CancellationToken cancellationToken)
     {
-        User? user = await userManager.FindByIdAsync(userId);
-
-        if (user is null)
-        {
-            throw new NotFoundException(nameof(User), userId);
-        }
-
-        IdentityResult result = await userManager.ChangePasswordAsync(user, currentPassword, newPassword);
-
-        return result.ToApplicationResult();
+        throw new NotImplementedException();
     }
 
     public Task<string> SetRefreshTokenAsync(string identifier, DateTime refreshTokenExpiryTime, CancellationToken cancellationToken)
