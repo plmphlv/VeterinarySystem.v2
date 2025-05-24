@@ -1,4 +1,5 @@
-﻿using Application.OwnerAccounts.Common;
+﻿using Application.Helpers;
+using Application.OwnerAccounts.Common;
 
 namespace Application.OwnerAccounts.Commands.Update;
 
@@ -31,7 +32,7 @@ public class UpdateOwnerAccountCommandHandler : IRequestHandler<UpdateOwnerAccou
         ownerAccount.FirstName = request.FirstName;
         ownerAccount.LastName = request.LastName;
         ownerAccount.Address = request.Address;
-        ownerAccount.PhoneNumber = request.PhoneNumber;
+        ownerAccount.PhoneNumber = PhoneNumberFormatter.Standardize(request.PhoneNumber);
 
         await context.SaveChangesAsync(cancellationToken);
     }

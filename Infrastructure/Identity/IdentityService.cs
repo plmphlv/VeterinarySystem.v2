@@ -1,7 +1,7 @@
 ﻿using Application.Common.Exceptions;
 using Application.Common.Interfaces;
 using Application.Common.Models;
-using Application.Users.Commands.Register;
+using Application.Users.Commands.Common;
 using Domain.Entities;
 using FluentValidation.Results;
 using Infrastructure.Extensions;
@@ -22,31 +22,47 @@ public class IdentityService : IIdentityService
         this.context = context;
     }
 
-    public async Task<(Result, string?)> CreateUserAsync(RegisterCommand command, CancellationToken cancellationToken)
+    public async Task<(Result, string?)> CreateUserAsync(UserInputModel model, CancellationToken cancellationToken)
     {
         User user = new User
         {
-            UserName = command.UserName,
-            Email = command.Email,
+            UserName = model.UserName,
+            Email = model.Email,
         };
 
-        IdentityResult result = await userManager.CreateAsync(user, command.Password);
+        IdentityResult result = await userManager.CreateAsync(user, model.Password);
 
         if (!result.Succeeded)
         {
             return (result.ToApplicationResult(), user.Id);
         }
 
-        OwnerAccount account = new OwnerAccount
-        {
-            Id = Guid.NewGuid().ToString(),
-            FirstName = command.FirstName,
-            LastName = command.LastName,
-            UserId = user.Id,
-            PhoneNumber = command.PhoneNumber
-        };
+        string firstName = model.FirstName;
+        string lastName = model.LastName;
+        string phoneNumber = model.PhoneNumber;
 
-        context.OwnerAccounts.Add(account);
+        OwnerAccount? account = await context.OwnerAccounts
+            .FirstOrDefaultAsync(oa =>
+        oa.FirstName == firstName &&
+        oa.LastName == lastName &&
+        oa.PhoneNumber == phoneNumber &&
+        oa.UserId == null,
+        cancellationToken);
+
+        if (account is null)
+        {
+            account = new OwnerAccount
+            {
+                Id = Guid.NewGuid().ToString(),
+                FirstName = firstName,
+                LastName = lastName,
+                PhoneNumber = phoneNumber
+            };
+
+            context.OwnerAccounts.Add(account);
+        }
+
+        account.UserId = user.Id;
 
         List<Claim> claims = new List<Claim>
         {
@@ -90,32 +106,6 @@ public class IdentityService : IIdentityService
         bool isValidPassword = await userManager.CheckPasswordAsync(user, password);
 
         return isValidPassword;
-    }
-
-    public async Task<string> RegisterUserAsync(User user, string password, CancellationToken cancellationToken)
-    {
-        bool isExistingUser = await userManager.Users
-            .AnyAsync(u => u.Email == user.Email || u.UserName == user.UserName, cancellationToken);
-
-        if (isExistingUser)
-        {
-            throw new ValidationException(new List<ValidationFailure> {
-                new ValidationFailure{ ErrorMessage = "Username or email is already in use" } });
-        }
-
-        IdentityResult result = await userManager.CreateAsync(user, password);
-
-        if (!result.Succeeded)
-        {
-            IEnumerable<ValidationFailure> failures = result.Errors
-                .Select(e => new ValidationFailure(e.Code, e.Description));
-
-            throw new ValidationException(failures);
-        }
-
-        string token = await userManager.GenerateEmailConfirmationTokenAsync(user);
-
-        return token;
     }
 
     public Task ChangePasswordAsync(string userId, string currentPassword, string newPassword, CancellationToken cancellationToken)

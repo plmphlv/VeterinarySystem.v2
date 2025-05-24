@@ -86,6 +86,7 @@ public static class ApplicationDbContextSeed
 
     public static async Task SeedDevelopmentData(ApplicationDbContext context, UserManager<User> userManager, IConfiguration configuration)
     {
+        await SeedPrescriptionCounter(context, configuration);
         await SeedUsers(context, userManager, configuration);
         await SeedSampleData(context, userManager);
     }
@@ -138,7 +139,7 @@ public static class ApplicationDbContextSeed
                 Id = Guid.NewGuid().ToString(),
                 FirstName = "Kiril",
                 LastName = "Draganov",
-                PhoneNumber = "088 666 9004"
+                PhoneNumber = "+359 88 666 9004"
             };
 
             context.OwnerAccounts.Add(unregiteredOwner);
@@ -185,7 +186,7 @@ public static class ApplicationDbContextSeed
                 new AnimalType{ Name = "Other mammal" }
             };
 
-            await context.AnimalTypes.AddRangeAsync(animalTypes);
+            context.AnimalTypes.AddRange(animalTypes);
 
             #endregion
 

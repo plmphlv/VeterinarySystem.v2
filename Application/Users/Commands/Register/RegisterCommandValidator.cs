@@ -32,8 +32,8 @@ public class RegisterCommandValidator : AbstractValidator<RegisterCommand>
 
 		RuleFor(c => c.PhoneNumber)
 			.NotEmpty()
-			.WithMessage("Phone number is required")
-			.Length(10)
-			.WithMessage("A valid phone number is reqired");
+			.WithMessage("Phone number is required");
+			//.Length(16)
+			//.WithMessage("A valid phone number is reqired");
 	}
 }
