@@ -1,13 +1,13 @@
 ﻿namespace Application.Users.Commands.Login;
 
-public class LoginCommand : IRequest<LoginResponce>
+public class LoginCommand : IRequest<AuthResponse>
 {
     public string IdentifyingCredential { get; set; } = null!;
 
     public string Password { get; set; } = null!;
 }
 
-public class LoginCommandHandler : IRequestHandler<LoginCommand, LoginResponce>
+public class LoginCommandHandler : IRequestHandler<LoginCommand, AuthResponse>
 {
 
     private readonly IJwtManager jwtManager;
@@ -19,7 +19,7 @@ public class LoginCommandHandler : IRequestHandler<LoginCommand, LoginResponce>
         this.identityService = identityService;
     }
 
-    public async Task<LoginResponce> Handle(LoginCommand request, CancellationToken cancellationToken)
+    public async Task<AuthResponse> Handle(LoginCommand request, CancellationToken cancellationToken)
     {
         string identifyingCredential = request.IdentifyingCredential;
         string password = request.Password;
@@ -29,7 +29,7 @@ public class LoginCommandHandler : IRequestHandler<LoginCommand, LoginResponce>
 
         if (!isValidLogin)
         {
-            return new LoginResponce
+            return new AuthResponse
             {
                 IsSuccessful = false,
                 ErrorMessage = UserMessages.InvalidUser
@@ -39,7 +39,7 @@ public class LoginCommandHandler : IRequestHandler<LoginCommand, LoginResponce>
         string accessToken = await jwtManager.GenerateAccessTokenAsync(identifyingCredential);
         string refreshToken = await jwtManager.GenerateRefreshTokenAsync(identifyingCredential);
 
-        return new LoginResponce
+        return new AuthResponse
         {
             AccessToken = accessToken,
             RefreshToken = refreshToken,

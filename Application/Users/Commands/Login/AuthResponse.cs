@@ -1,6 +1,6 @@
 ﻿namespace Application.Users.Commands.Login;
 
-public class LoginResponce
+public class AuthResponse
 {
 	public string? AccessToken { get; set; }
 
