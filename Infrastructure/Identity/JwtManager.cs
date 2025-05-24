@@ -97,6 +97,7 @@ namespace Infrastructure.Identity
             {
                 throw new NotFoundException(nameof(User), userId);
             }
+
             bool isValid = user.RefreshToken == refreshToken && user.RefreshTokenExpiryTime > dateTime.Now;
 
             return isValid;

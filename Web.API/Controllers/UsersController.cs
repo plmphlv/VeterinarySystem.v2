@@ -1,4 +1,5 @@
 ﻿using Application.Users.Commands.Login;
+using Application.Users.Commands.RefreshToken;
 using Application.Users.Commands.Register;
 using Application.Users.Commands.ResetPassword;
 using Microsoft.AspNetCore.Mvc;
@@ -8,7 +9,7 @@ namespace Web.API.Controllers;
 public class UsersController : ApiControllerBase
 {
     [HttpPost("Login")]
-    public async Task<ActionResult<LoginResponce>> Login([FromBody] LoginCommand command)
+    public async Task<ActionResult<AuthResponse>> Login([FromBody] LoginCommand command)
     {
         return await Mediator.Send(command);
     }
@@ -27,5 +28,11 @@ public class UsersController : ApiControllerBase
         await Mediator.Send(command);
 
         return NoContent();
+    }
+
+    [HttpPost("RefreshToken")]
+    public async Task<ActionResult<AuthResponse>> RefreshToken([FromBody] RefreshTokenCommand command)
+    {
+        return await Mediator.Send(command);
     }
 }
