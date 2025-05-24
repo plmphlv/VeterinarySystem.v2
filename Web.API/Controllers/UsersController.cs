@@ -1,7 +1,9 @@
-﻿using Application.Users.Commands.Login;
+﻿using Application.Users.Commands.ChangePassword;
+using Application.Users.Commands.Login;
 using Application.Users.Commands.RefreshToken;
 using Application.Users.Commands.Register;
 using Application.Users.Commands.ResetPassword;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Web.API.Controllers;
@@ -34,5 +36,14 @@ public class UsersController : ApiControllerBase
     public async Task<ActionResult<AuthResponse>> RefreshToken([FromBody] RefreshTokenCommand command)
     {
         return await Mediator.Send(command);
+    }
+
+    [HttpPut("ChangePassword")]
+    [Authorize]
+    public async Task<ActionResult> ChangePassword([FromBody] ChangePasswordCommand command)
+    {
+        await Mediator.Send(command);
+
+        return NoContent();
     }
 }
