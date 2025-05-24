@@ -1,4 +1,5 @@
-﻿using Application.OwnerAccounts.Common;
+﻿using Application.Helpers;
+using Application.OwnerAccounts.Common;
 
 namespace Application.OwnerAccounts.Commands.Create;
 
@@ -17,7 +18,7 @@ public class CreateOwnerAccountCommandHandler : IRequestHandler<CreateOwnerAccou
     {
         string firstName = request.FirstName.Trim();
         string lastName = request.LastName.Trim();
-        string phoneNumber = request.PhoneNumber.Trim();
+        string phoneNumber = PhoneNumberFormatter.Standardize(request.PhoneNumber);
 
         bool ownerExists = await context.OwnerAccounts
             .AnyAsync(ao =>

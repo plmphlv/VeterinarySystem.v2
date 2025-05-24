@@ -1,7 +1,7 @@
 ﻿using Application.Common.Exceptions;
 using Application.Common.Interfaces;
 using Application.Common.Models;
-using Application.Users.Commands.Register;
+using Application.Users.Commands.Common;
 using Domain.Entities;
 using FluentValidation.Results;
 using Infrastructure.Extensions;
@@ -22,30 +22,31 @@ public class IdentityService : IIdentityService
         this.context = context;
     }
 
-    public async Task<(Result, string?)> CreateUserAsync(RegisterCommand command, CancellationToken cancellationToken)
+    public async Task<(Result, string?)> CreateUserAsync(UserInputModel model, CancellationToken cancellationToken)
     {
         User user = new User
         {
-            UserName = command.UserName,
-            Email = command.Email,
+            UserName = model.UserName,
+            Email = model.Email,
         };
 
-        IdentityResult result = await userManager.CreateAsync(user, command.Password);
+        IdentityResult result = await userManager.CreateAsync(user, model.Password);
 
         if (!result.Succeeded)
         {
             return (result.ToApplicationResult(), user.Id);
         }
 
-        string firstName = command.FirstName;
-        string lastName = command.LastName;
-        string phoneNumber = command.PhoneNumber;
+        string firstName = model.FirstName;
+        string lastName = model.LastName;
+        string phoneNumber = model.PhoneNumber;
 
         OwnerAccount? account = await context.OwnerAccounts
             .FirstOrDefaultAsync(oa =>
         oa.FirstName == firstName &&
         oa.LastName == lastName &&
-        oa.PhoneNumber == phoneNumber,
+        oa.PhoneNumber == phoneNumber &&
+        oa.UserId == null,
         cancellationToken);
 
         if (account is null)
@@ -57,11 +58,11 @@ public class IdentityService : IIdentityService
                 LastName = lastName,
                 PhoneNumber = phoneNumber
             };
+
+            context.OwnerAccounts.Add(account);
         }
 
         account.UserId = user.Id;
-
-        context.OwnerAccounts.Add(account);
 
         List<Claim> claims = new List<Claim>
         {
