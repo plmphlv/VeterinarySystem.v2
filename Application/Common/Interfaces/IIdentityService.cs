@@ -11,11 +11,9 @@ public interface IIdentityService
 
     Task<bool> ValidateLoginAsync(string userIdentifier, string password, CancellationToken cancellationToken);
 
-    Task<string> SetRefreshTokenAsync(string identifier, DateTime refreshTokenExpiryTime, CancellationToken cancellationToken);
-
     Task<IEnumerable<Claim>> GetUserClaimsAsync(string userIdentifier, CancellationToken cancellationToken);
 
-    Task ChangePasswordAsync(string userId, string currentPassword, string newPassword, CancellationToken cancellationToken);
+    Task<Result> ChangePasswordAsync(string userId, string currentPassword, string newPassword, CancellationToken cancellationToken);
 
     Task<IdentityResult> AddClaimsAsync(User user, IEnumerable<Claim> claims);
 
