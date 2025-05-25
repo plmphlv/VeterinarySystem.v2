@@ -122,11 +122,6 @@ public class IdentityService : IIdentityService
         return result.ToApplicationResult();
     }
 
-    public Task<string> SetRefreshTokenAsync(string identifier, DateTime refreshTokenExpiryTime, CancellationToken cancellationToken)
-    {
-        throw new NotImplementedException();
-    }
-
     public async Task<IEnumerable<Claim>> GetUserClaimsAsync(string userIdentifier, CancellationToken cancellationToken)
     {
         User? user = await FindUserByUsernameOrEmailAsync(userIdentifier);
