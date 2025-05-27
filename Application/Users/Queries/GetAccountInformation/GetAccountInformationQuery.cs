@@ -1,4 +1,4 @@
-﻿using Application.Users.Common;
+﻿using Application.Users.Queries.GetAccountInformation;
 
 namespace Application.Users.Queries.GetAccountInforamtion
 {
@@ -21,7 +21,7 @@ namespace Application.Users.Queries.GetAccountInforamtion
             string id = request.Id;
 
             AccountOutputModel? account = await context.OwnerAccounts
-                .Where(a => a.Id == id && a.User != null)
+                .Where(oa => oa.Id == id && oa.User != null)
                 .Select(a => new AccountOutputModel
                 {
                     Id = a.Id,
@@ -33,7 +33,7 @@ namespace Application.Users.Queries.GetAccountInforamtion
                 })
                 .FirstOrDefaultAsync(cancellationToken);
 
-            if (account == null)
+            if (account is null)
             {
                 throw new NotFoundException(nameof(OwnerAccount), id);
             }

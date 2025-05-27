@@ -3,8 +3,10 @@ using Application.Users.Commands.Login;
 using Application.Users.Commands.RefreshToken;
 using Application.Users.Commands.Register;
 using Application.Users.Commands.ResetPassword;
+using Application.Users.Commands.UpdateAccount;
 using Application.Users.Common;
 using Application.Users.Queries.GetAccountInforamtion;
+using Application.Users.Queries.GetAccountInformation;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
@@ -53,5 +55,18 @@ public class UsersController : ApiControllerBase
     public async Task<ActionResult<AccountOutputModel>> GetAccoutInformation([FromRoute] string id)
     {
         return await Mediator.Send(new GetAccountInformationQuery { Id = id });
+    }
+
+    [HttpPut("UpdateAccount/{id}")]
+    public async Task<ActionResult> UpdateAccoutInformation([FromRoute] string id, [FromBody] UpdateAccountCommand command)
+    {
+        if (id != command.Id)
+        {
+            return BadRequest();
+        }
+
+        await Mediator.Send(command);
+
+        return NoContent();
     }
 }
