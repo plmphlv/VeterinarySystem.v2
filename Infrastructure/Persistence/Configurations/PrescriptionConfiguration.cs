@@ -37,5 +37,10 @@ public class PrescriptionConfiguration : AuditableEntityConfiguration<Prescripti
             .OnDelete(DeleteBehavior.Restrict);
 
         builder.HasIndex(p => p.StaffId);
+
+        builder.Property(p => p.Description)
+            .IsRequired()
+            .HasMaxLength(1000)
+            .HasColumnType("nvarchar(1000)");
     }
 }

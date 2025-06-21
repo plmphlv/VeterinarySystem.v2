@@ -5,8 +5,6 @@ public class UpdatePrescriptionCommand : IRequest
     public int Id { get; set; }
 
     public string Description { get; set; } = null!;
-
-    public DateTime IssueDate { get; set; }
 }
 
 public class UpdatePrescriptionCommandHandler : IRequestHandler<UpdatePrescriptionCommand>
@@ -31,7 +29,6 @@ public class UpdatePrescriptionCommandHandler : IRequestHandler<UpdatePrescripti
         }
 
         prescription.Description = request.Description;
-        prescription.IssueDate = request.IssueDate;
 
         await context.SaveChangesAsync(cancellationToken);
     }

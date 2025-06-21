@@ -36,13 +36,13 @@ public class RequestAppointmentCommandHandler : IRequestHandler<RequestAppointme
 
         if (!staffMemberExists)
         {
-            throw new NotFoundException(nameof(StaffAccount), staffMemberExists);
+            throw new NotFoundException(nameof(StaffAccount), staffMemberId);
         }
 
         Appointment appointment = new Appointment
         {
             Date = request.Date,
-            Desctiption = request.Desctiption,
+            Desctiption = request.Description,
             Status = AppointmentStatus.Pending_Review,
             AnimalOwnerId = ownerId!,
             StaffId = staffMemberId,

@@ -17,5 +17,7 @@ namespace Web.API.Services
         public string? UserName => httpContextAccessor.HttpContext?.User.FindFirstValue(ClaimTypes.Name);
 
         public string? AccountId => httpContextAccessor.HttpContext?.User.FindFirstValue(InfrastructureConstants.AccountId);
+
+        public string? StaffId => httpContextAccessor.HttpContext?.User.FindFirstValue(InfrastructureConstants.StaffId);
     }
 }

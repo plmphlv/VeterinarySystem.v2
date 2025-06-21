@@ -19,10 +19,20 @@ public class CreateAppointmentCommandHadler : IRequestHandler<CreateAppointmentC
 
     public async Task<int> Handle(CreateAppointmentCommand request, CancellationToken cancellationToken)
     {
+        string staffMemberId = request.StaffId;
+
+        bool staffMemberExists = await context.StaffAccounts
+            .AnyAsync(sp => sp.Id == staffMemberId, cancellationToken);
+
+        if (!staffMemberExists)
+        {
+            throw new NotFoundException(nameof(StaffAccount), staffMemberId);
+        }
+
         DateTime appointmentTime = request.Date;
 
         bool isTimeSlotTaken = await context.Appointments
-            .AnyAsync(ap => ap.Date == appointmentTime, cancellationToken);
+            .AnyAsync(ap => ap.Date == appointmentTime && ap.StaffId == staffMemberId, cancellationToken);
 
         if (isTimeSlotTaken)
         {
@@ -44,20 +54,10 @@ public class CreateAppointmentCommandHadler : IRequestHandler<CreateAppointmentC
             throw new NotFoundException(nameof(OwnerAccount), ownerId);
         }
 
-        string staffMemberId = request.StaffId;
-
-        bool staffMemberExists = await context.StaffAccounts
-            .AnyAsync(sp => sp.Id == staffMemberId, cancellationToken);
-
-        if (!staffMemberExists)
-        {
-            throw new NotFoundException(nameof(StaffAccount), staffMemberId);
-        }
-
         Appointment appointment = new Appointment
         {
             Date = request.Date,
-            Desctiption = request.Desctiption,
+            Desctiption = request.Description,
             Status = AppointmentStatus.Confirmed,
             AnimalOwnerId = ownerId,
             StaffId = staffMemberId,

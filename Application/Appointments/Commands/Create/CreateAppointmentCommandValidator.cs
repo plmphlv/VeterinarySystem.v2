@@ -1,10 +1,11 @@
 ﻿using FluentValidation;
+using System;
 
 namespace Application.Appointments.Commands.Create;
 
 public class CreateAppointmentCommandValidator : AbstractValidator<CreateAppointmentCommand>
 {
-    public CreateAppointmentCommandValidator()
+    public CreateAppointmentCommandValidator(IDateTime dateTime)
     {
         RuleFor(c => c.Date)
             .NotEmpty()
@@ -18,9 +19,15 @@ public class CreateAppointmentCommandValidator : AbstractValidator<CreateAppoint
             .NotEmpty()
             .WithMessage("AnimalOwnerId is required.");
 
-        RuleFor(c => c.Desctiption)
+        RuleFor(c => c.Date)
+            .NotNull()
+            .WithMessage("Appointment date is required.")
+            .GreaterThanOrEqualTo(dateTime.Now.AddHours(2))
+            .WithMessage("Appointment date can only be in the future");
+
+        RuleFor(c => c.Description)
           .MaximumLength(255)
-          .When(c => !string.IsNullOrEmpty(c.Desctiption))
+          .When(c => !string.IsNullOrEmpty(c.Description))
           .WithMessage("Desctiption cannot be longer than 255 characters.");
     }
 }

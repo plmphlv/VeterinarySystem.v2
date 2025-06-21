@@ -48,22 +48,27 @@ public class UpdateAppointmentCommandHandler : IRequestHandler<UpdateAppointment
 
                 throw new ValidationException(validationFailures);
             }
+
+            appointment.Date = request.Date;
         }
 
         string staffMemberId = request.StaffId;
 
-        bool staffMemberExists = await context.StaffAccounts
-            .AnyAsync(sp => sp.Id == staffMemberId);
-
-        if (!staffMemberExists)
+        if (appointment.StaffId != staffMemberId)
         {
-            throw new NotFoundException(nameof(StaffAccount), staffMemberExists);
+            bool staffMemberExists = await context.StaffAccounts
+                .AnyAsync(sp => sp.Id == staffMemberId);
+
+            if (!staffMemberExists)
+            {
+                throw new NotFoundException(nameof(StaffAccount), staffMemberExists);
+            }
+
+            appointment.StaffId = request.StaffId;
         }
 
-        appointment.Date = request.Date;
-        appointment.Desctiption = request.Desctiption;
+        appointment.Desctiption = request.Description;
         appointment.Status = request.Status;
-        appointment.StaffId = request.StaffId;
 
         await context.SaveChangesAsync(cancellationToken);
     }
