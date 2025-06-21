@@ -7,4 +7,6 @@ public interface ICurrentUserService
     string? UserName { get; }
 
     string? AccountId { get; }
+
+    string? StaffId { get; }
 }

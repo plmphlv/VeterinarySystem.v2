@@ -2,8 +2,6 @@
 
 public class CreatePrescriptionCommand : IRequest<int>
 {
-    public string StaffId { get; set; } = null!;
-
     public int AnimalId { get; set; }
 
     public string Description { get; set; } = null!;
@@ -24,7 +22,7 @@ public class CreatePrescriptionCommandHandler : IRequestHandler<CreatePrescripti
 
     public async Task<int> Handle(CreatePrescriptionCommand request, CancellationToken cancellationToken)
     {
-        string? staffId = request.StaffId;
+        string? staffId = currentUserService.StaffId;
 
         bool staffMemberExists = await context.StaffAccounts.AnyAsync(sp => sp.AccountId == staffId, cancellationToken);
 
@@ -79,7 +77,7 @@ public class CreatePrescriptionCommandHandler : IRequestHandler<CreatePrescripti
         {
             Number = prescriptionNumber,
             Description = request.Description,
-            IssueDate = dateTime.Now,
+            IssueDate = dateTime.Now.Date,
             AnimalId = animalId,
             StaffId = staffId
         };
