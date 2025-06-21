@@ -1,14 +1,15 @@
-﻿using Application.Users.Common;
+﻿using Application.Helpers;
+using Application.Users.Common;
 
 namespace Application.Users.Commands.UpdateAccount
 {
     public class UpdateAccountCommand : AccountModel, IRequest;
 
-    public class UpdateAccountHanlder : IRequestHandler<UpdateAccountCommand>
+    public class UpdateAccountCommandHanlder : IRequestHandler<UpdateAccountCommand>
     {
         private readonly IApplicationDbContext context;
 
-        public UpdateAccountHanlder(IApplicationDbContext context)
+        public UpdateAccountCommandHanlder(IApplicationDbContext context)
         {
             this.context = context;
         }
@@ -25,10 +26,12 @@ namespace Application.Users.Commands.UpdateAccount
                 throw new NotFoundException(nameof(OwnerAccount), id);
             }
 
+            string phoneNumber = PhoneNumberFormatter.Standardize(request.PhoneNumber);
+
             account.FirstName = request.FirstName;
             account.LastName = request.LastName;
             account.Address = request.Address;
-            account.PhoneNumber = request.PhoneNumber;
+            account.PhoneNumber = phoneNumber;
 
             await context.SaveChangesAsync(cancellationToken);
         }
