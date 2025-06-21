@@ -25,4 +25,6 @@ public interface IApplicationDbContext
     DbSet<OwnerAccount> OwnerAccounts { get; set; }
 
     DbSet<User> Users { get; set; }
+
+    DbSet<Template> Templates { get; set; }
 }
