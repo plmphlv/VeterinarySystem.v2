@@ -1,8 +1,4 @@
-﻿using Application.Common.Interfaces;
-using MediatR;
-using Microsoft.EntityFrameworkCore;
-
-namespace Application.Animals.Queries.GetOwnersAnimals;
+﻿namespace Application.Animals.Queries.GetOwnersAnimals;
 
 public class GetOwnersAnimalsQuery : IRequest<List<AnimalDto>>
 {
