@@ -4,7 +4,6 @@ using Application.Users.Commands.RefreshToken;
 using Application.Users.Commands.Register;
 using Application.Users.Commands.ResetPassword;
 using Application.Users.Commands.UpdateAccount;
-using Application.Users.Common;
 using Application.Users.Queries.GetAccountInforamtion;
 using Application.Users.Queries.GetAccountInformation;
 using Microsoft.AspNetCore.Authorization;

@@ -42,6 +42,9 @@ public static class ConfigureServices
 
         services.AddTokenBasedAuthentication();
 
+        services.Configure<EmailSettings>(configuration.GetSection("EmailSettings"));
+
+        services.AddSingleton<IEmailService, EmailService>();
         services.AddTransient<IDateTime, DateTimeService>();
         services.AddTransient<ILocalizationServices, LocalizationServices>();
         services.AddScoped<IIdentityService, IdentityService>();
