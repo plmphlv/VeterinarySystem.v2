@@ -24,7 +24,7 @@ namespace Web.API.Controllers
         }
 
         [HttpPut("{id}")]
-        public async Task<ActionResult> Update([FromBody] int id, [FromBody] UpdateTemplateCommand command)
+        public async Task<ActionResult> Update([FromRoute] int id, [FromBody] UpdateTemplateCommand command)
         {
             if (id != command.Id)
             {
