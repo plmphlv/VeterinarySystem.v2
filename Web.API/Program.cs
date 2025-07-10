@@ -55,6 +55,11 @@ public class Program
 
         builder.Services.AddHealthChecks();
 
+        if (builder.Environment.IsDevelopment())
+        {
+            builder.WebHost.UseUrls("https://localhost:44348");
+        }
+
         WebApplication app = builder.Build();
 
         app.UseCors();
