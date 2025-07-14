@@ -16,13 +16,13 @@ const Footer: React.FC = () => {
                     <Link to="/">Home</Link>
                 </li>
                 <li>
-                    <Link to="/about.html">About</Link>
+                    <Link to="/about">About</Link>
                 </li>
                 <li>
-                    <Link to="/contact.html">Contact</Link>
+                    <Link to="/contact">Contact</Link>
                 </li>
                 <li>
-                    <Link to="/services.html">Services</Link>
+                    <Link to="/services">Services</Link>
                 </li>
                 {/*
                 <li>
@@ -33,10 +33,10 @@ const Footer: React.FC = () => {
                 </li>
                 */}
                 <li>
-                    <Link to="/login.html">Login</Link>
+                    <Link to="/login">Login</Link>
                 </li>
                 <li>
-                    <Link to="/register.html">Register</Link>
+                    <Link to="/register">Register</Link>
                 </li>
                 {/*
                 <li>

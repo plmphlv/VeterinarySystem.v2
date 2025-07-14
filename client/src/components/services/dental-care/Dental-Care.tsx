@@ -20,7 +20,7 @@ const DentalCare: React.FC = () => {
                         <li>Eliminates bad breath and oral infections;</li>
                         <li>Improves quality of life and longevity.</li>
                     </ul>
-                    <Link to="services.html" className="back-link">← Back to Services</Link>
+                    <Link to="/services" className="back-link">← Back to Services</Link>
             </div>
         </>
     )
