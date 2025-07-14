@@ -1,0 +1,855 @@
+/* Fade Animation Start */
+@mixin fade-in {
+    opacity: 1;
+    animation-name: fadeInOpacity;
+    animation-iteration-count: 1;
+    animation-timing-function: ease-in;
+    animation-duration: 2s;
+}
+
+@keyframes fadeInOpacity {
+    0% {
+        opacity: 0;
+    }
+
+    100% {
+        opacity: 1;
+    }
+}
+
+/* Fade Animation End */
+
+
+/* NavBar Start */
+.header {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    padding: 1.3rem 10%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    z-index: 100;
+    box-sizing: border-box;
+}
+
+.header::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(78, 197, 180);
+    backdrop-filter: blur(50px);
+    z-index: -1;
+}
+
+.header::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, .4), transparent);
+    transition: .5s;
+}
+
+.logo {
+    font-size: 2rem;
+    color: #fff;
+    text-decoration: none;
+    font-weight: 700;
+    margin-top: 10px;
+}
+
+.navbar a {
+    color: #fff;
+    position: relative;
+    text-decoration: none;
+    font-size: 1.15rem;
+    font-weight: 500;
+    margin-left: 2.5rem;
+}
+
+.navbar a::before {
+    content: '';
+    position: absolute;
+    width: 100%;
+    height: 3px;
+    border-radius: 4px;
+    background-color: #fff;
+    bottom: -6px;
+    left: 0;
+    transform-origin: left;
+    transform: scaleX(0);
+    transition: transform .3s ease-in-out;
+}
+
+#check {
+    display: none;
+}
+
+.icons {
+    position: absolute;
+    right: 5%;
+    font-size: 2.8rem;
+    color: #fff;
+    cursor: pointer;
+    display: none;
+}
+
+@media(min-width: 1025px) {
+    .header:hover::after {
+        left: 100%;
+    }
+
+    .navbar a:hover::before {
+        transform-origin: left;
+        transform: scaleX(1);
+    }
+}
+
+@media(max-width: 1024px) {
+    .header {
+        padding: 1.3rem 5%;
+    }
+
+    .icons {
+        display: inline-flex;
+    }
+
+    #check:checked~.icons #menu-icon {
+        display: none;
+    }
+
+    .icons #close-icon {
+        display: none;
+    }
+
+    #check:checked~.icons #close-icon {
+        display: block;
+    }
+
+    .navbar {
+        position: absolute;
+        top: 100%;
+        left: 0;
+        width: 100%;
+        height: 0;
+        background: rgb(78, 197, 180);
+        backdrop-filter: blur(50px);
+        box-shadow: 0 .5rem 1rem rgba(78, 197, 180, .5);
+        overflow: hidden;
+        transition: height 0.3s ease;
+    }
+
+    #check:checked~.navbar {
+        height: 23rem;
+    }
+
+    .navbar a {
+        display: block;
+        font-size: 1.1rem;
+        margin: 1.5rem 0;
+        text-align: center;
+        transform: translateY(-50px);
+        opacity: 0;
+        transition: .3s ease;
+    }
+
+    #check:checked~.navbar a {
+        transform: translateY(0);
+        opacity: 1;
+        transition-delay: calc(.15s * var(--i));
+    }
+}
+
+/* NavBar End */
+
+/* Home Page Start */
+
+/* Home Page End */
+
+/* About Page Start */
+
+.about {
+    min-height: 100vh;
+    width: 100%;
+    background-image: url('../images/veterinary-hospital.png');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    color: white;
+    padding: 2rem 1rem;
+    box-sizing: border-box;
+}
+
+.about::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.7);
+    z-index: 1;
+    pointer-events: none;
+}
+
+.about-container {
+    z-index: 2;
+    background-color: rgb(78, 197, 180, 0.8);
+    padding: 40px;
+    border-radius: 16px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+    max-width: 700px;
+    margin-top: 150px;
+    margin-bottom: 30px;
+    animation: fadeInOpacity 1s;
+    width: 90%;
+    font-family: Arial, sans-serif;
+}
+
+.about-container h2 {
+    text-align: center;
+    color: #fff;
+    margin-bottom: 20px;
+    font-size: 26px;
+}
+
+.about-paragraph {
+    font-size: 16px;
+    color: #fff;
+    line-height: 1.6;
+    margin-bottom: 40px;
+    text-align: justify;
+}
+
+/* About Page End */
+
+/* Contact Page Start */
+
+.contact {
+    min-height: 100vh;
+    width: 100%;
+    background-image: url('../images/veterinary-hospital.png');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    color: white;
+    padding: 2rem 1rem;
+    box-sizing: border-box;
+}
+
+.contact::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.7);
+    z-index: 1;
+    pointer-events: none;
+}
+
+.contact-container {
+    z-index: 2;
+    background-color: rgba(78, 197, 180, 0.8);
+    padding: 40px;
+    border-radius: 16px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+    max-width: 700px;
+    margin-top: 150px;
+    margin-bottom: 30px;
+    animation: fadeInOpacity 1s;
+    width: 90%;
+    font-family: Arial, sans-serif;
+}
+
+.contact-container h2 {
+    text-align: center;
+    color: #fff;
+    margin-bottom: 20px;
+    font-size: 26px;
+}
+
+.contact-paragraph {
+    font-size: 16px;
+    color: #fff;
+    line-height: 1.6;
+    margin-bottom: 25px;
+    text-align: justify;
+}
+
+.contact-info {
+    font-size: 16px;
+    color: #fff;
+    line-height: 1.8;
+    text-align: center;
+    margin-top: 30px;
+}
+
+/* Contact Page End */
+
+/* Services Page Start */
+.services {
+    animation: fadeInOpacity 1s;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 2rem;
+    padding: 2rem;
+    max-width: 1200px;
+    width: 100%;
+}
+
+.services-h1 {
+    animation: fadeInOpacity 1s;
+    margin-top: 150px;
+    background-color: #4EC5B4;
+    color: #fff;
+    padding: 0.3em 1em;
+    border-radius: 1em;
+}
+
+.service-card {
+    background-color: #ffffff;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+    transition: transform 0.3s ease;
+}
+
+.service-card img {
+    width: 100%;
+    height: 200px;
+    object-fit: cover;
+}
+
+.service-card .content {
+    padding: 1.5rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+}
+
+.service-card h2 {
+    color: #4EC5B4;
+    margin-bottom: 0.5rem;
+}
+
+.service-card p {
+    font-size: 0.95rem;
+    margin-bottom: 1rem;
+}
+
+.learn-more-btn {
+    display: inline-block;
+    background-color: #4EC5B4;
+    color: #fff;
+    padding: 0.5rem 1rem;
+    border: none;
+    border-radius: 5px;
+    text-decoration: none;
+    font-size: 0.9rem;
+    transition: background-color 0.3s ease;
+}
+
+@media(min-width: 1025px) {
+    .service-card:hover {
+        transform: translateY(-5px);
+    }
+
+    .learn-more-btn:hover {
+        background-color: #3BAA9C;
+    }
+}
+
+/* @media (max-width: 600px) {
+    header h1 {
+        font-size: 2rem;
+    }
+} */
+
+/* Services Page End */
+
+/* Seperate Services Page Start */
+
+.service-content {
+    max-width: 800px;
+    animation: fadeInOpacity 1s;
+    text-align: center;
+    margin: 2rem auto;
+    background-color: #f9f9f9;
+    border-radius: 10px;
+    padding: 2rem;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.service-h1 {
+    animation: fadeInOpacity 1s;
+    margin-top: 150px;
+    background-color: #4EC5B4;
+    color: #fff;
+    padding: 0.3em 1em;
+    border-radius: 1em;
+}
+
+.service-content img {
+    width: 100%;
+    border-radius: 10px;
+    margin-bottom: 1.5rem;
+}
+
+.service-content h2 {
+    color: #4EC5B4;
+    margin-bottom: 1rem;
+}
+
+.service-content p {
+    margin-bottom: 1rem;
+}
+
+.back-link {
+    display: inline-block;
+    margin-top: 2rem;
+    background-color: #4EC5B4;
+    color: white;
+    padding: 0.5rem 1rem;
+    border-radius: 5px;
+    text-decoration: none;
+}
+
+.back-link:hover {
+    background-color: #3BAA9C;
+}
+
+/* Seperate Services Page Start */
+
+/* Profile Page Start */
+
+.profile-card {
+    background-color: #fff;
+    margin-top: 100px;
+    animation: fadeInOpacity 1s;
+    width: 90%;
+    max-width: 600px;
+    border-radius: 15px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+    padding: 3rem 2rem;
+    margin-bottom: 30px;
+    text-align: center;
+    position: relative;
+}
+
+.avatar {
+    width: 100px;
+    height: 100px;
+    background-color: #4EC5B4;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 2.5rem;
+    color: white;
+    margin: 0 auto 1.5rem;
+}
+
+.field {
+    display: flex;
+    justify-content: space-between;
+    margin: 1rem 0;
+    border-bottom: 1px solid #e0e0e0;
+    padding-bottom: 0.5rem;
+    font-size: 1rem;
+}
+
+.field label {
+    font-weight: 600;
+    color: #4EC5B4;
+}
+
+.field span {
+    color: #333;
+    text-align: right;
+    max-width: 65%;
+}
+
+.edit-button {
+    margin-top: 2rem;
+    background-color: #4EC5B4;
+    color: #fff;
+    border: none;
+    padding: 0.8rem 2rem;
+    border-radius: 25px;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: background 0.3s ease;
+}
+
+@media(min-width: 1025px) {
+    .edit-button:hover {
+        background-color: #3bb0a1;
+    }
+}
+
+@media (max-width: 480px) {
+    .field {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .field span {
+        margin-top: 0.3rem;
+        max-width: 100%;
+    }
+}
+
+/* Profile Page End */
+
+/* Login Start */
+
+.login {
+    min-height: 100vh;
+    width: 100%;
+    background-image: url('../images/veterinary-hospital.png');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    padding: 2rem 1rem;
+    box-sizing: border-box;
+}
+
+.login::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.7);
+    z-index: 1;
+    pointer-events: none;
+}
+
+.login-container {
+    z-index: 2;
+    text-align: start;
+    background-color: rgb(78, 197, 180, 0.8);
+    padding: 40px;
+    border-radius: 16px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+    max-width: 400px;
+    margin-top: 100px;
+    animation: fadeInOpacity 1s;
+    width: 90%;
+}
+
+.login-container h2 {
+    text-align: center;
+    color: #fff;
+    margin-bottom: 30px;
+}
+
+.login-form-group {
+    margin-bottom: 20px;
+}
+
+.login-form-group label {
+    display: block;
+    margin-bottom: 6px;
+    font-weight: bold;
+    color: #fff;
+}
+
+.login-form-group input {
+    width: 100%;
+    padding: 12px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    outline: none;
+    transition: 0.3s;
+}
+
+.login-form-group input:focus {
+    border-color: #000;
+}
+
+.login-btn {
+    width: 100%;
+    padding: 12px;
+    background-color: #fff;
+    color: 4EC5B4;
+    border: none;
+    border-radius: 8px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.login-btn:hover {
+    background-color: #D3D3D3;
+}
+
+.login-bottom-text {
+    text-align: center;
+    margin-top: 20px;
+    font-size: 14px;
+    color: #333;
+}
+
+.login-bottom-text a {
+    color: #fff;
+    position: relative;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+.login-bottom-text a::before {
+    content: '';
+    position: absolute;
+    width: 100%;
+    height: 3px;
+    border-radius: 3px;
+    background-color: #fff;
+    bottom: -2px;
+    left: 0;
+    transform-origin: left;
+    transform: scaleX(0);
+    transition: transform .3s ease-in-out;
+}
+
+
+@media(min-width: 1025px) {
+    .login-btn:hover {
+        background-color: #D3D3D3;
+    }
+
+    .login-bottom-text a:hover::before {
+        transform-origin: left;
+        transform: scaleX(1);
+    }
+}
+
+/* Login End */
+
+/* Register Start */
+
+.register {
+    min-height: 100vh;
+    width: 100%;
+    background-image: url('../images/veterinary-hospital.png');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    padding: 2rem 1rem;
+    box-sizing: border-box;
+}
+
+.register::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.7);
+    z-index: 1;
+    pointer-events: none;
+}
+
+.register-container {
+    z-index: 2;
+    text-align: start;
+    background-color: rgb(78, 197, 180, 0.8);
+    padding: 40px;
+    border-radius: 16px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+    max-width: 400px;
+    margin-top: 150px;
+    margin-bottom: 30px;
+    animation: fadeInOpacity 1s;
+    width: 90%;
+}
+
+.register-container h2 {
+    text-align: center;
+    color: #fff;
+    margin-bottom: 30px;
+}
+
+.register-form-group {
+    margin-bottom: 20px;
+}
+
+.register-form-group label {
+    display: block;
+    margin-bottom: 6px;
+    font-weight: bold;
+    color: #fff;
+}
+
+.register-form-group input {
+    width: 100%;
+    padding: 12px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    outline: none;
+    transition: 0.3s;
+}
+
+.register-form-group input:focus {
+    border-color: #000;
+}
+
+.register-btn {
+    width: 100%;
+    padding: 12px;
+    background-color: #fff;
+    color: 4EC5B4;
+    border: none;
+    border-radius: 8px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.register-bottom-text {
+    text-align: center;
+    margin-top: 20px;
+    font-size: 14px;
+    color: #333;
+}
+
+.register-bottom-text a {
+    color: #fff;
+    position: relative;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+.register-bottom-text a::before {
+    content: '';
+    position: absolute;
+    width: 100%;
+    height: 3px;
+    border-radius: 4px;
+    background-color: #fff;
+    bottom: -2px;
+    left: 0;
+    transform-origin: left;
+    transform: scaleX(0);
+    transition: transform .3s ease-in-out;
+}
+
+@media(min-width: 1025px) {
+    .register-btn:hover {
+        background-color: #D3D3D3;
+    }
+
+    .register-bottom-text a:hover::before {
+        transform-origin: left;
+        transform: scaleX(1);
+    }
+}
+
+/* Register End */
+
+/* Footer Start */
+
+.footer {
+    width: 100%;
+    padding: 40px 0;
+    background-color: #4EC5B4;
+    margin-top: auto;
+}
+
+.footer .socials {
+    text-align: center;
+    padding-bottom: 25px;
+    color: #fff;
+}
+
+.footer .socials a {
+    font-size: 24px;
+    color: inherit;
+    border: 1px solid #fff;
+    width: 40px;
+    height: 40px;
+    line-height: 42px;
+    display: inline-block;
+    text-align: center;
+    border-radius: 50%;
+    margin: 0 8px;
+    opacity: 0.75;
+}
+
+.footer ul {
+    margin-top: 0;
+    padding: 0;
+    list-style: none;
+    font-size: 18;
+    line-height: 1.6;
+    margin-bottom: 0;
+    text-align: center;
+}
+
+.footer ul li {
+    display: inline-block;
+    padding: 0 15px;
+}
+
+.footer ul li a {
+    font-size: 1.15rem;
+    font-weight: 500;
+    color: #fff;
+    position: relative;
+    text-decoration: none;
+}
+
+.footer ul li a::before {
+    content: '';
+    position: absolute;
+    width: 100%;
+    height: 3px;
+    border-radius: 4px;
+    background-color: #fff;
+    bottom: -7px;
+    left: 0;
+    transform-origin: left;
+    transform: scaleX(0);
+    transition: transform .3s ease-in-out;
+}
+
+.footer .copyright {
+    margin-top: 15px;
+    text-align: center;
+    font-size: 16px;
+    color: #000;
+}
+
+@media(min-width: 1025px) {
+    .footer .socials a:hover {
+        color: #000;
+        transition: 0.7s ease;
+    }
+
+    .footer a:hover::before {
+        transform-origin: left;
+        transform: scaleX(1);
+    }
+}
+
+/* Footer End */
