@@ -1,10 +1,10 @@
-import type React from "react";
+import React, { useState } from "react";
 
 const Home: React.FC = () => {
-    return (
-        <>
-        </>
-    );
+  return (
+    <>
+    </>
+  );
 };
 
 export default Home;
