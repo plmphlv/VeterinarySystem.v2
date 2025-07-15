@@ -11,6 +11,7 @@ import Surgery from "./components/services/surgery/Surgery";
 import DentalCare from "./components/services/dental-care/Dental-Care";
 import EmegencyServices from "./components/services/emergency-services/Emergency-Services";
 import PetNutritionCounseling from "./components/services/pet-nutrition-counseling/Pet-Nutrition-Counseling";
+import Profile from "./components/profile/Profile";
 import Login from "./components/login/Login";
 import Register from "./components/register/Register";
 import Footer from "./components/footer/Footer";
@@ -30,6 +31,7 @@ function App() {
         <Route path="/services/dental-care" element={<DentalCare />}></Route>
         <Route path="/services/emergency-services" element={<EmegencyServices />}></Route>
         <Route path="/services/pet-nutrition-counseling" element={<PetNutritionCounseling />}></Route>
+        <Route path="/profile" element={<Profile />}></Route>
         <Route path="/login" element={<Login />}></Route>
         <Route path="/register" element={<Register />}></Route>
       </Routes>
