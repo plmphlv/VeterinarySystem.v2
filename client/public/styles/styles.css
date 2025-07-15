@@ -754,6 +754,20 @@
     transition: transform .3s ease-in-out;
 }
 
+.register-form-group input.error {
+    border: 3px solid #ff4d4d;
+}
+
+.register-form-group input.success {
+    border: 3px solid #3cb371;
+}
+
+.error-text {
+    color: #ff4d4d;
+    font-size: 13px;
+    margin-top: 5px;
+}
+
 @media(min-width: 1025px) {
     .register-btn:hover {
         background-color: #D3D3D3;
@@ -766,6 +780,7 @@
 }
 
 /* Register End */
+
 
 /* Dialog Start */
 

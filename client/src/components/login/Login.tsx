@@ -9,8 +9,8 @@ const Login: React.FC = () => {
                     <h2>Login</h2>
                     <form>
                         <div className="login-form-group">
-                            <label htmlFor="email"><i className="fa-solid fa-envelope"></i> Email Address or Username:</label>
-                            <input type="email" id="email" placeholder="Enter your email or username" required />
+                            <label htmlFor="emailOrUsername"><i className="fa-solid fa-envelope"></i> Email Address or Username:</label>
+                            <input type="email" id="emailOrUsername" placeholder="Enter your email or username" required />
                         </div>
                         <div className="login-form-group">
                             <label htmlFor="password"><i className="fa-solid fa-key"></i> Password:</label>
