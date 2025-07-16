@@ -3,6 +3,8 @@ import { Link, useNavigate } from "react-router";
 import { useRegister } from "../../api/authAPI";
 import type { FieldErrors, RegisterRequest } from "../../types";
 import { useForm } from "../hooks/useForm";
+import Spinner from "../spinner/Spinner";
+import Dialog from "../dialog/Dialog";
 
 const initialValues: RegisterRequest = {
     userName: "",
@@ -16,6 +18,9 @@ const initialValues: RegisterRequest = {
 
 const Register: React.FC = () => {
     const [errors, setErrors] = useState<FieldErrors>({});
+    const [isLoading, setIsLoading] = useState(false);
+    const [dialog, setDialog] = useState<{ message: string; type: "success" | "error" } | null>(null);
+
     const { register } = useRegister();
     const navigate = useNavigate();
 
@@ -89,18 +94,25 @@ const Register: React.FC = () => {
             return;
         }
 
+        setIsLoading(true);
         try {
             setErrors({});
             await register(values);
-            navigate('/');
-        } catch (err: any) {
-            console.log(err);
-            
+            setDialog({ message: "Registration successful!", type: "success" });
+
+            setTimeout(() => {
+                navigate('/');
+            }, 2000);
+        } catch (err: any) {                        
+            setDialog({ message: err || "Registration failed.", type: "error" });
+
             changeValues({
                 ...values,
                 password: "",
                 confirmPassword: ""
             });
+        } finally {
+            setIsLoading(false);
         }
     };
 
@@ -157,12 +169,23 @@ const Register: React.FC = () => {
                         </div>
                     ))}
 
-                    <button type="submit" className="register-btn">Register</button>
+                    <button type="submit" className="register-btn" disabled={isLoading}>
+                        {isLoading ? <Spinner /> : "Register"}
+                    </button>
                 </form>
+
                 <div className="register-bottom-text">
                     Already registered? <Link to="/login">Login</Link>
                 </div>
             </div>
+
+            {dialog && (
+                <Dialog
+                    message={dialog.message}
+                    type={dialog.type}
+                    onClose={() => setDialog(null)}
+                />
+            )}
         </section>
     );
 };

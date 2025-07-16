@@ -12,7 +12,7 @@ async function request<TData = unknown, TResult = unknown>({
         headers: {
             ...(options.headers || {}),
         },
-    };
+    };    
 
     if (data && method !== 'GET') {
         config.headers = {
@@ -38,6 +38,14 @@ async function request<TData = unknown, TResult = unknown>({
     }
 
     const response = await fetch(url, config);
+
+    if (!response.ok) {
+        const errorObject = await response.json();
+        
+        const errorMessage = errorObject.errors.RegisterCommand[0];
+
+        throw errorMessage;
+    }
     const contentType = response.headers.get('Content-Type');
 
     if (!contentType) return;

@@ -73,6 +73,14 @@ export type UseFormReturn<T> = {
 export type FieldErrors = Partial<Record<keyof RegisterRequest, string>>;
 // Field errors types end:
 
+// Dialog types start:
+export type DialogProps = {
+    message: string;
+    type: "success" | "error";
+    onClose: () => void;
+};
+// Dialog types end
+
 
 
 
