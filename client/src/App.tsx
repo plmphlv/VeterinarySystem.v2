@@ -1,5 +1,7 @@
 import { Route, Routes } from "react-router";
 
+import UserProvider from "./providers/UserProvider";
+
 import Header from "./components/header/Header";
 import Home from "./components/home/Home";
 import About from "./components/about/About";
@@ -18,7 +20,7 @@ import Footer from "./components/footer/Footer";
 
 function App() {
   return (
-    <>
+    <UserProvider>
       <Header />
       <Routes>
         <Route path="/" element={<Home />}></Route>
@@ -36,7 +38,7 @@ function App() {
         <Route path="/register" element={<Register />}></Route>
       </Routes>
       <Footer />
-    </>
+    </UserProvider>
   );
 }
 

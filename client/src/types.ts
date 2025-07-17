@@ -17,15 +17,15 @@ export interface RequestParams<T> {
 
 // authAPI.ts types start
 export interface LoginRequest {
-    emailOrUsername: string;
+    IdentifyingCredential: string;
     password: string;
 }
 
 export interface LoginResponse {
     accessToken: string;
     refreshToken: string;
-    isSuccessful: number;
-    errorMessage: string;
+    isSuccessful: boolean;
+    errorMessage?: string;
 }
 
 export interface RegisterRequest {
@@ -51,26 +51,41 @@ export interface User {
     accessToken: string;
 }
 
-export interface UserContextType {
-    user: User | null;
-    userLoginHandler: (user: User) => void;
+export interface AuthData {
+  accessToken: string;
+  refreshToken: string;
+  isSuccessful: boolean;
+  errorMessage?: string;
+}
+
+export interface UserContextType extends AuthData {
+    userLoginHandler: (data: AuthData) => void;
     userLogoutHandler: () => void;
 }
 // UserContext.ts types end
 
+// UserProvider.ts types start
+
+export interface UserProviderProps {
+  children: React.ReactNode;
+}
+
+// UserProvidet.ts types end
+
 // useForm.ts types start
 
 export type UseFormReturn<T> = {
-  values: T;
-  changeHandler: (e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => void;
-  onSubmit: (e: FormEvent<HTMLFormElement>) => void;
-  changeValues: (newValues: T) => void;
+    values: T;
+    changeHandler: (e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => void;
+    onSubmit: (e: FormEvent<HTMLFormElement>) => void;
+    changeValues: (newValues: T) => void;
 };
 
 // userForm.ts types end
 
 // Field errors types start:
-export type FieldErrors = Partial<Record<keyof RegisterRequest, string>>;
+export type RegisterFieldErrors = Partial<Record<keyof RegisterRequest, string>>;
+export type LoginFieldErrors = Partial<Record<keyof LoginRequest, string>>;
 // Field errors types end:
 
 // Dialog types start:
@@ -80,6 +95,7 @@ export type DialogProps = {
     onClose: () => void;
 };
 // Dialog types end
+
 
 
 

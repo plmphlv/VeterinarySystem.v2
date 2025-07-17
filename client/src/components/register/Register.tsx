@@ -1,10 +1,11 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import { Link, useNavigate } from "react-router";
-import { useRegister } from "../../api/authAPI";
-import type { FieldErrors, RegisterRequest } from "../../types";
+import { useLogin, useRegister } from "../../api/authAPI";
+import type { RegisterFieldErrors, RegisterRequest } from "../../types";
 import { useForm } from "../hooks/useForm";
 import Spinner from "../spinner/Spinner";
 import Dialog from "../dialog/Dialog";
+import { UserContext } from "../../contexts/UserContext";
 
 const initialValues: RegisterRequest = {
     userName: "",
@@ -17,12 +18,16 @@ const initialValues: RegisterRequest = {
 };
 
 const Register: React.FC = () => {
-    const [errors, setErrors] = useState<FieldErrors>({});
+    const [errors, setErrors] = useState<RegisterFieldErrors>({});
     const [isLoading, setIsLoading] = useState(false);
     const [dialog, setDialog] = useState<{ message: string; type: "success" | "error" } | null>(null);
 
     const { register } = useRegister();
+    const { login } = useLogin();
+
     const navigate = useNavigate();
+    const { userLoginHandler } = useContext(UserContext);
+
 
     const validateField = (
         field: keyof RegisterRequest,
@@ -71,8 +76,8 @@ const Register: React.FC = () => {
         }
     };
 
-    const validate = (values: RegisterRequest): FieldErrors => {
-        const fieldErrors: FieldErrors = {};
+    const validate = (values: RegisterRequest): RegisterFieldErrors => {
+        const fieldErrors: RegisterFieldErrors = {};
         (Object.keys(values) as (keyof RegisterRequest)[]).forEach(field => {
             const error = validateField(field, values[field], values);
             if (error) fieldErrors[field] = error;
@@ -98,12 +103,19 @@ const Register: React.FC = () => {
         try {
             setErrors({});
             await register(values);
+            const IdentifyingCredential = values.email;
+            const password = values.password
+            const authData = await login({ IdentifyingCredential, password });
+
+            if (!authData || authData?.errorMessage || authData.isSuccessful === false) {
+                throw new Error(`${authData?.errorMessage}`);
+            }
+
+            userLoginHandler(authData);
             setDialog({ message: "Registration successful!", type: "success" });
 
-            setTimeout(() => {
-                navigate('/');
-            }, 2000);
-        } catch (err: any) {                        
+            navigate('/');
+        } catch (err: any) {
             setDialog({ message: err || "Registration failed.", type: "error" });
 
             changeValues({

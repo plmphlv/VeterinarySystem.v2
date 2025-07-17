@@ -40,12 +40,21 @@ async function request<TData = unknown, TResult = unknown>({
     const response = await fetch(url, config);
 
     if (!response.ok) {
-        const errorObject = await response.json();
-        
-        const errorMessage = errorObject.errors.RegisterCommand[0];
+    const errorObject = await response.json();
 
-        throw errorMessage;
+    let errorMessage = "Unknown error";
+
+    if (errorObject.errors) {
+        const errorFields = Object.values(errorObject.errors);
+        if (errorFields.length > 0 && Array.isArray(errorFields[0])) {
+            errorMessage = errorFields[0][0];
+        }
+    } else if (errorObject.message) {
+        errorMessage = errorObject.message;
     }
+
+    throw errorMessage;
+}
     const contentType = response.headers.get('Content-Type');
 
     if (!contentType) return;
