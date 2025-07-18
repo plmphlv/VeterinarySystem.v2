@@ -1,1 +1,0 @@
-// TODO: Да направя този hook да връща от accessToken-а id-то.

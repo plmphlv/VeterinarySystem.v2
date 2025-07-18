@@ -3,9 +3,9 @@ import { Link, useNavigate } from "react-router";
 import { useLogin, useRegister } from "../../api/authAPI";
 import type { RegisterFieldErrors, RegisterRequest } from "../../types";
 import { useForm } from "../hooks/useForm";
-import Spinner from "../spinner/Spinner";
 import Dialog from "../dialog/Dialog";
 import { UserContext } from "../../contexts/UserContext";
+import Spinner from "../spinner/Spinner";
 
 const initialValues: RegisterRequest = {
     userName: "",
@@ -27,7 +27,6 @@ const Register: React.FC = () => {
 
     const navigate = useNavigate();
     const { userLoginHandler } = useContext(UserContext);
-
 
     const validateField = (
         field: keyof RegisterRequest,
@@ -112,9 +111,11 @@ const Register: React.FC = () => {
             }
 
             userLoginHandler(authData);
-            setDialog({ message: "Registration successful!", type: "success" });
-
-            navigate('/');
+            setDialog({ message: "Register successful!", type: "success" });
+            setTimeout(() => {
+                userLoginHandler(authData);
+                navigate('/');
+            }, 500);
         } catch (err: any) {
             setDialog({ message: err || "Registration failed.", type: "error" });
 
@@ -150,55 +151,63 @@ const Register: React.FC = () => {
     };
 
     return (
-        <section className="register">
-            <div className="register-container">
-                <h2>Register</h2>
-                <form onSubmit={onSubmit} noValidate>
-                    {([
-                        { name: "userName", label: "Username", type: "text", icon: "fa-user", placeholder: "Enter your username" },
-                        { name: "email", label: "Email Address", type: "email", icon: "fa-envelope", placeholder: "Enter your email" },
-                        { name: "firstName", label: "First Name", type: "text", icon: "fa-pen", placeholder: "Enter your first name" },
-                        { name: "lastName", label: "Last Name", type: "text", icon: "fa-pen", placeholder: "Enter your last name" },
-                        { name: "phoneNumber", label: "Phone Number", type: "tel", icon: "fa-phone", placeholder: "0888123456" },
-                        { name: "password", label: "Password", type: "password", icon: "fa-key", placeholder: "Create a password" },
-                        { name: "confirmPassword", label: "Confirm Password", type: "password", icon: "fa-key", placeholder: "Confirm your password" },
-                    ] as const).map(({ name, label, type, icon, placeholder }) => (
-                        <div className="register-form-group" key={name}>
-                            <label htmlFor={name}>
-                                <i className={`fa-solid ${icon}`}></i> {label}:
-                            </label>
-                            <input
-                                type={type}
-                                id={name}
-                                name={name}
-                                value={values[name]}
-                                onChange={handleChange}
-                                className={inputClass(name)}
-                                placeholder={placeholder}
-                                autoComplete="off"
-                            />
-                            {errors[name] && <p className="error-text">{errors[name]}</p>}
-                        </div>
-                    ))}
-
-                    <button type="submit" className="register-btn" disabled={isLoading}>
-                        {isLoading ? <Spinner /> : "Register"}
-                    </button>
-                </form>
-
-                <div className="register-bottom-text">
-                    Already registered? <Link to="/login">Login</Link>
+        <>
+        {isLoading && (
+                <div className="spinner-overlay">
+                    <Spinner />
                 </div>
-            </div>
-
-            {dialog && (
-                <Dialog
-                    message={dialog.message}
-                    type={dialog.type}
-                    onClose={() => setDialog(null)}
-                />
             )}
-        </section>
+
+            <section className="register">
+                <div className="register-container">
+                    <h2>Register</h2>
+                    <form onSubmit={onSubmit} noValidate>
+                        {([
+                            { name: "userName", label: "Username", type: "text", icon: "fa-user", placeholder: "Enter your username" },
+                            { name: "email", label: "Email Address", type: "email", icon: "fa-envelope", placeholder: "Enter your email" },
+                            { name: "firstName", label: "First Name", type: "text", icon: "fa-pen", placeholder: "Enter your first name" },
+                            { name: "lastName", label: "Last Name", type: "text", icon: "fa-pen", placeholder: "Enter your last name" },
+                            { name: "phoneNumber", label: "Phone Number", type: "tel", icon: "fa-phone", placeholder: "0888123456" },
+                            { name: "password", label: "Password", type: "password", icon: "fa-key", placeholder: "Create a password" },
+                            { name: "confirmPassword", label: "Confirm Password", type: "password", icon: "fa-key", placeholder: "Confirm your password" },
+                        ] as const).map(({ name, label, type, icon, placeholder }) => (
+                            <div className="register-form-group" key={name}>
+                                <label htmlFor={name}>
+                                    <i className={`fa-solid ${icon}`}></i> {label}:
+                                </label>
+                                <input
+                                    type={type}
+                                    id={name}
+                                    name={name}
+                                    value={values[name]}
+                                    onChange={handleChange}
+                                    className={inputClass(name)}
+                                    placeholder={placeholder}
+                                    autoComplete="off"
+                                />
+                                {errors[name] && <p className="error-text">{errors[name]}</p>}
+                            </div>
+                        ))}
+
+                        <button type="submit" className="register-btn" disabled={isLoading}>
+                            Register
+                        </button>
+                    </form>
+
+                    <div className="register-bottom-text">
+                        Already registered? <Link to="/login">Login</Link>
+                    </div>
+                </div>
+
+                {dialog && (
+                    <Dialog
+                        message={dialog.message}
+                        type={dialog.type}
+                        onClose={() => setDialog(null)}
+                    />
+                )}
+            </section>
+        </>
     );
 };
 

@@ -59,11 +59,13 @@ const Login: React.FC = () => {
 
             if (!authData || authData?.errorMessage || authData.isSuccessful === false) {
                 throw new Error(`${authData?.errorMessage}`);
-            }            
+            }
 
             setDialog({ message: "Login successful!", type: "success" });
-            userLoginHandler(authData);
-            navigate('/');
+            setTimeout(() => {
+                userLoginHandler(authData);
+                navigate('/');
+            }, 500);
         } catch (err: any) {
             setDialog({ message: err instanceof Error ? err.message : String(err) || "Login failed.", type: "error" });
             changeValues({ ...values, password: "" });
@@ -95,6 +97,12 @@ const Login: React.FC = () => {
 
     return (
         <>
+            {isLoading && (
+                <div className="spinner-overlay">
+                    <Spinner />
+                </div>
+            )}
+
             <section className="login">
                 <div className="login-container">
                     <h2>Login</h2>
@@ -134,13 +142,13 @@ const Login: React.FC = () => {
                         ))}
 
                         <button type="submit" className="register-btn" disabled={isLoading}>
-                            {isLoading ? <Spinner /> : "Login"}
+                            Login
                         </button>
                     </form>
                     <div className="login-bottom-text">
                         Don't have an account? <Link to="/register">Register</Link>
                     </div>
-                </div>                
+                </div>
 
                 {dialog && (
                     <Dialog

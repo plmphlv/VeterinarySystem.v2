@@ -41,6 +41,22 @@ export interface RegisterRequest {
 export interface RegisterResponse {
     userId: string;
 }
+
+export interface UserDataFromId {
+    email: string,
+    id: string,
+    firstName: string,
+    lastName: string,
+    phoneNumber: string
+}
+
+export interface UpdateAccountRequest {
+    id: "string",
+    firstName: "string",
+    lastName: "string",
+    address: "string",
+    phoneNumber: "string"
+}
 // authAPI.ts types end
 
 // UserContext.ts types start
@@ -52,10 +68,17 @@ export interface User {
 }
 
 export interface AuthData {
-  accessToken: string;
-  refreshToken: string;
-  isSuccessful: boolean;
-  errorMessage?: string;
+    accessToken: string;
+    refreshToken: string;
+    isSuccessful: boolean;
+    errorMessage?: string;
+}
+
+export interface AccessToken {
+    accessToken: string;
+    refreshToken: string;
+    isSuccessful: boolean;
+    errorMessage?: string;
 }
 
 export interface UserContextType extends AuthData {
@@ -67,7 +90,7 @@ export interface UserContextType extends AuthData {
 // UserProvider.ts types start
 
 export interface UserProviderProps {
-  children: React.ReactNode;
+    children: React.ReactNode;
 }
 
 // UserProvidet.ts types end
@@ -95,6 +118,14 @@ export type DialogProps = {
     onClose: () => void;
 };
 // Dialog types end
+
+// useAuth types start
+
+export interface JwtPayload {
+    AccountId: "ba995470-a7ad-4e7f-8119-8587089f92c4",
+}
+
+// useAuth types end
 
 
 
