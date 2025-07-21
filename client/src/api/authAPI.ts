@@ -41,13 +41,13 @@ export const useLogout = () => {
     };
 };
 
-export const useEditProfile = () => {
-    const editProfile = async (data: LoginRequest) => {
-        return http.post<LoginRequest, LoginResponse>(
-            `${baseUrl}/Login`,
-            data
-        );
-    };
+// export const useEditProfile = () => {
+//     const editProfile = async (data: LoginRequest) => {
+//         return http.post<LoginRequest, LoginResponse>(
+//             `${baseUrl}/Login`,
+//             data
+//         );
+//     };
 
-    return { login };
-};
+//     return { login };
+// };
