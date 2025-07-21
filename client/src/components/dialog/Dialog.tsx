@@ -1,10 +1,5 @@
 import React, { useEffect } from "react";
-
-type DialogProps = {
-    message: string;
-    type: "success" | "error";
-    onClose: () => void;
-};
+import type { DialogProps } from "../../types";
 
 const Dialog: React.FC<DialogProps> = ({ message, type, onClose }) => {
     useEffect(() => {
