@@ -1,10 +1,8 @@
 import { Link } from "react-router";
 import { useUserContext } from "../../contexts/UserContext";
-import { useGetUserData } from "../hooks/useGetUserData";
 
 const Header: React.FC = () => {
     const { isSuccessful } = useUserContext();
-    const { userData } = useGetUserData();
 
     return (
         <header className="header">

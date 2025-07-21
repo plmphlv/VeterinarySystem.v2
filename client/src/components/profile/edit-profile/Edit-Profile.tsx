@@ -7,7 +7,7 @@ const EditProfile: React.FC = () => {
 
             <div className="field">
                 <label htmlFor="email">Email:</label>
-                <input type="email" id="email" name="email" value="bozhidarivanov24@gmail.com" readOnly />
+                <input type="email" id="email" name="email" value="bozhidarivanov24@gmail.com" />
             </div>
 
             <div className="field">
