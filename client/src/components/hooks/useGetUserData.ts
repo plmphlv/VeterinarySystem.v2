@@ -3,7 +3,7 @@ import type { UserDataFromId } from "../../types";
 import { getUserId } from "../../utils/getUserId";
 import http from "../../utils/request";
 
-const baseUrl = `${import.meta.env.BASE_API_URL}/Users/Account`;
+const baseUrl = `${import.meta.env.VITE_BASE_API_URL}/Users/Account`;
 
 export const useGetUserData = () => {
     const [userData, setUserData] = useState<UserDataFromId | null>(null);

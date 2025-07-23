@@ -3,7 +3,7 @@ import type { LoginRequest, LoginResponse, RegisterRequest, RegisterResponse, Us
 import http from '../utils/request';
 import { UserContext } from '../contexts/UserContext';
 
-const baseUrl = `${import.meta.env.BASE_API_URL}/Users`;
+const baseUrl = `${import.meta.env.VITE_BASE_API_URL}/Users`;
 
 export const useLogin = () => {
     const login = async (data: LoginRequest) => {
@@ -12,6 +12,9 @@ export const useLogin = () => {
             data
         );
     };
+
+    console.log(baseUrl);
+    
 
     return { login };
 };

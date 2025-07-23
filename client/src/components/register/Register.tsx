@@ -101,6 +101,7 @@ const Register: React.FC = () => {
         setIsLoading(true);
         try {
             setErrors({});
+            console.log(values);
             await register(values);
             const IdentifyingCredential = values.email;
             const password = values.password
