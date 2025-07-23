@@ -12,10 +12,7 @@ export const useLogin = () => {
             data
         );
     };
-
-    console.log(baseUrl);
     
-
     return { login };
 };
 
