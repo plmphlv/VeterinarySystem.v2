@@ -33,7 +33,7 @@ const Footer: React.FC = () => {
                             <Link to="/mypets">My Pets</Link>
                         </li>
                         <li>
-                            <Link to="/login">Profile</Link>
+                            <Link to="/profile">Profile</Link>
                         </li>
 
                         <li>

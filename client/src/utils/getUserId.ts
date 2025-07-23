@@ -14,6 +14,7 @@ export function getUserId(): string | null {
     if (!accessToken) return null;
 
     const decoded = jwtDecode<JwtPayload>(accessToken);
+    
     return decoded.AccountId ?? null;
   } catch (error) {
     console.error("Failed to decode access token", error);

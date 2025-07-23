@@ -8,7 +8,7 @@ const Profile: React.FC = () => {
     const { userData, isLoading, error } = useGetUserData();
     const [showError, setShowError] = useState(true);
 
-    if (isLoading) return <Spinner />;  
+    if (isLoading) return <Spinner />;
 
     return (
         <>

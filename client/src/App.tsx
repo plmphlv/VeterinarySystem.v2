@@ -20,6 +20,7 @@ import EditProfile from "./components/profile/edit-profile/Edit-Profile";
 import Login from "./components/login/Login";
 import Register from "./components/register/Register";
 import Logout from "./components/logout/Logout";
+import Error from "./components/error/error";
 import Footer from "./components/footer/Footer";
 
 function App() {
@@ -37,7 +38,7 @@ function App() {
         <Route path="/services/dental-care" element={<DentalCare />}></Route>
         <Route path="/services/emergency-services" element={<EmegencyServices />}></Route>
         <Route path="/services/pet-nutrition-counseling" element={<PetNutritionCounseling />}></Route>
-
+        <Route path="*" element={<Error />}></Route>
         <Route element={<AuthGuard />}>
           <Route path="/profile" element={<Profile />}></Route>
           <Route path="/profile/edit" element={<EditProfile />}></Route>
