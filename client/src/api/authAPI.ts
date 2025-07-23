@@ -1,5 +1,5 @@
-import { useContext, useEffect } from 'react';
-import type { LoginRequest, LoginResponse, RegisterRequest, RegisterResponse, UserDataFromId } from '../types';
+import { useContext } from 'react';
+import type { LoginRequest, LoginResponse, RegisterRequest, RegisterResponse } from '../types';
 import http from '../utils/request';
 import { UserContext } from '../contexts/UserContext';
 
