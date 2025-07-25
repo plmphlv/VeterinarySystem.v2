@@ -1,8 +1,16 @@
 import type React from "react";
+import Spinner from "../../spinner/Spinner";
+import { useGetUserData } from "../../hooks/useGetUserData";
+import { useState } from "react";
 
 const EditProfile: React.FC = () => {
+    const { userData, isLoading, error } = useGetUserData();
+    const [showError, setShowError] = useState(true);
+
+    if (isLoading) return <Spinner />;
+
     return (
-        <form className="profile-card" action="#" method="post">
+        <form className="profile-card">
             <div className="avatar">BI</div>
 
             <div className="field">
@@ -25,7 +33,8 @@ const EditProfile: React.FC = () => {
                 <input type="tel" id="phone" name="phone" value="+359 89 499 2968" />
             </div>
 
-            <button className="edit-button" type="submit">Save Profile</button>
+            <button className="edit-button" type="submit">Save</button>
+            <button className="edit-button" type="submit">Cancel</button>
         </form>
     )
 }

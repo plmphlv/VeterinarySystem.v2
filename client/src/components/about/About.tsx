@@ -1,10 +1,10 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 
 const About: React.FC = () => {
     return (
         <section className="about">
             <div className="about-container">
-
+        
                 <h2>Why Choose Vetariq?</h2>
                 <p className="about-paragraph">
                     What sets Vetariq apart is its deep understanding of both veterinary needs and user experience. With a

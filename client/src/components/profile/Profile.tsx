@@ -12,7 +12,7 @@ const Profile: React.FC = () => {
 
     return (
         <>
-            <h1>My Profile</h1>
+            {/* <h1 className="services-h1">My Profile</h1> */}
 
             {error && showError && (
                 <Dialog
@@ -49,6 +49,7 @@ const Profile: React.FC = () => {
                     </div>
 
                     <Link to="/profile/edit" className="edit-button">Edit Profile</Link>
+                    <Link to="/profile/change-password" className="edit-button">Change Password</Link>
                 </div>
             ) : !isLoading && !error ? (
                 <p>No user data found.</p>

@@ -1,5 +1,5 @@
 import { useContext, useRef, useEffect } from 'react';
-import type { LoginRequest, LoginResponse, RegisterRequest, RegisterResponse } from '../types';
+import type { ChangePasswordRequest, ChangePasswordResponse, LoginRequest, LoginResponse, RegisterRequest, RegisterResponse } from '../types';
 import http from '../utils/request';
 import { UserContext } from '../contexts/UserContext';
 
@@ -63,6 +63,29 @@ export const useLogout = () => {
         logout,
         isLoggedOut: !accessToken,
     };
+};
+
+export const useChangePassword = () => {
+    const abortControllerRef = useRef<AbortController | null>(null);
+
+    useEffect(() => {
+        return () => {
+            abortControllerRef.current?.abort();
+        };
+    }, []);
+
+    const changePassword = async (data: ChangePasswordRequest) => {
+        abortControllerRef.current?.abort();
+        abortControllerRef.current = new AbortController();
+
+        return http.put<ChangePasswordRequest, ChangePasswordResponse>(
+            `${baseUrl}/ChangePassword`,
+            data,
+            { signal: abortControllerRef.current.signal }
+        );
+    };
+
+    return { changePassword, cancelChangePassword: () => abortControllerRef.current?.abort() };
 };
 
 

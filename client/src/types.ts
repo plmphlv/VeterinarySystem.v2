@@ -122,12 +122,22 @@ export type DialogProps = {
 // Dialog types end
 
 // useAuth types start
-
 export interface JwtPayload {
     AccountId: "ba995470-a7ad-4e7f-8119-8587089f92c4",
 }
-
 // useAuth types end
+
+// ChangePassword types start
+export interface ChangePasswordRequest {
+    currentPassword: string;
+    newPassword: string;
+    confirmNewPassword: string;
+}
+
+export interface ChangePasswordResponse {
+    message: string;
+}
+// ChangePassword types end
 
 
 

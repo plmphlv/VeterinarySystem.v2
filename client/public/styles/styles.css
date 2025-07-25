@@ -437,8 +437,8 @@
 /* Profile Page Start */
 
 .profile-card {
+    margin-top: 150px;
     background-color: #fff;
-    margin-top: 100px;
     animation: fadeInOpacity 1s;
     width: 90%;
     max-width: 600px;
@@ -470,6 +470,7 @@
     border-bottom: 1px solid #e0e0e0;
     padding-bottom: 0.5rem;
     font-size: 1rem;
+    margin-bottom: 2rem;
 }
 
 .field label {
@@ -483,8 +484,24 @@
     max-width: 65%;
 }
 
+.profile-buttons {
+    margin-top: 1rem;
+}
+
 .edit-button {
-    margin-top: 3rem;
+    background-color: #4EC5B4;
+    color: #fff;
+    text-decoration: none;
+    border: none;
+    padding: 0.8rem 2rem;
+    margin-right: 1rem;
+    border-radius: 25px;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: background 0.3s ease;
+}
+
+.change-button {
     background-color: #4EC5B4;
     color: #fff;
     text-decoration: none;
@@ -619,6 +636,10 @@
 } */
 
 /* Edit Profile End */
+
+/* Change Password Page Start */
+
+/* Change Password Page End */
 
 /* Login Start */
 

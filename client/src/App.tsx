@@ -17,10 +17,11 @@ import EmegencyServices from "./components/services/emergency-services/Emergency
 import PetNutritionCounseling from "./components/services/pet-nutrition-counseling/Pet-Nutrition-Counseling";
 import Profile from "./components/profile/Profile";
 import EditProfile from "./components/profile/edit-profile/Edit-Profile";
+import ChangePassword from "./components/profile/change-password/Change-Password";
 import Login from "./components/login/Login";
 import Register from "./components/register/Register";
 import Logout from "./components/logout/Logout";
-import Error from "./components/error/error";
+import Error from "./components/error/Error";
 import Footer from "./components/footer/Footer";
 
 function App() {
@@ -42,6 +43,7 @@ function App() {
         <Route element={<AuthGuard />}>
           <Route path="/profile" element={<Profile />}></Route>
           <Route path="/profile/edit" element={<EditProfile />}></Route>
+          <Route path="/profile/change-password" element={<ChangePassword />}></Route>
           <Route path="/logout" element={<Logout />}></Route>
         </Route>
 
