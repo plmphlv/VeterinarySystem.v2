@@ -5,6 +5,7 @@ export type HttpMethod = 'GET' | 'POST' | 'PUT' | 'DELETE';
 
 export interface RequestOptions extends RequestInit {
     headers?: Record<string, string>;
+    signal?: AbortSignal;
 }
 
 export interface RequestParams<T> {
@@ -13,6 +14,7 @@ export interface RequestParams<T> {
     data?: T;
     options?: RequestOptions;
 }
+
 // request.ts types end
 
 // authAPI.ts types start

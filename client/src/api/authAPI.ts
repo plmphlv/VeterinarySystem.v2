@@ -1,4 +1,4 @@
-import { useContext } from 'react';
+import { useContext, useRef, useEffect } from 'react';
 import type { LoginRequest, LoginResponse, RegisterRequest, RegisterResponse } from '../types';
 import http from '../utils/request';
 import { UserContext } from '../contexts/UserContext';
@@ -6,25 +6,49 @@ import { UserContext } from '../contexts/UserContext';
 const baseUrl = `${import.meta.env.VITE_BASE_API_URL}/Users`;
 
 export const useLogin = () => {
+    const abortControllerRef = useRef<AbortController | null>(null);
+
+    useEffect(() => {
+        return () => {
+            abortControllerRef.current?.abort();
+        };
+    }, []);
+
     const login = async (data: LoginRequest) => {
+        abortControllerRef.current?.abort();
+        abortControllerRef.current = new AbortController();
+
         return http.post<LoginRequest, LoginResponse>(
             `${baseUrl}/Login`,
-            data
+            data,
+            { signal: abortControllerRef.current.signal }
         );
     };
-    
-    return { login };
+
+    return { login, cancelLogin: () => abortControllerRef.current?.abort() };
 };
 
 export const useRegister = () => {
+    const abortControllerRef = useRef<AbortController | null>(null);
+
+    useEffect(() => {
+        return () => {
+            abortControllerRef.current?.abort();
+        };
+    }, []);
+
     const register = async (data: RegisterRequest) => {
+        abortControllerRef.current?.abort();
+        abortControllerRef.current = new AbortController();
+
         return http.post<RegisterRequest, RegisterResponse>(
             `${baseUrl}/Register`,
-            data
+            data,
+            { signal: abortControllerRef.current.signal }
         );
     };
 
-    return { register };
+    return { register, cancelRegister: () => abortControllerRef.current?.abort() };
 };
 
 export const useLogout = () => {
@@ -40,6 +64,7 @@ export const useLogout = () => {
         isLoggedOut: !accessToken,
     };
 };
+
 
 // export const useEditProfile = () => {
 //     const editProfile = async (data: LoginRequest) => {

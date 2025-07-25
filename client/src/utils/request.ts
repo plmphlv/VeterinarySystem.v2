@@ -8,11 +8,12 @@ async function request<TData = unknown, TResult = unknown>({
 }: RequestParams<TData>): Promise<TResult | undefined> {
     const config: RequestInit = {
         ...options,
+        signal: options.signal,
         method: method !== 'GET' ? method : 'GET',
         headers: {
             ...(options.headers || {}),
         },
-    };    
+    };
 
     if (data && method !== 'GET') {
         config.headers = {
@@ -40,21 +41,9 @@ async function request<TData = unknown, TResult = unknown>({
     const response = await fetch(url, config);
 
     if (!response.ok) {
-    const errorObject = await response.json();
-
-    let errorMessage = "Unknown error";
-
-    if (errorObject.errors) {
-        const errorFields = Object.values(errorObject.errors);
-        if (errorFields.length > 0 && Array.isArray(errorFields[0])) {
-            errorMessage = errorFields[0][0];
-        }
-    } else if (errorObject.message) {
-        errorMessage = errorObject.message;
+        const error = await response.json();
+        throw error;
     }
-
-    throw errorMessage;
-}
     const contentType = response.headers.get('Content-Type');
 
     if (!contentType) return;

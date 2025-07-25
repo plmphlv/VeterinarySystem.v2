@@ -1,4 +1,4 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router";
 import { useLogin, useRegister } from "../../api/authAPI";
 import type { RegisterFieldErrors, RegisterRequest } from "../../types";
@@ -22,7 +22,7 @@ const Register: React.FC = () => {
     const [isLoading, setIsLoading] = useState(false);
     const [dialog, setDialog] = useState<{ message: string; type: "success" | "error" } | null>(null);
 
-    const { register } = useRegister();
+    const { register, cancelRegister } = useRegister();
     const { login } = useLogin();
 
     const navigate = useNavigate();
@@ -110,15 +110,13 @@ const Register: React.FC = () => {
                 throw new Error(`${authData?.errorMessage}`);
             }
 
-            userLoginHandler(authData);
             setDialog({ message: "Register successful!", type: "success" });
             setTimeout(() => {
                 userLoginHandler(authData);
                 navigate('/');
             }, 500);
         } catch (err: any) {
-            setDialog({ message: err || "Registration failed.", type: "error" });
-
+            setDialog({ message: err.errors.RegisterCommand[0] || "Registration failed.", type: "error" });
             changeValues({
                 ...values,
                 password: "",
@@ -149,6 +147,12 @@ const Register: React.FC = () => {
         if (values[field] && !errors[field]) return "input success";
         return "input";
     };
+
+    useEffect(() => {
+            return () => {
+                cancelRegister();
+            };
+        }, []);
 
     return (
         <>

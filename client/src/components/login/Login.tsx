@@ -1,4 +1,4 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router";
 import { useLogin } from "../../api/authAPI";
 import type { LoginFieldErrors, LoginRequest } from "../../types";
@@ -17,7 +17,7 @@ const Login: React.FC = () => {
     const [isLoading, setIsLoading] = useState(false);
     const [dialog, setDialog] = useState<{ message: string; type: "success" | "error" } | null>(null);
 
-    const { login } = useLogin();
+    const { login, cancelLogin } = useLogin();
     const navigate = useNavigate();
     const { userLoginHandler } = useContext(UserContext);
 
@@ -67,8 +67,9 @@ const Login: React.FC = () => {
                 navigate('/');
             }, 500);
         } catch (err: any) {
-            setDialog({ message: err instanceof Error ? err.message : String(err) || "Login failed.", type: "error" });
+            setDialog({ message: err.detail || "Login failed.", type: "error" });
             changeValues({ ...values, password: "" });
+
         } finally {
             setIsLoading(false);
         }
@@ -94,6 +95,12 @@ const Login: React.FC = () => {
         if (values[field] && !errors[field]) return "input success";
         return "input";
     };
+
+    useEffect(() => {
+        return () => {
+            cancelLogin();
+        };
+    }, []);
 
     return (
         <>

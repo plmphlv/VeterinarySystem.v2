@@ -1060,6 +1060,74 @@
 
 /* Dialog End */
 
+/* Error Start */
+.error-section {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 60px 20px;
+  min-height: 100vh;
+}
+
+.error-container {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  max-width: 1200px;
+  width: 100%;
+  gap: 40px;
+  text-align: center;
+  flex-wrap: wrap-reverse;
+}
+
+.error-content {
+  flex: 1;
+  min-width: 300px;
+}
+
+.error-code {
+  font-size: 96px;
+  color: red;
+  font-weight: bold;
+}
+
+.error-message {
+  font-size: 32px;
+  color: #4EC5B4;
+  margin-top: 10px;
+}
+
+.error-description {
+  font-size: 18px;
+  margin: 20px 0;
+  color: #555;
+  line-height: 1.6;
+}
+
+.error-button {
+  display: inline-block;
+  background-color: #4EC5B4;
+  color: white;
+  padding: 12px 24px;
+  border-radius: 8px;
+  text-decoration: none;
+  transition: background 0.3s ease;
+  font-weight: 500;
+}
+
+.error-button:hover {
+  background-color: #3aa89b;
+}
+
+.error-image img {
+  max-width: 400px;
+  width: 100%;
+  height: auto;
+}
+
+/* Error End */
+
 /* Footer Start */
 
 .footer {
