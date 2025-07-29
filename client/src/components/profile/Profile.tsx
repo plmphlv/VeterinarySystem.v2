@@ -12,7 +12,6 @@ const Profile: React.FC = () => {
 
     return (
         <>
-            {/* <h1 className="services-h1">My Profile</h1> */}
 
             {error && showError && (
                 <Dialog
@@ -24,6 +23,7 @@ const Profile: React.FC = () => {
 
             {userData ? (
                 <div className="profile-card">
+                    <h1 className="h1-profile">Your Profile</h1>
                     <div className="avatar">
                         {userData.firstName[0]}{userData.lastName[0]}
                     </div>

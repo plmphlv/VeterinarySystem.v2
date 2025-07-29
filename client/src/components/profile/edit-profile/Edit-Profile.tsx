@@ -11,6 +11,8 @@ const EditProfile: React.FC = () => {
 
     return (
         <form className="profile-card">
+            <h1 className="h1-profile">Edit Profile</h1>
+            
             <div className="avatar">BI</div>
 
             <div className="field">

@@ -436,6 +436,7 @@
 
 /* Profile Page Start */
 
+
 .profile-card {
     margin-top: 150px;
     background-color: #fff;
@@ -448,6 +449,11 @@
     margin-bottom: 30px;
     text-align: center;
     position: relative;
+}
+
+.h1-profile {
+    color: #4EC5B4;
+    margin-bottom: 2rem;
 }
 
 .avatar {
@@ -638,6 +644,43 @@
 /* Edit Profile End */
 
 /* Change Password Page Start */
+
+.field-edit-profile {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    margin: 1rem 0;
+    padding-bottom: 0.5rem;
+    font-size: 1rem;
+    margin-bottom: 2rem;
+    text-align: left;
+}
+
+.field-edit-profile label {
+    font-weight: 600;
+    color: #4EC5B4;
+}
+
+.field-edit-profile span {
+    color: #333;
+    text-align: right;
+    max-width: 65%;
+}
+
+.field-edit-profile input {
+    border: none;
+    border-bottom: 1px solid #e0e0e0;
+    font-size: 1rem;
+    color: #333;
+    max-width: 100%;
+    text-align: left;
+    padding: 0.3rem 0;
+    background: transparent;
+    outline: none;
+    font-family: inherit;
+    transition: border-color 0.3s ease;
+}
+
 
 /* Change Password Page End */
 

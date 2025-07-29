@@ -6,46 +6,46 @@ async function request<TData = unknown, TResult = unknown>({
     data,
     options = {},
 }: RequestParams<TData>): Promise<TResult | undefined> {
-    const config: RequestInit = {
-        ...options,
-        signal: options.signal,
-        method: method !== 'GET' ? method : 'GET',
-        headers: {
-            ...(options.headers || {}),
-        },
+    const headers: HeadersInit = {
+        ...(options.headers || {}),
     };
-
-    if (data && method !== 'GET') {
-        config.headers = {
-            'Content-Type': 'application/json',
-            ...config.headers,
-        };
-        config.body = JSON.stringify(data);
-    }
 
     const authRaw = localStorage.getItem('auth');
     if (authRaw) {
         try {
             const auth = JSON.parse(authRaw);
             if (auth?.accessToken) {
-                config.headers = {
-                    'X-Authorization': auth.accessToken,
-                    ...config.headers,
-                };
+                headers['Authorization'] = `Bearer ${auth.accessToken}`;
             }
         } catch {
             console.warn('Invalid auth data in localStorage');
         }
     }
 
+    const config: RequestInit = {
+        ...options,
+        method: method !== 'GET' ? method : 'GET',
+        signal: options.signal,
+        headers,
+    };
+
+    if (data && method !== 'GET') {
+        headers['Content-Type'] = 'application/json';
+        config.body = JSON.stringify(data);
+    }
+
     const response = await fetch(url, config);
 
     if (!response.ok) {
+        switch (response.status) {
+            case 401: return "Unauthorized" as unknown as TResult;
+            case 500: return "Internal Server Error" as unknown as TResult;
+        }
         const error = await response.json();
         throw error;
     }
-    const contentType = response.headers.get('Content-Type');
 
+    const contentType = response.headers.get('Content-Type');
     if (!contentType) return;
 
     if (contentType.includes('application/json')) {
@@ -56,16 +56,16 @@ async function request<TData = unknown, TResult = unknown>({
 }
 
 const http = {
-    get<TResult = unknown>(url: string, options?: RequestOptions) {
+    get<TResult = unknown>(url: string, options: RequestOptions) {
         return request<undefined, TResult>({ method: 'GET', url, options });
     },
-    post<TData = unknown, TResult = unknown>(url: string, data: TData, options?: RequestOptions) {
+    post<TData = unknown, TResult = unknown>(url: string, data: TData, options: RequestOptions) {
         return request<TData, TResult>({ method: 'POST', url, data, options });
     },
-    put<TData = unknown, TResult = unknown>(url: string, data: TData, options?: RequestOptions) {
+    put<TData = unknown, TResult = unknown>(url: string, data: TData, options: RequestOptions) {
         return request<TData, TResult>({ method: 'PUT', url, data, options });
     },
-    delete<TResult = unknown>(url: string, options?: RequestOptions) {
+    delete<TResult = unknown>(url: string, options: RequestOptions) {
         return request<undefined, TResult>({ method: 'DELETE', url, options });
     },
     baseRequest: request,

@@ -1,0 +1,20 @@
+services:
+  db:
+    container_name: db
+    image: mcr.microsoft.com/mssql/server:2017-latest-ubuntu
+    ports:
+      - "10.10.10.231:1433:1433"
+    environment:
+      ACCEPT_EULA: Y
+      SA_PASSWORD: Squeak-Stump-4012-Goes-Superjet-Shredding
+      MSSQL_PID: Express
+    volumes:
+      - /Users/b0zh1d4r/mssql/mssql:/var/opt/mssql
+    networks:
+      - reverse-proxy
+    restart: always
+
+networks:
+  reverse-proxy:
+    driver: bridge
+
