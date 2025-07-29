@@ -16,7 +16,7 @@ const ChangePassword: React.FC = () => {
     const [isLoading, setIsLoading] = useState(false);
     const [dialog, setDialog] = useState<{ message: string; type: "success" | "error" } | null>(null);
 
-    const { changePassword } = useChangePassword();
+    const { changePassword, cancelChangePassword} = useChangePassword();
     const navigate = useNavigate();
 
     const validateField = (
@@ -101,11 +101,11 @@ const ChangePassword: React.FC = () => {
         return "input";
     };
 
-    // useEffect(() => {
-    //     return () => {
-    //         cancelChangePassword();
-    //     };
-    // }, []);
+    useEffect(() => {
+        return () => {
+            cancelChangePassword();
+        };
+    }, []);
 
     return (
         <>

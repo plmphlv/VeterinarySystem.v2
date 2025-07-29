@@ -46,6 +46,7 @@ export interface RegisterResponse {
 
 export interface UserDataFromId {
     email: string,
+    address: string,
     id: string,
     firstName: string,
     lastName: string,
@@ -139,8 +140,18 @@ export interface ChangePasswordResponse {
 }
 // ChangePassword types end
 
+// Edit Profile types start
 
+export interface EditProfileRequest {
+    firstName: string;
+    lastName: string;
+    address: string;
+    phoneNumber: string;
+}
 
-
+export interface EditProfileResponse {
+    message: string;
+}
+// Edit Profile types end   
 
 

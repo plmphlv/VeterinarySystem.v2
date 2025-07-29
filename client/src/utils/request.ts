@@ -56,16 +56,16 @@ async function request<TData = unknown, TResult = unknown>({
 }
 
 const http = {
-    get<TResult = unknown>(url: string, options: RequestOptions) {
+    get<TResult = unknown>(url: string, options?: RequestOptions) {
         return request<undefined, TResult>({ method: 'GET', url, options });
     },
-    post<TData = unknown, TResult = unknown>(url: string, data: TData, options: RequestOptions) {
+    post<TData = unknown, TResult = unknown>(url: string, data: TData, options?: RequestOptions) {
         return request<TData, TResult>({ method: 'POST', url, data, options });
     },
-    put<TData = unknown, TResult = unknown>(url: string, data: TData, options: RequestOptions) {
+    put<TData = unknown, TResult = unknown>(url: string, data: TData, options?: RequestOptions) {
         return request<TData, TResult>({ method: 'PUT', url, data, options });
     },
-    delete<TResult = unknown>(url: string, options: RequestOptions) {
+    delete<TResult = unknown>(url: string, options?: RequestOptions) {
         return request<undefined, TResult>({ method: 'DELETE', url, options });
     },
     baseRequest: request,

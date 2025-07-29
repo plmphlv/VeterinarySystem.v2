@@ -1,5 +1,5 @@
 import { useContext, useRef, useEffect } from 'react';
-import type { ChangePasswordRequest, ChangePasswordResponse, LoginRequest, LoginResponse, RegisterRequest, RegisterResponse } from '../types';
+import type { ChangePasswordRequest, ChangePasswordResponse, EditProfileRequest, EditProfileResponse, LoginRequest, LoginResponse, RegisterRequest, RegisterResponse } from '../types';
 import http from '../utils/request';
 import { UserContext } from '../contexts/UserContext';
 
@@ -89,13 +89,25 @@ export const useChangePassword = () => {
 };
 
 
-// export const useEditProfile = () => {
-//     const editProfile = async (data: LoginRequest) => {
-//         return http.post<LoginRequest, LoginResponse>(
-//             `${baseUrl}/Login`,
-//             data
-//         );
-//     };
+export const useEditProfile = () => {
+    const abortControllerRef = useRef<AbortController | null>(null);
 
-//     return { login };
-// };
+    useEffect(() => {
+        return () => {
+            abortControllerRef.current?.abort();
+        };
+    }, []);
+
+    const editProfile = async (data: EditProfileRequest) => {
+        abortControllerRef.current?.abort();
+        abortControllerRef.current = new AbortController();
+
+        return http.put<EditProfileRequest, EditProfileResponse>(
+            `${baseUrl}/UpdateAccount`,
+            data,
+            { signal: abortControllerRef.current.signal }
+        );
+    };
+
+    return { editProfile, cancelEditProfile: () => abortControllerRef.current?.abort() };
+};
