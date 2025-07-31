@@ -143,9 +143,10 @@ export interface ChangePasswordResponse {
 // Edit Profile types start
 
 export interface EditProfileRequest {
+    id: string;
     firstName: string;
     lastName: string;
-    address: string;
+    address?: string;
     phoneNumber: string;
 }
 

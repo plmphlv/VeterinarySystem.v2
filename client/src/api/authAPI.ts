@@ -103,7 +103,7 @@ export const useEditProfile = () => {
         abortControllerRef.current = new AbortController();
 
         return http.put<EditProfileRequest, EditProfileResponse>(
-            `${baseUrl}/UpdateAccount`,
+            `${baseUrl}/UpdateAccount/${data.id}`,
             data,
             { signal: abortControllerRef.current.signal }
         );

@@ -16,7 +16,7 @@ const ChangePassword: React.FC = () => {
     const [isLoading, setIsLoading] = useState(false);
     const [dialog, setDialog] = useState<{ message: string; type: "success" | "error" } | null>(null);
 
-    const { changePassword, cancelChangePassword} = useChangePassword();
+    const { changePassword, cancelChangePassword } = useChangePassword();
     const navigate = useNavigate();
 
     const validateField = (
@@ -56,7 +56,7 @@ const ChangePassword: React.FC = () => {
         });
         return fieldErrors;
     };
-    
+
 
     const changePasswordHandler = async (values: ChangePasswordRequest) => {
         const validationErrors = validate(values);
@@ -109,69 +109,47 @@ const ChangePassword: React.FC = () => {
 
     return (
         <>
-        {isLoading && (
+            {isLoading && (
                 <div className="spinner-overlay">
                     <Spinner />
                 </div>
             )}
 
-             <div className="profile-card">
-            <h1 className="h1-profile">Change Password</h1>
-            <form onSubmit={onSubmit} noValidate>
-                <div className="field-edit-profile">
-                    <label htmlFor="currentPassword">Current Password:</label>
-                    <input
-                        type="password"
-                        id="currentPassword"
-                        placeholder="Enter current password"
-                        name="currentPassword"
-                        value={values.currentPassword}
-                        onChange={handleChange}
-                        className={inputClass("currentPassword")}
-                        required
-                    />
-                    {errors.currentPassword && <p className="error-text">{errors.currentPassword}</p>}
-                </div>
+            <div className="profile-card">
+                <h1 className="h1-profile">Change Password</h1>
+                <form onSubmit={onSubmit} noValidate>
+                    {([
+                        { name: "currentPassword", label: "Current Password", type: "password", icon: "fa-key", placeholder: "Enter your current password" },
+                        { name: "newPassword", label: "New Password", type: "password", icon: "fa-key", placeholder: "Create a new password" },
+                        { name: "confirmNewPassword", label: "Confirm New Password", type: "password", icon: "fa-key", placeholder: "Confirm your new password" },
+                    ] as const).map(({ name, label, type, icon, placeholder }) => (
+                        <div className="field-edit-profile" key={name}>
+                            <label htmlFor={name}>
+                                <i className={`fa-solid ${icon}`}></i> {label}:
+                            </label>
+                            <input
+                                type={type}
+                                id={name}
+                                name={name}
+                                value={values[name]}
+                                onChange={handleChange}
+                                className={inputClass(name)}
+                                placeholder={placeholder}
+                                autoComplete="off"
+                            />
+                            {errors[name] && <p className="error-text">{errors[name]}</p>}
+                        </div>
+                    ))}
 
-                <div className="field-edit-profile">
-                    <label htmlFor="newPassword">New Password:</label>
-                    <input
-                        type="password"
-                        id="newPassword"
-                        placeholder="Enter new password"
-                        name="newPassword"
-                        value={values.newPassword}
-                        onChange={handleChange}
-                        className={inputClass("newPassword")}
-                        required
-                    />
-                    {errors.newPassword && <p className="error-text">{errors.newPassword}</p>}
-                </div>
+                    <button className="edit-button" type="submit" disabled={isLoading}>
+                        Save
+                    </button>
 
-                <div className="field-edit-profile">
-                    <label htmlFor="confirmNewPassword">Confirm New Password:</label>
-                    <input
-                        type="password"
-                        id="confirmNewPassword"
-                        placeholder="Confirm new password"
-                        name="confirmNewPassword"
-                        value={values.confirmNewPassword}
-                        onChange={handleChange}
-                        className={inputClass("confirmNewPassword")}
-                        required
-                    />
-                    {errors.confirmNewPassword && <p className="error-text">{errors.confirmNewPassword}</p>}
-                </div>
+                    <Link to="/profile" className="edit-button">Cancel</Link>
 
-                <button className="edit-button" type="submit" disabled={isLoading}>
-                   Save
-                </button>
-
-                <Link to="/profile" className="edit-button">Cancel</Link>
-
-                {dialog && <div className={`dialog ${dialog.type}`}>{dialog.message}</div>}
-            </form>
-        </div>
+                    {dialog && <div className={`dialog ${dialog.type}`}>{dialog.message}</div>}
+                </form>
+            </div>
         </>
     );
 };

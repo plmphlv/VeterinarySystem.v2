@@ -35,7 +35,7 @@ const Register: React.FC = () => {
     ): string | undefined => {
         const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
         const passwordRegex = /(?=.*[A-Z])(?=.*[a-z])(?=.*\d)/;
-        const phoneRegex = /^\+?\d{7,15}$/;
+        const phoneRegex = /^(?:\+\d(?: ?\d){11}|\d(?: ?\d){9})$/;
 
         switch (field) {
             case "userName":
@@ -56,7 +56,7 @@ const Register: React.FC = () => {
                 return undefined;
             case "phoneNumber":
                 if (!value.trim()) return "Phone number is required.";
-                if (!phoneRegex.test(value)) return "Phone number must be between 7 and 15 digits.";
+                if (!phoneRegex.test(value)) return "Phone number must be between 10 and 16 digits.";
                 return undefined;
             case "password":
                 if (!value.trim()) return "Password is required.";
@@ -171,7 +171,7 @@ const Register: React.FC = () => {
                             { name: "email", label: "Email Address", type: "email", icon: "fa-envelope", placeholder: "Enter your email" },
                             { name: "firstName", label: "First Name", type: "text", icon: "fa-pen", placeholder: "Enter your first name" },
                             { name: "lastName", label: "Last Name", type: "text", icon: "fa-pen", placeholder: "Enter your last name" },
-                            { name: "phoneNumber", label: "Phone Number", type: "tel", icon: "fa-phone", placeholder: "0888123456" },
+                            { name: "phoneNumber", label: "Phone Number", type: "tel", icon: "fa-phone", placeholder: "+359 88 812 3456 / 0888123456" },
                             { name: "password", label: "Password", type: "password", icon: "fa-key", placeholder: "Create a password" },
                             { name: "confirmPassword", label: "Confirm Password", type: "password", icon: "fa-key", placeholder: "Confirm your password" },
                         ] as const).map(({ name, label, type, icon, placeholder }) => (

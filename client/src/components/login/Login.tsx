@@ -21,7 +21,6 @@ const Login: React.FC = () => {
     const navigate = useNavigate();
     const { userLoginHandler } = useContext(UserContext);
 
-
     const validateField = (field: keyof LoginRequest, value: string): string | undefined => {
         switch (field) {
             case "IdentifyingCredential":

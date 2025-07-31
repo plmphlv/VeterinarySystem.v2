@@ -8,6 +8,7 @@ import { useEditProfile } from "../../../api/authAPI";
 import { Link, useNavigate } from "react-router";
 
 const initialValues: EditProfileRequest = {
+    id: "",
     firstName: "",
     lastName: "",
     address: "",
@@ -20,7 +21,7 @@ const EditProfile: React.FC = () => {
     const [dialog, setDialog] = useState<{ message: string; type: "success" | "error" } | null>(null);
 
     const { userData, isLoading: isUserLoading, error } = useGetUserData();
-    
+
     const { editProfile, cancelEditProfile } = useEditProfile();
 
     const navigate = useNavigate();
@@ -30,8 +31,7 @@ const EditProfile: React.FC = () => {
         value: string,
         allValues: EditProfileRequest
     ): string | undefined => {
-        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-        const phoneRegex = /^\+?\d{7,15}$/;
+        const phoneRegex = /^(?:\+\d(?: ?\d){11}|\d(?: ?\d){9})$/;
 
         switch (field) {
             case "firstName":
@@ -44,23 +44,28 @@ const EditProfile: React.FC = () => {
                 return undefined;
             case "phoneNumber":
                 if (!value.trim()) return "Phone number is required.";
-                if (!phoneRegex.test(value)) return "Phone number must be between 7 and 15 digits.";
+                if (!phoneRegex.test(value)) return "Phone number must be between 10 and 16 digits.";
                 return undefined;
             case "address":
+                if (value?.length > 0 && value?.length < 2) return "Address must be at least 2 characters.";
                 return undefined;
             default:
                 return undefined;
         }
-    };
+    };    
 
     const validate = (values: EditProfileRequest): Partial<Record<keyof EditProfileRequest, string>> => {
-        const fieldErrors: Partial<Record<keyof EditProfileRequest, string>> = {};
-        (Object.keys(values) as (keyof EditProfileRequest)[]).forEach(field => {
-            const error = validateField(field, values[field], values);
-            if (error) fieldErrors[field] = error;
-        });
-        return fieldErrors;
-    };
+    const fieldErrors: Partial<Record<keyof EditProfileRequest, string>> = {};
+
+    (Object.keys(values) as (keyof EditProfileRequest)[]).forEach(field => {
+        if (field === 'address') return;
+
+        const error = validateField(field, values[field], values);
+        if (error) fieldErrors[field] = error;
+    });
+
+    return fieldErrors;
+};
 
     const editProfileHandler = async (values: EditProfileRequest) => {
         const validationErrors = validate(values);
@@ -72,20 +77,23 @@ const EditProfile: React.FC = () => {
         setIsLoading(true);
         try {
             setErrors({});
-            await editProfile(values);
+            if (!userData) {
+                return setDialog({ message: "No user data found.", type: "error" });
+            }
+            await editProfile({ ...values, id: userData.id });
 
             setDialog({ message: "Edit is successful!", type: "success" });
             setTimeout(() => {
-                navigate('/');
+                navigate('/profile');
             }, 500);
         } catch (err: any) {
-            setDialog({ message: err.errors.RegisterCommand[0] || "Edit failed.", type: "error" });
+            setDialog({ message: err.detail || "Edit failed.", type: "error" });
         } finally {
             setIsLoading(false);
         }
     };
 
-    const { values, changeHandler, onSubmit } = useForm(initialValues, editProfileHandler);
+    const { values, changeHandler, onSubmit, changeValues } = useForm(initialValues, editProfileHandler);
 
     const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         const { name, value } = e.target;
@@ -112,6 +120,19 @@ const EditProfile: React.FC = () => {
         };
     }, []);
 
+    useEffect(() => {
+        if (userData) {
+            const safeValues: EditProfileRequest = {
+                id: userData.id,
+                firstName: userData.firstName || "",
+                lastName: userData.lastName || "",
+                phoneNumber: userData.phoneNumber || "",
+                address: userData.address || ""
+            };
+            changeValues(safeValues);
+        }
+    }, [userData]);
+
     return (
         <>
             {isLoading || isUserLoading && (
@@ -128,8 +149,8 @@ const EditProfile: React.FC = () => {
                         {([
                             { name: "firstName", label: "First Name", type: "text", icon: "fa-pen", placeholder: "Enter your first name" },
                             { name: "lastName", label: "Last Name", type: "text", icon: "fa-pen", placeholder: "Enter your last name" },
-                            { name: "phoneNumber", label: "Phone Number", type: "tel", icon: "fa-phone", placeholder: "0888123456" },
-                            { name: "address", label: "Address", type: "text", icon: "fa-address-card", placeholder: "Enter your address (optional)" },
+                            { name: "phoneNumber", label: "Phone Number", type: "tel", icon: "fa-phone", placeholder: "+359 88 812 3456 / 0888123456" },
+                            { name: "address", label: "Address", type: "text", icon: "fa-solid fa-map-marker-alt", placeholder: "Enter your address (optional)" },
                         ] as const).map(({ name, label, type, icon, placeholder }) => (
                             <div className="field-edit-profile" key={name}>
                                 <label htmlFor={name}>
@@ -139,7 +160,7 @@ const EditProfile: React.FC = () => {
                                     type={type}
                                     id={name}
                                     name={name}
-                                    value={userData[name]}
+                                    value={values[name] ?? ""}
                                     onChange={handleChange}
                                     className={inputClass(name)}
                                     placeholder={placeholder}
