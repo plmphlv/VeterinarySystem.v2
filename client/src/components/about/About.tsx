@@ -1,25 +1,10 @@
-import React, { useEffect, useState } from "react";
-import Dialog from "../dialog/Dialog";
+import React from "react";
 
 const About: React.FC = () => {
-    const [showDialog, setShowDialog] = useState(true);
-
-    useEffect(() => {
-        setShowDialog(true);
-    }, []);
-
     return (
         <section className="about">
             <div className="about-container">
-
-                {/* {showDialog && (
-                    <Dialog
-                        message="Welcome to the About page!"
-                        type="success"
-                        onClose={() => setShowDialog(false)}
-                    />
-                )} */}
-
+        
                 <h2>Why Choose Vetariq?</h2>
                 <p className="about-paragraph">
                     What sets Vetariq apart is its deep understanding of both veterinary needs and user experience. With a

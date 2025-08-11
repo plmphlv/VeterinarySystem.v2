@@ -1,5 +1,9 @@
 import { Route, Routes } from "react-router";
 
+import UserProvider from "./providers/UserProvider";
+import AuthGuard from "./components/guards/AuthGuard";
+import GuestGuard from "./components/guards/GuestGuard";
+
 import Header from "./components/header/Header";
 import Home from "./components/home/Home";
 import About from "./components/about/About";
@@ -12,13 +16,17 @@ import DentalCare from "./components/services/dental-care/Dental-Care";
 import EmegencyServices from "./components/services/emergency-services/Emergency-Services";
 import PetNutritionCounseling from "./components/services/pet-nutrition-counseling/Pet-Nutrition-Counseling";
 import Profile from "./components/profile/Profile";
+import EditProfile from "./components/profile/edit-profile/Edit-Profile";
+import ChangePassword from "./components/profile/change-password/Change-Password";
 import Login from "./components/login/Login";
 import Register from "./components/register/Register";
+import Logout from "./components/logout/Logout";
+import Error from "./components/error/Error";
 import Footer from "./components/footer/Footer";
 
 function App() {
   return (
-    <>
+    <UserProvider>
       <Header />
       <Routes>
         <Route path="/" element={<Home />}></Route>
@@ -31,12 +39,21 @@ function App() {
         <Route path="/services/dental-care" element={<DentalCare />}></Route>
         <Route path="/services/emergency-services" element={<EmegencyServices />}></Route>
         <Route path="/services/pet-nutrition-counseling" element={<PetNutritionCounseling />}></Route>
-        <Route path="/profile" element={<Profile />}></Route>
-        <Route path="/login" element={<Login />}></Route>
-        <Route path="/register" element={<Register />}></Route>
+        <Route path="*" element={<Error />}></Route>
+        <Route element={<AuthGuard />}>
+          <Route path="/profile" element={<Profile />}></Route>
+          <Route path="/profile/edit" element={<EditProfile />}></Route>
+          <Route path="/profile/change-password" element={<ChangePassword />}></Route>
+          <Route path="/logout" element={<Logout />}></Route>
+        </Route>
+
+        <Route element={<GuestGuard />}>
+          <Route path="/login" element={<Login />}></Route>
+          <Route path="/register" element={<Register />}></Route>
+        </Route>
       </Routes>
       <Footer />
-    </>
+    </UserProvider>
   );
 }
 

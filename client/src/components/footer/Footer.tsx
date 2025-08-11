@@ -1,7 +1,10 @@
 import type React from "react";
 import { Link } from "react-router";
+import { useUserContext } from "../../contexts/UserContext";
 
 const Footer: React.FC = () => {
+    const { isSuccessful } = useUserContext();
+
     return (
         <section className="footer">
             <div className="socials">
@@ -24,31 +27,35 @@ const Footer: React.FC = () => {
                 <li>
                     <Link to="/services">Services</Link>
                 </li>
-                {/*
-                <li>
-                    <Link to="/login.html">Profile</Link>
-                </li>
-                <li>
-                    <Link to="/register.html">My Pets</Link>
-                </li>
-                */}
-                <li>
-                    <Link to="/login">Login</Link>
-                </li>
-                <li>
-                    <Link to="/register">Register</Link>
-                </li>
-                {/*
-                <li>
-                    <Link to="#">Logout</Link>
-                </li>
-                */}
-            </ul>
+                {isSuccessful ? (
+                    <>
+                        <li>
+                            <Link to="/mypets">My Pets</Link>
+                        </li>
+                        <li>
+                            <Link to="/profile">Profile</Link>
+                        </li>
+
+                        <li>
+                            <Link to="/logout">Logout</Link>
+                        </li>
+                    </>
+                ) : (
+                    <>
+                        <li>
+                            <Link to="/login">Login</Link>
+                        </li>
+                        <li>
+                            <Link to="/register">Register</Link>
+                        </li>
+                    </>
+                )}
+            </ul >
 
             <p className="copyright">
                 Veteriq @ 2025
             </p>
-        </section>
+        </section >
     );
 };
 
