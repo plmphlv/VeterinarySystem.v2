@@ -8,4 +8,10 @@
     <!-- Folder where production build objects will be placed -->
     <BuildOutputFolder>$(MSBuildProjectDirectory)\dist</BuildOutputFolder>
   </PropertyGroup>
+  <ItemGroup>
+    <None Remove=".env.local" />
+  </ItemGroup>
+  <ItemGroup>
+    <TypeScriptConfiguration Include=".env.local" />
+  </ItemGroup>
 </Project>
