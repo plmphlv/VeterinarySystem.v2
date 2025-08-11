@@ -23,7 +23,8 @@ public class CreateAnimalCommandHandler : IRequestHandler<CreateAnimalCommand, i
     public async Task<int> Handle(CreateAnimalCommand request, CancellationToken cancellationToken)
     {
         string? ownerId = request.OwnerId;
-
+        
+        //TO DO: MAKE SURE NOBODY CAN ADD PETS WILLY-NILLY
         if (string.IsNullOrEmpty(ownerId))
         {
             ownerId = currentUserService.AccountId!;
