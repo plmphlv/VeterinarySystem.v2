@@ -1,4 +1,4 @@
-import usePersistedState from "../components/hooks/usePersistedState";
+import usePersistedState from "../hooks/usePersistedState";
 import { UserContext } from "../contexts/UserContext";
 import type { AuthData, UserProviderProps, UserContextType } from "../types";
 

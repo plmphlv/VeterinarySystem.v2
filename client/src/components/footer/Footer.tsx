@@ -30,7 +30,7 @@ const Footer: React.FC = () => {
                 {isSuccessful ? (
                     <>
                         <li>
-                            <Link to="/mypets">My Pets</Link>
+                            <Link to="/my-pets">My Pets</Link>
                         </li>
                         <li>
                             <Link to="/profile">Profile</Link>

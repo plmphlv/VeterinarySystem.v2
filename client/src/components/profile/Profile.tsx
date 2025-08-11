@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { useGetUserData } from "../hooks/useGetUserData";
+import { useGetUserData } from "../../hooks/useGetUserData";
 import Dialog from "../dialog/Dialog";
 import Spinner from "../spinner/Spinner";
 import { Link } from "react-router";
@@ -21,9 +21,10 @@ const Profile: React.FC = () => {
                 />
             )}
 
+            <h1 className="h1-profile">Profile</h1>
+
             {userData ? (
                 <div className="profile-card">
-                    <h1 className="h1-profile">Your Profile</h1>
                     <div className="avatar">
                         {userData.firstName[0]}{userData.lastName[0]}
                     </div>
@@ -57,6 +58,7 @@ const Profile: React.FC = () => {
 
                     <Link to="/profile/edit" className="edit-button">Edit Profile</Link>
                     <Link to="/profile/change-password" className="edit-button">Change Password</Link>
+                    <Link to="/profile/change-email" className="edit-button">Change Email Address</Link>
                 </div>
             ) : !isLoading && !error ? (
                 <p>No user data found.</p>

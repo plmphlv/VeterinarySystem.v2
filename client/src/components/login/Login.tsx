@@ -2,7 +2,7 @@ import React, { useContext, useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router";
 import { useLogin } from "../../api/authAPI";
 import type { LoginFieldErrors, LoginRequest } from "../../types";
-import { useForm } from "../hooks/useForm";
+import { useForm } from "../../hooks/useForm";
 import Dialog from "../dialog/Dialog";
 import Spinner from "../spinner/Spinner";
 import { UserContext } from "../../contexts/UserContext";
@@ -56,16 +56,18 @@ const Login: React.FC = () => {
             setErrors({});
             const authData = await login(values);
 
-            if (!authData || authData?.errorMessage || authData.isSuccessful === false) {
-                throw new Error(`${authData?.errorMessage}`);
+            if (!authData || !authData.hasOwnProperty('accessToken') || authData?.errorMessage || authData.isSuccessful === false) {
+                throw new Error(`${authData?.errorMessage}`) || new Error("Login failed.");
             }
-
+            
             setDialog({ message: "Login successful!", type: "success" });
             setTimeout(() => {
                 userLoginHandler(authData);
                 navigate('/');
             }, 500);
         } catch (err: any) {
+            console.log(err);
+            
             setDialog({ message: err.detail || "Login failed.", type: "error" });
             changeValues({ ...values, password: "" });
 

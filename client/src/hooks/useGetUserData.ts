@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
-import type { UserDataFromId } from "../../types";
-import { getUserId } from "../../utils/getUserId";
-import http from "../../utils/request";
+import type { UserDataFromId } from "../types";
+import { getUserId } from "../utils/getUserId";
+import http from "../utils/request";
 
 const baseUrl = `${import.meta.env.VITE_BASE_API_URL}/Users/Account`;
 

@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router";
 import type { ChangePasswordRequest } from "../../../types";
 import { useChangePassword } from "../../../api/authAPI";
-import { useForm } from "../../hooks/useForm";
+import { useForm } from "../../../hooks/useForm";
 import Spinner from "../../spinner/Spinner";
 
 const initialValues: ChangePasswordRequest = {
@@ -115,8 +115,9 @@ const ChangePassword: React.FC = () => {
                 </div>
             )}
 
+            <h1 className="h1-profile">Change Password</h1>
+
             <div className="profile-card">
-                <h1 className="h1-profile">Change Password</h1>
                 <form onSubmit={onSubmit} noValidate>
                     {([
                         { name: "currentPassword", label: "Current Password", type: "password", icon: "fa-key", placeholder: "Enter your current password" },

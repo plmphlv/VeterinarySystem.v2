@@ -2,7 +2,7 @@ import React, { useContext, useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router";
 import { useLogin, useRegister } from "../../api/authAPI";
 import type { RegisterFieldErrors, RegisterRequest } from "../../types";
-import { useForm } from "../hooks/useForm";
+import { useForm } from "../../hooks/useForm";
 import Dialog from "../dialog/Dialog";
 import { UserContext } from "../../contexts/UserContext";
 import Spinner from "../spinner/Spinner";
@@ -106,7 +106,7 @@ const Register: React.FC = () => {
             const password = values.password
             const authData = await login({ IdentifyingCredential, password });
 
-            if (!authData || authData?.errorMessage || authData.isSuccessful === false) {
+            if (!authData || !authData.hasOwnProperty('accessToken') || authData?.errorMessage || authData.isSuccessful === false) {
                 throw new Error(`${authData?.errorMessage}`);
             }
 

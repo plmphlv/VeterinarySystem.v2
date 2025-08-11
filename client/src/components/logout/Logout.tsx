@@ -11,7 +11,7 @@ const Logout: React.FC = () => {
     useEffect(() => {
         const doLogout = async () => {
             try {
-                await logout();
+                logout();
                 setDialog({ message: "Logout successful!", type: "success" });
             } catch (error: any) {
                 setDialog({ message: error?.message || "Logout failed.", type: "error" });

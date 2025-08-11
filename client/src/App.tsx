@@ -15,6 +15,9 @@ import Surgery from "./components/services/surgery/Surgery";
 import DentalCare from "./components/services/dental-care/Dental-Care";
 import EmegencyServices from "./components/services/emergency-services/Emergency-Services";
 import PetNutritionCounseling from "./components/services/pet-nutrition-counseling/Pet-Nutrition-Counseling";
+import MyPets from "./components/my-pets/My-Pets";
+import MyPetItem from "./components/my-pets/my-pets-item/My-Pets-Item";
+import MyPetInfo from "./components/my-pet-info/My-Pet-Info";
 import Profile from "./components/profile/Profile";
 import EditProfile from "./components/profile/edit-profile/Edit-Profile";
 import ChangePassword from "./components/profile/change-password/Change-Password";
@@ -41,6 +44,9 @@ function App() {
         <Route path="/services/pet-nutrition-counseling" element={<PetNutritionCounseling />}></Route>
         <Route path="*" element={<Error />}></Route>
         <Route element={<AuthGuard />}>
+          <Route path="/my-pets" element={<MyPets />}></Route>
+          <Route path="/my-pet" element={<MyPetItem />}></Route>
+          <Route path="/my-pet/info" element={<MyPetInfo />}></Route>
           <Route path="/profile" element={<Profile />}></Route>
           <Route path="/profile/edit" element={<EditProfile />}></Route>
           <Route path="/profile/change-password" element={<ChangePassword />}></Route>

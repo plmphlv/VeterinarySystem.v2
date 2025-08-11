@@ -146,13 +146,22 @@ export interface EditProfileRequest {
     id: string;
     firstName: string;
     lastName: string;
-    address?: string;
+    address: string;
     phoneNumber: string;
 }
 
 export interface EditProfileResponse {
     message: string;
 }
-// Edit Profile types end   
+// Edit Profile types end  
+
+// usePersistedState types start
+
+export interface NewState {
+    accessToken: string;
+    refreshToken: string;
+    isSuccessful: boolean;
+    errorMessage?: string;
+}
 
 

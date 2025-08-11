@@ -381,10 +381,158 @@
 
 /* Services Page End */
 
+/* My Pets Start */
+
+.my-pets-h1 {
+    animation: fadeInOpacity 1s;
+    margin-top: 150px;
+    background-color: #4EC5B4;
+    color: #fff;
+    padding: 0.3em 1em;
+    border-radius: 1em;
+}
+
+.add-pet-btn {
+    background-color: #4EC5B4;
+    color: #fff;
+    text-decoration: none;
+    border: none;
+    padding: 0.8rem 2rem;
+    margin-right: 1rem;
+    border-radius: 25px;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: background 0.3s ease;
+    margin-bottom: 2rem;
+}
+
+@media(min-width: 1025px) {
+
+
+    .learn-more-btn:hover {
+        background-color: #3BAA9C;
+    }
+}
+
+/* My Pets End */
+
+/* My Pets Item Start */
+
+.my-pets-item-section {
+    animation: fadeInOpacity 1s;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 2rem;
+    padding: 2rem;
+    max-width: 400px;
+    width: 100%;
+}
+
+.my-pets-item-card {
+    background-color: #ffffff;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+    transition: transform 0.3s ease;
+}
+
+.my-pets-item-card img {
+    width: 100%;
+    height: 200px;
+    object-fit: cover;
+}
+
+.my-pets-item-card .content {
+    padding: 1.5rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+}
+
+.my-pets-item-card h2 {
+    color: #4EC5B4;
+    margin-bottom: 1rem;
+}
+
+.my-pets-item-card p {
+    font-size: 0.95rem;
+    margin-bottom: 0.5rem;
+}
+
+.my-pets-item-more-info-btn {
+    margin-top: 1rem;
+    display: inline-block;
+    background-color: #4EC5B4;
+    color: #fff;
+    padding: 0.5rem 1rem;
+    border: none;
+    border-radius: 5px;
+    text-decoration: none;
+    font-size: 0.9rem;
+    transition: background-color 0.3s ease;
+}
+
+/* My Pets Item End */
+
+/* My Pet Info Start */
+
+.my-pet-info-content {
+    margin: 150px 0 2rem 0;
+    max-width: 400px;
+    animation: fadeInOpacity 1s;
+    text-align: center;
+    background-color: #f9f9f9;
+    border-radius: 10px;
+    padding: 2rem;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.my-pet-info-h1 {
+    display: inline-block;
+    animation: fadeInOpacity 1s;
+    margin-bottom: 1em;
+    background-color: #4EC5B4;
+    color: #fff;
+    padding: 0.3em 1em;
+    border-radius: 1em;
+}
+
+.my-pet-info-content img {
+    width: 100%;
+    border-radius: 10px;
+    margin-bottom: 1.5rem;
+}
+
+.my-pet-info-content h2 {
+    color: #4EC5B4;
+    margin-bottom: 1rem;
+}
+
+.my-pet-info-content p {
+    margin-bottom: 0.5rem;
+}
+
+.my-pet-info-back-link {
+    margin-top: 1rem;
+    display: inline-block;
+    background-color: #4EC5B4;
+    color: white;
+    padding: 0.5rem 1rem;
+    border-radius: 5px;
+    text-decoration: none;
+}
+
+.my-pet-back-link:hover {
+    background-color: #3BAA9C;
+}
+
+/* My Pet End */
+
 /* Seperate Services Page Start */
 
 .service-content {
-    max-width: 800px;
+    max-width: 600px;
     animation: fadeInOpacity 1s;
     text-align: center;
     margin: 2rem auto;
@@ -400,7 +548,7 @@
     background-color: #4EC5B4;
     color: #fff;
     padding: 0.3em 1em;
-    border-radius: 1em;
+    border-radius: 0.3em;
 }
 
 .service-content img {
@@ -436,13 +584,12 @@
 
 /* Profile Page Start */
 
-
 .profile-card {
-    margin-top: 150px;
+    margin-top: 2rem;
     background-color: #fff;
     animation: fadeInOpacity 1s;
     width: 90%;
-    max-width: 600px;
+    max-width: 700px;
     border-radius: 15px;
     box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
     padding: 3rem 2rem;
@@ -452,8 +599,12 @@
 }
 
 .h1-profile {
-    color: #4EC5B4;
-    margin-bottom: 2rem;
+    animation: fadeInOpacity 1s;
+    margin-top: 150px;
+    background-color: #4EC5B4;
+    color: #fff;
+    padding: 0.3em 1em;
+    border-radius: 1em;
 }
 
 .avatar {
@@ -540,111 +691,7 @@
 
 /* Profile Page End */
 
-/* Edit Profile Start */
-
-/* .profile-card {
-    background-color: #fff;
-    margin: 100px auto 30px auto;
-    animation: fadeInOpacity 1s;
-    width: 90%;
-    max-width: 600px;
-    border-radius: 15px;
-    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
-    padding: 3rem 2rem;
-    text-align: center;
-    position: relative;
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-}
-
-.avatar {
-    width: 100px;
-    height: 100px;
-    background-color: #4EC5B4;
-    border-radius: 50%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    font-size: 2.5rem;
-    color: white;
-    margin: 0 auto 1.5rem;
-    user-select: none;
-}
-
-.field {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin: 1rem 0;
-    border-bottom: 1px solid #e0e0e0;
-    padding-bottom: 0.5rem;
-    font-size: 1rem;
-}
-
-.field label {
-    font-weight: 600;
-    color: #4EC5B4;
-    flex-basis: 30%;
-    text-align: left;
-}
-
-.field input {
-    border: none;
-    border-bottom: 1px solid #e0e0e0;
-    font-size: 1rem;
-    color: #333;
-    max-width: 65%;
-    text-align: right;
-    padding: 0.3rem 0;
-    background: transparent;
-    outline: none;
-    font-family: inherit;
-    transition: border-color 0.3s ease;
-}
-
-.field input::placeholder {
-    color: #aaa;
-}
-
-.field input:focus {
-    border-color: #4EC5B4;
-}
-
-.edit-button {
-    margin-top: 2rem;
-    background-color: #4EC5B4;
-    color: #fff;
-    border: none;
-    padding: 0.8rem 2rem;
-    border-radius: 25px;
-    font-size: 1rem;
-    cursor: pointer;
-    transition: background 0.3s ease;
-}
-
-.edit-button:hover {
-    background-color: #3bb0a1;
-}
-
-@media (max-width: 480px) {
-    .field {
-        flex-direction: column;
-        align-items: flex-start;
-    }
-
-    .field label {
-        flex-basis: 100%;
-        margin-bottom: 0.3rem;
-    }
-
-    .field input {
-        max-width: 100%;
-        text-align: left;
-    }
-} */
-
-/* Edit Profile End */
-
-/* Change Password Page Start */
+/* Edit Profile & Change Password Page Start */
 
 .field-edit-profile {
     display: flex;
@@ -682,8 +729,7 @@
     transition: border-color 0.3s ease;
 }
 
-
-/* Change Password Page End */
+/* Edit Profile & Change Password Page End */
 
 /* Login Start */
 
@@ -1127,68 +1173,68 @@
 
 /* Error Start */
 .error-section {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  padding: 60px 20px;
-  min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 60px 20px;
+    min-height: 100vh;
 }
 
 .error-container {
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  justify-content: center;
-  max-width: 1200px;
-  width: 100%;
-  gap: 40px;
-  text-align: center;
-  flex-wrap: wrap-reverse;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    max-width: 1200px;
+    width: 100%;
+    gap: 40px;
+    text-align: center;
+    flex-wrap: wrap-reverse;
 }
 
 .error-content {
-  flex: 1;
-  min-width: 300px;
+    flex: 1;
+    min-width: 300px;
 }
 
 .error-code {
-  font-size: 96px;
-  color: red;
-  font-weight: bold;
+    font-size: 96px;
+    color: red;
+    font-weight: bold;
 }
 
 .error-message {
-  font-size: 32px;
-  color: #4EC5B4;
-  margin-top: 10px;
+    font-size: 32px;
+    color: #4EC5B4;
+    margin-top: 10px;
 }
 
 .error-description {
-  font-size: 18px;
-  margin: 20px 0;
-  color: #555;
-  line-height: 1.6;
+    font-size: 18px;
+    margin: 20px 0;
+    color: #555;
+    line-height: 1.6;
 }
 
 .error-button {
-  display: inline-block;
-  background-color: #4EC5B4;
-  color: white;
-  padding: 12px 24px;
-  border-radius: 8px;
-  text-decoration: none;
-  transition: background 0.3s ease;
-  font-weight: 500;
+    display: inline-block;
+    background-color: #4EC5B4;
+    color: white;
+    padding: 12px 24px;
+    border-radius: 8px;
+    text-decoration: none;
+    transition: background 0.3s ease;
+    font-weight: 500;
 }
 
 .error-button:hover {
-  background-color: #3aa89b;
+    background-color: #3aa89b;
 }
 
 .error-image img {
-  max-width: 400px;
-  width: 100%;
-  height: auto;
+    max-width: 400px;
+    width: 100%;
+    height: auto;
 }
 
 /* Error End */

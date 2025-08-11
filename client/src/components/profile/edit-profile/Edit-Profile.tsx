@@ -1,9 +1,9 @@
 import type React from "react";
 import Spinner from "../../spinner/Spinner";
-import { useGetUserData } from "../../hooks/useGetUserData";
+import { useGetUserData } from "../../../hooks/useGetUserData";
 import { useEffect, useState } from "react";
 import type { EditProfileRequest } from "../../../types";
-import { useForm } from "../../hooks/useForm";
+import { useForm } from "../../../hooks/useForm";
 import { useEditProfile } from "../../../api/authAPI";
 import { Link, useNavigate } from "react-router";
 
@@ -52,20 +52,20 @@ const EditProfile: React.FC = () => {
             default:
                 return undefined;
         }
-    };    
+    };
 
     const validate = (values: EditProfileRequest): Partial<Record<keyof EditProfileRequest, string>> => {
-    const fieldErrors: Partial<Record<keyof EditProfileRequest, string>> = {};
+        const fieldErrors: Partial<Record<keyof EditProfileRequest, string>> = {};
 
-    (Object.keys(values) as (keyof EditProfileRequest)[]).forEach(field => {
-        if (field === 'address') return;
+        (Object.keys(values) as (keyof EditProfileRequest)[]).forEach(field => {
+            if (field === 'address') return;
 
-        const error = validateField(field, values[field], values);
-        if (error) fieldErrors[field] = error;
-    });
+            const error = validateField(field, values[field], values);
+            if (error) fieldErrors[field] = error;
+        });
 
-    return fieldErrors;
-};
+        return fieldErrors;
+    };
 
     const editProfileHandler = async (values: EditProfileRequest) => {
         const validationErrors = validate(values);
@@ -80,6 +80,10 @@ const EditProfile: React.FC = () => {
             if (!userData) {
                 return setDialog({ message: "No user data found.", type: "error" });
             }
+            if (values.address === null) {
+                values.address = "";
+            }
+
             await editProfile({ ...values, id: userData.id });
 
             setDialog({ message: "Edit is successful!", type: "success" });
@@ -141,10 +145,11 @@ const EditProfile: React.FC = () => {
                 </div>
             )}
 
+            <h1 className="h1-profile">Edit Profile</h1>
+            
             {userData ? (
 
                 <div className="profile-card">
-                    <h1 className="h1-profile">Edit Profile</h1>
                     <form onSubmit={onSubmit} noValidate>
                         {([
                             { name: "firstName", label: "First Name", type: "text", icon: "fa-pen", placeholder: "Enter your first name" },
