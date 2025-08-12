@@ -65,9 +65,7 @@ const Login: React.FC = () => {
                 userLoginHandler(authData);
                 navigate('/');
             }, 500);
-        } catch (err: any) {
-            console.log(err);
-            
+        } catch (err: any) {            
             setDialog({ message: err.detail || "Login failed.", type: "error" });
             changeValues({ ...values, password: "" });
 

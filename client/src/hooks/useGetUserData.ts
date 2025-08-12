@@ -19,7 +19,7 @@ export const useGetUserData = () => {
             setError(null);
             try {
                 const response = await http.get<UserDataFromId>(`${baseUrl}/${id}`);
-                setUserData(response ?? null);
+                setUserData(response || null);
             } catch (err) {
                 console.error("Failed to fetch user data by ID", err);
                 setError("Failed to load user data");

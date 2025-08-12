@@ -392,8 +392,18 @@
     border-radius: 1em;
 }
 
-.add-pet-btn {
+.no-pets-h1 {
+    animation: fadeInOpacity 1s;
+    margin-top: 50px;
     background-color: #4EC5B4;
+    color: #fff;
+    padding: 0.3em 1em;
+    border-radius: 1em;
+}
+
+.add-pet-btn {
+    background-color: rgb(0, 170, 0);
+    font-weight: bold;
     color: #fff;
     text-decoration: none;
     border: none;
@@ -407,10 +417,12 @@
 }
 
 @media(min-width: 1025px) {
-
-
     .learn-more-btn:hover {
         background-color: #3BAA9C;
+    }
+
+    .add-pet-btn:hover {
+        background-color: darkgreen;
     }
 }
 
@@ -473,11 +485,22 @@
     transition: background-color 0.3s ease;
 }
 
+@media(min-width: 1025px) {
+    .my-pets-item-card:hover {
+        transform: translateY(-5px);
+    }
+
+    .my-pets-item-more-info-btn:hover {
+        background-color: #3BAA9C;
+        ;
+    }
+}
+
 /* My Pets Item End */
 
 /* My Pet Info Start */
 
-.my-pet-info-content {
+.my-pets-item-info-content {
     margin: 150px 0 2rem 0;
     max-width: 400px;
     animation: fadeInOpacity 1s;
@@ -488,7 +511,7 @@
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
-.my-pet-info-h1 {
+.my-pets-item-info-h1 {
     display: inline-block;
     animation: fadeInOpacity 1s;
     margin-bottom: 1em;
@@ -498,22 +521,22 @@
     border-radius: 1em;
 }
 
-.my-pet-info-content img {
+.my-pets-item-info-content img {
     width: 100%;
     border-radius: 10px;
     margin-bottom: 1.5rem;
 }
 
-.my-pet-info-content h2 {
+.my-pets-item-info-content h2 {
     color: #4EC5B4;
     margin-bottom: 1rem;
 }
 
-.my-pet-info-content p {
+.my-pets-item-info-content p {
     margin-bottom: 0.5rem;
 }
 
-.my-pet-info-back-link {
+.my-pets-item-info-back-link {
     margin-top: 1rem;
     display: inline-block;
     background-color: #4EC5B4;
@@ -523,8 +546,10 @@
     text-decoration: none;
 }
 
-.my-pet-back-link:hover {
-    background-color: #3BAA9C;
+@media(min-width: 1025px) {
+    .my-pets-item-info-back-link:hover {
+        background-color: #3BAA9C;
+    }
 }
 
 /* My Pet End */

@@ -1,6 +1,6 @@
 import type React from "react";
 
-const MyPetAdd: React.FC = () => {
+const AddPet: React.FC = () => {
     return (
         <>
         
@@ -8,4 +8,4 @@ const MyPetAdd: React.FC = () => {
     )
 }
 
-export default MyPetAdd;
+export default AddPet;
