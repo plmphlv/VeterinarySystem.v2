@@ -4,6 +4,8 @@ using Infrastructure.Identity;
 using Infrastructure.Persistence;
 using Infrastructure.Services;
 using Infrastructure.Settings;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Infrastructure;
@@ -92,13 +94,36 @@ public static class ConfigureServices
             {
                 options.TokenValidationParameters = new TokenValidationParameters
                 {
-                    ValidateAudience = true,
                     ValidateIssuer = true,
-                    ValidateIssuerSigningKey = true,
-                    ValidateLifetime = true,
                     ValidIssuer = Environment.GetEnvironmentVariable("JWT_ISSUER"),
+
+                    ValidateAudience = true,
                     ValidAudience = Environment.GetEnvironmentVariable("JWT_AUDIENCE"),
+                    
+                    ValidateIssuerSigningKey = true,
                     IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(key)),
+                    
+                    ValidateLifetime = true,
+                    RequireExpirationTime = true,
+                    RequireSignedTokens = true,
+
+                    ClockSkew = TimeSpan.Zero
+                };
+
+                options.Events = new JwtBearerEvents
+                {
+                    OnAuthenticationFailed = context =>
+                    {
+                        if (context.Exception.GetType() == typeof(SecurityTokenExpiredException))
+                        {
+                            context.Response.StatusCode = StatusCodes.Status401Unauthorized;
+                            context.Response.ContentType = "application/json";
+
+                            return context.Response.WriteAsync("{\"error\":\"invalid_token\",\"error_description\":\"The access token expired\"}");
+                        }
+
+                        return Task.CompletedTask;
+                    }
                 };
             });
     }
