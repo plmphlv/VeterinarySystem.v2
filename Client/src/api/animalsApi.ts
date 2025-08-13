@@ -1,7 +1,6 @@
-import { useContext, useRef, useEffect } from 'react';
+import { useRef, useEffect } from 'react';
 import http from '../utils/request';
-import { UserContext } from '../contexts/UserContext';
-import type { AddAnimalRequest, AddAnimalResponse, MyAnimal, MyAnimalsRequest } from '../types';
+import type { AddAnimalRequest, AddAnimalResponse, Animal, GetAllAnimalsRequest, GetAnimalDetailsRequest, GetAnimalDetailsResponse } from '../types';
 
 const AnimalsUrl = `${import.meta.env.VITE_BASE_API_URL}/Animals`;
 const AnimalTypesUrl = `${import.meta.env.VITE_BASE_API_URL}/AnimalTypes`;
@@ -15,11 +14,11 @@ export const useGetAllAnimals = () => {
         };
     }, []);
 
-    const getAllAnimals = async (data: MyAnimalsRequest) => {
+    const getAllAnimals = async (data: GetAllAnimalsRequest) => {
         abortControllerRef.current?.abort();
         abortControllerRef.current = new AbortController();
 
-        return http.get<MyAnimal[]>(
+        return http.get<Animal[]>(
             `${AnimalsUrl}?OwnerId=${data.ownerId}`,
             { signal: abortControllerRef.current.signal }
         );   
@@ -28,25 +27,47 @@ export const useGetAllAnimals = () => {
     return { getAllAnimals, cancelGetAllAnimals: () => abortControllerRef.current?.abort() };
 };
 
-// export const useAddAnimal = () => {
-//     const abortControllerRef = useRef<AbortController | null>(null);
+export const useGetAnimalDetails = () => {
+    const abortControllerRef = useRef<AbortController | null>(null);
 
-//     useEffect(() => {
-//         return () => {
-//             abortControllerRef.current?.abort();
-//         };
-//     }, []);
+    useEffect(() => {
+        return () => {
+            abortControllerRef.current?.abort();
+        };
+    }, []);
 
-//     const addAnimal = async (data: AddAnimalRequest) => {
-//         abortControllerRef.current?.abort();
-//         abortControllerRef.current = new AbortController();
+    const getAnimalDetails = async (id: number) => {
+        abortControllerRef.current?.abort();
+        abortControllerRef.current = new AbortController();
 
-//         return http.post<AddAnimalRequest, AddAnimalResponse>(
-//             `${AnimalsUrl}`,
-//             data,
-//             { signal: abortControllerRef.current.signal }
-//         );
-//     };
+        return http.get<GetAnimalDetailsResponse>(
+            `${AnimalsUrl}/Details/${id}`,
+            { signal: abortControllerRef.current.signal }
+        );   
+    };
 
-//     return { addAnimal, cancelAddAnimal: () => abortControllerRef.current?.abort() };
-// };
+    return { getAnimalDetails, cancelGetAnimalDetails: () => abortControllerRef.current?.abort() };
+};
+
+export const useAddAnimal = () => {
+    const abortControllerRef = useRef<AbortController | null>(null);
+
+    useEffect(() => {
+        return () => {
+            abortControllerRef.current?.abort();
+        };
+    }, []);
+
+    const addAnimal = async (data: AddAnimalRequest) => {
+        abortControllerRef.current?.abort();
+        abortControllerRef.current = new AbortController();
+
+        return http.post<AddAnimalRequest, AddAnimalResponse>(
+            `${AnimalsUrl}`,
+            data,
+            { signal: abortControllerRef.current.signal }
+        );
+    };
+
+    return { addAnimal, cancelAddAnimal: () => abortControllerRef.current?.abort() };
+};

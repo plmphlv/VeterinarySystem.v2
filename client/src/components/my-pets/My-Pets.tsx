@@ -16,7 +16,7 @@ const MyPets: React.FC = () => {
 
             <MyPetItem />
 
-            <Link to="/my-pets/add" className="add-pet-btn">+ Add New Pet</Link>
+            <Link to="/my-pets/add" className="my-pets-add-pet-btn">+ Add New Pet</Link>
         </>
     )
 }

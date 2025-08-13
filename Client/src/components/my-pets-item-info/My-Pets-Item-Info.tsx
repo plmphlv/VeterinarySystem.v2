@@ -1,18 +1,79 @@
-import { Link } from "react-router";
+import { Link, useParams } from "react-router";
+import { useGetAnimalDetails } from "../../api/animalsApi";
+import type { Animal, GetAnimalDetailsErrors, GetAnimalDetailsResponse } from "../../types";
+import { useEffect, useState } from "react";
+import Spinner from "../spinner/Spinner";
+import Dialog from "../dialog/Dialog";
 
 const MyPetsItemInfo: React.FC = () => {
+    const { id } = useParams();
+    const { getAnimalDetails, cancelGetAnimalDetails } = useGetAnimalDetails();
+    // const [errors, setErrors] = useState<GetAnimalDetailsErrors>({});
+
+    const [dialog, setDialog] = useState<{ message: string; type: "success" | "error" } | null>(null);
+
+    const [animalDetails, setAnimalDetails] = useState<GetAnimalDetailsResponse>();
+    const [isLoading, setLoading] = useState(true);
+
+    useEffect(() => {
+        if (!id) {
+            return;
+        }
+
+        const fetchAnimalDetails = async () => {
+            try {
+                // setErrors({});
+                setLoading(true)
+
+                const animalDetails = await getAnimalDetails(Number(id));
+
+                setAnimalDetails(animalDetails || undefined);
+
+            } catch (err: any) {
+                setDialog({ message: err.title || "An error occurred while fetching animal details.", type: "error" });
+                // setErrors(err);
+                return;
+            } finally {
+                setLoading(false);
+            }
+        };
+
+        fetchAnimalDetails();
+    }, [id]);
+
+    useEffect(() => {
+        return () => {
+            cancelGetAnimalDetails();
+        };
+    }, []);
+
     return (
         <>
+            {isLoading && (
+                <div className="spinner-overlay">
+                    <Spinner />
+                </div>
+            )}
             <div className="my-pets-item-info-content">
-                <h1 className="my-pets-item-info-h1">Bobo</h1>
-                <img src="/images/general-check-up.png" alt="Bobo's image" />
-                    <h2>General Information:</h2>
-                    <p><i className="fa-solid fa-pen"></i> Name: Bobo</p>
-                    <p><i className="fa-solid fa-calendar-days"></i> Age: 13 years</p>
-                    <p><i className="fa-solid fa-paw"></i> Animal type: Dog</p>
-                    <p><i className="fa-solid fa-scale-unbalanced"></i> Weight: 5.80kg</p>
-                    <Link to="/my-pets" className="my-pets-item-info-back-link">← Back to My Pets</Link>
+                <h1 className="my-pets-item-info-h1">{animalDetails?.name}</h1>
+                {/* <img src="/images/general-check-up.png" alt={animalDetails?.name} /> */}
+                <h2>General Information:</h2>
+                <p><i className="fa-solid fa-pen"></i> Name: {animalDetails?.name}</p>
+                <p><i className="fa-solid fa-calendar-days"></i> Age: {animalDetails?.age} years</p>
+                <p><i className="fa-solid fa-paw"></i> Animal type: {animalDetails?.animalType}</p>
+                <p><i className="fa-solid fa-weight"></i> Weight: {animalDetails?.weight}kg</p>
+                <Link to="/my-pets" className="my-pets-item-info-back-link">← Back to My Pets</Link>
+                <Link to="/my-pets/edit" className="my-pets-item-info-edit">Edit</Link>
+                <Link to="/my-pets/delete" className="my-pets-item-info-delete">Delete</Link>
             </div>
+
+            {dialog && (
+                <Dialog
+                    message={dialog.message}
+                    type={dialog.type}
+                    onClose={() => setDialog(null)}
+                />
+            )}
         </>
     )
 }

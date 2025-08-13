@@ -2,18 +2,18 @@ import { Link } from "react-router";
 import { useEffect, useState } from "react";
 import { useGetUserData } from "../../../hooks/useGetUserData";
 import { useGetAllAnimals } from "../../../api/animalsApi";
-import type { MyAnimal, MyAnimalsErrors } from "../../../types";
 import Spinner from "../../spinner/Spinner";
 import Dialog from "../../dialog/Dialog";
+import type { Animal, GetAllAnimalsErrors } from "../../../types";
 
 const MyPetItem: React.FC = () => {
     const { userData } = useGetUserData();
-    const { getAllAnimals } = useGetAllAnimals();
-    const [errors, setErrors] = useState<MyAnimalsErrors>({});
+    const { getAllAnimals, cancelGetAllAnimals } = useGetAllAnimals();
+    const [errors, setErrors] = useState<GetAllAnimalsErrors>({});
 
     const [dialog, setDialog] = useState<{ message: string; type: "success" | "error" } | null>(null);
 
-    const [animals, setAnimals] = useState<MyAnimal[]>([]);
+    const [animals, setAnimals] = useState<Animal[]>([]);
     const [isLoading, setLoading] = useState(true);
 
     useEffect(() => {
@@ -49,6 +49,12 @@ const MyPetItem: React.FC = () => {
 
         fetchAnimals();
     }, [userData?.id]);
+
+    useEffect(() => {
+        return () => {
+            cancelGetAllAnimals();
+        };
+    }, []);
 
     return (
         <>

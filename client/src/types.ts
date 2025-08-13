@@ -164,15 +164,34 @@ export interface NewState {
     errorMessage?: string;
 }
 
-// MyPets types start
-export interface MyAnimalsRequest {
-    ownerId: string;
-}
-
-export interface MyAnimal {
+// Animals types start
+export interface Animal {
     id: string;
     name: string;
     animalType: string;
+}
+
+export type GetAllAnimalsErrors = Partial<Record<keyof GetAllAnimalsRequest, string>>;
+export type GetAnimalDetailsErrors = Partial<Record<keyof GetAnimalDetailsRequest, string>>;
+export type AddAnimalFieldErrors = Partial<Record<keyof AddAnimalRequest, string>>;
+
+
+export interface GetAllAnimalsRequest {
+    ownerId: string;
+}
+
+export interface GetAnimalDetailsRequest {
+    id: number;
+}
+
+export interface GetAnimalDetailsResponse {
+    name: string,
+    age: number,
+    weight: number,
+    passportNumber: string,
+    chipNumber: string,
+    ownerName: string
+    animalType: string,
 }
 
 export interface AddAnimalRequest {
@@ -189,9 +208,7 @@ export interface AddAnimalResponse {
     number: number;
 }
 
-export type MyAnimalsErrors = Partial<Record<keyof MyAnimalsRequest, string>>;
-
-// MyPets types end
+// Animals types end
 
 
 

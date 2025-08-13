@@ -360,7 +360,7 @@
     border-radius: 5px;
     text-decoration: none;
     font-size: 0.9rem;
-    transition: background-color 0.3s ease;
+    transition: background-color 0.7s ease;
 }
 
 @media(min-width: 1025px) {
@@ -369,7 +369,7 @@
     }
 
     .learn-more-btn:hover {
-        background-color: #3BAA9C;
+        background-color: #2a796f;
     }
 }
 
@@ -401,8 +401,8 @@
     border-radius: 1em;
 }
 
-.add-pet-btn {
-    background-color: rgb(0, 170, 0);
+.my-pets-add-pet-btn {
+    background-color: #48d889;
     font-weight: bold;
     color: #fff;
     text-decoration: none;
@@ -412,17 +412,13 @@
     border-radius: 25px;
     font-size: 1rem;
     cursor: pointer;
-    transition: background 0.3s ease;
+    transition: background 0.7s ease;
     margin-bottom: 2rem;
 }
 
 @media(min-width: 1025px) {
-    .learn-more-btn:hover {
-        background-color: #3BAA9C;
-    }
-
-    .add-pet-btn:hover {
-        background-color: darkgreen;
+    .my-pets-add-pet-btn:hover {
+        background-color: #2f8a58;
     }
 }
 
@@ -482,7 +478,7 @@
     border-radius: 5px;
     text-decoration: none;
     font-size: 0.9rem;
-    transition: background-color 0.3s ease;
+    transition: background-color 0.7s ease;
 }
 
 @media(min-width: 1025px) {
@@ -491,8 +487,7 @@
     }
 
     .my-pets-item-more-info-btn:hover {
-        background-color: #3BAA9C;
-        ;
+        background-color: #2a796f;
     }
 }
 
@@ -541,18 +536,223 @@
     display: inline-block;
     background-color: #4EC5B4;
     color: white;
+    margin-right: 0.5rem;
     padding: 0.5rem 1rem;
     border-radius: 5px;
     text-decoration: none;
+    margin-right: 0.5remx;
+    transition: background-color 0.7s ease;
+}
+
+.my-pets-item-info-edit {
+    margin-top: 1rem;
+    margin-right: 0.5rem;
+    display: inline-block;
+    background-color: rgb(225, 225, 0);
+    color: white;
+    padding: 0.5rem 1rem;
+    border-radius: 5px;
+    text-decoration: none;
+    margin-right: 0.5remx;
+    transition: background-color 0.7s ease;
+}
+
+.my-pets-item-info-delete {
+    margin-top: 1rem;
+    display: inline-block;
+    background-color: #ff4d4d;
+    color: white;
+    padding: 0.5rem 1rem;
+    border-radius: 5px;
+    text-decoration: none;
+    transition: background-color 0.7s ease;
 }
 
 @media(min-width: 1025px) {
     .my-pets-item-info-back-link:hover {
-        background-color: #3BAA9C;
+        background-color: #2a796f;
+
+    }
+
+    .my-pets-item-info-delete:hover {
+        background-color: #ba3838;
+    }
+
+    .my-pets-item-info-edit:hover {
+        background-color: rgb(190, 190, 0);
     }
 }
 
-/* My Pet End */
+/* My Pet Info End */
+
+/* Add Pet Start*/
+
+.my-pets-add {
+    min-height: 100vh;
+    width: 100%;
+    background-image: url('../images/veterinary-hospital.png');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    padding: 2rem 1rem;
+    box-sizing: border-box;
+}
+
+.my-pets-add::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.7);
+    z-index: 1;
+    pointer-events: none;
+}
+
+.my-pets-add-container {
+    z-index: 2;
+    text-align: start;
+    background-color: rgb(78, 197, 180, 0.8);
+    padding: 40px;
+    border-radius: 16px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+    max-width: 400px;
+    margin-top: 150px;
+    margin-bottom: 30px;
+    animation: fadeInOpacity 1s;
+    width: 90%;
+}
+
+.my-pets-add-container h2 {
+    text-align: center;
+    color: #fff;
+    margin-bottom: 30px;
+}
+
+.my-pets-add-form-group {
+    margin-bottom: 20px;
+}
+
+.my-pets-add-form-group select {
+    padding: 0.7rem;
+    border-radius: 0.5rem;
+}
+
+.my-pets-add-form-group label {
+    display: block;
+    margin-bottom: 6px;
+    font-weight: bold;
+    color: #fff;
+}
+
+.my-pets-add-form-group input {
+    width: 100%;
+    padding: 12px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    outline: none;
+    transition: 0.3s;
+}
+
+.my-pets-add-form-group input:focus {
+    border-color: #000;
+}
+
+.add-pet-btn {
+    width: 100%;
+    padding: 12px;
+    background-color: #fff;
+    color: 4EC5B4;
+    border: none;
+    margin-bottom: 0.5rem;
+    border-radius: 8px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.cancel-btn {
+    width: 100%;
+    padding: 12px;
+    font-size: 14px;
+    display: inline-block;
+    text-align: center;
+    text-decoration: none;
+    background-color: #fff;
+    color: #000;
+    border: none;
+    border-radius: 8px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.my-pets-add-bottom-text {
+    text-align: center;
+    margin-top: 20px;
+    font-size: 14px;
+    color: #333;
+}
+
+.my-pets-add-bottom-text a {
+    color: #fff;
+    position: relative;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+.my-pets-add-bottom-text a::before {
+    content: '';
+    position: absolute;
+    width: 100%;
+    height: 3px;
+    border-radius: 4px;
+    background-color: #fff;
+    bottom: -2px;
+    left: 0;
+    transform-origin: left;
+    transform: scaleX(0);
+    transition: transform .3s ease-in-out;
+}
+
+.my-pets-add-form-group input.error {
+    border: 3px solid #ff4d4d;
+}
+
+.my-pets-add-form-group input.success {
+    border: 3px solid #3cb371;
+}
+
+.error-text {
+    color: #ff4d4d;
+    font-weight: bold;
+    font-size: 13px;
+    margin-top: 5px;
+}
+
+@media(min-width: 1025px) {
+    .my-pets-add-btn:hover {
+        background-color: #D3D3D3;
+    }
+
+    .my-pets-add-bottom-text a:hover::before {
+        transform-origin: left;
+        transform: scaleX(1);
+    }
+
+    .add-pet-btn:hover {
+        background-color: #D3D3D3;
+    }
+
+    .cancel-btn:hover {
+        background-color: #D3D3D3;
+    }
+}
+
+/* Add Pet End */
 
 /* Seperate Services Page Start */
 
@@ -599,10 +799,14 @@
     padding: 0.5rem 1rem;
     border-radius: 5px;
     text-decoration: none;
+    transition: background-color 0.7s ease;
 }
 
-.back-link:hover {
-    background-color: #3BAA9C;
+@media(min-width: 1025px) {
+    .back-link:hover {
+        background-color: #2a796f;
+        transition: 0.3s ease-in;
+    }
 }
 
 /* Seperate Services Page Start */
@@ -681,7 +885,7 @@
     border-radius: 25px;
     font-size: 1rem;
     cursor: pointer;
-    transition: background 0.3s ease;
+    transition: background 0.7s ease;
 }
 
 .change-button {
@@ -698,7 +902,8 @@
 
 @media(min-width: 1025px) {
     .edit-button:hover {
-        background-color: #3bb0a1;
+        background-color: #2a796f;
+        transition: 0.3s ease-in;
     }
 }
 
@@ -840,6 +1045,7 @@
 
 .login-btn:hover {
     background-color: #D3D3D3;
+    transition: 0.3s ease-in;
 }
 
 .login-bottom-text {
@@ -882,6 +1088,7 @@
 @media(min-width: 1025px) {
     .login-btn:hover {
         background-color: #D3D3D3;
+        transition: 0.3s ease-in;
     }
 
     .login-bottom-text a:hover::before {
