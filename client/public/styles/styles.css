@@ -432,7 +432,7 @@
     grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
     gap: 2rem;
     padding: 2rem;
-    max-width: 400px;
+    max-width: 1200px;
     width: 100%;
 }
 
@@ -536,7 +536,6 @@
     display: inline-block;
     background-color: #4EC5B4;
     color: white;
-    margin-right: 0.5rem;
     padding: 0.5rem 1rem;
     border-radius: 5px;
     text-decoration: none;
@@ -664,7 +663,7 @@
 .add-pet-btn {
     width: 100%;
     padding: 12px;
-    background-color: #fff;
+    background-color: #48d889;
     color: 4EC5B4;
     border: none;
     margin-bottom: 0.5rem;
@@ -744,7 +743,7 @@
     }
 
     .add-pet-btn:hover {
-        background-color: #D3D3D3;
+        background-color: #2f8a58;
     }
 
     .cancel-btn:hover {

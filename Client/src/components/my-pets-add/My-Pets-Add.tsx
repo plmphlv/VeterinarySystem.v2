@@ -93,6 +93,7 @@ const MyPetsAdd: React.FC = () => {
                 ...values,
                 ownerId: userData?.id || ""
             };
+            
             await addAnimal(payload);
 
             setDialog({ message: "Pet added successfully!", type: "success" });
@@ -150,7 +151,7 @@ const MyPetsAdd: React.FC = () => {
 
             <section className="my-pets-add">
                 <div className="my-pets-add-container">
-                    <h2>Add Pet</h2>
+                    <h2>Add New Pet</h2>
                     <form onSubmit={onSubmit} noValidate>
                         <div className="my-pets-add-form-group">
                             <label htmlFor="name">
