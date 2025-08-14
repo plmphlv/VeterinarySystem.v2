@@ -1,14 +1,15 @@
 import { useState } from "react";
+import type { AuthData } from "../types";
 
-export default function usePersistedState<T>(
+export default function usePersistedState<T extends Partial<AuthData>>(
     stateKey: string,
     initialState: T | (() => T)
 ): [T, (value: T | ((prevState: T) => T)) => void] {
-    
+
     const [state, setState] = useState<T>(() => {
         const persistedState = localStorage.getItem(stateKey);
 
-        if (!persistedState) {
+        if (!persistedState || !persistedState.includes('accessToken')) {
             return typeof initialState === 'function'
                 ? (initialState as () => T)()
                 : initialState;
@@ -30,6 +31,11 @@ export default function usePersistedState<T>(
             : input;
 
         try {
+
+            if (!newState.hasOwnProperty('isSuccessful')) {
+                localStorage.removeItem(stateKey);
+                return;
+            }
             localStorage.setItem(stateKey, JSON.stringify(newState));
         } catch (err) {
             console.warn("Failed to persist state:", err);

@@ -360,7 +360,7 @@
     border-radius: 5px;
     text-decoration: none;
     font-size: 0.9rem;
-    transition: background-color 0.3s ease;
+    transition: background-color 0.7s ease;
 }
 
 @media(min-width: 1025px) {
@@ -369,7 +369,7 @@
     }
 
     .learn-more-btn:hover {
-        background-color: #3BAA9C;
+        background-color: #2a796f;
     }
 }
 
@@ -381,10 +381,382 @@
 
 /* Services Page End */
 
+/* My Pets Start */
+
+.my-pets-h1 {
+    animation: fadeInOpacity 1s;
+    margin-top: 150px;
+    background-color: #4EC5B4;
+    color: #fff;
+    padding: 0.3em 1em;
+    border-radius: 1em;
+}
+
+.no-pets-h1 {
+    animation: fadeInOpacity 1s;
+    margin-top: 50px;
+    background-color: #4EC5B4;
+    color: #fff;
+    padding: 0.3em 1em;
+    border-radius: 1em;
+}
+
+.my-pets-add-pet-btn {
+    background-color: #48d889;
+    font-weight: bold;
+    color: #fff;
+    text-decoration: none;
+    border: none;
+    padding: 0.8rem 2rem;
+    margin-right: 1rem;
+    border-radius: 25px;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: background 0.7s ease;
+    margin-bottom: 2rem;
+}
+
+@media(min-width: 1025px) {
+    .my-pets-add-pet-btn:hover {
+        background-color: #2f8a58;
+    }
+}
+
+/* My Pets End */
+
+/* My Pets Item Start */
+
+.my-pets-item-section {
+    animation: fadeInOpacity 1s;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 2rem;
+    padding: 2rem;
+    max-width: 1200px;
+    width: 100%;
+}
+
+.my-pets-item-card {
+    background-color: #ffffff;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+    transition: transform 0.3s ease;
+}
+
+.my-pets-item-card img {
+    width: 100%;
+    height: 200px;
+    object-fit: cover;
+}
+
+.my-pets-item-card .content {
+    padding: 1.5rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+}
+
+.my-pets-item-card h2 {
+    color: #4EC5B4;
+    margin-bottom: 1rem;
+}
+
+.my-pets-item-card p {
+    font-size: 0.95rem;
+    margin-bottom: 0.5rem;
+}
+
+.my-pets-item-more-info-btn {
+    margin-top: 1rem;
+    display: inline-block;
+    background-color: #4EC5B4;
+    color: #fff;
+    padding: 0.5rem 1rem;
+    border: none;
+    border-radius: 5px;
+    text-decoration: none;
+    font-size: 0.9rem;
+    transition: background-color 0.7s ease;
+}
+
+@media(min-width: 1025px) {
+    .my-pets-item-card:hover {
+        transform: translateY(-5px);
+    }
+
+    .my-pets-item-more-info-btn:hover {
+        background-color: #2a796f;
+    }
+}
+
+/* My Pets Item End */
+
+/* My Pet Info Start */
+
+.my-pets-item-info-content {
+    margin: 150px 0 2rem 0;
+    max-width: 400px;
+    animation: fadeInOpacity 1s;
+    text-align: center;
+    background-color: #f9f9f9;
+    border-radius: 10px;
+    padding: 2rem;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.my-pets-item-info-h1 {
+    display: inline-block;
+    animation: fadeInOpacity 1s;
+    margin-bottom: 1em;
+    background-color: #4EC5B4;
+    color: #fff;
+    padding: 0.3em 1em;
+    border-radius: 1em;
+}
+
+.my-pets-item-info-content img {
+    width: 100%;
+    border-radius: 10px;
+    margin-bottom: 1.5rem;
+}
+
+.my-pets-item-info-content h2 {
+    color: #4EC5B4;
+    margin-bottom: 1rem;
+}
+
+.my-pets-item-info-content p {
+    margin-bottom: 0.5rem;
+}
+
+.my-pets-item-info-back-link {
+    margin-top: 1rem;
+    display: inline-block;
+    background-color: #4EC5B4;
+    color: white;
+    padding: 0.5rem 1rem;
+    border-radius: 5px;
+    text-decoration: none;
+    margin-right: 0.5remx;
+    transition: background-color 0.7s ease;
+}
+
+.my-pets-item-info-edit {
+    margin-top: 1rem;
+    margin-right: 0.5rem;
+    display: inline-block;
+    background-color: rgb(225, 225, 0);
+    color: white;
+    padding: 0.5rem 1rem;
+    border-radius: 5px;
+    text-decoration: none;
+    margin-right: 0.5remx;
+    transition: background-color 0.7s ease;
+}
+
+.my-pets-item-info-delete {
+    margin-top: 1rem;
+    display: inline-block;
+    background-color: #ff4d4d;
+    color: white;
+    padding: 0.5rem 1rem;
+    border-radius: 5px;
+    text-decoration: none;
+    transition: background-color 0.7s ease;
+}
+
+@media(min-width: 1025px) {
+    .my-pets-item-info-back-link:hover {
+        background-color: #2a796f;
+
+    }
+
+    .my-pets-item-info-delete:hover {
+        background-color: #ba3838;
+    }
+
+    .my-pets-item-info-edit:hover {
+        background-color: rgb(190, 190, 0);
+    }
+}
+
+/* My Pet Info End */
+
+/* Add Pet Start*/
+
+.my-pets-add {
+    min-height: 100vh;
+    width: 100%;
+    background-image: url('../images/veterinary-hospital.png');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    padding: 2rem 1rem;
+    box-sizing: border-box;
+}
+
+.my-pets-add::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.7);
+    z-index: 1;
+    pointer-events: none;
+}
+
+.my-pets-add-container {
+    z-index: 2;
+    text-align: start;
+    background-color: rgb(78, 197, 180, 0.8);
+    padding: 40px;
+    border-radius: 16px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+    max-width: 400px;
+    margin-top: 150px;
+    margin-bottom: 30px;
+    animation: fadeInOpacity 1s;
+    width: 90%;
+}
+
+.my-pets-add-container h2 {
+    text-align: center;
+    color: #fff;
+    margin-bottom: 30px;
+}
+
+.my-pets-add-form-group {
+    margin-bottom: 20px;
+}
+
+.my-pets-add-form-group select {
+    padding: 0.7rem;
+    border-radius: 0.5rem;
+}
+
+.my-pets-add-form-group label {
+    display: block;
+    margin-bottom: 6px;
+    font-weight: bold;
+    color: #fff;
+}
+
+.my-pets-add-form-group input {
+    width: 100%;
+    padding: 12px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    outline: none;
+    transition: 0.3s;
+}
+
+.my-pets-add-form-group input:focus {
+    border-color: #000;
+}
+
+.add-pet-btn {
+    width: 100%;
+    padding: 12px;
+    background-color: #48d889;
+    color: 4EC5B4;
+    border: none;
+    margin-bottom: 0.5rem;
+    border-radius: 8px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.cancel-btn {
+    width: 100%;
+    padding: 12px;
+    font-size: 14px;
+    display: inline-block;
+    text-align: center;
+    text-decoration: none;
+    background-color: #fff;
+    color: #000;
+    border: none;
+    border-radius: 8px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.my-pets-add-bottom-text {
+    text-align: center;
+    margin-top: 20px;
+    font-size: 14px;
+    color: #333;
+}
+
+.my-pets-add-bottom-text a {
+    color: #fff;
+    position: relative;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+.my-pets-add-bottom-text a::before {
+    content: '';
+    position: absolute;
+    width: 100%;
+    height: 3px;
+    border-radius: 4px;
+    background-color: #fff;
+    bottom: -2px;
+    left: 0;
+    transform-origin: left;
+    transform: scaleX(0);
+    transition: transform .3s ease-in-out;
+}
+
+.my-pets-add-form-group input.error {
+    border: 3px solid #ff4d4d;
+}
+
+.my-pets-add-form-group input.success {
+    border: 3px solid #3cb371;
+}
+
+.error-text {
+    color: #ff4d4d;
+    font-weight: bold;
+    font-size: 13px;
+    margin-top: 5px;
+}
+
+@media(min-width: 1025px) {
+    .my-pets-add-btn:hover {
+        background-color: #D3D3D3;
+    }
+
+    .my-pets-add-bottom-text a:hover::before {
+        transform-origin: left;
+        transform: scaleX(1);
+    }
+
+    .add-pet-btn:hover {
+        background-color: #2f8a58;
+    }
+
+    .cancel-btn:hover {
+        background-color: #D3D3D3;
+    }
+}
+
+/* Add Pet End */
+
 /* Seperate Services Page Start */
 
 .service-content {
-    max-width: 800px;
+    max-width: 600px;
     animation: fadeInOpacity 1s;
     text-align: center;
     margin: 2rem auto;
@@ -400,7 +772,7 @@
     background-color: #4EC5B4;
     color: #fff;
     padding: 0.3em 1em;
-    border-radius: 1em;
+    border-radius: 0.3em;
 }
 
 .service-content img {
@@ -426,23 +798,26 @@
     padding: 0.5rem 1rem;
     border-radius: 5px;
     text-decoration: none;
+    transition: background-color 0.7s ease;
 }
 
-.back-link:hover {
-    background-color: #3BAA9C;
+@media(min-width: 1025px) {
+    .back-link:hover {
+        background-color: #2a796f;
+        transition: 0.3s ease-in;
+    }
 }
 
 /* Seperate Services Page Start */
 
 /* Profile Page Start */
 
-
 .profile-card {
-    margin-top: 150px;
+    margin-top: 2rem;
     background-color: #fff;
     animation: fadeInOpacity 1s;
     width: 90%;
-    max-width: 600px;
+    max-width: 700px;
     border-radius: 15px;
     box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
     padding: 3rem 2rem;
@@ -452,8 +827,12 @@
 }
 
 .h1-profile {
-    color: #4EC5B4;
-    margin-bottom: 2rem;
+    animation: fadeInOpacity 1s;
+    margin-top: 150px;
+    background-color: #4EC5B4;
+    color: #fff;
+    padding: 0.3em 1em;
+    border-radius: 1em;
 }
 
 .avatar {
@@ -505,7 +884,7 @@
     border-radius: 25px;
     font-size: 1rem;
     cursor: pointer;
-    transition: background 0.3s ease;
+    transition: background 0.7s ease;
 }
 
 .change-button {
@@ -522,7 +901,8 @@
 
 @media(min-width: 1025px) {
     .edit-button:hover {
-        background-color: #3bb0a1;
+        background-color: #2a796f;
+        transition: 0.3s ease-in;
     }
 }
 
@@ -540,111 +920,7 @@
 
 /* Profile Page End */
 
-/* Edit Profile Start */
-
-/* .profile-card {
-    background-color: #fff;
-    margin: 100px auto 30px auto;
-    animation: fadeInOpacity 1s;
-    width: 90%;
-    max-width: 600px;
-    border-radius: 15px;
-    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
-    padding: 3rem 2rem;
-    text-align: center;
-    position: relative;
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-}
-
-.avatar {
-    width: 100px;
-    height: 100px;
-    background-color: #4EC5B4;
-    border-radius: 50%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    font-size: 2.5rem;
-    color: white;
-    margin: 0 auto 1.5rem;
-    user-select: none;
-}
-
-.field {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin: 1rem 0;
-    border-bottom: 1px solid #e0e0e0;
-    padding-bottom: 0.5rem;
-    font-size: 1rem;
-}
-
-.field label {
-    font-weight: 600;
-    color: #4EC5B4;
-    flex-basis: 30%;
-    text-align: left;
-}
-
-.field input {
-    border: none;
-    border-bottom: 1px solid #e0e0e0;
-    font-size: 1rem;
-    color: #333;
-    max-width: 65%;
-    text-align: right;
-    padding: 0.3rem 0;
-    background: transparent;
-    outline: none;
-    font-family: inherit;
-    transition: border-color 0.3s ease;
-}
-
-.field input::placeholder {
-    color: #aaa;
-}
-
-.field input:focus {
-    border-color: #4EC5B4;
-}
-
-.edit-button {
-    margin-top: 2rem;
-    background-color: #4EC5B4;
-    color: #fff;
-    border: none;
-    padding: 0.8rem 2rem;
-    border-radius: 25px;
-    font-size: 1rem;
-    cursor: pointer;
-    transition: background 0.3s ease;
-}
-
-.edit-button:hover {
-    background-color: #3bb0a1;
-}
-
-@media (max-width: 480px) {
-    .field {
-        flex-direction: column;
-        align-items: flex-start;
-    }
-
-    .field label {
-        flex-basis: 100%;
-        margin-bottom: 0.3rem;
-    }
-
-    .field input {
-        max-width: 100%;
-        text-align: left;
-    }
-} */
-
-/* Edit Profile End */
-
-/* Change Password Page Start */
+/* Edit Profile & Change Password Page Start */
 
 .field-edit-profile {
     display: flex;
@@ -682,8 +958,7 @@
     transition: border-color 0.3s ease;
 }
 
-
-/* Change Password Page End */
+/* Edit Profile & Change Password Page End */
 
 /* Login Start */
 
@@ -769,6 +1044,7 @@
 
 .login-btn:hover {
     background-color: #D3D3D3;
+    transition: 0.3s ease-in;
 }
 
 .login-bottom-text {
@@ -811,6 +1087,7 @@
 @media(min-width: 1025px) {
     .login-btn:hover {
         background-color: #D3D3D3;
+        transition: 0.3s ease-in;
     }
 
     .login-bottom-text a:hover::before {
@@ -1127,68 +1404,68 @@
 
 /* Error Start */
 .error-section {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  padding: 60px 20px;
-  min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 60px 20px;
+    min-height: 100vh;
 }
 
 .error-container {
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  justify-content: center;
-  max-width: 1200px;
-  width: 100%;
-  gap: 40px;
-  text-align: center;
-  flex-wrap: wrap-reverse;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    max-width: 1200px;
+    width: 100%;
+    gap: 40px;
+    text-align: center;
+    flex-wrap: wrap-reverse;
 }
 
 .error-content {
-  flex: 1;
-  min-width: 300px;
+    flex: 1;
+    min-width: 300px;
 }
 
 .error-code {
-  font-size: 96px;
-  color: red;
-  font-weight: bold;
+    font-size: 96px;
+    color: red;
+    font-weight: bold;
 }
 
 .error-message {
-  font-size: 32px;
-  color: #4EC5B4;
-  margin-top: 10px;
+    font-size: 32px;
+    color: #4EC5B4;
+    margin-top: 10px;
 }
 
 .error-description {
-  font-size: 18px;
-  margin: 20px 0;
-  color: #555;
-  line-height: 1.6;
+    font-size: 18px;
+    margin: 20px 0;
+    color: #555;
+    line-height: 1.6;
 }
 
 .error-button {
-  display: inline-block;
-  background-color: #4EC5B4;
-  color: white;
-  padding: 12px 24px;
-  border-radius: 8px;
-  text-decoration: none;
-  transition: background 0.3s ease;
-  font-weight: 500;
+    display: inline-block;
+    background-color: #4EC5B4;
+    color: white;
+    padding: 12px 24px;
+    border-radius: 8px;
+    text-decoration: none;
+    transition: background 0.3s ease;
+    font-weight: 500;
 }
 
 .error-button:hover {
-  background-color: #3aa89b;
+    background-color: #3aa89b;
 }
 
 .error-image img {
-  max-width: 400px;
-  width: 100%;
-  height: auto;
+    max-width: 400px;
+    width: 100%;
+    height: auto;
 }
 
 /* Error End */

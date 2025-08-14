@@ -24,7 +24,7 @@ const Header: React.FC = () => {
 
                 {isSuccessful ? (
                     <>
-                        <Link to="/mypets" style={{ "--i": "4" } as React.CSSProperties}>My Pets</Link>
+                        <Link to="/my-pets" style={{ "--i": "4" } as React.CSSProperties}>My Pets</Link>
                         <Link to="/profile" style={{ "--i": "5" } as React.CSSProperties}>Profile</Link>
                         <Link to="/logout" style={{ "--i": "6" } as React.CSSProperties}>Logout</Link>
                     </>

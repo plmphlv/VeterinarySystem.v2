@@ -146,13 +146,124 @@ export interface EditProfileRequest {
     id: string;
     firstName: string;
     lastName: string;
-    address?: string;
+    address: string;
     phoneNumber: string;
 }
 
 export interface EditProfileResponse {
     message: string;
 }
-// Edit Profile types end   
+// Edit Profile types end  
+
+// usePersistedState types start
+
+export interface NewState {
+    accessToken: string;
+    refreshToken: string;
+    isSuccessful: boolean;
+    errorMessage?: string;
+}
+
+// Animals types start
+export interface Animal {
+    id: string;
+    name: string;
+    animalType: string;
+}
+
+export type GetAllAnimalsErrors = Partial<Record<keyof GetAllAnimalsRequest, string>>;
+export type GetAnimalDetailsErrors = Partial<Record<keyof GetAnimalDetailsRequest, string>>;
+export type AddAnimalFieldErrors = Partial<Record<keyof AddAnimalRequest, string>>;
+
+
+export interface GetAllAnimalsRequest {
+    ownerId: string;
+}
+
+export interface GetAnimalDetailsRequest {
+    id: number;
+}
+
+export interface GetAnimalDetailsResponse {
+    name: string,
+    age: number,
+    weight: number,
+    passportNumber: string,
+    chipNumber: string,
+    ownerName: string
+    animalType: string,
+}
+
+export interface AddAnimalRequest {
+    name: string,
+    age: number,
+    weight: number,
+    passportNumber: string,
+    chipNumber: string,
+    animalTypeId: number,
+    ownerId: string
+}
+
+export interface AddAnimalResponse {
+    number: number;
+}
+
+export interface EditAnimalRequest {
+    id: number;
+    name: string,
+    age: number,
+    weight: number,
+    passportNumber: string,
+    chipNumber: string,
+    animalTypeId: number,
+}
+
+export interface EditAnimalResponse {
+    message: string;
+}
+
+export interface DeleteAnimalRequest {
+    id: number;
+}
+
+export interface DeleteAnimalResponse {
+    message: string;
+}
+// Animals types end
+
+// AnimalTypes types start
+export interface AnimalType {
+    id: number;
+    value: string;
+}
+
+export interface AddAnimalTypeRequest {
+    id: number;
+    typeName: string; 
+}
+
+export interface AddAnimalTypeResponse {
+    number: number; 
+}
+
+export interface EditAnimalTypeRequest {
+    id: number;
+    typeName: string;
+}
+
+export interface EditAnimalTypeResponse {
+    message: string;
+}
+
+export interface DeleteAnimalTypeRequest{
+    id: number;
+}
+
+export interface DeleteAnimalTypeResponse {
+    message: string;
+}
+// AnimalTypes types end
+
+
 
 

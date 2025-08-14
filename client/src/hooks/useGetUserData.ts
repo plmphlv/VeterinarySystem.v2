@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
-import type { UserDataFromId } from "../../types";
-import { getUserId } from "../../utils/getUserId";
-import http from "../../utils/request";
+import type { UserDataFromId } from "../types";
+import { getUserId } from "../utils/getUserId";
+import http from "../utils/request";
 
 const baseUrl = `${import.meta.env.VITE_BASE_API_URL}/Users/Account`;
 
@@ -19,7 +19,7 @@ export const useGetUserData = () => {
             setError(null);
             try {
                 const response = await http.get<UserDataFromId>(`${baseUrl}/${id}`);
-                setUserData(response ?? null);
+                setUserData(response || null);
             } catch (err) {
                 console.error("Failed to fetch user data by ID", err);
                 setError("Failed to load user data");

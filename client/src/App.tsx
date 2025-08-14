@@ -15,6 +15,10 @@ import Surgery from "./components/services/surgery/Surgery";
 import DentalCare from "./components/services/dental-care/Dental-Care";
 import EmegencyServices from "./components/services/emergency-services/Emergency-Services";
 import PetNutritionCounseling from "./components/services/pet-nutrition-counseling/Pet-Nutrition-Counseling";
+import MyPets from "./components/my-pets/My-Pets";
+import MyPetsItemInfo from "./components/my-pets-item-info/My-Pets-Item-Info";
+import MyPetsAdd from "./components/my-pets-add/My-Pets-Add";
+// import MyPetsEdit from "./components/my-pets/my-pets-edit/My-Pets-Edit";
 import Profile from "./components/profile/Profile";
 import EditProfile from "./components/profile/edit-profile/Edit-Profile";
 import ChangePassword from "./components/profile/change-password/Change-Password";
@@ -41,6 +45,10 @@ function App() {
         <Route path="/services/pet-nutrition-counseling" element={<PetNutritionCounseling />}></Route>
         <Route path="*" element={<Error />}></Route>
         <Route element={<AuthGuard />}>
+          <Route path="/my-pets" element={<MyPets />}></Route>
+          <Route path="/my-pets/:id/info" element={<MyPetsItemInfo />}></Route>
+          <Route path="/my-pets/add" element={<MyPetsAdd />}></Route>
+          {/* <Route path="/my-pets/edit" element={<MyPetsEdit />}></Route> */}
           <Route path="/profile" element={<Profile />}></Route>
           <Route path="/profile/edit" element={<EditProfile />}></Route>
           <Route path="/profile/change-password" element={<ChangePassword />}></Route>
