@@ -1,7 +1,7 @@
 import { Link } from "react-router";
 import { useEffect, useState } from "react";
 import { useGetUserData } from "../../../hooks/useGetUserData";
-import { useGetAllAnimals } from "../../../api/animalsApi";
+import { useGetAllAnimals } from "../../../api/animalsAPI";
 import Spinner from "../../spinner/Spinner";
 import Dialog from "../../dialog/Dialog";
 import type { Animal, GetAllAnimalsErrors } from "../../../types";

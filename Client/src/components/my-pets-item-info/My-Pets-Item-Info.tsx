@@ -1,5 +1,5 @@
 import { Link, useParams } from "react-router";
-import { useGetAnimalDetails } from "../../api/animalsApi";
+import { useGetAnimalDetails } from "../../api/animalsAPI";
 import type { Animal, GetAnimalDetailsErrors, GetAnimalDetailsResponse } from "../../types";
 import { useEffect, useState } from "react";
 import Spinner from "../spinner/Spinner";

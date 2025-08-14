@@ -4,7 +4,7 @@ import { Link, useNavigate } from "react-router";
 import Dialog from "../dialog/Dialog";
 import type { AddAnimalFieldErrors, AddAnimalRequest } from "../../types";
 import { useEffect, useState } from "react";
-import { useAddAnimal } from "../../api/animalsApi";
+import { useAddAnimal } from "../../api/animalsAPI";
 import { useGetUserData } from "../../hooks/useGetUserData";
 import { useForm } from "../../hooks/useForm";
 

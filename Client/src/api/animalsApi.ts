@@ -3,7 +3,6 @@ import http from '../utils/request';
 import type { AddAnimalRequest, AddAnimalResponse, Animal, GetAllAnimalsRequest, GetAnimalDetailsRequest, GetAnimalDetailsResponse } from '../types';
 
 const AnimalsUrl = `${import.meta.env.VITE_BASE_API_URL}/Animals`;
-const AnimalTypesUrl = `${import.meta.env.VITE_BASE_API_URL}/AnimalTypes`;
 
 export const useGetAllAnimals = () => {
     const abortControllerRef = useRef<AbortController | null>(null);
@@ -71,3 +70,4 @@ export const useAddAnimal = () => {
 
     return { addAnimal, cancelAddAnimal: () => abortControllerRef.current?.abort() };
 };
+
