@@ -1,8 +1,8 @@
 import { useRef, useEffect } from 'react';
 import http from '../utils/request';
-import type { AddAnimalRequest, AddAnimalResponse, Animal, GetAllAnimalsRequest, GetAnimalDetailsRequest, GetAnimalDetailsResponse } from '../types';
+import type { AddAnimalRequest, AddAnimalResponse, Animal, DeleteAnimalRequest, EditAnimalRequest, EditAnimalResponse, GetAllAnimalsRequest, GetAnimalDetailsRequest, GetAnimalDetailsResponse } from '../types';
 
-const AnimalsUrl = `${import.meta.env.VITE_BASE_API_URL}/Animals`;
+const baseUrl = `${import.meta.env.VITE_BASE_API_URL}/Animals`;
 
 export const useGetAllAnimals = () => {
     const abortControllerRef = useRef<AbortController | null>(null);
@@ -18,7 +18,7 @@ export const useGetAllAnimals = () => {
         abortControllerRef.current = new AbortController();
 
         return http.get<Animal[]>(
-            `${AnimalsUrl}?OwnerId=${data.ownerId}`,
+            `${baseUrl}?OwnerId=${data.ownerId}`,
             { signal: abortControllerRef.current.signal }
         );   
     };
@@ -40,7 +40,7 @@ export const useGetAnimalDetails = () => {
         abortControllerRef.current = new AbortController();
 
         return http.get<GetAnimalDetailsResponse>(
-            `${AnimalsUrl}/Details/${id}`,
+            `${baseUrl}/Details/${id}`,
             { signal: abortControllerRef.current.signal }
         );   
     };
@@ -62,12 +62,57 @@ export const useAddAnimal = () => {
         abortControllerRef.current = new AbortController();
 
         return http.post<AddAnimalRequest, AddAnimalResponse>(
-            `${AnimalsUrl}`,
+            `${baseUrl}`,
             data,
             { signal: abortControllerRef.current.signal }
         );
     };
 
     return { addAnimal, cancelAddAnimal: () => abortControllerRef.current?.abort() };
+};
+
+export const useEditAnimal = () => {
+    const abortControllerRef = useRef<AbortController | null>(null);
+
+    useEffect(() => {
+        return () => {
+            abortControllerRef.current?.abort();
+        };
+    }, []);
+
+    const editAnimal = async (data: EditAnimalRequest) => {
+        abortControllerRef.current?.abort();
+        abortControllerRef.current = new AbortController();
+
+        return http.put<EditAnimalRequest, EditAnimalResponse>(
+            `${baseUrl}/${data.id}`,
+            data,
+            { signal: abortControllerRef.current.signal }
+        );
+    };
+
+    return { editAnimal, cancelEditAnimal: () => abortControllerRef.current?.abort() };
+};
+
+export const useDeleteAnimal = () => {
+    const abortControllerRef = useRef<AbortController | null>(null);
+
+    useEffect(() => {
+        return () => {
+            abortControllerRef.current?.abort();
+        };
+    }, []);
+
+    const deleteAnimal = async (data: DeleteAnimalRequest) => {
+        abortControllerRef.current?.abort();
+        abortControllerRef.current = new AbortController();
+
+        return http.delete<DeleteAnimalRequest>(
+            `${baseUrl}/${data.id}`,
+            { signal: abortControllerRef.current.signal }
+        );
+    };
+
+    return { deleteAnimal, cancelDeleteAnimal: () => abortControllerRef.current?.abort() };
 };
 

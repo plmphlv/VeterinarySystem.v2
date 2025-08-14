@@ -208,7 +208,61 @@ export interface AddAnimalResponse {
     number: number;
 }
 
+export interface EditAnimalRequest {
+    id: number;
+    name: string,
+    age: number,
+    weight: number,
+    passportNumber: string,
+    chipNumber: string,
+    animalTypeId: number,
+}
+
+export interface EditAnimalResponse {
+    message: string;
+}
+
+export interface DeleteAnimalRequest {
+    id: number;
+}
+
+export interface DeleteAnimalResponse {
+    message: string;
+}
 // Animals types end
+
+// AnimalTypes types start
+export interface AnimalType {
+    id: number;
+    value: string;
+}
+
+export interface AddAnimalTypeRequest {
+    id: number;
+    typeName: string; 
+}
+
+export interface AddAnimalTypeResponse {
+    number: number; 
+}
+
+export interface EditAnimalTypeRequest {
+    id: number;
+    typeName: string;
+}
+
+export interface EditAnimalTypeResponse {
+    message: string;
+}
+
+export interface DeleteAnimalTypeRequest{
+    id: number;
+}
+
+export interface DeleteAnimalTypeResponse {
+    message: string;
+}
+// AnimalTypes types end
 
 
 

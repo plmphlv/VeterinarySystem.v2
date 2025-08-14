@@ -2,11 +2,12 @@ import type React from "react";
 import Spinner from "../spinner/Spinner";
 import { Link, useNavigate } from "react-router";
 import Dialog from "../dialog/Dialog";
-import type { AddAnimalFieldErrors, AddAnimalRequest } from "../../types";
+import type { AddAnimalFieldErrors, AddAnimalRequest, AnimalType } from "../../types";
 import { useEffect, useState } from "react";
 import { useAddAnimal } from "../../api/animalsAPI";
 import { useGetUserData } from "../../hooks/useGetUserData";
 import { useForm } from "../../hooks/useForm";
+import { useGetAnimalTypes } from "../../api/animalTypesAPI";
 
 const initialValues: AddAnimalRequest = {
     name: "",
@@ -18,25 +19,35 @@ const initialValues: AddAnimalRequest = {
     ownerId: ""
 };
 
-// TODO: Take the animal types dynamic from the database:
-const animalTypes = [
-    { id: 1, label: "Cat" },
-    { id: 2, label: "Dog" },
-    { id: 3, label: "Parrot" },
-    { id: 4, label: "Bird" },
-    { id: 5, label: "Livestock" },
-    { id: 6, label: "Transportation Animal" },
-    { id: 7, label: "Other mammal" }
-];
-
 const MyPetsAdd: React.FC = () => {
     const [errors, setErrors] = useState<AddAnimalFieldErrors>({});
     const [formLoading, setFormLoading] = useState(false);
     const [dialog, setDialog] = useState<{ message: string; type: "success" | "error" } | null>(null);
+    const [animalTypes, setAnimalTypes] = useState<AnimalType[]>([]);
 
     const { userData, isLoading: userLoading } = useGetUserData();
     const { addAnimal, cancelAddAnimal } = useAddAnimal();
+    const { getAnimalTypes, cancelGetAnimalTypes } = useGetAnimalTypes()
     const navigate = useNavigate();
+
+    useEffect(() => {
+        const fetchAnimalTypes = async () => {
+            try {
+                setErrors({});
+
+                const animalTypes = await getAnimalTypes();                
+
+                setAnimalTypes(animalTypes || []);
+            } catch (err: any) {
+                setDialog({ message: "An error occurred while fetching animal types.", type: "error" });
+                // setErrors(err.errors);
+                return;
+            } finally {
+            }
+        };
+
+        fetchAnimalTypes();
+    }, []);
 
     const validateField = (
         field: keyof AddAnimalRequest,
@@ -93,7 +104,7 @@ const MyPetsAdd: React.FC = () => {
                 ...values,
                 ownerId: userData?.id || ""
             };
-            
+
             await addAnimal(payload);
 
             setDialog({ message: "Pet added successfully!", type: "success" });
@@ -138,6 +149,12 @@ const MyPetsAdd: React.FC = () => {
     useEffect(() => {
         return () => {
             cancelAddAnimal();
+        };
+    }, []);
+
+    useEffect(() => {
+        return () => {
+            cancelGetAnimalTypes();
         };
     }, []);
 
@@ -248,7 +265,7 @@ const MyPetsAdd: React.FC = () => {
                                 <option value={0}>-- Select animal type --</option>
                                 {animalTypes.map(type => (
                                     <option key={type.id} value={type.id}>
-                                        {type.label}
+                                        {type.value}
                                     </option>
                                 ))}
                             </select>
