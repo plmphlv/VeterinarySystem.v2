@@ -1,6 +1,8 @@
 ﻿using Application.Animals.Commands.Delete;
 using Application.AnimalTypes.Commands.Create;
 using Application.AnimalTypes.Commands.Update;
+using Application.AnimalTypes.Queries.GetAnimalTypesList;
+using Application.Common.Models;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Web.API.Controllers;
@@ -32,5 +34,11 @@ public class AnimalTypesController : ApiControllerBase
         await Mediator.Send(new DeleteAnimalCommand { Id = id });
 
         return NoContent();
+    }
+
+    [HttpGet]
+    public async Task<ActionResult<List<DropdownModel>>> GetAnimalTypesList()
+    {
+        return await Mediator.Send(new GetAnimalTypesListQuery());
     }
 }
