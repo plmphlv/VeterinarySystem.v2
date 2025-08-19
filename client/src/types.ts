@@ -239,11 +239,11 @@ export interface AnimalType {
 
 export interface AddAnimalTypeRequest {
     id: number;
-    typeName: string; 
+    typeName: string;
 }
 
 export interface AddAnimalTypeResponse {
-    number: number; 
+    number: number;
 }
 
 export interface EditAnimalTypeRequest {
@@ -255,7 +255,7 @@ export interface EditAnimalTypeResponse {
     message: string;
 }
 
-export interface DeleteAnimalTypeRequest{
+export interface DeleteAnimalTypeRequest {
     id: number;
 }
 
@@ -263,6 +263,23 @@ export interface DeleteAnimalTypeResponse {
     message: string;
 }
 // AnimalTypes types end
+
+// OwnerAccounts types start
+
+export interface GetOwnerAccountDetailsRequest {
+    id: string;
+}
+
+export interface GetOwnerAccountDetailsResponse {
+    firstName: string,
+    lastName: string,
+    address: string,
+    phoneNumber: string,
+    id: string
+}
+
+
+// OwnerAccounts types end
 
 
 
