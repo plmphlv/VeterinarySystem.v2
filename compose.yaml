@@ -3,7 +3,7 @@ services:
     container_name: db
     image: mcr.microsoft.com/mssql/server:2017-latest-ubuntu
     ports:
-      - "10.10.10.230:1433:1433"
+      - "10.10.10.231:1433:1433"
     environment:
       ACCEPT_EULA: Y
       SA_PASSWORD: Squeak-Stump-4012-Goes-Superjet-Shredding
