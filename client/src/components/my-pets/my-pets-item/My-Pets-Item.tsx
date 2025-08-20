@@ -35,7 +35,7 @@ const MyPetItem: React.FC = () => {
                 }
 
                 const ownerId = ownerAccountData?.id;
-                const animals = await getAllAnimals({ ownerId });
+                const animals = await getAllAnimals({ ownerId });                
 
                 setAnimals(animals || []);
             } catch (err: any) {

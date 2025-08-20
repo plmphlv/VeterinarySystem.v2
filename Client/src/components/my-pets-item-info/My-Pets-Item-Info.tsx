@@ -63,7 +63,7 @@ const MyPetsItemInfo: React.FC = () => {
                 <p><i className="fa-solid fa-paw"></i> Animal type: {animalDetails?.animalType}</p>
                 <p><i className="fa-solid fa-weight"></i> Weight: {animalDetails?.weight}kg</p>
                 <div className="pet-action-btns">
-                    <Link to="/my-pets/edit" className="my-pets-item-info-edit">Edit</Link>
+                    <Link to={`/my-pets/${id}/edit`} className="my-pets-item-info-edit">Edit</Link>
                     <Link to={`/my-pets/${id}/delete`} className="my-pets-item-info-delete">Delete</Link>
                 </div>
                 <Link to="/my-pets" className="my-pets-item-info-back-link">← Back to My Pets</Link>

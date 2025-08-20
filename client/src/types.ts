@@ -174,7 +174,7 @@ export interface Animal {
 export type GetAllAnimalsErrors = Partial<Record<keyof GetAllAnimalsRequest, string>>;
 export type GetAnimalDetailsErrors = Partial<Record<keyof GetAnimalDetailsRequest, string>>;
 export type AddAnimalFieldErrors = Partial<Record<keyof AddAnimalRequest, string>>;
-
+export type EditAnimalFieldErrors = Partial<Record<keyof EditAnimalRequest, string>>;
 
 export interface GetAllAnimalsRequest {
     ownerId: string;
