@@ -278,6 +278,43 @@ export interface GetOwnerAccountDetailsResponse {
     id: string
 }
 
+export interface CreateOwnerAccountRequest {
+    firstName: string,
+    lastName: string,
+    address: string,
+    phoneNumber: string,
+}
+
+export interface CreateOwnerAccountRequest {
+    firstName: string,
+    lastName: string,
+    address: string,
+    phoneNumber: string,
+}
+
+export interface CreateOwnerAccountResponse {
+    id: string;
+}
+
+export interface EditOwnerAccountRequest {
+    firstName: string,
+    lastName: string,
+    address: string,
+    phoneNumber: string,
+    id: string
+}
+
+export interface EditOwnerAccountResponse {
+    message: string
+}
+
+export interface DeleteOwnerAccountRequest {
+    id: string;
+}
+
+export interface DeleteOwnerAccountResponse {
+    message: string;
+}
 
 // OwnerAccounts types end
 
