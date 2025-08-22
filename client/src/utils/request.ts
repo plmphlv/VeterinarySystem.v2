@@ -40,6 +40,8 @@ async function refreshAccessToken(): Promise<string | null> {
 
             localStorage.setItem("auth", JSON.stringify(newAuth));
 
+            console.log(auth);
+
             return newAuth.accessToken;
         })
         .catch(() => null)
