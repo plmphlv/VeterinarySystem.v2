@@ -61,7 +61,7 @@ const Profile: React.FC = () => {
                     </div>
                 </>
             ) : (
-                <h1 className="h1-profile">No user data Found</h1>
+                <h1 className="h1-profile">No User Data Found</h1>
             )}
         </>
     );

@@ -12,24 +12,32 @@ async function refreshAccessToken(): Promise<string | null> {
     if (!authRaw) return null;
 
     const auth = JSON.parse(authRaw);
-    if (!auth?.refreshToken) return null;
+    if (auth?.refreshToken === "") return null;
 
     isRefreshing = true;
 
-    refreshPromise = fetch(`${import.meta.env.VITE_BASE_API_URL}/Users/RefreshToken`, {
+    console.log("Auth: ", auth);
+
+    refreshPromise = await fetch(`${import.meta.env.VITE_BASE_API_URL}/Users/RefreshToken`, {
         method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ refreshToken: auth.refreshToken }),
+        headers: { "Content-Type": "application/json", "Authorization": `Bearer ${auth.accessToken}` },
+        body: JSON.stringify({ refreshToken: auth.refreshToken })
     })
         .then(async (res) => {
-            if (!res.ok) throw new Error("Refresh failed");
+            // if (!res.ok) throw new Error("Refresh failed");
+
             const data = await res.json();
+
+            console.log("Data:", data);
 
             const newAuth = {
                 ...auth,
                 accessToken: data.accessToken,
                 refreshToken: data.refreshToken ?? auth.refreshToken,
             };
+
+            console.log("New auth: ", newAuth);
+
             localStorage.setItem("auth", JSON.stringify(newAuth));
 
             return newAuth.accessToken;
@@ -92,8 +100,9 @@ async function request<TData = unknown, TResult = unknown>({
         if (response.status === 401) {
             // ❌ refresh-а е паднал -> редирект към logout
             // Тук няма navigate, просто хвърляме специална грешка
-            localStorage.removeItem("auth");
-            window.location.href = "/logout";
+
+            // localStorage.removeItem("auth");
+            // window.location.href = "/logout";
         }
 
         if (response.status === 500) {
