@@ -1,8 +1,7 @@
-
 import { jwtDecode } from "jwt-decode";
-import type { JwtPayload } from "../types";
+import type { JwtDecodedData } from "../types";
 
-export function getUserId(): string | null {
+export function getJwtDecodedData(): JwtDecodedData | null {
   const authData = localStorage.getItem("auth");
 
   if (!authData) return null;
@@ -13,9 +12,9 @@ export function getUserId(): string | null {
 
     if (!accessToken) return null;
 
-    const decoded = jwtDecode<JwtPayload>(accessToken);
+    const decoded = jwtDecode<JwtDecodedData>(accessToken);
     
-    return decoded.AccountId ?? null;
+    return decoded ?? null;
   } catch (error) {
     console.error("Failed to decode access token", error);
     return null;

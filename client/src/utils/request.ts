@@ -1,4 +1,5 @@
 import type { RequestOptions, RequestParams } from "../types";
+import { getJwtDecodedData } from "./getJwtDecodedData";
 
 let isRefreshing = false;
 let refreshPromise: Promise<string | null> | null = null;
@@ -12,45 +13,71 @@ async function refreshAccessToken(): Promise<string | null> {
     if (!authRaw) return null;
 
     const auth = JSON.parse(authRaw);
-    if (auth?.refreshToken === "") return null;
+    if (!auth?.refreshToken) return null;
 
     isRefreshing = true;
 
-    console.log("Auth: ", auth);
-
-    refreshPromise = await fetch(`${import.meta.env.VITE_BASE_API_URL}/Users/RefreshToken`, {
+    refreshPromise = fetch(`${import.meta.env.VITE_BASE_API_URL}/Users/RefreshToken`, {
         method: "POST",
-        headers: { "Content-Type": "application/json", "Authorization": `Bearer ${auth.accessToken}` },
-        body: JSON.stringify({ refreshToken: auth.refreshToken })
+        headers: {
+            "Content-Type": "application/json",
+            "Authorization": `Bearer ${auth.accessToken}`,
+        },
+        body: JSON.stringify({ refreshToken: auth.refreshToken }),
     })
         .then(async (res) => {
-            // if (!res.ok) throw new Error("Refresh failed");
+            if (!res.ok) throw new Error("Refresh failed");
 
             const data = await res.json();
 
-            console.log("Data:", data);
+            if (!data.isSuccessful || !data.accessToken) {
+                throw new Error("Invalid refresh response");
+            }
 
             const newAuth = {
                 ...auth,
                 accessToken: data.accessToken,
-                refreshToken: data.refreshToken ?? auth.refreshToken,
+                refreshToken: data.refreshToken,
             };
 
-            console.log("New auth: ", newAuth);
-
             localStorage.setItem("auth", JSON.stringify(newAuth));
-
-            console.log(auth);
-
             return newAuth.accessToken;
         })
-        .catch(() => null)
+        .catch(() => {
+            localStorage.removeItem("auth");
+            window.location.href = "/login";
+            return null;
+        })
         .finally(() => {
             isRefreshing = false;
             refreshPromise = null;
         });
 
     return refreshPromise;
+}
+
+async function ensureValidAccessToken(): Promise<string | null> {
+    const authRaw = localStorage.getItem("auth");
+    if (!authRaw) return null;
+
+    const auth = JSON.parse(authRaw);
+    const accessToken = auth?.accessToken;
+    if (!accessToken) return null;
+
+    const decodedData = getJwtDecodedData();
+
+    if (!decodedData) {
+        return null;
+    }
+
+    const now = Math.floor(Date.now() / 1000);
+    const timeLeft = decodedData.exp - now;
+
+    if (timeLeft >= 0 && timeLeft <= 300) {
+        return await refreshAccessToken();
+    }
+
+    return accessToken;
 }
 
 async function request<TData = unknown, TResult = unknown>({
@@ -63,16 +90,9 @@ async function request<TData = unknown, TResult = unknown>({
         ...(options.headers || {}),
     };
 
-    const authRaw = localStorage.getItem("auth");
-    if (authRaw) {
-        try {
-            const auth = JSON.parse(authRaw);
-            if (auth?.accessToken) {
-                headers["Authorization"] = `Bearer ${auth.accessToken}`;
-            }
-        } catch {
-            console.warn("Invalid auth data in localStorage");
-        }
+    let accessToken = await ensureValidAccessToken();
+    if (accessToken) {
+        headers["Authorization"] = `Bearer ${accessToken}`;
     }
 
     const config: RequestInit = {
@@ -87,32 +107,15 @@ async function request<TData = unknown, TResult = unknown>({
         config.body = JSON.stringify(data);
     }
 
-    let response = await fetch(url, config);
+    const response = await fetch(url, config);
 
-    // ⚡ Ако токенът е изтекъл → пробваме refresh
     if (response.status === 401) {
-        const newToken = await refreshAccessToken();
-        if (newToken) {
-            headers["Authorization"] = `Bearer ${newToken}`;
-            response = await fetch(url, config);
-        }
+        localStorage.removeItem("auth");
+        window.location.href = "/login";
     }
 
-    if (!response.ok) {
-        if (response.status === 401) {
-            // ❌ refresh-а е паднал -> редирект към logout
-            // Тук няма navigate, просто хвърляме специална грешка
-
-            // localStorage.removeItem("auth");
-            // window.location.href = "/logout";
-        }
-
-        if (response.status === 500) {
-            return "Internal Server Error" as unknown as TResult;
-        }
-
-        const error = await response.json();
-        throw error;
+    if (response.status === 500) {
+        throw new Error("Internal server error, please try again later!");
     }
 
     const contentType = response.headers.get("Content-Type");

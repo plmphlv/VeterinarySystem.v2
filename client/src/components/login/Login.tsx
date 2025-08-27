@@ -66,7 +66,7 @@ const Login: React.FC = () => {
                 navigate('/');
             }, 500);
         } catch (err: any) {            
-            setDialog({ message: err.detail || "Login failed.", type: "error" });
+            setDialog({ message: err.detail || "Login failed, please try again later.", type: "error" });
             changeValues({ ...values, password: "" });
 
         } finally {

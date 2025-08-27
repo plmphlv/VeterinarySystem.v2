@@ -55,7 +55,6 @@ export const useLogout = () => {
     const { accessToken, userLogoutHandler } = useContext(UserContext);
 
     const logout = () => {     
-        localStorage.removeItem('auth');
         userLogoutHandler();
     };
 

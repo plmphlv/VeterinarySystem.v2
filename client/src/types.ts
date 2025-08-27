@@ -123,8 +123,22 @@ export type DialogProps = {
 // Dialog types end
 
 // useAuth types start
-export interface JwtPayload {
-    AccountId: "ba995470-a7ad-4e7f-8119-8587089f92c4",
+export interface JwtDecodedData {
+  "http://schemas.xmlsoap.org/ws/2005/05/identity/claims/name": string;
+  "http://schemas.xmlsoap.org/ws/2005/05/identity/claims/nameidentifier": string;
+  "http://schemas.xmlsoap.org/ws/2005/05/identity/claims/emailaddress": string;
+  AccountId: string;
+  exp: number;
+  iss: string;
+  aud: string;
+}
+
+export interface JwtAccountIdPayload {
+    AccountId: string,
+}
+
+export interface JwtAccountExpPayload {
+    exp: number,
 }
 // useAuth types end
 
@@ -163,6 +177,8 @@ export interface NewState {
     isSuccessful: boolean;
     errorMessage?: string;
 }
+
+// usePersistedState types end
 
 // Animals types start
 export interface Animal {
