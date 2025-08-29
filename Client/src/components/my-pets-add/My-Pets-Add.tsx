@@ -11,10 +11,11 @@ import { useGetAnimalTypes } from "../../api/animalTypesAPI";
 
 const initialValues: AddAnimalRequest = {
     name: "",
-    age: undefined as unknown as number,
-    weight: undefined as unknown as number,
-    passportNumber: "",
-    chipNumber: "",
+    age: null,
+    // TODO: Полето "weight" да се показва като празно, вместо 1:
+    weight: 1,
+    passportNumber: null,
+    chipNumber: null,
     animalTypeId: 0,
     ownerId: ""
 };
@@ -39,8 +40,6 @@ const MyPetsAdd: React.FC = () => {
 
                 setAnimalTypes(animalTypes || []);
             } catch (err: any) {
-                console.log(animalTypes);
-                
                 setDialog({ message: "An error occurred while fetching animal types.", type: "error" });
                 setTimeout(() => {
                     navigate("/my-pets");
@@ -62,25 +61,38 @@ const MyPetsAdd: React.FC = () => {
         switch (field) {
             case "name":
                 if (!String(value).trim()) return "Name is required.";
-                if (String(value).length < 2) return "Name must be at least 2 characters.";
+                if (String(value).trim().length < 2) return "Name must be at least 2 characters.";
                 return undefined;
+
             case "age":
-                if (value === "" || value === null || value === undefined) return "Age is required.";
-                if (Number(value) < 0) return "Age cannot be negative.";
+                if (value !== "" && value !== null && value !== undefined) {
+                    const num = Number(value);
+                    if (isNaN(num)) return "Age must be a number.";
+                    if (num <= 0) return "Age must be greater than 0.";
+                }
                 return undefined;
+
             case "weight":
                 if (value === "" || value === null || value === undefined) return "Weight is required.";
                 if (Number(value) <= 0) return "Weight must be greater than 0.";
                 return undefined;
+
             case "passportNumber":
-                if (!String(value).trim()) return "Passport number is required.";
+                if (String(value).trim().length > 0 && String(value).trim().length < 2) {
+                    return "Passport number must be at least 2 characters.";
+                }
                 return undefined;
+
             case "chipNumber":
-                if (!String(value).trim()) return "Chip number is required.";
+                if (String(value).trim().length > 0 && String(value).trim().length < 2) {
+                    return "Chip number must be at least 2 characters.";
+                }
                 return undefined;
+
             case "animalTypeId":
                 if (Number(value) <= 0) return "Please select an animal type.";
                 return undefined;
+
             default:
                 return undefined;
         }
@@ -89,7 +101,8 @@ const MyPetsAdd: React.FC = () => {
     const validate = (values: AddAnimalRequest): AddAnimalFieldErrors => {
         const fieldErrors: AddAnimalFieldErrors = {};
         (Object.keys(values) as (keyof AddAnimalRequest)[]).forEach(field => {
-            const error = validateField(field, values[field], values);
+            const fieldValue = values[field] ?? "";
+            const error = validateField(field, fieldValue, values);
             if (error) fieldErrors[field] = error;
         });
         return fieldErrors;
@@ -105,9 +118,16 @@ const MyPetsAdd: React.FC = () => {
         setFormLoading(true);
         try {
             setErrors({});
+            if (!userData) {
+                return;
+            }
+
             const payload: AddAnimalRequest = {
                 ...values,
-                ownerId: userData?.id || ""
+                ownerId: userData.id,
+                age: values.age == null ? null : values.age, // null или undefined -> null
+                passportNumber: values.passportNumber?.trim() === "" ? null : values.passportNumber,
+                chipNumber: values.chipNumber?.trim() === "" ? null : values.chipNumber,
             };
 
             await addAnimal(payload);
@@ -127,17 +147,20 @@ const MyPetsAdd: React.FC = () => {
 
     const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
         const { name, value, type } = e.target;
+        const fieldName = name as keyof AddAnimalRequest;
 
-        let parsedValue: string | number = value;
+        let parsedValue: string | number | null = value;
 
-        if ((type === "number" || name === "animalTypeId") && value !== "") {
-            parsedValue = Number(value);
+        if (type === "number") {
+            parsedValue = value === "" ? null : Number(value);
+        } else if (fieldName === "animalTypeId") {
+            parsedValue = value === "" ? 0 : Number(value);
         }
 
-        changeValues({ ...values, [name]: parsedValue });
+        changeValues({ ...values, [fieldName]: parsedValue });
 
-        const fieldName = name as keyof AddAnimalRequest;
-        const errorMsg = validateField(fieldName, parsedValue, { ...values, [name]: parsedValue });
+        const valueForValidation = parsedValue ?? "";
+        const errorMsg = validateField(fieldName, valueForValidation, { ...values, [fieldName]: parsedValue });
 
         setErrors(prev => ({
             ...prev,
@@ -183,11 +206,12 @@ const MyPetsAdd: React.FC = () => {
                                 type="text"
                                 id="name"
                                 name="name"
-                                value={values.name}
+                                value={values.name ?? ""}
                                 onChange={handleChange}
                                 className={inputClass("name")}
                                 placeholder="Enter pet's name"
                                 autoComplete="off"
+                                required
                             />
                             {errors.name && <p className="error-text">{errors.name}</p>}
                         </div>
@@ -203,7 +227,7 @@ const MyPetsAdd: React.FC = () => {
                                 value={values.age ?? ""}
                                 onChange={handleChange}
                                 className={inputClass("age")}
-                                placeholder="Enter pet's age"
+                                placeholder="Enter pet's age (optional)"
                             />
                             {errors.age && <p className="error-text">{errors.age}</p>}
                         </div>
@@ -220,6 +244,7 @@ const MyPetsAdd: React.FC = () => {
                                 onChange={handleChange}
                                 className={inputClass("weight")}
                                 placeholder="Enter pet's weight"
+                                required
                             />
                             {errors.weight && <p className="error-text">{errors.weight}</p>}
                         </div>
@@ -232,10 +257,10 @@ const MyPetsAdd: React.FC = () => {
                                 type="text"
                                 id="passportNumber"
                                 name="passportNumber"
-                                value={values.passportNumber}
+                                value={values.passportNumber ?? ""}
                                 onChange={handleChange}
                                 className={inputClass("passportNumber")}
-                                placeholder="Enter pet's passport number"
+                                placeholder="Enter pet's passport number (optional)"
                             />
                             {errors.passportNumber && <p className="error-text">{errors.passportNumber}</p>}
                         </div>
@@ -248,10 +273,10 @@ const MyPetsAdd: React.FC = () => {
                                 type="text"
                                 id="chipNumber"
                                 name="chipNumber"
-                                value={values.chipNumber}
+                                value={values.chipNumber ?? ""}
                                 onChange={handleChange}
                                 className={inputClass("chipNumber")}
-                                placeholder="Enter pet's chip number"
+                                placeholder="Enter pet's chip number (optional)"
                             />
                             {errors.chipNumber && <p className="error-text">{errors.chipNumber}</p>}
                         </div>
@@ -266,6 +291,7 @@ const MyPetsAdd: React.FC = () => {
                                 value={values.animalTypeId}
                                 onChange={handleChange}
                                 className={inputClass("animalTypeId")}
+                                required
                             >
                                 <option value={0}>-- Select animal type --</option>
                                 {animalTypes.map(type => (

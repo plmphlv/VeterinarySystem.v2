@@ -11,7 +11,7 @@ const initialValues: EditProfileRequest = {
     id: "",
     firstName: "",
     lastName: "",
-    address: "",
+    address: null,
     phoneNumber: "",
 };
 
@@ -54,57 +54,61 @@ const EditProfile: React.FC = () => {
         }
     };
 
+
     const validate = (values: EditProfileRequest): Partial<Record<keyof EditProfileRequest, string>> => {
         const fieldErrors: Partial<Record<keyof EditProfileRequest, string>> = {};
-
         (Object.keys(values) as (keyof EditProfileRequest)[]).forEach(field => {
-            if (field === 'address') return;
-
-            const error = validateField(field, values[field], values);
+            const fieldValue = values[field] ?? "";
+            const error = validateField(field, fieldValue, values);
             if (error) fieldErrors[field] = error;
         });
-
         return fieldErrors;
     };
 
     const editProfileHandler = async (values: EditProfileRequest) => {
-        const validationErrors = validate(values);
-        if (Object.keys(validationErrors).length > 0) {
-            setErrors(validationErrors);
-            return;
+    const validationErrors = validate(values);
+    if (Object.keys(validationErrors).length > 0) {
+        setErrors(validationErrors);
+        return;
+    }
+
+    setIsLoading(true);
+    try {
+        setErrors({});
+        if (!userData) {
+            return setDialog({ message: "No user data found.", type: "error" });
         }
 
-        setIsLoading(true);
-        try {
-            setErrors({});
-            if (!userData) {
-                return setDialog({ message: "No user data found.", type: "error" });
-            }
-            if (values.address === null) {
-                values.address = "";
-            }
+        const payload: EditProfileRequest = {
+            ...values,
+            id: userData.id,
+            address: values.address?.trim() === "" ? null : values.address
+        };
 
-            await editProfile({ ...values, id: userData.id });
+        await editProfile(payload);
 
-            setDialog({ message: "Edit is successful!", type: "success" });
-            setTimeout(() => {
-                navigate('/profile');
-            }, 500);
-        } catch (err: any) {
-            setDialog({ message: err.detail || "Edit failed.", type: "error" });
-        } finally {
-            setIsLoading(false);
-        }
-    };
+        setDialog({ message: "Edit is successful!", type: "success" });
+        setTimeout(() => {
+            navigate('/profile');
+        }, 500);
+    } catch (err: any) {
+        setDialog({ message: err.detail || "Edit failed.", type: "error" });
+    } finally {
+        setIsLoading(false);
+    }
+};
 
     const { values, changeHandler, onSubmit, changeValues } = useForm(initialValues, editProfileHandler);
 
     const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         const { name, value } = e.target;
-        changeHandler(e);
-
         const fieldName = name as keyof EditProfileRequest;
-        const errorMsg = validateField(fieldName, value, { ...values, [name]: value });
+
+        const valueForValidation = value ?? "";
+
+        changeValues({ ...values, [fieldName]: value });
+
+        const errorMsg = validateField(fieldName, valueForValidation, { ...values, [fieldName]: value });
 
         setErrors(prev => ({
             ...prev,
@@ -146,7 +150,7 @@ const EditProfile: React.FC = () => {
             )}
 
             <h1 className="h1-profile">Edit Profile</h1>
-            
+
             {userData ? (
 
                 <div className="profile-card">

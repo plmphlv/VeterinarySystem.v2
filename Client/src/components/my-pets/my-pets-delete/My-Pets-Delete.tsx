@@ -32,7 +32,7 @@ const MyPetsDelete: React.FC = () => {
         setDialog({ message: "Failed to delete animal.", type: "error" });
       } finally {
         setLoading(false);
-        navigate(`/my-pets/${id}/info`);
+        navigate(`/my-pets`);
       }
     };
 

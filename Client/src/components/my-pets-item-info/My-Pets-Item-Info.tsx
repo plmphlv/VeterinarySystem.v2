@@ -29,7 +29,7 @@ const MyPetsItemInfo: React.FC = () => {
 
                 setAnimalDetails(animalDetails || undefined);
 
-            } catch (err: any) {
+            } catch (err: any) {                
                 setDialog({ message: err.title || "An error occurred while fetching animal details.", type: "error" });
                 // setErrors(err);
                 return;
@@ -59,9 +59,18 @@ const MyPetsItemInfo: React.FC = () => {
                 {/* <img src="/images/general-check-up.png" alt={animalDetails?.name} /> */}
                 <h2>General Information:</h2>
                 <p><i className="fa-solid fa-pen"></i> Name: {animalDetails?.name}</p>
-                <p><i className="fa-solid fa-calendar-days"></i> Age: {animalDetails?.age} years</p>
+                {animalDetails?.age && (
+                    <p><i className="fa-solid fa-calendar-days"></i> Age: {animalDetails?.age} years</p>
+                )}
                 <p><i className="fa-solid fa-paw"></i> Animal type: {animalDetails?.animalType}</p>
                 <p><i className="fa-solid fa-weight"></i> Weight: {animalDetails?.weight}kg</p>
+                {animalDetails?.passportNumber && (
+                    <p><i className="fa-solid fa-passport"></i> Passport Number: {animalDetails?.passportNumber}</p>
+                )}
+                {animalDetails?.chipNumber && (
+                    <p><i className="fa-solid fa-microchip"></i> Chip Number: {animalDetails?.chipNumber}</p>
+                )}
+
                 <div className="pet-action-btns">
                     <Link to={`/my-pets/${id}/edit`} className="my-pets-item-info-edit">Edit</Link>
                     <Link to={`/my-pets/${id}/delete`} className="my-pets-item-info-delete">Delete</Link>

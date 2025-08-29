@@ -12,10 +12,10 @@ import Spinner from "../../spinner/Spinner";
 const initialValues: EditAnimalRequest = {
     id: 0,
     name: "",
-    age: 0,
-    weight: 0,
-    passportNumber: "",
-    chipNumber: "",
+    age: null,
+    weight: 1,
+    passportNumber: null,
+    chipNumber: null,
     animalTypeId: 0,
 };
 
@@ -55,25 +55,38 @@ const MyPetsEdit: React.FC = () => {
         switch (field) {
             case "name":
                 if (!String(value).trim()) return "Name is required.";
-                if (String(value).length < 2) return "Name must be at least 2 characters.";
+                if (String(value).trim().length < 2) return "Name must be at least 2 characters.";
                 return undefined;
+
             case "age":
-                if (value === "" || value === null || value === undefined) return "Age is required.";
-                if (Number(value) < 0) return "Age cannot be negative.";
+                if (value !== "" && value !== null && value !== undefined) {
+                    const num = Number(value);
+                    if (isNaN(num)) return "Age must be a number.";
+                    if (num <= 0) return "Age must be greater than 0.";
+                }
                 return undefined;
+
             case "weight":
                 if (value === "" || value === null || value === undefined) return "Weight is required.";
                 if (Number(value) <= 0) return "Weight must be greater than 0.";
                 return undefined;
+
             case "passportNumber":
-                if (!String(value).trim()) return "Passport number is required.";
+                if (String(value).trim().length > 0 && String(value).trim().length < 2) {
+                    return "Passport number must be at least 2 characters.";
+                }
                 return undefined;
+
             case "chipNumber":
-                if (!String(value).trim()) return "Chip number is required.";
+                if (String(value).trim().length > 0 && String(value).trim().length < 2) {
+                    return "Chip number must be at least 2 characters.";
+                }
                 return undefined;
+
             case "animalTypeId":
                 if (Number(value) <= 0) return "Please select an animal type.";
                 return undefined;
+
             default:
                 return undefined;
         }
@@ -82,7 +95,8 @@ const MyPetsEdit: React.FC = () => {
     const validate = (values: EditAnimalRequest): EditAnimalFieldErrors => {
         const fieldErrors: EditAnimalFieldErrors = {};
         (Object.keys(values) as (keyof EditAnimalRequest)[]).forEach(field => {
-            const error = validateField(field, values[field], values);
+            const fieldValue = values[field] ?? "";
+            const error = validateField(field, fieldValue, values);
             if (error) fieldErrors[field] = error;
         });
         return fieldErrors;
@@ -100,13 +114,16 @@ const MyPetsEdit: React.FC = () => {
             const payload: EditAnimalRequest = {
                 ...values,
                 id: Number(id),
-            };
+                age: values.age == null ? null : values.age,
+                passportNumber: values.passportNumber?.trim() === "" ? null : values.passportNumber,
+                chipNumber: values.chipNumber?.trim() === "" ? null : values.chipNumber,
+            };            
 
             await editAnimal(payload);
 
             setDialog({ message: "Pet updated successfully!", type: "success" });
             setTimeout(() => navigate(`/my-pets/${id}/info`), 1000);
-        } catch {
+        } catch (err) {
             setDialog({ message: "Updating pet failed.", type: "error" });
         } finally {
             setFormLoading(false);
@@ -117,16 +134,20 @@ const MyPetsEdit: React.FC = () => {
 
     const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
         const { name, value, type } = e.target;
+        const fieldName = name as keyof EditAnimalRequest;
 
-        let parsedValue: string | number = value;
-        if ((type === "number" || name === "animalTypeId") && value !== "") {
-            parsedValue = Number(value);
+        let parsedValue: string | number | null = value;
+
+        if (type === "number") {
+            parsedValue = value === "" ? null : Number(value);
+        } else if (fieldName === "animalTypeId") {
+            parsedValue = value === "" ? 0 : Number(value);
         }
 
-        changeValues({ ...values, [name]: parsedValue });
+        changeValues({ ...values, [fieldName]: parsedValue });
 
-        const fieldName = name as keyof EditAnimalRequest;
-        const errorMsg = validateField(fieldName, parsedValue, { ...values, [name]: parsedValue });
+        const valueForValidation = parsedValue ?? "";
+        const errorMsg = validateField(fieldName, valueForValidation, { ...values, [fieldName]: parsedValue });
 
         setErrors(prev => ({
             ...prev,
@@ -163,6 +184,9 @@ const MyPetsEdit: React.FC = () => {
                     changeValues(mapped);
                 }
             } catch (err: any) {
+
+                // TODO: Да видя за тази грешка (AbortError: The user aborted a request):
+                console.log(err);
                 setDialog({ message: err.title || "An error occurred while fetching animal details.", type: "error" });
             } finally {
                 setLoading(false);
@@ -200,11 +224,12 @@ const MyPetsEdit: React.FC = () => {
                                 type="text"
                                 id="name"
                                 name="name"
-                                value={values.name}
+                                value={values.name ?? ""}
                                 onChange={handleChange}
                                 className={inputClass("name")}
                                 placeholder="Enter pet's name"
                                 autoComplete="off"
+                                required
                             />
                             {errors.name && <p className="error-text">{errors.name}</p>}
                         </div>
@@ -220,7 +245,7 @@ const MyPetsEdit: React.FC = () => {
                                 value={values.age ?? ""}
                                 onChange={handleChange}
                                 className={inputClass("age")}
-                                placeholder="Enter pet's age"
+                                placeholder="Enter pet's age (optional)"
                             />
                             {errors.age && <p className="error-text">{errors.age}</p>}
                         </div>
@@ -237,6 +262,7 @@ const MyPetsEdit: React.FC = () => {
                                 onChange={handleChange}
                                 className={inputClass("weight")}
                                 placeholder="Enter pet's weight"
+                                required
                             />
                             {errors.weight && <p className="error-text">{errors.weight}</p>}
                         </div>
@@ -249,10 +275,10 @@ const MyPetsEdit: React.FC = () => {
                                 type="text"
                                 id="passportNumber"
                                 name="passportNumber"
-                                value={values.passportNumber}
+                                value={values.passportNumber ?? ""}
                                 onChange={handleChange}
                                 className={inputClass("passportNumber")}
-                                placeholder="Enter pet's passport number"
+                                placeholder="Enter pet's passport number (optional)"
                             />
                             {errors.passportNumber && <p className="error-text">{errors.passportNumber}</p>}
                         </div>
@@ -265,10 +291,10 @@ const MyPetsEdit: React.FC = () => {
                                 type="text"
                                 id="chipNumber"
                                 name="chipNumber"
-                                value={values.chipNumber}
+                                value={values.chipNumber ?? ""}
                                 onChange={handleChange}
                                 className={inputClass("chipNumber")}
-                                placeholder="Enter pet's chip number"
+                                placeholder="Enter pet's chip number (optional)"
                             />
                             {errors.chipNumber && <p className="error-text">{errors.chipNumber}</p>}
                         </div>
@@ -283,6 +309,7 @@ const MyPetsEdit: React.FC = () => {
                                 value={values.animalTypeId}
                                 onChange={handleChange}
                                 className={inputClass("animalTypeId")}
+                                required
                             >
                                 <option value={0}>-- Select animal type --</option>
                                 {animalTypes.map(type => (

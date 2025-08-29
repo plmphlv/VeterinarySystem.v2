@@ -17,10 +17,15 @@ export const useGetUserData = () => {
         const fetchUserData = async () => {
             setLoading(true);
             setError(null);
-            try {                
-                const response = await http.get<UserDataFromId>(`${baseUrl}/${decodedData.AccountId}`);
+            try {
+                if (decodedData.AccountId) {
+                    const response = await http.get<UserDataFromId>(`${baseUrl}/${decodedData.AccountId}`);
+                    setUserData(response || null);
+                } else if (decodedData.StaffId){
+                    const response = await http.get<UserDataFromId>(`${baseUrl}/${decodedData.StaffId}`);
+                    setUserData(response || null);
+                }
 
-                setUserData(response || null);
             } catch (err) {
                 setError("Failed to load user data, please try again later.");
                 setUserData(null);

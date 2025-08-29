@@ -60,6 +60,29 @@ export interface UpdateAccountRequest {
     address: "string",
     phoneNumber: "string"
 }
+
+export interface ResetPasswordRequest {
+    userId: string,
+    newPassword: string,
+    confirmNewPassword: string
+}
+
+export interface ResetPasswordResponse {
+    message: string;
+}
+
+export interface GetUserAccountRequest {
+    id: string;
+}
+
+export interface GetUserAccountResponse {
+    id: string,
+    firstName: string,
+    lastName: string,
+    address: string,
+    phoneNumber: string,
+    email: string
+}
 // authAPI.ts types end
 
 // UserContext.ts types start
@@ -124,13 +147,15 @@ export type DialogProps = {
 
 // useAuth types start
 export interface JwtDecodedData {
-  "http://schemas.xmlsoap.org/ws/2005/05/identity/claims/name": string;
-  "http://schemas.xmlsoap.org/ws/2005/05/identity/claims/nameidentifier": string;
-  "http://schemas.xmlsoap.org/ws/2005/05/identity/claims/emailaddress": string;
-  AccountId: string;
-  exp: number;
-  iss: string;
-  aud: string;
+    "http://schemas.xmlsoap.org/ws/2005/05/identity/claims/name": string;
+    "http://schemas.xmlsoap.org/ws/2005/05/identity/claims/nameidentifier": string;
+    "http://schemas.xmlsoap.org/ws/2005/05/identity/claims/emailaddress": string;
+    "http://schemas.microsoft.com/ws/2008/06/identity/claims/role"?: "StaffMember",
+    AccountId?: string;
+    StaffId?: string;
+    exp: number;
+    iss: string;
+    aud: string;
 }
 
 export interface JwtAccountIdPayload {
@@ -160,7 +185,7 @@ export interface EditProfileRequest {
     id: string;
     firstName: string;
     lastName: string;
-    address: string;
+    address?: string | null;
     phoneNumber: string;
 }
 
@@ -212,10 +237,10 @@ export interface GetAnimalDetailsResponse {
 
 export interface AddAnimalRequest {
     name: string,
-    age: number,
+    age?: number | null,
     weight: number,
-    passportNumber: string,
-    chipNumber: string,
+    passportNumber?: string | null,
+    chipNumber?: string | null,
     animalTypeId: number,
     ownerId: string
 }
@@ -227,10 +252,10 @@ export interface AddAnimalResponse {
 export interface EditAnimalRequest {
     id: number;
     name: string,
-    age: number,
+    age?: number | null,
     weight: number,
-    passportNumber: string,
-    chipNumber: string,
+    passportNumber?: string | null,
+    chipNumber?: string | null,
     animalTypeId: number,
 }
 
@@ -334,6 +359,100 @@ export interface DeleteOwnerAccountResponse {
 
 // OwnerAccounts types end
 
+// User Appointments types start:
+
+export interface GetOwnerAppointmentsRequest {
+    OwnerId: string;
+    StaffId?: string;
+    Status?: "Pending_Review" | "Confirmed" | "Completed" | "Cancelled" | "Missed";
+    StartDate?: string; // or Date
+    EndDate?: string; // or Date
+}
+
+export interface GetAllAppointmentsRequest {
+    OwnerId?: string;
+    StaffId?: string;
+    Status?: "Pending_Review" | "Confirmed" | "Completed" | "Cancelled" | "Missed";
+    StartDate?: string; // or Date, or transform the date to string before send request
+    EndDate?: string; // or Date
+}
+
+export interface CreateRequestAppointment {
+    date: string, // or Date
+    description: string,
+    staffId: string
+}
+
+export interface CreateRequestAppointmentResponse {
+    message: number;
+}
+
+export interface UpdateAppointmentRequest {
+    date: string;
+    description: string;
+    staffId: string;
+    id: string;
+}
+
+export interface UpdateAppointmentResponse {
+    message: number;
+}
+
+// User Appointments types end
+
+// Staff Appointments types start:
+
+export interface GetAppointmentDetailsRequest {
+    id: number;
+}
+
+export interface GetAppointmentDetailsResponse {
+    id: number;
+    appointmentStatus: string;
+    date: string;
+    animalOwnerName: string;
+    staffMemberName: string;
+    desctiption: string;
+}
+
+export interface CreateAppointmentRequest {
+    date: string;
+    description: string;
+    staffId: string;
+    ownerId: string;
+}
+
+export interface CreateAppointmentResponse {
+    message: number;
+}
+
+export interface EditAppointmentRequest {
+    date: string;
+    description: string;
+    staffId: string;
+    id: number;
+    status: "Pending_Review" | "Confirmed" | "Completed" | "Cancelled" | "Missed";
+}
+
+export interface EditAppointmentResponse {
+    message: number;
+}
+
+export interface CompleteAppointmentRequest {
+    id: number;
+}
+
+export interface CompleteAppointmentResponse {
+    message: number;
+}
+
+export interface DeleteAppointmentRequest {
+    id: number;
+}
+
+export interface DeleteAppointmentResponse {
+    message: number;
+}
 
 
-
+// Staff Appointments types end

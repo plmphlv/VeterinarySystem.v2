@@ -38,7 +38,7 @@ const MyPetItem: React.FC = () => {
                 const animals = await getAllAnimals({ ownerId });                
 
                 setAnimals(animals || []);
-            } catch (err: any) {
+            } catch (err: any) {                
                 let errorMessage = "An error occurred while fetching animals.";
 
                 if (err?.errors && typeof err.errors === "object") {
