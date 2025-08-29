@@ -1,14 +1,16 @@
 import { Link } from "react-router";
 import { useEffect, useState } from "react";
 import { useGetUserData } from "../../../hooks/useGetUserData";
-import { useGetAllAnimals } from "../../../api/animalsAPI";
 import Spinner from "../../spinner/Spinner";
 import Dialog from "../../dialog/Dialog";
 import type { Animal, GetAllAnimalsErrors } from "../../../types";
+import { useGetAllAnimals } from "../../../api/animalsAPI";
+import { useGetOwnerAccountDetails } from "../../../api/ownerAccountsAPI";
 
 const MyPetItem: React.FC = () => {
     const { userData } = useGetUserData();
     const { getAllAnimals, cancelGetAllAnimals } = useGetAllAnimals();
+    const { getOwnerAccountDetails, cancelGetOwnerAccountDetails } = useGetOwnerAccountDetails();
     const [errors, setErrors] = useState<GetAllAnimalsErrors>({});
 
     const [dialog, setDialog] = useState<{ message: string; type: "success" | "error" } | null>(null);
@@ -26,7 +28,14 @@ const MyPetItem: React.FC = () => {
                 setErrors({});
                 setLoading(true)
 
-                const animals = await getAllAnimals({ ownerId: "c504a5b3-f101-41fe-9e0a-9c829ae07735" });
+                const ownerAccountData = await getOwnerAccountDetails(userData.id);
+
+                if (!ownerAccountData) {
+                    return;
+                }
+
+                const ownerId = ownerAccountData?.id;
+                const animals = await getAllAnimals({ ownerId });                
 
                 setAnimals(animals || []);
             } catch (err: any) {
@@ -53,6 +62,12 @@ const MyPetItem: React.FC = () => {
     useEffect(() => {
         return () => {
             cancelGetAllAnimals();
+        };
+    }, []);
+
+    useEffect(() => {
+        return () => {
+            cancelGetOwnerAccountDetails();
         };
     }, []);
 

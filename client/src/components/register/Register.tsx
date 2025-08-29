@@ -116,7 +116,12 @@ const Register: React.FC = () => {
                 navigate('/');
             }, 500);
         } catch (err: any) {
-            setDialog({ message: err.errors.RegisterCommand[0] || "Registration failed.", type: "error" });
+            if (!err.errors) {
+                setDialog({ message: "Registration failed, please try again later.", type: "error" });
+
+            } else {
+                setDialog({ message: err.errors.RegisterCommand[0] || "Registration failed.", type: "error" });
+            }
             changeValues({
                 ...values,
                 password: "",
@@ -149,14 +154,14 @@ const Register: React.FC = () => {
     };
 
     useEffect(() => {
-            return () => {
-                cancelRegister();
-            };
-        }, []);
+        return () => {
+            cancelRegister();
+        };
+    }, []);
 
     return (
         <>
-        {isLoading && (
+            {isLoading && (
                 <div className="spinner-overlay">
                     <Spinner />
                 </div>

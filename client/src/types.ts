@@ -123,8 +123,22 @@ export type DialogProps = {
 // Dialog types end
 
 // useAuth types start
-export interface JwtPayload {
-    AccountId: "ba995470-a7ad-4e7f-8119-8587089f92c4",
+export interface JwtDecodedData {
+  "http://schemas.xmlsoap.org/ws/2005/05/identity/claims/name": string;
+  "http://schemas.xmlsoap.org/ws/2005/05/identity/claims/nameidentifier": string;
+  "http://schemas.xmlsoap.org/ws/2005/05/identity/claims/emailaddress": string;
+  AccountId: string;
+  exp: number;
+  iss: string;
+  aud: string;
+}
+
+export interface JwtAccountIdPayload {
+    AccountId: string,
+}
+
+export interface JwtAccountExpPayload {
+    exp: number,
 }
 // useAuth types end
 
@@ -164,6 +178,8 @@ export interface NewState {
     errorMessage?: string;
 }
 
+// usePersistedState types end
+
 // Animals types start
 export interface Animal {
     id: string;
@@ -174,7 +190,7 @@ export interface Animal {
 export type GetAllAnimalsErrors = Partial<Record<keyof GetAllAnimalsRequest, string>>;
 export type GetAnimalDetailsErrors = Partial<Record<keyof GetAnimalDetailsRequest, string>>;
 export type AddAnimalFieldErrors = Partial<Record<keyof AddAnimalRequest, string>>;
-
+export type EditAnimalFieldErrors = Partial<Record<keyof EditAnimalRequest, string>>;
 
 export interface GetAllAnimalsRequest {
     ownerId: string;
@@ -239,11 +255,11 @@ export interface AnimalType {
 
 export interface AddAnimalTypeRequest {
     id: number;
-    typeName: string; 
+    typeName: string;
 }
 
 export interface AddAnimalTypeResponse {
-    number: number; 
+    number: number;
 }
 
 export interface EditAnimalTypeRequest {
@@ -255,7 +271,7 @@ export interface EditAnimalTypeResponse {
     message: string;
 }
 
-export interface DeleteAnimalTypeRequest{
+export interface DeleteAnimalTypeRequest {
     id: number;
 }
 
@@ -263,6 +279,60 @@ export interface DeleteAnimalTypeResponse {
     message: string;
 }
 // AnimalTypes types end
+
+// OwnerAccounts types start
+
+export interface GetOwnerAccountDetailsRequest {
+    id: string;
+}
+
+export interface GetOwnerAccountDetailsResponse {
+    firstName: string,
+    lastName: string,
+    address: string,
+    phoneNumber: string,
+    id: string
+}
+
+export interface CreateOwnerAccountRequest {
+    firstName: string,
+    lastName: string,
+    address: string,
+    phoneNumber: string,
+}
+
+export interface CreateOwnerAccountRequest {
+    firstName: string,
+    lastName: string,
+    address: string,
+    phoneNumber: string,
+}
+
+export interface CreateOwnerAccountResponse {
+    id: string;
+}
+
+export interface EditOwnerAccountRequest {
+    firstName: string,
+    lastName: string,
+    address: string,
+    phoneNumber: string,
+    id: string
+}
+
+export interface EditOwnerAccountResponse {
+    message: string
+}
+
+export interface DeleteOwnerAccountRequest {
+    id: string;
+}
+
+export interface DeleteOwnerAccountResponse {
+    message: string;
+}
+
+// OwnerAccounts types end
 
 
 

@@ -55,7 +55,6 @@ export const useLogout = () => {
     const { accessToken, userLogoutHandler } = useContext(UserContext);
 
     const logout = () => {     
-        localStorage.removeItem('auth');
         userLogoutHandler();
     };
 
@@ -111,3 +110,4 @@ export const useEditProfile = () => {
 
     return { editProfile, cancelEditProfile: () => abortControllerRef.current?.abort() };
 };
+

@@ -21,6 +21,7 @@ export default function UserProvider({ children }: UserProviderProps) {
       isSuccessful: false,
       errorMessage: "",
     });
+    localStorage.removeItem("auth");
   };
 
   const contextValue: UserContextType = {

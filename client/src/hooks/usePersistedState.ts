@@ -30,8 +30,7 @@ export default function usePersistedState<T extends Partial<AuthData>>(
             ? (input as (prevState: T) => T)(state)
             : input;
 
-        try {
-
+        try {            
             if (!newState.hasOwnProperty('isSuccessful')) {
                 localStorage.removeItem(stateKey);
                 return;

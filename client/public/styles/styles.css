@@ -81,7 +81,7 @@
     height: 3px;
     border-radius: 4px;
     background-color: #fff;
-    bottom: -6px;
+    bottom: -3px;
     left: 0;
     transform-origin: left;
     transform: scaleX(0);
@@ -109,6 +109,15 @@
     .navbar a:hover::before {
         transform-origin: left;
         transform: scaleX(1);
+    }
+
+    .navbar a.active::before {
+        transform-origin: left;
+        transform: scaleX(1);
+    }
+
+    .header.active::after {
+        left: 100%;
     }
 }
 
@@ -165,11 +174,84 @@
         opacity: 1;
         transition-delay: calc(.15s * var(--i));
     }
+
+    .navbar a.active {
+        text-decoration: underline;
+        text-underline-offset: 8px;
+        text-decoration-thickness: 3px;
+    }
+
+    .header.active {
+        left: 100%;
+    }
 }
 
 /* NavBar End */
 
 /* Home Page Start */
+
+.home-container {
+    animation: fadeInOpacity 1s;
+    height: 100vh;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    text-align: center;
+    background: url('/images/veterinary-hospital.png') no-repeat center center/cover;
+    position: relative;
+}
+
+.home-container::after {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.7);
+    z-index: 0;
+}
+
+.home-content {
+    position: relative;
+    margin-top: 90px;
+    z-index: 1;
+    color: #ffffff;
+}
+
+.home-content h1 {
+    font-size: 3rem;
+    margin-bottom: 1.5rem;
+    color: #ffffff;
+}
+
+.home-content p {
+    font-size: 1.2rem;
+    max-width: 600px;
+    margin-bottom: 2rem;
+    color: #ffffff;
+    line-height: 1.6;
+}
+
+.home-content a {
+    display: inline-block;
+    padding: 0.75rem 2rem;
+    background: #4EC5B4;
+    color: #000;
+    font-weight: bold;
+    font-size: 1.2rem;
+    border-radius: 50px;
+    text-decoration: none;
+    transition: all 0.3s ease-in-out;
+}
+
+@media (min-width: 1025px) {
+    .home-content a:hover {
+        background: #2a796f;
+    }
+}
 
 /* Home Page End */
 
@@ -1529,7 +1611,7 @@
     height: 3px;
     border-radius: 4px;
     background-color: #fff;
-    bottom: -7px;
+    bottom: -3px;
     left: 0;
     transform-origin: left;
     transform: scaleX(0);
@@ -1552,6 +1634,36 @@
     .footer a:hover::before {
         transform-origin: left;
         transform: scaleX(1);
+    }
+
+    .footer a.active::before {
+        transform-origin: left;
+        transform: scaleX(1);
+    }
+
+    .footer.active::after {
+        left: 100%;
+    }
+}
+
+@media(max-width: 1024px) {
+    .footer .socials a:hover {
+        color: #000;
+        transition: 0.7s ease;
+    }
+
+    .footer a:hover::before {
+        transform-origin: left;
+        transform: scaleX(1);
+    }
+
+    .footer a.active::before {
+        transform-origin: left;
+        transform: scaleX(1);
+    }
+
+    .footer.active::after {
+        left: 100%;
     }
 }
 

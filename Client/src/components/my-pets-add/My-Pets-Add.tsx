@@ -35,11 +35,16 @@ const MyPetsAdd: React.FC = () => {
             try {
                 setErrors({});
 
-                const animalTypes = await getAnimalTypes();                
+                const animalTypes = await getAnimalTypes();
 
                 setAnimalTypes(animalTypes || []);
             } catch (err: any) {
+                console.log(animalTypes);
+                
                 setDialog({ message: "An error occurred while fetching animal types.", type: "error" });
+                setTimeout(() => {
+                    navigate("/my-pets");
+                }, 1500);
                 // setErrors(err.errors);
                 return;
             } finally {

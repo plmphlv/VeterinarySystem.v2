@@ -1,5 +1,5 @@
 import type React from "react";
-import { Link } from "react-router";
+import { NavLink } from "react-router";
 import { useUserContext } from "../../contexts/UserContext";
 
 const Footer: React.FC = () => {
@@ -8,45 +8,45 @@ const Footer: React.FC = () => {
     return (
         <section className="footer">
             <div className="socials">
-                <Link to="#"><i className="fa-brands fa-facebook-f"></i></Link>
-                <Link to="#"><i className="fa-brands fa-instagram"></i></Link>
-                <Link to="#"><i className="fa-brands fa-linkedin"></i></Link>
-                <Link to="#"><i className="fa-brands fa-youtube"></i></Link>
+                <NavLink to="#"><i className="fa-brands fa-facebook-f"></i></NavLink>
+                <NavLink to="#"><i className="fa-brands fa-instagram"></i></NavLink>
+                <NavLink to="#"><i className="fa-brands fa-linkedin"></i></NavLink>
+                <NavLink to="#"><i className="fa-brands fa-youtube"></i></NavLink>
             </div>
 
             <ul className="list">
                 <li>
-                    <Link to="/">Home</Link>
+                    <NavLink to="/">Home</NavLink>
                 </li>
                 <li>
-                    <Link to="/about">About</Link>
+                    <NavLink to="/about">About</NavLink>
                 </li>
                 <li>
-                    <Link to="/contact">Contact</Link>
+                    <NavLink to="/contact">Contact</NavLink>
                 </li>
                 <li>
-                    <Link to="/services">Services</Link>
+                    <NavLink to="/services">Services</NavLink>
                 </li>
                 {isSuccessful ? (
                     <>
                         <li>
-                            <Link to="/my-pets">My Pets</Link>
+                            <NavLink to="/my-pets">My Pets</NavLink>
                         </li>
                         <li>
-                            <Link to="/profile">Profile</Link>
+                            <NavLink to="/profile">Profile</NavLink>
                         </li>
 
                         <li>
-                            <Link to="/logout">Logout</Link>
+                            <NavLink to="/logout">Logout</NavLink>
                         </li>
                     </>
                 ) : (
                     <>
                         <li>
-                            <Link to="/login">Login</Link>
+                            <NavLink to="/login">Login</NavLink>
                         </li>
                         <li>
-                            <Link to="/register">Register</Link>
+                            <NavLink to="/register">Register</NavLink>
                         </li>
                     </>
                 )}
