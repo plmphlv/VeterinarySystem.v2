@@ -1,9 +1,13 @@
 import { NavLink, useLocation } from "react-router";
 import { useUserContext } from "../../contexts/UserContext";
 import { useEffect, useRef } from "react";
+import { getJwtDecodedData } from "../../utils/getJwtDecodedData";
 
 const Header: React.FC = () => {
     const { isSuccessful } = useUserContext();
+
+    // TODO: Да направя логиката да се показват страниците според различните роли на потребителите ():
+    const decodedData = getJwtDecodedData();
     const location = useLocation();
     const checkRef = useRef<HTMLInputElement>(null);
     const headerRef = useRef<HTMLElement>(null);
