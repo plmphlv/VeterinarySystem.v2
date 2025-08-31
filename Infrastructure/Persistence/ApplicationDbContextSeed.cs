@@ -151,13 +151,7 @@ public static class ApplicationDbContextSeed
 
         if (staff is null)
         {
-            staff = new StaffAccount
-            {
-                Id = Guid.NewGuid().ToString(),
-                AccountId = staffAccount.Id,
-            };
-
-            context.StaffAccounts.Add(staff);
+            return;
         }
 
         int animalTypesCount = await context.AnimalTypes.CountAsync();
@@ -394,7 +388,22 @@ public static class ApplicationDbContextSeed
                 IdentityResult addRoleResult = await userManager.AddToRoleAsync(user, role);
 
                 claims.Add(new Claim(ClaimTypes.Role, role));
-                claims.Add(new Claim(InfrastructureConstants.StaffId, role));
+
+                if (string.Equals(role, Role.StaffMember.ToString()))
+                {
+                    StaffAccount staff = new StaffAccount
+                    {
+                        Id = Guid.NewGuid().ToString(),
+                        AccountId = account.Id,
+                    };
+
+                    context.StaffAccounts.Add(staff);
+
+                    await context.SaveChangesAsync();
+
+                    claims.Add(new Claim(InfrastructureConstants.StaffId, staff.Id));
+                }
+
             }
 
             await userManager.AddClaimsAsync(user, claims);
