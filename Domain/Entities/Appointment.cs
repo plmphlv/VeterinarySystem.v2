@@ -17,7 +17,7 @@ public class Appointment : AuditableEntity
 
 	public OwnerAccount Owner { get; set; } = null!;
 
-	public string StaffId { get; set; } = null!;
+	public string? StaffId { get; set; }
 
-	public StaffAccount StaffAccount { get; set; } = null!;
+	public StaffAccount? StaffAccount { get; set; }
 }

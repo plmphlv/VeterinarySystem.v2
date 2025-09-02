@@ -1,6 +1,9 @@
-﻿using Application.StaffProfiles.Commands.Create;
+﻿using Application.AnimalTypes.Queries.GetAnimalTypesList;
+using Application.Common.Models;
+using Application.StaffProfiles.Commands.Create;
 using Application.StaffProfiles.Commands.Delete;
 using Application.StaffProfiles.Queries.GetStaffMemberDetails;
+using Application.StaffProfiles.Queries.GetStaffMemberesList;
 using Application.StaffProfiles.Queries.GetStaffMembers;
 using Microsoft.AspNetCore.Mvc;
 
@@ -29,8 +32,14 @@ public class StaffProfilesController : ApiControllerBase
     }
 
     [HttpGet]
-    public async Task<ActionResult<List<StaffMemberDto>>> GetStaffMembers([FromQuery] GetStaffMembersQuery query)
+    public async Task<ActionResult<List<StaffMemberDto>>> SearchStaffMembers([FromQuery] SearchStaffMembersQuery query)
     {
         return await Mediator.Send(query);
+    }
+
+    [HttpGet("GetStaffMembers")]
+    public async Task<ActionResult<List<StaffMemberDropdownModel>>> GetStaffMembers()
+    {
+        return await Mediator.Send(new GetStaffMemberesListQuery());
     }
 }

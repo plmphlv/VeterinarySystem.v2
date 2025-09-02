@@ -11,10 +11,6 @@ namespace Application.Appointments.Commands.UpdateAppointmentRequest
                 .GreaterThan(0)
                 .WithMessage("Invalid id");
 
-            RuleFor(c => c.StaffId)
-                .NotEmpty()
-                .WithMessage("StaffMemberId is required.");
-
             RuleFor(c => c.Date)
                 .NotNull()
                 .WithMessage("Appointment date is required.")

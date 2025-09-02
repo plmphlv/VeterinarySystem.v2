@@ -43,7 +43,7 @@ public class UpdateAppointmentCommandHandler : IRequestHandler<UpdateAppointment
             {
                 List<ValidationFailure> validationFailures = new List<ValidationFailure>
                 {
-                new ValidationFailure(nameof(newAppointmentTime), "Time slot is unavailable", newAppointmentTime)
+                    new ValidationFailure(nameof(newAppointmentTime), "Time slot is unavailable", newAppointmentTime)
                 };
 
                 throw new ValidationException(validationFailures);

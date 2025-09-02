@@ -3,7 +3,7 @@ using Domain.Enums;
 
 namespace Application.Appointments.Commands.UpdateAppointmentRequest;
 
-public class UpdateAppointmentRequestCommand : AppointmentModel, IRequest
+public class UpdateAppointmentRequestCommand : AppointmentRequestModel, IRequest
 {
     public int Id { get; set; }
 }
@@ -48,19 +48,8 @@ public class UpdateAppointmentRequestCommandHandler : IRequestHandler<UpdateAppo
             }
         }
 
-        string staffMemberId = request.StaffId;
-
-        bool staffMemberExists = await context.StaffAccounts
-            .AnyAsync(sp => sp.Id == staffMemberId, cancellationToken);
-
-        if (!staffMemberExists)
-        {
-            throw new NotFoundException(nameof(StaffAccount), staffMemberExists);
-        }
-
         appointment.Date = request.Date;
         appointment.Desctiption = request.Description;
-        appointment.StaffId = staffMemberId;
 
         await context.SaveChangesAsync(cancellationToken);
     }

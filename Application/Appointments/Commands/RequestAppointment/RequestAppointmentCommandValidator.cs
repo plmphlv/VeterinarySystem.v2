@@ -10,10 +10,6 @@ public class RequestAppointmentCommandValidator : AbstractValidator<RequestAppoi
             .NotEmpty()
             .WithMessage("Appointment Date is required");
 
-        RuleFor(c => c.StaffId)
-            .NotEmpty()
-            .WithMessage("StaffMemberId is required.");
-
         RuleFor(c => c.Date)
             .NotNull()
             .WithMessage("Appointment date is required.")

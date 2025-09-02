@@ -13,11 +13,11 @@ namespace Application.Appointments.Commands.Update
 
             RuleFor(c => c.StaffId)
                 .NotEmpty()
-                .WithMessage("StaffMemberId is required.");
+                .WithMessage("Staff Member is required.");
 
             RuleFor(c => c.Status)
                 .NotEmpty()
-                .WithMessage("AppointmentStatus is required.")
+                .WithMessage("Appointment Status is required.")
                 .IsInEnum()
                 .WithMessage("Invalid AppointmentStatus");
 
