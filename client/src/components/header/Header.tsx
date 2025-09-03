@@ -56,8 +56,12 @@ const Header: React.FC = () => {
 
                 {isSuccessful ? (
                     <>
+                        <NavLink to="/appointments" style={{ "--i": "4" } as React.CSSProperties}>Appointments</NavLink>
                         <NavLink to="/my-pets" style={{ "--i": "4" } as React.CSSProperties}>My Pets</NavLink>
                         <NavLink to="/profile" style={{ "--i": "5" } as React.CSSProperties}>Profile</NavLink>
+                        {decodedData?.StaffId && (
+                            <NavLink to="/administration" style={{ "--i": "5" } as React.CSSProperties}>Administration</NavLink>
+                        )}
                         <NavLink to="/logout" style={{ "--i": "6" } as React.CSSProperties}>Logout</NavLink>
                     </>
                 ) : (

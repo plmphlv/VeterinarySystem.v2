@@ -4,19 +4,22 @@ import { useGetUserData } from "../../../hooks/useGetUserData";
 import Spinner from "../../spinner/Spinner";
 import Dialog from "../../dialog/Dialog";
 import type { Animal, GetAllAnimalsErrors } from "../../../types";
-import { useGetAllAnimals } from "../../../api/animalsAPI";
 import { useGetOwnerAccountDetails } from "../../../api/ownerAccountsAPI";
+import { useGetAllAnimals } from "../../../api/animalsAPI";
 
 const MyPetItem: React.FC = () => {
-    const { userData } = useGetUserData();
+    const { userData, isLoading, error } = useGetUserData();
     const { getAllAnimals, cancelGetAllAnimals } = useGetAllAnimals();
     const { getOwnerAccountDetails, cancelGetOwnerAccountDetails } = useGetOwnerAccountDetails();
     const [errors, setErrors] = useState<GetAllAnimalsErrors>({});
 
+    const [showError, setShowError] = useState(true);
+
+
     const [dialog, setDialog] = useState<{ message: string; type: "success" | "error" } | null>(null);
 
     const [animals, setAnimals] = useState<Animal[]>([]);
-    const [isLoading, setLoading] = useState(true);
+    const [loading, setLoading] = useState(true);
 
     useEffect(() => {
         if (!userData?.id) {
@@ -35,10 +38,10 @@ const MyPetItem: React.FC = () => {
                 }
 
                 const ownerId = ownerAccountData?.id;
-                const animals = await getAllAnimals({ ownerId });                
+                const animals = await getAllAnimals({ ownerId });
 
                 setAnimals(animals || []);
-            } catch (err: any) {                
+            } catch (err: any) {
                 let errorMessage = "An error occurred while fetching animals.";
 
                 if (err?.errors && typeof err.errors === "object") {
@@ -73,42 +76,46 @@ const MyPetItem: React.FC = () => {
 
     return (
         <>
-            {isLoading && (
+            {loading && (
                 <div className="spinner-overlay">
                     <Spinner />
                 </div>
             )}
-
-            {!isLoading && animals.length === 0 && (!errors || Object.keys(errors).length === 0) && (
-                <h1 className="no-pets-h1">No Added Animals yet!</h1>
+            
+            {error && showError && (
+                <Dialog
+                    message={error}
+                    type="error"
+                    onClose={() => setShowError(false)}
+                />
             )}
 
-            <section className="my-pets-item-section">
-                {animals.map((animal) => (
-                    <div key={animal.id} className="my-pets-item-card">
-                        <div className="content">
-                            <h2>{animal.name}</h2>
-                            <p>
-                                <i className="fa-solid fa-paw"></i> Animal type: {animal.animalType}
-                            </p>
-                            <Link
-                                to={`/my-pets/${animal.id}/info`}
-                                className="my-pets-item-more-info-btn"
-                            >
-                                → More Info
-                            </Link>
-                        </div>
-                    </div>
-                ))}
+            {!userData && (
+                <h1 className="no-pets-h1">No user data found, please try again later.</h1>
+            )}
 
-                {dialog && (
-                    <Dialog
-                        message={dialog.message}
-                        type={dialog.type}
-                        onClose={() => setDialog(null)}
-                    />
-                )}
-            </section>
+            {animals.length > 0 ? (
+                <section className="my-pets-item-section">
+                    {animals.map((animal) => (
+                        <div key={animal.id} className="my-pets-item-card">
+                            <div className="content">
+                                <h2>{animal.name}</h2>
+                                <p>
+                                    <i className="fa-solid fa-paw"></i> Animal type: {animal.animalType}
+                                </p>
+                                <Link
+                                    to={`/my-pets/${animal.id}/info`}
+                                    className="my-pets-item-more-info-btn"
+                                >
+                                    → More Info
+                                </Link>
+                            </div>
+                        </div>
+                    ))}
+                </section>
+            ) : (
+                <h1 className="no-pets-h1">No Animals Found.</h1>
+            )}
         </>
     );
 

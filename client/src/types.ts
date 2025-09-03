@@ -151,7 +151,7 @@ export interface JwtDecodedData {
     "http://schemas.xmlsoap.org/ws/2005/05/identity/claims/nameidentifier": string;
     "http://schemas.xmlsoap.org/ws/2005/05/identity/claims/emailaddress": string;
     "http://schemas.microsoft.com/ws/2008/06/identity/claims/role"?: string,
-    AccountId?: string;
+    AccountId: string;
     StaffId?: string;
     exp: number;
     iss: string;
@@ -361,6 +361,15 @@ export interface DeleteOwnerAccountResponse {
 
 // User Appointments types start:
 
+export type AppointmentStatus = "Pending_Review" | "Confirmed" | "Completed" | "Cancelled" | "Missed";
+
+export interface Appointment {
+    id: number;
+    status: "Pending_Review" | "Confirmed" | "Completed" | "Cancelled" | "Missed";
+    date: string; // or Date
+    staffMemberName: string;
+}
+
 export interface GetOwnerAppointmentsRequest {
     OwnerId: string;
     StaffId?: string;
@@ -376,6 +385,9 @@ export interface GetAllAppointmentsRequest {
     StartDate?: string; // or Date, or transform the date to string before send request
     EndDate?: string; // or Date
 }
+
+export type GetAllAppointmentsErrors = Partial<Record<keyof GetAllAppointmentsRequest, string>>;
+export type CreateAppointmentRequestError = Partial<Record<keyof CreateAppointmentRequest, string>>;
 
 export interface CreateRequestAppointment {
     date: string, // or Date
@@ -419,7 +431,6 @@ export interface CreateAppointmentRequest {
     date: string;
     description: string;
     staffId: string;
-    ownerId: string;
 }
 
 export interface CreateAppointmentResponse {

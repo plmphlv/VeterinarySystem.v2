@@ -156,7 +156,7 @@
     }
 
     #check:checked~.navbar {
-        height: 23rem;
+        height: 25rem;
     }
 
     .navbar a {
@@ -256,7 +256,6 @@
 /* Home Page End */
 
 /* About Page Start */
-
 .about {
     min-height: 100vh;
     width: 100%;
@@ -382,6 +381,61 @@
 /* Contact Page End */
 
 /* Services Page Start */
+.service-content {
+    max-width: 600px;
+    animation: fadeInOpacity 1s;
+    text-align: center;
+    margin: 2rem auto;
+    background-color: #f9f9f9;
+    border-radius: 10px;
+    padding: 2rem;
+}
+
+.service-h1 {
+    animation: fadeInOpacity 1s;
+    margin-top: 150px;
+    background-color: #4EC5B4;
+    color: #fff;
+    padding: 0.3em 1em;
+    border-radius: 0.3em;
+}
+
+.service-content img {
+    width: 100%;
+    border-radius: 10px;
+    margin-bottom: 1.5rem;
+}
+
+.service-content h2 {
+    color: #4EC5B4;
+    margin-bottom: 1rem;
+}
+
+.service-content p {
+    margin-bottom: 1rem;
+}
+
+.back-link {
+    display: inline-block;
+    margin-top: 2rem;
+    background-color: #4EC5B4;
+    color: white;
+    padding: 0.5rem 1rem;
+    border-radius: 5px;
+    text-decoration: none;
+    transition: background-color 0.7s ease;
+}
+
+@media(min-width: 1025px) {
+    .back-link:hover {
+        background-color: #2a796f;
+        transition: 0.3s ease-in;
+    }
+}
+
+/* Services Page End */
+
+/* Seperate Services Page Start */
 .services {
     animation: fadeInOpacity 1s;
     display: grid;
@@ -448,6 +502,7 @@
 @media(min-width: 1025px) {
     .service-card:hover {
         transform: translateY(-5px);
+        box-shadow: 0 6px 16px rgba(0, 0, 0, 0.12);
     }
 
     .learn-more-btn:hover {
@@ -455,16 +510,208 @@
     }
 }
 
-/* @media (max-width: 600px) {
-    header h1 {
-        font-size: 2rem;
-    }
-} */
+/* Seperate Services Page End */
 
-/* Services Page End */
+/* Appointments start: */
+.appointments {
+    animation: fadeInOpacity 1s;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 2rem;
+    padding: 2rem;
+    max-width: 1200px;
+    width: 100%;
+}
+
+.appointments-h1 {
+    animation: fadeInOpacity 1s;
+    margin-top: 150px;
+    background-color: #4EC5B4;
+    color: #fff;
+    padding: 0.3em 1em;
+    border-radius: 1em;
+}
+
+.no-appointments {
+    animation: fadeInOpacity 1s;
+    margin-top: 100px;
+    margin-bottom: 100px;
+    background-color: #4EC5B4;
+    color: #fff;
+    padding: 0.3em 1em;
+    border-radius: 0.5em;
+}
+
+.appointment-card {
+    background-color: #ffffff;
+    border-radius: 10px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+    overflow: hidden;
+    transition: transform 0.3s ease;
+}
+
+.appointment-card img {
+    width: 100%;
+    height: 200px;
+    object-fit: cover;
+}
+
+.appointment-card .content {
+    padding: 1.5rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+}
+
+.appointment-card h2 {
+    color: #4EC5B4;
+    margin-bottom: 0.5rem;
+}
+
+.appointment-card p {
+    font-size: 0.95rem;
+    margin-bottom: 1rem;
+}
+
+.learn-more-btn {
+    display: inline-block;
+    background-color: #4EC5B4;
+    color: #fff;
+    padding: 0.5rem 1rem;
+    border: none;
+    border-radius: 5px;
+    text-decoration: none;
+    font-size: 0.9rem;
+    transition: background-color 0.7s ease;
+}
+
+.my-pets-request-appointment-btn {
+    background-color: #48d889;
+    font-weight: bold;
+    color: #fff;
+    text-decoration: none;
+    border: none;
+    padding: 0.8rem 2rem;
+    margin-right: 1rem;
+    border-radius: 25px;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: background 0.7s ease;
+    margin-bottom: 2rem;
+}
+
+.appointments-filter {
+    display: flex;
+    gap: 1rem;
+    align-items: center;
+    padding: 1rem 2rem;
+    background: #f9f9f9;
+    border-radius: 10px;
+    margin: 1rem auto;
+    max-width: 1200px;
+}
+
+.appointments-filter input,
+.appointments-filter select,
+.appointments-filter button {
+    padding: 0.6rem 1rem;
+    border-radius: 8px;
+    border: 1px solid #ccc;
+    font-size: 0.95rem;
+}
+
+.appointments-filter button {
+    background-color: #4EC5B4;
+    color: #fff;
+    cursor: pointer;
+    border: none;
+    transition: background 0.3s ease;
+}
+
+.appointments-filter button:hover {
+    background-color: #2a796f;
+}
+
+.appointments-filter {
+    display: flex;
+    gap: 1.5rem;
+    align-items: flex-end;
+    padding: 1rem 2rem;
+    background: #f9f9f9;
+    border-radius: 10px;
+    margin: 1rem auto;
+    max-width: 1200px;
+    flex-wrap: wrap;
+}
+
+.filter-item {
+    display: flex;
+    flex-direction: column;
+    gap: 0.4rem;
+}
+
+.filter-item label {
+    font-size: 0.9rem;
+    font-weight: 500;
+    color: #333;
+}
+
+.appointment-actions .edit-request {
+    margin-top: 1rem;
+    margin-right: 0.5rem;
+    display: inline-block;
+    background-color: rgb(225, 225, 0);
+    color: white;
+    padding: 0.5rem 1rem;
+    border-radius: 5px;
+    text-decoration: none;
+    margin-right: 0.5rem;
+    transition: background-color 0.7s ease;
+}
+
+.appointment-actions .delete-request {
+    margin-top: 1rem;
+    display: inline-block;
+    background-color: #ff4d4d;
+    color: white;
+    padding: 0.5rem 1rem;
+    border-radius: 5px;
+    text-decoration: none;
+    transition: background-color 0.7s ease;
+}
+
+@media(min-width: 1025px) {
+    .my-pets-item-info-back-link:hover {
+        background-color: #2a796f;
+
+    }
+
+    .appointment-actions .delete-request:hover {
+        background-color: #ba3838;
+    }
+
+    .appointment-actions .edit-request:hover {
+        background-color: rgb(190, 190, 0);
+    }
+
+    .appointment-card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 6px 16px rgba(0, 0, 0, 0.12);
+    }
+
+    .learn-more-btn:hover {
+        background-color: #2a796f;
+    }
+
+    .my-pets-request-appointment-btn:hover {
+        background-color: #2f8a58;
+    }
+}
+
+/* Appointments end */
 
 /* My Pets Start */
-
 .my-pets-h1 {
     animation: fadeInOpacity 1s;
     margin-top: 150px;
@@ -476,11 +723,12 @@
 
 .no-pets-h1 {
     animation: fadeInOpacity 1s;
-    margin-top: 50px;
+    margin-top: 100px;
+    margin-bottom: 100px;
     background-color: #4EC5B4;
     color: #fff;
     padding: 0.3em 1em;
-    border-radius: 1em;
+    border-radius: 0.5em;
 }
 
 .my-pets-add-pet-btn {
@@ -634,7 +882,7 @@
     padding: 0.5rem 1rem;
     border-radius: 5px;
     text-decoration: none;
-    margin-right: 0.5remx;
+    margin-right: 0.5rem;
     transition: background-color 0.7s ease;
 }
 
@@ -835,63 +1083,6 @@
 
 /* Add Pet End */
 
-/* Seperate Services Page Start */
-
-.service-content {
-    max-width: 600px;
-    animation: fadeInOpacity 1s;
-    text-align: center;
-    margin: 2rem auto;
-    background-color: #f9f9f9;
-    border-radius: 10px;
-    padding: 2rem;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-}
-
-.service-h1 {
-    animation: fadeInOpacity 1s;
-    margin-top: 150px;
-    background-color: #4EC5B4;
-    color: #fff;
-    padding: 0.3em 1em;
-    border-radius: 0.3em;
-}
-
-.service-content img {
-    width: 100%;
-    border-radius: 10px;
-    margin-bottom: 1.5rem;
-}
-
-.service-content h2 {
-    color: #4EC5B4;
-    margin-bottom: 1rem;
-}
-
-.service-content p {
-    margin-bottom: 1rem;
-}
-
-.back-link {
-    display: inline-block;
-    margin-top: 2rem;
-    background-color: #4EC5B4;
-    color: white;
-    padding: 0.5rem 1rem;
-    border-radius: 5px;
-    text-decoration: none;
-    transition: background-color 0.7s ease;
-}
-
-@media(min-width: 1025px) {
-    .back-link:hover {
-        background-color: #2a796f;
-        transition: 0.3s ease-in;
-    }
-}
-
-/* Seperate Services Page Start */
-
 /* Profile Page Start */
 
 .profile-card {
@@ -906,6 +1097,15 @@
     margin-bottom: 30px;
     text-align: center;
     position: relative;
+}
+
+.no-user-data {
+    animation: fadeInOpacity 1s;
+    margin-top: 150px;
+    background-color: #4EC5B4;
+    color: #fff;
+    padding: 0.3em 1em;
+    border-radius: 0.5em;
 }
 
 .h1-profile {

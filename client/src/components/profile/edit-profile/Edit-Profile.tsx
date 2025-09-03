@@ -152,7 +152,6 @@ const EditProfile: React.FC = () => {
             <h1 className="h1-profile">Edit Profile</h1>
 
             {userData ? (
-
                 <div className="profile-card">
                     <form onSubmit={onSubmit} noValidate>
                         {([

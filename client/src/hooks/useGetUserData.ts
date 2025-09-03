@@ -18,14 +18,8 @@ export const useGetUserData = () => {
             setLoading(true);
             setError(null);
             try {
-                if (decodedData.AccountId) {
-                    const response = await http.get<UserDataFromId>(`${baseUrl}/${decodedData.AccountId}`);
-                    setUserData(response || null);
-                } else if (decodedData.StaffId){
-                    const response = await http.get<UserDataFromId>(`${baseUrl}/${decodedData.StaffId}`);
-                    setUserData(response || null);
-                }
-
+                const response = await http.get<UserDataFromId>(`${baseUrl}/${decodedData.AccountId}`);
+                setUserData(response || null);
             } catch (err) {
                 setError("Failed to load user data, please try again later.");
                 setUserData(null);

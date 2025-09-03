@@ -30,6 +30,9 @@ const Footer: React.FC = () => {
                 {isSuccessful ? (
                     <>
                         <li>
+                            <NavLink to="/appointments">Appointments</NavLink>
+                        </li>
+                        <li>
                             <NavLink to="/my-pets">My Pets</NavLink>
                         </li>
                         <li>
