@@ -392,7 +392,6 @@ export type CreateAppointmentRequestError = Partial<Record<keyof CreateAppointme
 export interface CreateRequestAppointment {
     date: string, // or Date
     description: string,
-    staffId: string
 }
 
 export interface CreateRequestAppointmentResponse {
@@ -402,11 +401,18 @@ export interface CreateRequestAppointmentResponse {
 export interface UpdateAppointmentRequest {
     date: string;
     description: string;
-    staffId: string;
     id: string;
 }
 
 export interface UpdateAppointmentResponse {
+    message: number;
+}
+
+export interface DeleteAppointmentRequest {
+    id: number;
+}
+
+export interface DeleteAppointmentResponse {
     message: number;
 }
 
@@ -430,7 +436,6 @@ export interface GetAppointmentDetailsResponse {
 export interface CreateAppointmentRequest {
     date: string;
     description: string;
-    staffId: string;
 }
 
 export interface CreateAppointmentResponse {
@@ -448,6 +453,7 @@ export interface EditAppointmentRequest {
 export interface EditAppointmentResponse {
     message: number;
 }
+
 
 export interface CompleteAppointmentRequest {
     id: number;

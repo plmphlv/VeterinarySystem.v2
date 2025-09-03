@@ -206,8 +206,9 @@ const AppointmentsItem: React.FC = () => {
                                     <p>Status: {formatStatus(appointment.status)}</p>
                                     <p>Staff member name: {appointment.staffMemberName}</p>
                                     <div className="appointment-actions">
-                                        <Link to={`/appointments/update-appointment-request/${appointment.id}`} className="edit-request">Edit Request</Link>
-                                        <Link to={`/appointments/delete-appointment-request/${appointment.id}`} className="delete-request">Delete Request</Link>
+                                        <Link to={`/appointments/${appointment.id}/details`} className="more-details-btn">→ More Details</Link>
+                                        <Link to={`/appointments/${appointment.id}/edit-request`} className="edit-request">Edit Request</Link>
+                                        <Link to={`/appointments/${appointment.id}/delete-request`} className="delete-request">Delete Request</Link>
                                         {decodedData?.StaffId ? (
                                             <>
                                                 <Link to={`/appointments/${appointment.id}/complete`} className="complete-appointment">Complete Appointment</Link>

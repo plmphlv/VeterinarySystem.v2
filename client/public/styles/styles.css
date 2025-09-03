@@ -574,7 +574,7 @@
     margin-bottom: 1rem;
 }
 
-.learn-more-btn {
+.more-details-btn {
     display: inline-block;
     background-color: #4EC5B4;
     color: #fff;
@@ -582,9 +582,18 @@
     border: none;
     border-radius: 5px;
     text-decoration: none;
-    font-size: 0.9rem;
     transition: background-color 0.7s ease;
 }
+/* 
+    margin-right: 0.5rem;
+    display: inline-block;
+    background-color: rgb(225, 225, 0);
+    color: white;
+    padding: 0.5rem 1rem;
+    border-radius: 5px;
+    text-decoration: none;
+    margin-right: 0.5rem;
+    transition: background-color 0.7s ease; */
 
 .my-pets-request-appointment-btn {
     background-color: #48d889;
@@ -657,42 +666,14 @@
     color: #333;
 }
 
-.appointment-actions .edit-request {
-    margin-top: 1rem;
-    margin-right: 0.5rem;
-    display: inline-block;
-    background-color: rgb(225, 225, 0);
-    color: white;
-    padding: 0.5rem 1rem;
-    border-radius: 5px;
-    text-decoration: none;
-    margin-right: 0.5rem;
-    transition: background-color 0.7s ease;
-}
-
-.appointment-actions .delete-request {
-    margin-top: 1rem;
-    display: inline-block;
-    background-color: #ff4d4d;
-    color: white;
-    padding: 0.5rem 1rem;
-    border-radius: 5px;
-    text-decoration: none;
-    transition: background-color 0.7s ease;
-}
-
 @media(min-width: 1025px) {
+    .more-details-btn:hover {
+        background-color: #2a796f;
+    }
+
     .my-pets-item-info-back-link:hover {
         background-color: #2a796f;
 
-    }
-
-    .appointment-actions .delete-request:hover {
-        background-color: #ba3838;
-    }
-
-    .appointment-actions .edit-request:hover {
-        background-color: rgb(190, 190, 0);
     }
 
     .appointment-card:hover {
@@ -710,6 +691,43 @@
 }
 
 /* Appointments end */
+
+/* Appointments Details start */
+
+.appointment-actions .edit-request {
+    margin-right: 0.5rem;
+    display: inline-block;
+    background-color: rgb(225, 225, 0);
+    color: white;
+    padding: 0.5rem 1rem;
+    border-radius: 5px;
+    text-decoration: none;
+    margin-right: 0.5rem;
+    transition: background-color 0.7s ease;
+}
+
+.appointment-actions .delete-request {
+    display: inline-block;
+    background-color: #ff4d4d;
+    color: white;
+    padding: 0.5rem 1rem;
+    border-radius: 5px;
+    text-decoration: none;
+    transition: background-color 0.7s ease;
+}
+
+
+@media(min-width: 1025px) {
+    .appointment-actions .delete-request:hover {
+        background-color: #ba3838;
+    }
+
+    .appointment-actions .edit-request:hover {
+        background-color: rgb(190, 190, 0);
+    }
+}
+
+/* Appointments Details end */
 
 /* My Pets Start */
 .my-pets-h1 {

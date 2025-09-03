@@ -104,10 +104,10 @@ const MyPetItem: React.FC = () => {
                                     <i className="fa-solid fa-paw"></i> Animal type: {animal.animalType}
                                 </p>
                                 <Link
-                                    to={`/my-pets/${animal.id}/info`}
+                                    to={`/my-pets/${animal.id}/details`}
                                     className="my-pets-item-more-info-btn"
                                 >
-                                    → More Info
+                                    → More Details
                                 </Link>
                             </div>
                         </div>

@@ -1,7 +1,7 @@
 import { useEffect, useRef } from "react";
 import http from "../utils/request";
 import { getJwtDecodedData } from "../utils/getJwtDecodedData";
-import type { Appointment, CreateRequestAppointment, CreateRequestAppointmentResponse, GetAllAppointmentsRequest, GetOwnerAppointmentsRequest, UpdateAppointmentRequest, UpdateAppointmentResponse } from "../types";
+import type { Appointment, CreateRequestAppointment, CreateRequestAppointmentResponse, DeleteAppointmentRequest, GetAllAppointmentsRequest, GetOwnerAppointmentsRequest, UpdateAppointmentRequest, UpdateAppointmentResponse } from "../types";
 
 const baseUrl = `${import.meta.env.VITE_BASE_API_URL}/Appointments`;
 const decodedData = getJwtDecodedData();
@@ -81,4 +81,26 @@ export const useUpdateAppointmentRequest = () => {
     };
 
     return { updateAppointmentRequest, cancelUpdateAppointmentRequest: () => abortControllerRef.current?.abort() };
+};
+
+export const useDeleteAppointmentRequest = () => {
+    const abortControllerRef = useRef<AbortController | null>(null);
+
+    useEffect(() => {
+        return () => {
+            abortControllerRef.current?.abort();
+        };
+    }, []);
+
+    const deleteAppointmentRequest = async (data: DeleteAppointmentRequest) => {
+        abortControllerRef.current?.abort();
+        abortControllerRef.current = new AbortController();
+
+        return http.delete<DeleteAppointmentRequest>(
+            `${baseUrl}/Appointments/${data.id}`,
+            { signal: abortControllerRef.current.signal }
+        );
+    };
+
+    return { deleteAppointmentRequest, cancelDeleteAppointmentRequest: () => abortControllerRef.current?.abort() };
 };

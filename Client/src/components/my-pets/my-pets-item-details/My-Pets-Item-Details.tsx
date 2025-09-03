@@ -1,14 +1,14 @@
 import { Link, useParams } from "react-router";
-import { useGetAnimalDetails } from "../../api/animalsAPI";
-import type { Animal, GetAnimalDetailsErrors, GetAnimalDetailsResponse } from "../../types";
 import { useEffect, useState } from "react";
-import Spinner from "../spinner/Spinner";
-import Dialog from "../dialog/Dialog";
+import { useGetAnimalDetails } from "../../../api/animalsAPI";
+import type { GetAnimalDetailsErrors, GetAnimalDetailsResponse } from "../../../types";
+import Spinner from "../../spinner/Spinner";
+import Dialog from "../../dialog/Dialog";
 
-const MyPetsItemInfo: React.FC = () => {
+const MyPetsItemDetails: React.FC = () => {
     const { id } = useParams();
     const { getAnimalDetails, cancelGetAnimalDetails } = useGetAnimalDetails();
-    // const [errors, setErrors] = useState<GetAnimalDetailsErrors>({});
+    const [errors, setErrors] = useState<GetAnimalDetailsErrors>({});
 
     const [dialog, setDialog] = useState<{ message: string; type: "success" | "error" } | null>(null);
 
@@ -22,7 +22,7 @@ const MyPetsItemInfo: React.FC = () => {
 
         const fetchAnimalDetails = async () => {
             try {
-                // setErrors({});
+                setErrors({});
                 setLoading(true)
 
                 const animalDetails = await getAnimalDetails(Number(id));
@@ -31,7 +31,7 @@ const MyPetsItemInfo: React.FC = () => {
 
             } catch (err: any) {                
                 setDialog({ message: err.title || "An error occurred while fetching animal details.", type: "error" });
-                // setErrors(err);
+                setErrors(err);
                 return;
             } finally {
                 setLoading(false);
@@ -89,4 +89,4 @@ const MyPetsItemInfo: React.FC = () => {
     )
 }
 
-export default MyPetsItemInfo;
+export default MyPetsItemDetails;

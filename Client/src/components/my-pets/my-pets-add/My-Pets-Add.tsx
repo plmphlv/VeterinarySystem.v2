@@ -1,13 +1,14 @@
 import type React from "react";
-import Spinner from "../spinner/Spinner";
-import { Link, useNavigate } from "react-router";
-import Dialog from "../dialog/Dialog";
-import type { AddAnimalFieldErrors, AddAnimalRequest, AnimalType } from "../../types";
 import { useEffect, useState } from "react";
-import { useAddAnimal } from "../../api/animalsAPI";
-import { useGetUserData } from "../../hooks/useGetUserData";
-import { useForm } from "../../hooks/useForm";
-import { useGetAnimalTypes } from "../../api/animalTypesAPI";
+import type { AddAnimalFieldErrors, AddAnimalRequest, AnimalType } from "../../../types";
+import { useGetUserData } from "../../../hooks/useGetUserData";
+import { useGetAnimalTypes } from "../../../api/animalTypesAPI";
+import { useAddAnimal } from "../../../api/animalsAPI";
+import { Link, useNavigate } from "react-router";
+import Spinner from "../../spinner/Spinner";
+import Dialog from "../../dialog/Dialog";
+import { useForm } from "../../../hooks/useForm";
+
 
 const initialValues: AddAnimalRequest = {
     name: "",

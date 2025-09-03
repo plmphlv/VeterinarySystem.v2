@@ -59,16 +59,27 @@ const Login: React.FC = () => {
             if (!authData || !authData.hasOwnProperty('accessToken') || authData?.errorMessage || authData.isSuccessful === false) {
                 throw new Error(`${authData?.errorMessage}`) || new Error("Login failed.");
             }
-            
-            setDialog({ message: "Login successful!", type: "success" });
+
+            setDialog({ message: "Login is successful.", type: "success" });
             setTimeout(() => {
                 userLoginHandler(authData);
                 navigate('/');
             }, 500);
         } catch (err: any) {            
-            setDialog({ message: err.detail || "Login failed, please try again later.", type: "error" });
-            changeValues({ ...values, password: "" });
+            if (!err.status) {
+                setDialog({ message: "Invalid username or password.", type: "error" });
+                changeValues({ ...values, password: "" });
+                return;
+            }
 
+            if (err.errors.Password) {
+                setDialog({ message: err.errors.Password[0], type: "error" });
+                return;
+            }
+
+            setDialog({ message: err.detail || err.errorMessage || "Login failed, please try again later.", type: "error" });
+            changeValues({ ...values, password: "" });
+            return;
         } finally {
             setIsLoading(false);
         }

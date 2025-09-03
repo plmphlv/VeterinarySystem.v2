@@ -102,6 +102,7 @@ const Register: React.FC = () => {
         try {
             setErrors({});
             await register(values);
+
             const IdentifyingCredential = values.email;
             const password = values.password
             const authData = await login({ IdentifyingCredential, password });
@@ -110,23 +111,29 @@ const Register: React.FC = () => {
                 throw new Error(`${authData?.errorMessage}`);
             }
 
-            setDialog({ message: "Register successful!", type: "success" });
+            setDialog({ message: "Register is successful!", type: "success" });
             setTimeout(() => {
                 userLoginHandler(authData);
                 navigate('/');
             }, 500);
         } catch (err: any) {
-            if (!err.errors) {
-                setDialog({ message: "Registration failed, please try again later.", type: "error" });
-
-            } else {
+            if (err.status === 400) {
                 setDialog({ message: err.errors.RegisterCommand[0] || "Registration failed.", type: "error" });
+                changeValues({
+                    ...values,
+                    password: "",
+                    confirmPassword: ""
+                });
+                return;
+            } else if (err.status === 500){
+                setDialog({ message: "Registration failed, please try again later.", type: "error" });
+                changeValues({
+                    ...values,
+                    password: "",
+                    confirmPassword: ""
+                });
+                return;
             }
-            changeValues({
-                ...values,
-                password: "",
-                confirmPassword: ""
-            });
         } finally {
             setIsLoading(false);
         }

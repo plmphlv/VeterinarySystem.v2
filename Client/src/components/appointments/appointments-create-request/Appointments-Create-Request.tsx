@@ -1,17 +1,16 @@
 import type React from "react";
-import Spinner from "../spinner/Spinner";
+import Spinner from "../../spinner/Spinner";
 import { Link, useNavigate } from "react-router";
-import Dialog from "../dialog/Dialog";
-import type { CreateAppointmentRequest, CreateAppointmentRequestError } from "../../types";
+import Dialog from "../../dialog/Dialog";
+import type { CreateAppointmentRequest, CreateAppointmentRequestError } from "../../../types";
 import { useEffect, useState } from "react";
-import { useForm } from "../../hooks/useForm";
-import { useCreateRequestAppointment } from "../../api/userAppointmentsAPI";
-import { getJwtDecodedData } from "../../utils/getJwtDecodedData";
+import { useForm } from "../../../hooks/useForm";
+import { useCreateRequestAppointment } from "../../../api/userAppointmentsAPI";
+import { getJwtDecodedData } from "../../../utils/getJwtDecodedData";
 
 const initialValues: CreateAppointmentRequest = {
     date: "",
     description: "",
-    staffId: "",
 };
 
 const AppointmentsCreateRequest: React.FC = () => {
@@ -34,19 +33,19 @@ const AppointmentsCreateRequest: React.FC = () => {
 
                 const selectedDate = new Date(value);
                 const now = new Date();
-                if (selectedDate <= now) {
-                    return "Date must be in the future.";
+
+                const minDate = new Date();
+                minDate.setDate(now.getDate() + 1);
+
+                if (selectedDate < minDate) {
+                    return "Date must be at least one day in the future.";
                 }
                 return undefined;
 
             case "description":
                 if (!value) return "Description is required.";
-                if (value.trim().length < 10) return "Description must be at least 10 characters.";
-                return undefined;
-
-            case "staffId":
-                if (!value) return "Staff ID is required.";
-                if (value.trim().length !== 36) return "Staff ID must be 36 characters.";
+                // value.trim().length < 10
+                if (value.length < 10 || value.length > 255) return "Description must be between 10 and 255 characters.";
                 return undefined;
 
             default:
@@ -167,22 +166,6 @@ const AppointmentsCreateRequest: React.FC = () => {
                                 required
                             />
                             {errors.description && <p className="error-text">{errors.description}</p>}
-                        </div>
-
-                        <div className="my-pets-add-form-group">
-                            <label htmlFor="staffId">Staff ID:</label>
-                            <input
-                                type="text"
-                                id="staffId"
-                                name="staffId"
-                                value={values.staffId ?? ""}
-                                onChange={handleChange}
-                                className={inputClass("staffId")}
-                                placeholder="Enter staff ID"
-                                autoComplete="off"
-                                required
-                            />
-                            {errors.staffId && <p className="error-text">{errors.staffId}</p>}
                         </div>
 
                         <button type="submit" className="add-pet-btn" disabled={formLoading}>
