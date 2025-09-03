@@ -32,6 +32,7 @@ public static class ConfigureServices
         services.AddIdentityCore<User>(options =>
         {
             options.SignIn.RequireConfirmedAccount = true;
+            options.User.RequireUniqueEmail = true;
             options.Password.RequireDigit = true;
             options.Password.RequireLowercase = false;
             options.Password.RequireUppercase = false;
