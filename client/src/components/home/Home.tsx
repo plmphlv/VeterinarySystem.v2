@@ -1,11 +1,20 @@
-import React from "react";
+import React, { useState } from "react";
 import { Link } from "react-router";
 import { useGetUserData } from "../../hooks/useGetUserData";
+import Spinner from "../spinner/Spinner";
 
 const Home: React.FC = () => {
   const { userData, isLoading, error } = useGetUserData();
+  const [showError, setShowError] = useState(true);
+
   return (
     <>
+      {isLoading && (
+        <div className="spinner-overlay">
+          <Spinner />
+        </div>
+      )}
+
       <div className="home-container">
         <div className="home-content">
           {userData ? (

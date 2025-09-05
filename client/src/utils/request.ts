@@ -73,7 +73,7 @@ async function ensureValidAccessToken(): Promise<string | null> {
     const now = Math.floor(Date.now() / 1000);
     const timeLeft = decodedData.exp - now;
 
-    if (timeLeft >= 0 && timeLeft <= 300) {
+    if (timeLeft >= 0 && timeLeft <= 60) {
         return await refreshAccessToken();
     }
 
@@ -109,6 +109,12 @@ async function request<TData = unknown, TResult = unknown>({
 
     const response = await fetch(url, config);
 
+    if (response.status === 401) {
+        localStorage.removeItem("auth");
+        window.location.href = "/login";
+        return;
+    }
+
     if (!response.ok) {
         const errorObject = await response.json();
 
@@ -116,24 +122,19 @@ async function request<TData = unknown, TResult = unknown>({
             throw errorObject;
         }
 
-        if (response.status === 401) {
-            localStorage.removeItem("auth");
-            window.location.href = "/login";
-            return;
-        }
 
         // if (response.status === 500) {
         //     throw "Internal server error, please try again later!";
         // }
 
-        let message: string;
-        try {
-            const errorBody = await response.json();
-            message = errorBody?.message || JSON.stringify(errorBody);
-        } catch {
-            message = response.statusText || "Unknown error";
-        }
-        throw new Error(message || `HTTP error: ${response.status}`);
+        // let message: string;
+        // try {
+        //     const errorBody = await response.json();
+        //     message = errorBody?.message || JSON.stringify(errorBody);
+        // } catch {
+        //     message = response.statusText || "Unknown error";
+        // }
+        // throw new Error(message || `HTTP error: ${response.status}`);
     }
 
     const contentType = response.headers.get("Content-Type");

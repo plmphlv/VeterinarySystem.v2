@@ -9,7 +9,7 @@ public class Appointment : AuditableEntity
 
 	public DateTime Date { get; set; }
 
-	public string? Desctiption { get; set; }
+	public string? Description { get; set; }
 
 	public AppointmentStatus Status { get; set; }
 

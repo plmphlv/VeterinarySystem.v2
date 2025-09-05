@@ -16,8 +16,10 @@ import DentalCare from "./components/services/dental-care/Dental-Care";
 import EmegencyServices from "./components/services/emergency-services/Emergency-Services";
 import PetNutritionCounseling from "./components/services/pet-nutrition-counseling/Pet-Nutrition-Counseling";
 import Appointments from "./components/appointments/Appointments";
+import AppointmentsItemDetails from "./components/appointments/appointments-item-details/Appointments-Item-Details";
 import AppointmentsCreateRequest from "./components/appointments/appointments-create-request/Appointments-Create-Request";
-import AppointmentsDelete from "./components/appointments/appointments-delete/Appointments-Delete";
+import AppointmentsUpdateRequest from "./components/appointments/appointments-update-request/Appointments-Update-Request";
+import AppointmentsDeleteRequest from "./components/appointments/appointments-delete-request/Appointments-Delete-Request";
 import MyPets from "./components/my-pets/My-Pets";
 import MyPetsItemDetails from "./components/my-pets/my-pets-item-details/My-Pets-Item-Details";
 import MyPetsAdd from "./components/my-pets/my-pets-add/My-Pets-Add";
@@ -51,8 +53,10 @@ function App() {
 
         <Route element={<AuthGuard />}>
           <Route path="/appointments" element={<Appointments />}></Route>
+          <Route path="/appointments/:id/details" element={<AppointmentsItemDetails />}></Route>
           <Route path="/appointments/request-appointment" element={<AppointmentsCreateRequest />}></Route>
-          <Route path="/appointments/:id/delete" element={<AppointmentsDelete/>}></Route>
+          <Route path="/appointments/:id/update-request" element={<AppointmentsUpdateRequest />}></Route>
+          <Route path="/appointments/:id/delete-request" element={<AppointmentsDeleteRequest />}></Route>
           <Route path="/my-pets" element={<MyPets />}></Route>
           <Route path="/my-pets/:id/details" element={<MyPetsItemDetails />}></Route>
           <Route path="/my-pets/add" element={<MyPetsAdd />}></Route>

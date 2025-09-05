@@ -361,6 +361,20 @@ export interface DeleteOwnerAccountResponse {
 
 // User Appointments types start:
 
+export interface GetAppointmentDetailsRequest {
+    id: number;
+}
+
+export interface GetAppointmentDetailsResponse {
+    id: number;
+    appointmentStatus: string;
+    date: string;
+    animalOwnerName: string;
+    staffMemberId: string;
+    staffMemberName: string;
+    description: string;
+}
+
 export type AppointmentStatus = "Pending_Review" | "Confirmed" | "Completed" | "Cancelled" | "Missed";
 
 export interface Appointment {
@@ -387,7 +401,9 @@ export interface GetAllAppointmentsRequest {
 }
 
 export type GetAllAppointmentsErrors = Partial<Record<keyof GetAllAppointmentsRequest, string>>;
+export type GetAppointmentDetailsErrors = Partial<Record<keyof GetAppointmentDetailsRequest, string>>;
 export type CreateAppointmentRequestError = Partial<Record<keyof CreateAppointmentRequest, string>>;
+export type UpdateAppointmentRequestFieldErrors = Partial<Record<keyof UpdateAppointmentRequest, string>>;
 
 export interface CreateRequestAppointment {
     date: string, // or Date
@@ -401,7 +417,7 @@ export interface CreateRequestAppointmentResponse {
 export interface UpdateAppointmentRequest {
     date: string;
     description: string;
-    id: string;
+    id: number;
 }
 
 export interface UpdateAppointmentResponse {
@@ -419,19 +435,6 @@ export interface DeleteAppointmentResponse {
 // User Appointments types end
 
 // Staff Appointments types start:
-
-export interface GetAppointmentDetailsRequest {
-    id: number;
-}
-
-export interface GetAppointmentDetailsResponse {
-    id: number;
-    appointmentStatus: string;
-    date: string;
-    animalOwnerName: string;
-    staffMemberName: string;
-    desctiption: string;
-}
 
 export interface CreateAppointmentRequest {
     date: string;

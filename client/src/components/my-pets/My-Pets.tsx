@@ -11,18 +11,20 @@ const MyPets: React.FC = () => {
 
     return (
         <>
-            <h1 className="my-pets-h1">My Pets:</h1>
-
             {error && showError ? (
                 <Dialog
                     message={error}
                     type="error"
                     onClose={() => setShowError(false)}
                 />
-            ) : <MyPetItem />
-            }
+            ) : (
+                <>
+                    <h1 className="my-pets-h1">My Pets:</h1>
+                    <MyPetItem />
+                    <Link to="/my-pets/add" className="my-pets-add-pet-btn">+ Add New Pet</Link>
+                </>
+            )}
 
-            <Link to="/my-pets/add" className="my-pets-add-pet-btn">+ Add New Pet</Link>
         </>
     )
 }

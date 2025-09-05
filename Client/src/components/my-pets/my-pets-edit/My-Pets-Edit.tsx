@@ -117,14 +117,14 @@ const MyPetsEdit: React.FC = () => {
                 age: values.age == null ? null : values.age,
                 passportNumber: values.passportNumber?.trim() === "" ? null : values.passportNumber,
                 chipNumber: values.chipNumber?.trim() === "" ? null : values.chipNumber,
-            };            
+            };
 
             await editAnimal(payload);
 
-            setDialog({ message: "Pet updated successfully!", type: "success" });
+            setDialog({ message: "Pet edited successfully!", type: "success" });
             setTimeout(() => navigate(`/my-pets/${id}/info`), 1000);
         } catch (err) {
-            setDialog({ message: "Updating pet failed.", type: "error" });
+            setDialog({ message: "Editing pet failed.", type: "error" });
         } finally {
             setFormLoading(false);
         }
@@ -327,15 +327,15 @@ const MyPetsEdit: React.FC = () => {
                         <Link to={`/my-pets/${id}/info`} className="cancel-btn">Cancel</Link>
                     </form>
                 </div>
-
-                {dialog && (
-                    <Dialog
-                        message={dialog.message}
-                        type={dialog.type}
-                        onClose={() => setDialog(null)}
-                    />
-                )}
             </section>
+
+            {dialog && (
+                <Dialog
+                    message={dialog.message}
+                    type={dialog.type}
+                    onClose={() => setDialog(null)}
+                />
+            )}
         </>
     );
 };

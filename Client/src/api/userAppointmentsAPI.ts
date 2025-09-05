@@ -1,7 +1,7 @@
 import { useEffect, useRef } from "react";
 import http from "../utils/request";
 import { getJwtDecodedData } from "../utils/getJwtDecodedData";
-import type { Appointment, CreateRequestAppointment, CreateRequestAppointmentResponse, DeleteAppointmentRequest, GetAllAppointmentsRequest, GetOwnerAppointmentsRequest, UpdateAppointmentRequest, UpdateAppointmentResponse } from "../types";
+import type { Appointment, CreateRequestAppointment, CreateRequestAppointmentResponse, DeleteAppointmentRequest, DeleteAppointmentResponse, GetAllAppointmentsRequest, GetAppointmentDetailsRequest, GetAppointmentDetailsResponse, GetOwnerAppointmentsRequest, UpdateAppointmentRequest, UpdateAppointmentResponse } from "../types";
 
 const baseUrl = `${import.meta.env.VITE_BASE_API_URL}/Appointments`;
 const decodedData = getJwtDecodedData();
@@ -16,7 +16,6 @@ export const useGetAllAppointments = () => {
     }, []);
 
     const getAllAppointments = async (data: GetOwnerAppointmentsRequest | GetAllAppointmentsRequest) => {
-        abortControllerRef.current?.abort();
         abortControllerRef.current = new AbortController();
 
         const queryParams = new URLSearchParams();
@@ -36,6 +35,27 @@ export const useGetAllAppointments = () => {
     return { getAllAppointments, cancelGetAllAppointments: () => abortControllerRef.current?.abort() };
 };
 
+export const useGetAppointmentDetails = () => {
+    const abortControllerRef = useRef<AbortController | null>(null);
+
+    useEffect(() => {
+        return () => {
+            abortControllerRef.current?.abort();
+        };
+    }, []);
+
+    const getAppointmentDetails = async (data: GetAppointmentDetailsRequest) => {
+        abortControllerRef.current?.abort();
+        abortControllerRef.current = new AbortController();
+
+        return http.get<GetAppointmentDetailsResponse>(
+            `${baseUrl}/${data.id}`,
+            { signal: abortControllerRef.current.signal }
+        );
+    };
+
+    return { getAppointmentDetails, cancelGetAppointmentDetails: () => abortControllerRef.current?.abort() };
+};
 
 export const useCreateRequestAppointment = () => {
     const abortControllerRef = useRef<AbortController | null>(null);
@@ -96,8 +116,8 @@ export const useDeleteAppointmentRequest = () => {
         abortControllerRef.current?.abort();
         abortControllerRef.current = new AbortController();
 
-        return http.delete<DeleteAppointmentRequest>(
-            `${baseUrl}/Appointments/${data.id}`,
+        return http.delete<DeleteAppointmentResponse>(
+            `${baseUrl}/${data.id}`,
             { signal: abortControllerRef.current.signal }
         );
     };

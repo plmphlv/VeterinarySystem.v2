@@ -8,11 +8,11 @@ import { useGetOwnerAccountDetails } from "../../../api/ownerAccountsAPI";
 import { useGetAllAnimals } from "../../../api/animalsAPI";
 
 const MyPetItem: React.FC = () => {
-    const { userData, isLoading, error } = useGetUserData();
     const { getAllAnimals, cancelGetAllAnimals } = useGetAllAnimals();
     const { getOwnerAccountDetails, cancelGetOwnerAccountDetails } = useGetOwnerAccountDetails();
     const [errors, setErrors] = useState<GetAllAnimalsErrors>({});
 
+    const { userData, isLoading, error } = useGetUserData();
     const [showError, setShowError] = useState(true);
 
 
@@ -36,7 +36,7 @@ const MyPetItem: React.FC = () => {
                 if (!ownerAccountData) {
                     return;
                 }
-
+                
                 const ownerId = ownerAccountData?.id;
                 const animals = await getAllAnimals({ ownerId });
 
@@ -88,10 +88,6 @@ const MyPetItem: React.FC = () => {
                     type="error"
                     onClose={() => setShowError(false)}
                 />
-            )}
-
-            {!userData && (
-                <h1 className="no-pets-h1">No user data found, please try again later.</h1>
             )}
 
             {animals.length > 0 ? (

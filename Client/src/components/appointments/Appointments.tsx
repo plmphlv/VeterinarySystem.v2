@@ -1,10 +1,12 @@
 import { Link } from "react-router";
 import { useGetUserData } from "../../hooks/useGetUserData";
 import AppointmentsItem from "./appointments-item/Appointments-Item";
+import Dialog from "../dialog/Dialog";
+import { useState } from "react";
 
 const Appointments: React.FC = () => {
-
     const { userData, error } = useGetUserData();
+    const [showError, setShowError] = useState(true);
 
     if (!userData) {
         return;
@@ -12,10 +14,19 @@ const Appointments: React.FC = () => {
 
     return (
         <>
-            <h1 className="appointments-h1">My Appointment Requests:</h1>
-            <AppointmentsItem />
-            <Link to="/appointments/request-appointment" className="my-pets-request-appointment-btn">Request New Appointment</Link>
-
+            {error && showError ? (
+                <Dialog
+                    message={error}
+                    type="error"
+                    onClose={() => setShowError(false)}
+                />
+            ) : (
+                <>
+                    <h1 className="appointments-h1">My Appointment Requests:</h1>
+                    <AppointmentsItem />
+                    <Link to="/appointments/request-appointment" className="my-pets-request-appointment-btn">Request New Appointment</Link>
+                </>
+            )}
         </>
     )
 }

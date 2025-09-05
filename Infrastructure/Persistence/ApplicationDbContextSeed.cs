@@ -288,7 +288,7 @@ public static class ApplicationDbContextSeed
             Appointment appointment1 = new Appointment
             {
                 Date = DateTime.Parse("2025-02-12T14:20"),
-                Desctiption = "Leukemia vaccination for adult cat",
+                Description = "Leukemia vaccination for adult cat",
                 StaffId = staff.Id,
                 Status = AppointmentStatus.Pending_Review,
                 AnimalOwnerId = ownerAccount.Id
@@ -297,7 +297,7 @@ public static class ApplicationDbContextSeed
             Appointment appointment2 = new Appointment
             {
                 Date = DateTime.Parse("2025-02-21T11:00:00"),
-                Desctiption = "General checkup on dog",
+                Description = "General checkup on dog",
                 StaffId = staff.Id,
                 Status = AppointmentStatus.Confirmed,
                 AnimalOwnerId = ownerAccount.Id

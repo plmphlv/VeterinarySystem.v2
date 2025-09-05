@@ -19,7 +19,6 @@
 
 /* Fade Animation End */
 
-
 /* NavBar Start */
 .header {
     position: fixed;
@@ -488,6 +487,7 @@
 }
 
 .learn-more-btn {
+    margin-top: 0.5rem;
     display: inline-block;
     background-color: #4EC5B4;
     color: #fff;
@@ -495,7 +495,6 @@
     border: none;
     border-radius: 5px;
     text-decoration: none;
-    font-size: 0.9rem;
     transition: background-color 0.7s ease;
 }
 
@@ -519,7 +518,7 @@
     grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
     gap: 2rem;
     padding: 2rem;
-    max-width: 1200px;
+    max-width: 500px;
     width: 100%;
 }
 
@@ -529,6 +528,7 @@
     background-color: #4EC5B4;
     color: #fff;
     padding: 0.3em 1em;
+    text-align: center;
     border-radius: 1em;
 }
 
@@ -571,10 +571,11 @@
 
 .appointment-card p {
     font-size: 0.95rem;
-    margin-bottom: 1rem;
+    margin-bottom: 0.5rem;
 }
 
 .more-details-btn {
+    margin-top: 0.5rem;
     display: inline-block;
     background-color: #4EC5B4;
     color: #fff;
@@ -584,16 +585,6 @@
     text-decoration: none;
     transition: background-color 0.7s ease;
 }
-/* 
-    margin-right: 0.5rem;
-    display: inline-block;
-    background-color: rgb(225, 225, 0);
-    color: white;
-    padding: 0.5rem 1rem;
-    border-radius: 5px;
-    text-decoration: none;
-    margin-right: 0.5rem;
-    transition: background-color 0.7s ease; */
 
 .my-pets-request-appointment-btn {
     background-color: #48d889;
@@ -611,6 +602,7 @@
 }
 
 .appointments-filter {
+    justify-content: center;
     display: flex;
     gap: 1rem;
     align-items: center;
@@ -666,14 +658,31 @@
     color: #333;
 }
 
-@media(min-width: 1025px) {
+.filter-actions {
+    display: flex;
+    gap: 10px;
+    flex-direction: row;
+}
+
+@media(max-width: 1024px) {
+        .appointments-filter {
+        flex-direction: column;
+        align-items: stretch;
+        text-align: center;
+    }
+
+    .filter-actions {
+        justify-content: center;
+    }
+}
+
+@media (hover: hover) and (pointer: fine) {
     .more-details-btn:hover {
         background-color: #2a796f;
     }
 
     .my-pets-item-info-back-link:hover {
         background-color: #2a796f;
-
     }
 
     .appointment-card:hover {
@@ -693,9 +702,11 @@
 /* Appointments end */
 
 /* Appointments Details start */
+.appointment-actions {
+    margin-top: 0.5rem;
+}
 
 .appointment-actions .edit-request {
-    margin-right: 0.5rem;
     display: inline-block;
     background-color: rgb(225, 225, 0);
     color: white;
@@ -718,12 +729,12 @@
 
 
 @media(min-width: 1025px) {
-    .appointment-actions .delete-request:hover {
-        background-color: #ba3838;
-    }
-
     .appointment-actions .edit-request:hover {
         background-color: rgb(190, 190, 0);
+    }
+
+    .appointment-actions .delete-request:hover {
+        background-color: #ba3838;
     }
 }
 
@@ -773,14 +784,13 @@
 /* My Pets End */
 
 /* My Pets Item Start */
-
 .my-pets-item-section {
     animation: fadeInOpacity 1s;
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
     gap: 2rem;
     padding: 2rem;
-    max-width: 1200px;
+    max-width: 400px;
     width: 100%;
 }
 
@@ -817,7 +827,7 @@
 }
 
 .my-pets-item-more-info-btn {
-    margin-top: 1rem;
+    margin-top: 0.5rem;
     display: inline-block;
     background-color: #4EC5B4;
     color: #fff;
@@ -825,7 +835,6 @@
     border: none;
     border-radius: 5px;
     text-decoration: none;
-    font-size: 0.9rem;
     transition: background-color 0.7s ease;
 }
 
@@ -838,11 +847,9 @@
         background-color: #2a796f;
     }
 }
-
 /* My Pets Item End */
 
-/* My Pet Info Start */
-
+/* My Pet Item Info Start */
 .my-pets-item-info-content {
     margin: 150px 0 2rem 0;
     max-width: 400px;
@@ -930,7 +937,7 @@
     }
 }
 
-/* My Pet Info End */
+/* My Pet Item Info End */
 
 /* Add Pet Start*/
 

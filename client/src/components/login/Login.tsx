@@ -65,14 +65,14 @@ const Login: React.FC = () => {
                 userLoginHandler(authData);
                 navigate('/');
             }, 500);
-        } catch (err: any) {            
+        } catch (err: any) {                        
             if (!err.status) {
                 setDialog({ message: "Invalid username or password.", type: "error" });
                 changeValues({ ...values, password: "" });
                 return;
             }
 
-            if (err.errors.Password) {
+            if (err.errors?.Password) {
                 setDialog({ message: err.errors.Password[0], type: "error" });
                 return;
             }

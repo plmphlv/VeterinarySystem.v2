@@ -2,12 +2,12 @@ import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router";
 import Spinner from "../../spinner/Spinner";
 import Dialog from "../../dialog/Dialog";
-import { useDeleteAppointment } from "../../../api/staffAppointmentsAPI";
+import { useDeleteAppointmentRequest } from "../../../api/userAppointmentsAPI";
 
-const AppointmentsDelete: React.FC = () => {
+const AppointmentsDeleteRequest: React.FC = () => {
     const { id } = useParams();
     const navigate = useNavigate();
-    const { deleteAppointment, cancelDeleteAppointment } = useDeleteAppointment();
+    const { deleteAppointmentRequest, cancelDeleteAppointmentRequest } = useDeleteAppointmentRequest();
     const [isLoading, setLoading] = useState(false);
     const [dialog, setDialog] = useState<{ message: string; type: "success" | "error" } | null>(null);
 
@@ -18,18 +18,18 @@ const AppointmentsDelete: React.FC = () => {
         }
 
         const doDelete = async () => {
-            const confirmed = window.confirm("Are you sure you want to delete this appointment?");
+            const confirmed = window.confirm("Are you sure you want to delete this appointment request?");
             if (!confirmed) {
-                navigate(`/appointments/${id}/info`);
+                navigate(`/appointments/${id}/details`);
                 return;
             }
 
             try {
                 setLoading(true);
-                await deleteAppointment({ id: Number(id) });
-                setDialog({ message: "Appointment deleted successfully.", type: "success" });
+                await deleteAppointmentRequest({ id: Number(id) });
+                setDialog({ message: "Appointment request deleted successfully.", type: "success" });
             } catch (err) {
-                setDialog({ message: "Failed to delete appointment.", type: "error" });
+                setDialog({ message: "Failed to delete appointment request.", type: "error" });
             } finally {
                 setLoading(false);
                 navigate(`/appointments`);
@@ -41,7 +41,7 @@ const AppointmentsDelete: React.FC = () => {
 
     useEffect(() => {
         return () => {
-            cancelDeleteAppointment();
+            cancelDeleteAppointmentRequest();
         };
     }, []);
 
@@ -64,4 +64,4 @@ const AppointmentsDelete: React.FC = () => {
     );
 };
 
-export default AppointmentsDelete;
+export default AppointmentsDeleteRequest;
