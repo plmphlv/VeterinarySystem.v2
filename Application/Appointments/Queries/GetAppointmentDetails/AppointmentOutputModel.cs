@@ -14,5 +14,5 @@ public class AppointmentOutputModel
 
     public string StaffMemberName { get; set; } = null!;
 
-    public string? Desctiption { get; set; }
+    public string? Description { get; set; }
 }

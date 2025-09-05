@@ -57,7 +57,7 @@ public class CreateAppointmentCommandHadler : IRequestHandler<CreateAppointmentC
         Appointment appointment = new Appointment
         {
             Date = request.Date,
-            Desctiption = request.Description,
+            Description = request.Description,
             Status = AppointmentStatus.Confirmed,
             AnimalOwnerId = ownerId,
             StaffId = staffMemberId,

@@ -67,7 +67,7 @@ public class UpdateAppointmentCommandHandler : IRequestHandler<UpdateAppointment
             appointment.StaffId = request.StaffId;
         }
 
-        appointment.Desctiption = request.Description;
+        appointment.Description = request.Description;
         appointment.Status = request.Status;
 
         await context.SaveChangesAsync(cancellationToken);

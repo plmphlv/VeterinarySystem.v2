@@ -32,7 +32,7 @@ public class RequestAppointmentCommandHandler : IRequestHandler<RequestAppointme
         Appointment appointment = new Appointment
         {
             Date = request.Date,
-            Desctiption = request.Description,
+            Description = request.Description,
             Status = AppointmentStatus.Pending_Review,
             AnimalOwnerId = ownerId!
         };

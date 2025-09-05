@@ -28,6 +28,6 @@ public class CreateAppointmentCommandValidator : AbstractValidator<CreateAppoint
         RuleFor(c => c.Description)
           .MaximumLength(255)
           .When(c => !string.IsNullOrEmpty(c.Description))
-          .WithMessage("Desctiption cannot be longer than 255 characters.");
+          .WithMessage("Description cannot be longer than 255 characters.");
     }
 }

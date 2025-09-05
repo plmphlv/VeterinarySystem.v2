@@ -36,7 +36,7 @@ public class GetAppointmentDetailsQueryHandler : IRequestHandler<GetAppointmentD
                 AnimalOwnerName = $"{ap.Owner.FirstName} {ap.Owner.LastName}",
                 StaffMemberId = staffExists ? ap.StaffId : null,
                 StaffMemberName = ap.StaffAccount != null ? $"{ap.StaffAccount.Account.FirstName} {ap.StaffAccount.Account.LastName}" : "Staff memder has not been assigned",
-                Desctiption = ap.Desctiption
+                Description = ap.Description
             })
             .FirstOrDefaultAsync(cancellationToken);
 
