@@ -4,10 +4,10 @@ import { Link } from "react-router";
 const PetNutritionCounseling: React.FC = () => {
     return (
         <>
-            <h1 className="service-h1">Pet Nutrition Counseling</h1>
-
-            <div className="service-content">
-                <img src="/images/pet-nutrition-counseling.png" alt="Pet Nutrition Counseling"/>
+            <div className="service">
+                <div className="service-content">
+                    <h1 className="service-h1">Pet Nutrition Counseling</h1>
+                    <img src="/images/pet-nutrition-counseling.png" alt="Pet Nutrition Counseling" />
 
                     <h2>Personalized Nutrition for Your Pet</h2>
                     <p>Proper nutrition is the foundation of your pet’s health. Our nutrition counseling services help you choose
@@ -27,6 +27,7 @@ const PetNutritionCounseling: React.FC = () => {
                     </ul>
 
                     <Link to="/services" className="back-link">← Back to Services</Link>
+                </div>
             </div>
         </>
     )

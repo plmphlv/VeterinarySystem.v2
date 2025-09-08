@@ -66,37 +66,35 @@ const EditProfile: React.FC = () => {
     };
 
     const editProfileHandler = async (values: EditProfileRequest) => {
-    const validationErrors = validate(values);
-    if (Object.keys(validationErrors).length > 0) {
-        setErrors(validationErrors);
-        return;
-    }
-
-    setIsLoading(true);
-    try {
-        setErrors({});
-        if (!userData) {
-            return setDialog({ message: "No user data found.", type: "error" });
+        const validationErrors = validate(values);
+        if (Object.keys(validationErrors).length > 0) {
+            setErrors(validationErrors);
+            return;
         }
 
-        const payload: EditProfileRequest = {
-            ...values,
-            id: userData.id,
-            address: values.address?.trim() === "" ? null : values.address
-        };
+        setIsLoading(true);
+        try {
+            setErrors({});
+            if (!userData) {
+                return setDialog({ message: "No user data found.", type: "error" });
+            }
 
-        await editProfile(payload);
+            const payload: EditProfileRequest = {
+                ...values,
+                id: userData.id,
+                address: values.address?.trim() === "" ? null : values.address
+            };
 
-        setDialog({ message: "Edit is successful!", type: "success" });
-        setTimeout(() => {
-            navigate('/profile');
-        }, 500);
-    } catch (err: any) {
-        setDialog({ message: err.detail || "Edit failed.", type: "error" });
-    } finally {
-        setIsLoading(false);
-    }
-};
+            await editProfile(payload);
+
+            setDialog({ message: "Profile edit is successful!", type: "success" });
+        } catch (err: any) {
+            setDialog({ message: err.detail || "Edit failed.", type: "error" });
+        } finally {
+            setIsLoading(false);
+            setTimeout(() => navigate(`/profile`), 1500);
+        }
+    };
 
     const { values, changeHandler, onSubmit, changeValues } = useForm(initialValues, editProfileHandler);
 
@@ -152,41 +150,47 @@ const EditProfile: React.FC = () => {
             <h1 className="h1-profile">Edit Profile</h1>
 
             {userData ? (
-                <div className="profile-card">
-                    <form onSubmit={onSubmit} noValidate>
-                        {([
-                            { name: "firstName", label: "First Name", type: "text", icon: "fa-pen", placeholder: "Enter your first name" },
-                            { name: "lastName", label: "Last Name", type: "text", icon: "fa-pen", placeholder: "Enter your last name" },
-                            { name: "phoneNumber", label: "Phone Number", type: "tel", icon: "fa-phone", placeholder: "+359 88 812 3456 / 0888123456" },
-                            { name: "address", label: "Address", type: "text", icon: "fa-solid fa-map-marker-alt", placeholder: "Enter your address (optional)" },
-                        ] as const).map(({ name, label, type, icon, placeholder }) => (
-                            <div className="field-edit-profile" key={name}>
-                                <label htmlFor={name}>
-                                    <i className={`fa-solid ${icon}`}></i> {label}:
-                                </label>
-                                <input
-                                    type={type}
-                                    id={name}
-                                    name={name}
-                                    value={values[name] ?? ""}
-                                    onChange={handleChange}
-                                    className={inputClass(name)}
-                                    placeholder={placeholder}
-                                    autoComplete="off"
-                                    required={name !== "address"}
-                                />
-                                {errors[name] && <p className="error-text">{errors[name]}</p>}
+                <div className="profile">
+                    <div className="profile-card">
+                        <form onSubmit={onSubmit} noValidate>
+                            {([
+                                { name: "firstName", label: "First Name", type: "text", icon: "fa-pen", placeholder: "Enter your new first name" },
+                                { name: "lastName", label: "Last Name", type: "text", icon: "fa-pen", placeholder: "Enter your new last name" },
+                                { name: "phoneNumber", label: "Phone Number", type: "tel", icon: "fa-phone", placeholder: "Enter your new phone number" },
+                                { name: "address", label: "Address (Optional)", type: "text", icon: "fa-solid fa-map-marker-alt", placeholder: "Enter your address" },
+                            ] as const).map(({ name, label, type, icon, placeholder }) => (
+                                <div className="field-edit-profile" key={name}>
+                                    <label htmlFor={name}>
+                                        <i className={`fa-solid ${icon}`}></i> {label}:
+                                    </label>
+                                    <input
+                                        type={type}
+                                        id={name}
+                                        name={name}
+                                        value={values[name] ?? ""}
+                                        onChange={handleChange}
+                                        className={inputClass(name)}
+                                        placeholder={placeholder}
+                                        autoComplete="off"
+                                        required={name !== "address"}
+                                    />
+                                    {errors[name] && <p className="error-text">{errors[name]}</p>}
+                                </div>
+                            ))}
+
+                            <div className="profile-buttons">
+
+
+                                <button className="edit-button" type="submit" disabled={isLoading}>
+                                    Save
+                                </button>
+
+                                <Link to="/profile" className="edit-button">Cancel</Link>
                             </div>
-                        ))}
 
-                        <button className="edit-button" type="submit" disabled={isLoading}>
-                            Save
-                        </button>
-
-                        <Link to="/profile" className="edit-button">Cancel</Link>
-
-                        {dialog && <div className={`dialog ${dialog.type}`}>{dialog.message}</div>}
-                    </form>
+                            {dialog && <div className={`dialog ${dialog.type}`}>{dialog.message}</div>}
+                        </form>
+                    </div>
                 </div>
             ) : !isLoading && !error ? (
                 <p>No user data found.</p>

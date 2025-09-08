@@ -5,10 +5,10 @@ import { Link } from "react-router";
 const GeneralCheckup: React.FC = () => {
     return (
         <>
-            <h1 className="service-h1">General Check-up</h1>
-
-            <div className="service-content">
-                <img src="/images/general-check-up.png" alt="General Check-up" />
+            <div className="service">
+                <div className="service-content">
+                    <h1 className="service-h1">General Check-up</h1>
+                    <img src="/images/general-check-up.png" alt="General Check-up" />
 
                     <h2>What is a General Check-up?</h2>
                     <p>A General Check-up is a routine health examination for your pet to ensure they are happy, healthy, and
@@ -29,6 +29,7 @@ const GeneralCheckup: React.FC = () => {
                     </ul>
 
                     <Link to="/services" className="back-link">← Back to Services</Link>
+                </div>
             </div>
         </>
     )

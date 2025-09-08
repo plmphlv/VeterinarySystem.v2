@@ -4,10 +4,10 @@ import { Link } from "react-router";
 const Surgery: React.FC = () => {
     return (
         <>
-            <h1 className="service-h1">Surgery</h1>
-
-            <div className="service-content">
-                <img src="/images/surgery.png" alt="Surgery" />
+            <div className="service">
+                <div className="service-content">
+                    <h1 className="service-h1">Surgery</h1>
+                    <img src="/images/surgery.png" alt="Surgery" />
                     <h2>Expert Veterinary Surgery</h2>
                     <p>Our state-of-the-art surgical suite allows us to perform a wide range of soft tissue and orthopedic
                         procedures with safety and compassion.</p>
@@ -21,6 +21,7 @@ const Surgery: React.FC = () => {
                         <li>Detailed post-op instructions and support.</li>
                     </ul>
                     <Link to="/services" className="back-link">← Back to Services</Link>
+                </div>
             </div>
         </>
     )

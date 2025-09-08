@@ -29,7 +29,12 @@ export const formatDate = (isoDate: string) => {
 
 export const formatTime = (isoDate: string) => {
     const date = new Date(isoDate);
-    const hours = date.getHours().toString().padStart(2, "0");
+    let hours = date.getHours();
     const minutes = date.getMinutes().toString().padStart(2, "0");
-    return `${hours}:${minutes}h`;
+
+    const ampm = hours >= 12 ? "PM" : "AM";
+    hours = hours % 12 || 12;
+    const formattedHours = hours.toString().padStart(2, "0");
+
+    return `${formattedHours}:${minutes} ${ampm}`;
 };

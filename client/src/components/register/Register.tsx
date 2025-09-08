@@ -183,7 +183,7 @@ const Register: React.FC = () => {
                             { name: "email", label: "Email Address", type: "email", icon: "fa-envelope", placeholder: "Enter your email" },
                             { name: "firstName", label: "First Name", type: "text", icon: "fa-pen", placeholder: "Enter your first name" },
                             { name: "lastName", label: "Last Name", type: "text", icon: "fa-pen", placeholder: "Enter your last name" },
-                            { name: "phoneNumber", label: "Phone Number", type: "tel", icon: "fa-phone", placeholder: "+359 88 812 3456 / 0888123456" },
+                            { name: "phoneNumber", label: "Phone Number", type: "tel", icon: "fa-phone", placeholder: "Enter your phone number" },
                             { name: "password", label: "Password", type: "password", icon: "fa-key", placeholder: "Create a password" },
                             { name: "confirmPassword", label: "Confirm Password", type: "password", icon: "fa-key", placeholder: "Confirm your password" },
                         ] as const).map(({ name, label, type, icon, placeholder }) => (

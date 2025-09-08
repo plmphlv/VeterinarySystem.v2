@@ -84,7 +84,7 @@ const AppointmentsUpdateRequest: React.FC = () => {
             await updateAppointmentRequest(payload);
 
             setDialog({ message: "Appointment request updated successfully!", type: "success" });
-            setTimeout(() => navigate(`/appointments/${id}/details`), 1000);
+            setTimeout(() => navigate(`/appointments/${id}/details`), 1500);
         } catch (err) {
             setDialog({ message: "Updating appointment request failed.", type: "error" });
         } finally {
@@ -185,7 +185,7 @@ const AppointmentsUpdateRequest: React.FC = () => {
                                 value={values.description ?? ""}
                                 onChange={handleChange}
                                 className={inputClass("description")}
-                                placeholder="Enter appointment description"
+                                placeholder="Enter new appointment description"
                                 autoComplete="off"
                                 required
                             />

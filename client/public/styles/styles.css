@@ -21,11 +21,11 @@
 
 /* NavBar Start */
 .header {
-    position: fixed;
+    position: sticky;
     top: 0;
     left: 0;
     width: 100%;
-    padding: 1.3rem 10%;
+    padding: 1.3rem 5%;
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -64,7 +64,8 @@
     margin-top: 10px;
 }
 
-.navbar a {
+.navbar a,
+.navbar-success a {
     color: #fff;
     position: relative;
     text-decoration: none;
@@ -73,7 +74,8 @@
     margin-left: 2.5rem;
 }
 
-.navbar a::before {
+.navbar a::before,
+.navbar-success a::before {
     content: '';
     position: absolute;
     width: 100%;
@@ -105,12 +107,14 @@
         left: 100%;
     }
 
-    .navbar a:hover::before {
+    .navbar a:hover::before,
+    .navbar-success a:hover::before {
         transform-origin: left;
         transform: scaleX(1);
     }
 
-    .navbar a.active::before {
+    .navbar a.active::before,
+    .navbar-success a.active::before {
         transform-origin: left;
         transform: scaleX(1);
     }
@@ -120,7 +124,7 @@
     }
 }
 
-@media(max-width: 1024px) {
+@media (hover: none) and (pointer: coarse) {
     .header {
         padding: 1.3rem 5%;
     }
@@ -141,7 +145,8 @@
         display: block;
     }
 
-    .navbar {
+    .navbar,
+    .navbar-success {
         position: absolute;
         top: 100%;
         left: 0;
@@ -154,11 +159,18 @@
         transition: height 0.3s ease;
     }
 
-    #check:checked~.navbar {
-        height: 25rem;
+    /* For logged in users: */
+    #check:checked~.navbar-success {
+        height: 30rem;
     }
 
-    .navbar a {
+    /* Navbar not logged in users: */
+    #check:checked~.navbar {
+        height: 22rem;
+    }
+
+    .navbar a,
+    .navbar-success a {
         display: block;
         font-size: 1.1rem;
         margin: 1.5rem 0;
@@ -168,13 +180,15 @@
         transition: .3s ease;
     }
 
-    #check:checked~.navbar a {
+    #check:checked~.navbar a,
+    #check:checked~.navbar-success a {
         transform: translateY(0);
         opacity: 1;
         transition-delay: calc(.15s * var(--i));
     }
 
-    .navbar a.active {
+    .navbar a.active,
+    .navbar-success a.active {
         text-decoration: underline;
         text-underline-offset: 8px;
         text-decoration-thickness: 3px;
@@ -190,6 +204,7 @@
 /* Home Page Start */
 
 .home-container {
+    padding: 60px 20px;
     animation: fadeInOpacity 1s;
     height: 100vh;
     width: 100%;
@@ -215,7 +230,6 @@
 
 .home-content {
     position: relative;
-    margin-top: 90px;
     z-index: 1;
     color: #ffffff;
 }
@@ -288,8 +302,6 @@
     border-radius: 16px;
     box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
     max-width: 700px;
-    margin-top: 150px;
-    margin-bottom: 30px;
     animation: fadeInOpacity 1s;
     width: 90%;
     font-family: Arial, sans-serif;
@@ -347,8 +359,6 @@
     border-radius: 16px;
     box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
     max-width: 700px;
-    margin-top: 150px;
-    margin-bottom: 30px;
     animation: fadeInOpacity 1s;
     width: 90%;
     font-family: Arial, sans-serif;
@@ -380,74 +390,20 @@
 /* Contact Page End */
 
 /* Services Page Start */
-.service-content {
-    max-width: 600px;
-    animation: fadeInOpacity 1s;
-    text-align: center;
-    margin: 2rem auto;
-    background-color: #f9f9f9;
-    border-radius: 10px;
-    padding: 2rem;
-}
-
-.service-h1 {
-    animation: fadeInOpacity 1s;
-    margin-top: 150px;
-    background-color: #4EC5B4;
-    color: #fff;
-    padding: 0.3em 1em;
-    border-radius: 0.3em;
-}
-
-.service-content img {
-    width: 100%;
-    border-radius: 10px;
-    margin-bottom: 1.5rem;
-}
-
-.service-content h2 {
-    color: #4EC5B4;
-    margin-bottom: 1rem;
-}
-
-.service-content p {
-    margin-bottom: 1rem;
-}
-
-.back-link {
-    display: inline-block;
-    margin-top: 2rem;
-    background-color: #4EC5B4;
-    color: white;
-    padding: 0.5rem 1rem;
-    border-radius: 5px;
-    text-decoration: none;
-    transition: background-color 0.7s ease;
-}
-
-@media(min-width: 1025px) {
-    .back-link:hover {
-        background-color: #2a796f;
-        transition: 0.3s ease-in;
-    }
-}
-
-/* Services Page End */
-
-/* Seperate Services Page Start */
 .services {
     animation: fadeInOpacity 1s;
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
     gap: 2rem;
-    padding: 2rem;
+    padding: 60px 15px;
     max-width: 1200px;
     width: 100%;
 }
 
 .services-h1 {
     animation: fadeInOpacity 1s;
-    margin-top: 150px;
+    margin-top: 3rem;
+    text-align: center;
     background-color: #4EC5B4;
     color: #fff;
     padding: 0.3em 1em;
@@ -509,9 +465,76 @@
     }
 }
 
-/* Seperate Services Page End */
+/* Services Page End */
+
+/* Separate Page Start */
+.service {
+    padding: 0px 15px;
+}
+
+.service-content {
+    max-width: 600px;
+    animation: fadeInOpacity 1s;
+    text-align: center;
+    margin: 2rem auto;
+    background-color: #f9f9f9;
+    border-radius: 10px;
+    padding: 2rem;
+}
+
+.service-h1 {
+    margin-bottom: 2rem;
+    animation: fadeInOpacity 1s;
+    background-color: #4EC5B4;
+    color: #fff;
+    padding: 0.3em 1em;
+    border-radius: 1em;
+}
+
+.service-content img {
+    width: 100%;
+    border-radius: 10px;
+    margin-bottom: 1.5rem;
+}
+
+.service-content h2 {
+    color: #4EC5B4;
+    margin-bottom: 1rem;
+}
+
+.service-content p {
+    margin-bottom: 1rem;
+}
+
+.back-link {
+    display: inline-block;
+    margin-top: 2rem;
+    background-color: #4EC5B4;
+    color: white;
+    padding: 0.5rem 1rem;
+    border-radius: 5px;
+    text-decoration: none;
+    transition: background-color 0.7s ease;
+}
+
+@media(min-width: 1025px) {
+    .back-link:hover {
+        background-color: #2a796f;
+        transition: 0.3s ease-in;
+    }
+}
+
+/* Separate Services Page End */
 
 /* Appointments start: */
+.appointments-div {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 60px 20px;
+    gap: 50px;
+}
+
 .appointments {
     animation: fadeInOpacity 1s;
     display: grid;
@@ -524,7 +547,8 @@
 
 .appointments-h1 {
     animation: fadeInOpacity 1s;
-    margin-top: 150px;
+    margin-top: 3rem;
+    margin-bottom: 3rem;
     background-color: #4EC5B4;
     color: #fff;
     padding: 0.3em 1em;
@@ -534,10 +558,9 @@
 
 .no-appointments {
     animation: fadeInOpacity 1s;
-    margin-top: 100px;
-    margin-bottom: 100px;
     background-color: #4EC5B4;
     color: #fff;
+    text-align: center;
     padding: 0.3em 1em;
     border-radius: 0.5em;
 }
@@ -593,12 +616,11 @@
     text-decoration: none;
     border: none;
     padding: 0.8rem 2rem;
-    margin-right: 1rem;
     border-radius: 25px;
+    margin-bottom: 3rem;
     font-size: 1rem;
     cursor: pointer;
     transition: background 0.7s ease;
-    margin-bottom: 2rem;
 }
 
 .appointments-filter {
@@ -664,8 +686,8 @@
     flex-direction: row;
 }
 
-@media(max-width: 1024px) {
-        .appointments-filter {
+@media (hover: none) and (pointer: coarse) {
+    .appointments-filter {
         flex-direction: column;
         align-items: stretch;
         text-align: center;
@@ -676,7 +698,7 @@
     }
 }
 
-@media (hover: hover) and (pointer: fine) {
+@media (hover: none) and (pointer: coarse) {
     .more-details-btn:hover {
         background-color: #2a796f;
     }
@@ -703,7 +725,7 @@
 
 /* Appointments Details start */
 .appointment-actions {
-    margin-top: 0.5rem;
+    margin-top: 1rem;
 }
 
 .appointment-actions .edit-request {
@@ -741,9 +763,22 @@
 /* Appointments Details end */
 
 /* My Pets Start */
-.my-pets-h1 {
+.my-pets {
+    padding: 60px 20px;
     animation: fadeInOpacity 1s;
-    margin-top: 150px;
+    height: 50vh;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    text-align: center;
+    position: relative;
+}
+
+.my-pets-h1 {
+    margin-top: 3rem;
+    animation: fadeInOpacity 1s;
     background-color: #4EC5B4;
     color: #fff;
     padding: 0.3em 1em;
@@ -767,12 +802,11 @@
     text-decoration: none;
     border: none;
     padding: 0.8rem 2rem;
-    margin-right: 1rem;
     border-radius: 25px;
     font-size: 1rem;
     cursor: pointer;
     transition: background 0.7s ease;
-    margin-bottom: 2rem;
+    margin-bottom: 3rem;
 }
 
 @media(min-width: 1025px) {
@@ -791,7 +825,6 @@
     gap: 2rem;
     padding: 2rem;
     max-width: 400px;
-    width: 100%;
 }
 
 .my-pets-item-card {
@@ -847,14 +880,21 @@
         background-color: #2a796f;
     }
 }
+
 /* My Pets Item End */
 
 /* My Pet Item Info Start */
 .my-pets-item-info-content {
-    margin: 150px 0 2rem 0;
-    max-width: 400px;
+    max-width: 350px;
     animation: fadeInOpacity 1s;
+    margin-top: 8rem;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
     text-align: center;
+    position: relative;
     background-color: #f9f9f9;
     border-radius: 10px;
     padding: 2rem;
@@ -925,7 +965,6 @@
 @media(min-width: 1025px) {
     .my-pets-item-info-back-link:hover {
         background-color: #2a796f;
-
     }
 
     .my-pets-item-info-delete:hover {
@@ -937,12 +976,19 @@
     }
 }
 
+@media (hover: none) and (pointer: coarse) {
+    .my-pets-item-info-content {
+        margin-top: 2.5rem;
+    }
+}
+
 /* My Pet Item Info End */
 
 /* Add Pet Start*/
 
 .my-pets-add {
     min-height: 100vh;
+    padding: 60px 20px;
     width: 100%;
     background-image: url('../images/veterinary-hospital.png');
     background-size: cover;
@@ -974,8 +1020,6 @@
     border-radius: 16px;
     box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
     max-width: 400px;
-    margin-top: 150px;
-    margin-bottom: 30px;
     animation: fadeInOpacity 1s;
     width: 90%;
 }
@@ -1110,16 +1154,17 @@
 
 /* Profile Page Start */
 
+.profile {
+    padding: 60px 15px;
+}
+
 .profile-card {
-    margin-top: 2rem;
     background-color: #fff;
     animation: fadeInOpacity 1s;
-    width: 90%;
     max-width: 700px;
     border-radius: 15px;
     box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
-    padding: 3rem 2rem;
-    margin-bottom: 30px;
+    padding: 60px 40px;
     text-align: center;
     position: relative;
 }
@@ -1135,7 +1180,7 @@
 
 .h1-profile {
     animation: fadeInOpacity 1s;
-    margin-top: 150px;
+    margin-top: 3rem;
     background-color: #4EC5B4;
     color: #fff;
     padding: 0.3em 1em;
@@ -1179,6 +1224,10 @@
 
 .profile-buttons {
     margin-top: 1rem;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+    justify-content: center;
 }
 
 .edit-button {
@@ -1187,11 +1236,11 @@
     text-decoration: none;
     border: none;
     padding: 0.8rem 2rem;
-    margin-right: 1rem;
     border-radius: 25px;
     font-size: 1rem;
     cursor: pointer;
-    transition: background 0.7s ease;
+    transition: background 0.3s ease;
+    white-space: nowrap;
 }
 
 .change-button {
@@ -1281,7 +1330,7 @@
     align-items: center;
     justify-content: center;
     color: white;
-    padding: 2rem 1rem;
+    padding: 60px 15px;
     box-sizing: border-box;
 }
 
@@ -1302,9 +1351,8 @@
     border-radius: 16px;
     box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
     max-width: 400px;
-    margin-top: 100px;
     animation: fadeInOpacity 1s;
-    width: 90%;
+    width: 100%;
 }
 
 .login-container h2 {
@@ -1419,7 +1467,7 @@
     align-items: center;
     justify-content: center;
     color: white;
-    padding: 2rem 1rem;
+    padding: 60px 15px;
     box-sizing: border-box;
 }
 
@@ -1440,8 +1488,6 @@
     border-radius: 16px;
     box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
     max-width: 400px;
-    margin-top: 150px;
-    margin-bottom: 30px;
     animation: fadeInOpacity 1s;
     width: 90%;
 }
@@ -1871,7 +1917,7 @@
     }
 }
 
-@media(max-width: 1024px) {
+@media (hover: none) and (pointer: coarse) {
     .footer .socials a:hover {
         color: #000;
         transition: 0.7s ease;

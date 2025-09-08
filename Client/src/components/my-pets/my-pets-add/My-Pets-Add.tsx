@@ -13,8 +13,7 @@ import { useForm } from "../../../hooks/useForm";
 const initialValues: AddAnimalRequest = {
     name: "",
     age: null,
-    // TODO: Полето "weight" да се показва като празно, вместо 1:
-    weight: 1,
+    weight: null,
     passportNumber: null,
     chipNumber: null,
     animalTypeId: 0,
@@ -42,12 +41,10 @@ const MyPetsAdd: React.FC = () => {
                 setAnimalTypes(animalTypes || []);
             } catch (err: any) {
                 setDialog({ message: "An error occurred while fetching animal types.", type: "error" });
-                setTimeout(() => {
-                    navigate("/my-pets");
-                }, 1500);
-                // setErrors(err.errors);
+                setTimeout(() => navigate(`/my-pets`), 1500);
                 return;
             } finally {
+
             }
         };
 
@@ -134,9 +131,7 @@ const MyPetsAdd: React.FC = () => {
             await addAnimal(payload);
 
             setDialog({ message: "Pet added successfully!", type: "success" });
-            setTimeout(() => {
-                navigate("/my-pets");
-            }, 500);
+            setTimeout(() => navigate(`/my-pets`), 1500);
         } catch {
             setDialog({ message: "Adding pet failed.", type: "error" });
         } finally {

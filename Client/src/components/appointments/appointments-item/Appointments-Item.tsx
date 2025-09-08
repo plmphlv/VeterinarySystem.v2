@@ -90,7 +90,7 @@ const AppointmentsItem: React.FC = () => {
                     )}
 
                     <section className="appointments-filter">
-                        <div className="filter-item">
+                        {/* <div className="filter-item">
                             <label htmlFor="staffId">Staff ID:</label>
                             <input
                                 id="staffId"
@@ -98,7 +98,7 @@ const AppointmentsItem: React.FC = () => {
                                 value={staffId}
                                 onChange={(e) => setStaffId(e.target.value)}
                             />
-                        </div>
+                        </div> */}
 
                         <div className="filter-item">
                             <label htmlFor="status">Select Status:</label>
@@ -181,7 +181,7 @@ const AppointmentsItem: React.FC = () => {
                         )}
 
                         <section className="appointments-filter">
-                            <div className="filter-item">
+                            {/* <div className="filter-item">
                                 <label htmlFor="staffId">Staff ID:</label>
                                 <input
                                     id="staffId"
@@ -189,7 +189,7 @@ const AppointmentsItem: React.FC = () => {
                                     value={staffId}
                                     onChange={(e) => setStaffId(e.target.value)}
                                 />
-                            </div>
+                            </div> */}
 
                             <div className="filter-item">
                                 <label htmlFor="status">Select Status:</label>

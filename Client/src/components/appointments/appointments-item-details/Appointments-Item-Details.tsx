@@ -66,7 +66,7 @@ const AppointmentsItemDetails: React.FC = () => {
 
             {appointmentDetails ? (
                 <>
-                    <h1 className="appointments-h1">Appointment Request Details:</h1>
+                <h1 className="appointments-h1">Appointment Request Details:</h1>
 
                     <section className="appointments">
                         <div className="appointment-card" key={appointmentDetails?.id}>

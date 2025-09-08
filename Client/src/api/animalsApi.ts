@@ -81,7 +81,6 @@ export const useEditAnimal = () => {
     }, []);
 
     const editAnimal = async (data: EditAnimalRequest) => {
-        abortControllerRef.current?.abort();
         abortControllerRef.current = new AbortController();
 
         return http.put<EditAnimalRequest, EditAnimalResponse>(

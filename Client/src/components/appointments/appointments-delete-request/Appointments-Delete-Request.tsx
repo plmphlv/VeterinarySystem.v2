@@ -31,8 +31,8 @@ const AppointmentsDeleteRequest: React.FC = () => {
             } catch (err) {
                 setDialog({ message: "Failed to delete appointment request.", type: "error" });
             } finally {
+                setTimeout(() => navigate(`/appointments`), 1500);
                 setLoading(false);
-                navigate(`/appointments`);
             }
         };
 

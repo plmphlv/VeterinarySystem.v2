@@ -70,14 +70,11 @@ const ChangePassword: React.FC = () => {
             setErrors({});
             await changePassword(values);
             setDialog({ message: "Password changed successfully!", type: "success" });
-
-            setTimeout(() => {
-                navigate("/profile");
-            }, 1000);
         } catch (err: any) {
             setDialog({ message: err?.message || "Password change failed.", type: "error" });
         } finally {
             setIsLoading(false);
+            setTimeout(() => navigate(`/profile`), 1500);
         }
     };
 
@@ -117,39 +114,43 @@ const ChangePassword: React.FC = () => {
 
             <h1 className="h1-profile">Change Password</h1>
 
-            <div className="profile-card">
-                <form onSubmit={onSubmit} noValidate>
-                    {([
-                        { name: "currentPassword", label: "Current Password", type: "password", icon: "fa-key", placeholder: "Enter your current password" },
-                        { name: "newPassword", label: "New Password", type: "password", icon: "fa-key", placeholder: "Create a new password" },
-                        { name: "confirmNewPassword", label: "Confirm New Password", type: "password", icon: "fa-key", placeholder: "Confirm your new password" },
-                    ] as const).map(({ name, label, type, icon, placeholder }) => (
-                        <div className="field-edit-profile" key={name}>
-                            <label htmlFor={name}>
-                                <i className={`fa-solid ${icon}`}></i> {label}:
-                            </label>
-                            <input
-                                type={type}
-                                id={name}
-                                name={name}
-                                value={values[name]}
-                                onChange={handleChange}
-                                className={inputClass(name)}
-                                placeholder={placeholder}
-                                autoComplete="off"
-                            />
-                            {errors[name] && <p className="error-text">{errors[name]}</p>}
+            <div className="profile">
+                <div className="profile-card">
+                    <form onSubmit={onSubmit} noValidate>
+                        {([
+                            { name: "currentPassword", label: "Current Password", type: "password", icon: "fa-key", placeholder: "Enter your current password" },
+                            { name: "newPassword", label: "New Password", type: "password", icon: "fa-key", placeholder: "Create a new password" },
+                            { name: "confirmNewPassword", label: "Confirm New Password", type: "password", icon: "fa-key", placeholder: "Confirm your new password" },
+                        ] as const).map(({ name, label, type, icon, placeholder }) => (
+                            <div className="field-edit-profile" key={name}>
+                                <label htmlFor={name}>
+                                    <i className={`fa-solid ${icon}`}></i> {label}:
+                                </label>
+                                <input
+                                    type={type}
+                                    id={name}
+                                    name={name}
+                                    value={values[name]}
+                                    onChange={handleChange}
+                                    className={inputClass(name)}
+                                    placeholder={placeholder}
+                                    autoComplete="off"
+                                />
+                                {errors[name] && <p className="error-text">{errors[name]}</p>}
+                            </div>
+                        ))}
+
+                        <div className="profile-buttons">
+                            <button className="edit-button" type="submit" disabled={isLoading}>
+                                Save
+                            </button>
+
+                            <Link to="/profile" className="edit-button">Cancel</Link>
                         </div>
-                    ))}
 
-                    <button className="edit-button" type="submit" disabled={isLoading}>
-                        Save
-                    </button>
-
-                    <Link to="/profile" className="edit-button">Cancel</Link>
-
-                    {dialog && <div className={`dialog ${dialog.type}`}>{dialog.message}</div>}
-                </form>
+                        {dialog && <div className={`dialog ${dialog.type}`}>{dialog.message}</div>}
+                    </form>
+                </div>
             </div>
         </>
     );

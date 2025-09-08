@@ -4,10 +4,10 @@ import { Link } from "react-router";
 const EmegencyServices: React.FC = () => {
     return (
         <>
-            <h1 className="service-h1">Emergency Services</h1>
-
-            <div className="service-content">
-                <img src="/images/emergency-services.png" alt="Emergency Services"/>
+            <div className="service">
+                <div className="service-content">
+                    <h1 className="service-h1">Emergency Services</h1>
+                    <img src="/images/emergency-services.png" alt="Emergency Services" />
                     <h2>Urgent Care When You Need It Most</h2>
                     <p>Our emergency services are available for sudden, life-threatening situations where your pet needs immediate
                         medical attention. We are equipped to handle trauma, poisoning, seizures, breathing difficulties, and other
@@ -28,6 +28,7 @@ const EmegencyServices: React.FC = () => {
                     </ul>
 
                     <Link to="/services" className="back-link">← Back to Services</Link>
+                </div>
             </div>
         </>
     )

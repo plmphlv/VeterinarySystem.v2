@@ -83,6 +83,8 @@ const AppointmentsCreateRequest: React.FC = () => {
                 date: new Date(values.date).toISOString(),
             };
 
+            console.log(payload);
+            
             const response = await createRequestAppointment(payload);
 
             if (!response) {
@@ -90,11 +92,9 @@ const AppointmentsCreateRequest: React.FC = () => {
             }
 
             setDialog({ message: "Appointment request created successfully!", type: "success" });
-            setTimeout(() => {
-                navigate("/appointments");
-            }, 500);
+            setTimeout(() => navigate(`/appointments`), 1500);
         } catch {
-            setDialog({ message: "Failed to create appointment request.", type: "error" });
+            setDialog({ message: "Failed to create appointment request, please try again later.", type: "error" });
         } finally {
             setFormLoading(false);
         }

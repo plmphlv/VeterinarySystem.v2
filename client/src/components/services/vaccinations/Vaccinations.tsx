@@ -4,10 +4,10 @@ import { Link } from "react-router";
 const Vaccinations: React.FC = () => {
     return (
         <>
-            <h1 className="service-h1">Vaccinations</h1>
-
-            <div className="service-content">
-                <img src="/images/vaccinations.png" alt="Vaccinations" />
+            <div className="service">
+                <div className="service-content">
+                    <h1 className="service-h1">Vaccinations</h1>
+                    <img src="/images/vaccinations.png" alt="Vaccinations" />
                     <h2>Why Vaccinate Your Pet?</h2>
                     <p>Vaccinations are a crucial part of preventive healthcare. They help protect your pet from serious and
                         potentially fatal diseases, such as rabies, parvovirus, and distemper.</p>
@@ -21,6 +21,7 @@ const Vaccinations: React.FC = () => {
                         <li>Long-term cost savings by preventing illness.</li>
                     </ul>
                     <Link to="/services" className="back-link">← Back to Services</Link>
+                </div>
             </div>
         </>
     )

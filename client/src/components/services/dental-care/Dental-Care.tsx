@@ -4,10 +4,10 @@ import { Link } from "react-router";
 const DentalCare: React.FC = () => {
     return (
         <>
-            <h1 className="service-h1">Dental Care</h1>
-
-            <div className="service-content">
-                <img src="/images/dental-care.png" alt="Dental Care" />
+            <div className="service">
+                <div className="service-content">
+                    <h1 className="service-h1">Dental Care</h1>
+                    <img src="/images/dental-care.png" alt="Dental Care" />
                     <h2>Comprehensive Dental Services</h2>
                     <p>Good oral health is vital for your pet's overall well-being. We provide professional dental cleanings,
                         examinations, and treatments to ensure your pet’s mouth stays healthy.</p>
@@ -21,6 +21,7 @@ const DentalCare: React.FC = () => {
                         <li>Improves quality of life and longevity.</li>
                     </ul>
                     <Link to="/services" className="back-link">← Back to Services</Link>
+                </div>
             </div>
         </>
     )

@@ -122,7 +122,7 @@ const MyPetsEdit: React.FC = () => {
             await editAnimal(payload);
 
             setDialog({ message: "Pet edited successfully!", type: "success" });
-            setTimeout(() => navigate(`/my-pets/${id}/info`), 1000);
+            setTimeout(() => navigate(`/my-pets/${id}/details`), 1500);
         } catch (err) {
             setDialog({ message: "Editing pet failed.", type: "error" });
         } finally {
@@ -227,7 +227,7 @@ const MyPetsEdit: React.FC = () => {
                                 value={values.name ?? ""}
                                 onChange={handleChange}
                                 className={inputClass("name")}
-                                placeholder="Enter pet's name"
+                                placeholder="Enter new pet's name"
                                 autoComplete="off"
                                 required
                             />
@@ -236,7 +236,7 @@ const MyPetsEdit: React.FC = () => {
 
                         <div className="my-pets-add-form-group">
                             <label htmlFor="age">
-                                <i className="fa-solid fa-calendar"></i> Age:
+                                <i className="fa-solid fa-calendar"></i> Age (Optional):
                             </label>
                             <input
                                 type="number"
@@ -245,7 +245,7 @@ const MyPetsEdit: React.FC = () => {
                                 value={values.age ?? ""}
                                 onChange={handleChange}
                                 className={inputClass("age")}
-                                placeholder="Enter pet's age (optional)"
+                                placeholder="Enter new pet's age"
                             />
                             {errors.age && <p className="error-text">{errors.age}</p>}
                         </div>
@@ -261,7 +261,7 @@ const MyPetsEdit: React.FC = () => {
                                 value={values.weight ?? ""}
                                 onChange={handleChange}
                                 className={inputClass("weight")}
-                                placeholder="Enter pet's weight"
+                                placeholder="Enter new pet's weight"
                                 required
                             />
                             {errors.weight && <p className="error-text">{errors.weight}</p>}
@@ -269,7 +269,7 @@ const MyPetsEdit: React.FC = () => {
 
                         <div className="my-pets-add-form-group">
                             <label htmlFor="passportNumber">
-                                <i className="fa-solid fa-passport"></i> Passport Number:
+                                <i className="fa-solid fa-passport"></i> Passport Number (Optional):
                             </label>
                             <input
                                 type="text"
@@ -278,14 +278,14 @@ const MyPetsEdit: React.FC = () => {
                                 value={values.passportNumber ?? ""}
                                 onChange={handleChange}
                                 className={inputClass("passportNumber")}
-                                placeholder="Enter pet's passport number (optional)"
+                                placeholder="Enter new pet's passport number"
                             />
                             {errors.passportNumber && <p className="error-text">{errors.passportNumber}</p>}
                         </div>
 
                         <div className="my-pets-add-form-group">
                             <label htmlFor="chipNumber">
-                                <i className="fa-solid fa-microchip"></i> Chip Number:
+                                <i className="fa-solid fa-microchip"></i> Chip Number (Optional):
                             </label>
                             <input
                                 type="text"
@@ -294,7 +294,7 @@ const MyPetsEdit: React.FC = () => {
                                 value={values.chipNumber ?? ""}
                                 onChange={handleChange}
                                 className={inputClass("chipNumber")}
-                                placeholder="Enter pet's chip number (optional)"
+                                placeholder="Enter new pet's chip number"
                             />
                             {errors.chipNumber && <p className="error-text">{errors.chipNumber}</p>}
                         </div>
@@ -311,7 +311,7 @@ const MyPetsEdit: React.FC = () => {
                                 className={inputClass("animalTypeId")}
                                 required
                             >
-                                <option value={0}>-- Select animal type --</option>
+                                <option value={0}>-- Select new animal type --</option>
                                 {animalTypes.map(type => (
                                     <option key={type.id} value={type.id}>
                                         {type.value}

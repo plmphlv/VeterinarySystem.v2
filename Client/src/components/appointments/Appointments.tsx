@@ -23,7 +23,9 @@ const Appointments: React.FC = () => {
             ) : (
                 <>
                     <h1 className="appointments-h1">My Appointment Requests:</h1>
-                    <AppointmentsItem />
+                    <div className="appointments-div">
+                        <AppointmentsItem />
+                    </div>
                     <Link to="/appointments/request-appointment" className="my-pets-request-appointment-btn">Request New Appointment</Link>
                 </>
             )}

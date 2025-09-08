@@ -48,29 +48,34 @@ const Header: React.FC = () => {
                 <i className="bx bx-x" id="close-icon"></i>
             </label>
 
-            <nav className="navbar">
-                <NavLink to="/" style={{ "--i": "0" } as React.CSSProperties}>Home</NavLink>
-                <NavLink to="/about" style={{ "--i": "1" } as React.CSSProperties}>About</NavLink>
-                <NavLink to="/contact" style={{ "--i": "2" } as React.CSSProperties}>Contact</NavLink>
-                <NavLink to="/services" style={{ "--i": "3" } as React.CSSProperties}>Services</NavLink>
-
-                {isSuccessful ? (
-                    <>
-                        <NavLink to="/appointments" style={{ "--i": "4" } as React.CSSProperties}>Appointments</NavLink>
-                        <NavLink to="/my-pets" style={{ "--i": "4" } as React.CSSProperties}>My Pets</NavLink>
-                        <NavLink to="/profile" style={{ "--i": "5" } as React.CSSProperties}>Profile</NavLink>
-                        {decodedData?.StaffId && (
-                            <NavLink to="/administration" style={{ "--i": "5" } as React.CSSProperties}>Administration</NavLink>
-                        )}
-                        <NavLink to="/logout" style={{ "--i": "6" } as React.CSSProperties}>Logout</NavLink>
-                    </>
-                ) : (
-                    <>
-                        <NavLink to="/login" style={{ "--i": "4" } as React.CSSProperties}>Login</NavLink>
-                        <NavLink to="/register" style={{ "--i": "5" } as React.CSSProperties}>Register</NavLink>
-                    </>
-                )}
-            </nav>
+            {isSuccessful ? (
+                <nav className="navbar-success">
+                    <NavLink to="/" style={{ "--i": "0" } as React.CSSProperties}>Home</NavLink>
+                    <NavLink to="/about" style={{ "--i": "1" } as React.CSSProperties}>About</NavLink>
+                    <NavLink to="/contact" style={{ "--i": "2" } as React.CSSProperties}>Contact</NavLink>
+                    <NavLink to="/services" style={{ "--i": "3" } as React.CSSProperties}>Services</NavLink>
+                    <NavLink to="/appointments" style={{ "--i": "4" } as React.CSSProperties}>Appointments</NavLink>
+                    <NavLink to="/my-pets" style={{ "--i": "5" } as React.CSSProperties}>My Pets</NavLink>
+                    <NavLink to="/profile" style={{ "--i": "6" } as React.CSSProperties}>Profile</NavLink>
+                    {decodedData?.StaffId ? (
+                        <>
+                            <NavLink to="/administration" style={{ "--i": "7" } as React.CSSProperties}>Administration</NavLink>
+                            <NavLink to="/logout" style={{ "--i": "8" } as React.CSSProperties}>Logout</NavLink>
+                        </>
+                    ) : (
+                        <NavLink to="/logout" style={{ "--i": "7" } as React.CSSProperties}>Logout</NavLink>
+                    )}
+                </nav>
+            ) : (
+                <nav className="navbar">
+                    <NavLink to="/" style={{ "--i": "0" } as React.CSSProperties}>Home</NavLink>
+                    <NavLink to="/about" style={{ "--i": "1" } as React.CSSProperties}>About</NavLink>
+                    <NavLink to="/contact" style={{ "--i": "2" } as React.CSSProperties}>Contact</NavLink>
+                    <NavLink to="/services" style={{ "--i": "3" } as React.CSSProperties}>Services</NavLink>
+                    <NavLink to="/login" style={{ "--i": "4" } as React.CSSProperties}>Login</NavLink>
+                    <NavLink to="/register" style={{ "--i": "5" } as React.CSSProperties}>Register</NavLink>
+                </nav>
+            )}
         </header>
     );
 };

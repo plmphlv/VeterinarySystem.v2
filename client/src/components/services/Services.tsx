@@ -41,7 +41,6 @@ const Services: React.FC = () => {
                         <Link to="/services/dental-care" className="learn-more-btn">→ Learn More</Link>
                     </div>
                 </div>
-
                 <div className="service-card">
                     <img src="/images/emergency-services.png" alt="Emergency Services" />
                     <div className="content">

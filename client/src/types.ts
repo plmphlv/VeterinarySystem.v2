@@ -238,7 +238,7 @@ export interface GetAnimalDetailsResponse {
 export interface AddAnimalRequest {
     name: string,
     age?: number | null,
-    weight: number,
+    weight: number | null,
     passportNumber?: string | null,
     chipNumber?: string | null,
     animalTypeId: number,
@@ -251,12 +251,12 @@ export interface AddAnimalResponse {
 
 export interface EditAnimalRequest {
     id: number;
-    name: string,
-    age?: number | null,
-    weight: number,
-    passportNumber?: string | null,
-    chipNumber?: string | null,
-    animalTypeId: number,
+    name: string;
+    age: number | null;
+    weight: number;
+    passportNumber: string | null;
+    chipNumber: string | null;
+    animalTypeId: number;
 }
 
 export interface EditAnimalResponse {

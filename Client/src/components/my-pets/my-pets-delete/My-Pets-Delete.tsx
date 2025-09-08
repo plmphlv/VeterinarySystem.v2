@@ -20,7 +20,7 @@ const MyPetsDelete: React.FC = () => {
     const doDelete = async () => {
       const confirmed = window.confirm("Are you sure you want to delete this animal?");
       if (!confirmed) {
-        navigate(`/my-pets/${id}/info`);
+        navigate(`/my-pets/${id}/details`);
         return;
       }
 
@@ -32,7 +32,7 @@ const MyPetsDelete: React.FC = () => {
         setDialog({ message: "Failed to delete animal.", type: "error" });
       } finally {
         setLoading(false);
-        navigate(`/my-pets`);
+        setTimeout(() => navigate(`/my-pets`), 1500);
       }
     };
 
