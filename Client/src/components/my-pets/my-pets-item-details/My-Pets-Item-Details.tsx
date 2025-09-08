@@ -55,6 +55,8 @@ const MyPetsItemDetails: React.FC = () => {
                 </div>
             )}
 
+            <h1 className="my-pets-h1">My Pet Details:</h1>
+
             <div className="my-pets">
                 <div className="my-pets-item-info-content">
                     <h1 className="my-pets-item-info-h1">{animalDetails?.name}</h1>

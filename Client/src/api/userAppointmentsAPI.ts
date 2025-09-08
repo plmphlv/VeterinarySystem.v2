@@ -93,7 +93,7 @@ export const useUpdateAppointmentRequest = () => {
         abortControllerRef.current?.abort();
         abortControllerRef.current = new AbortController();
 
-        return http.post<UpdateAppointmentRequest, UpdateAppointmentResponse>(
+        return http.put<UpdateAppointmentRequest, UpdateAppointmentResponse>(
             `${baseUrl}/UpdateAppointmentRequest/${data.id}`,
             data,
             { signal: abortControllerRef.current.signal }

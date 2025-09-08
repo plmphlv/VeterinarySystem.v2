@@ -81,6 +81,9 @@ const AppointmentsUpdateRequest: React.FC = () => {
                 date: new Date(values.date).toISOString(),
             };
 
+            console.log(payload);
+            
+
             await updateAppointmentRequest(payload);
 
             setDialog({ message: "Appointment request updated successfully!", type: "success" });

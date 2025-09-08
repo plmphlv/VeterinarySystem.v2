@@ -36,7 +36,6 @@ export const useGetAnimalDetails = () => {
     }, []);
 
     const getAnimalDetails = async (id: number) => {
-        abortControllerRef.current?.abort();
         abortControllerRef.current = new AbortController();
 
         return http.get<GetAnimalDetailsResponse>(

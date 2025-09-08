@@ -324,7 +324,7 @@ const MyPetsEdit: React.FC = () => {
                         <button type="submit" className="add-pet-btn" disabled={formLoading}>
                             Save
                         </button>
-                        <Link to={`/my-pets/${id}/info`} className="cancel-btn">Cancel</Link>
+                        <Link to={`/my-pets/${id}/details`} className="cancel-btn">Cancel</Link>
                     </form>
                 </div>
             </section>
