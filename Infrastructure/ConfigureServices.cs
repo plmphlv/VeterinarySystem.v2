@@ -14,6 +14,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.IdentityModel.Tokens;
+using System.Runtime.InteropServices;
 using System.Text;
 
 namespace Infrastructure;
@@ -77,9 +78,25 @@ public static class ConfigureServices
 
     private static void AddDbContexts(this IServiceCollection services, IConfiguration configuration)
     {
+        string? connectionString = string.Empty;
+
+        /*
+         Different connection string for Windows and MacOS
+         will allow developers on different OS to work without constantrly changing the connection string.
+         Will be removed in production
+         */
+        if (OperatingSystem.IsWindows())
+        {
+            connectionString = configuration.GetConnectionString("DbConnection");
+        }
+        else if (OperatingSystem.IsMacOS())
+        {
+            connectionString = configuration.GetConnectionString("MacDbConnection");
+        }
+
         services.AddDbContext<ApplicationDbContext>(options =>
                     options.UseSqlServer(
-                        configuration.GetConnectionString("DbConnection"),
+                        connectionString,
                         b => b.MigrationsAssembly(typeof(ApplicationDbContext).Assembly.FullName)));
 
         services.AddScoped<IApplicationDbContext>(provider => provider.GetRequiredService<ApplicationDbContext>());
