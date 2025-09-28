@@ -15,10 +15,6 @@ namespace Infrastructure.Identity
 {
     public class JwtManager : IJwtManager
     {
-        private readonly string jwtSecurityKey = Environment.GetEnvironmentVariable("JWT_SECURITY_KEY")!;
-        private readonly string jwtIssuer = Environment.GetEnvironmentVariable("JWT_ISSUER")!;
-        private readonly string jwtAudience = Environment.GetEnvironmentVariable("JWT_AUDIENCE")!;
-
         private readonly IDateTime dateTime;
         private readonly JwtSettings settings;
         private readonly UserManager<User> userManager;
@@ -34,7 +30,7 @@ namespace Infrastructure.Identity
 
         public async Task<string> GenerateAccessTokenAsync(string userCredential)
         {
-            SymmetricSecurityKey key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(jwtSecurityKey));
+            SymmetricSecurityKey key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(settings.JwtSecurityKey));
 
             SigningCredentials credentials = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
 
@@ -51,8 +47,8 @@ namespace Infrastructure.Identity
                 .AddMinutes(settings.AccessTokenExpirationInMinutes);
 
             JwtSecurityToken token = new JwtSecurityToken(
-                issuer: jwtIssuer,
-                audience: jwtAudience,
+                issuer: settings.JwtIssuer,
+                audience: settings.JwtAudience,
                 claims: claims,
                 expires: expiration,
                 signingCredentials: credentials);

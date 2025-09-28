@@ -62,7 +62,9 @@ public static class ConfigureServices
 
     private static void AddJwtSettings(this IServiceCollection services, IConfiguration configuration)
     {
-        services.Configure<JwtSettings>(configuration.GetSection("Authentication:Jwt"));
+        services.AddOptions<JwtSettings>()
+            .Bind(configuration.GetSection("Authentication:JwtSettings"))
+            .ValidateDataAnnotations();
     }
 
     private static void AddUrlService(this IServiceCollection services)
