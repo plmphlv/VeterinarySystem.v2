@@ -14,7 +14,6 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.IdentityModel.Tokens;
-using System.Runtime.InteropServices;
 using System.Text;
 
 namespace Infrastructure;
@@ -44,7 +43,7 @@ public static class ConfigureServices
             .AddEntityFrameworkStores<ApplicationDbContext>()
             .AddDefaultTokenProviders();
 
-        services.AddTokenBasedAuthentication();
+        services.AddTokenBasedAuthentication(configuration);
 
         services.Configure<EmailSettings>(configuration.GetSection("EmailSettings"));
 
@@ -104,9 +103,9 @@ public static class ConfigureServices
         services.AddScoped<IApplicationDbContext>(provider => provider.GetRequiredService<ApplicationDbContext>());
     }
 
-    private static void AddTokenBasedAuthentication(this IServiceCollection services)
+    private static void AddTokenBasedAuthentication(this IServiceCollection services, IConfiguration configuration)
     {
-        string? key = Environment.GetEnvironmentVariable("JWT_SECURITY_KEY");
+        JwtSettings settings = configuration.GetSection("Authentication:JwtSettings").Get<JwtSettings>()!;
 
         services.AddAuthentication(options =>
         {
@@ -118,13 +117,13 @@ public static class ConfigureServices
               options.TokenValidationParameters = new TokenValidationParameters
               {
                   ValidateIssuer = true,
-                  ValidIssuer = Environment.GetEnvironmentVariable("JWT_ISSUER"),
+                  ValidIssuer = settings.JwtIssuer,
 
                   ValidateAudience = true,
-                  ValidAudience = Environment.GetEnvironmentVariable("JWT_AUDIENCE"),
+                  ValidAudience = settings.JwtAudience,
 
                   ValidateIssuerSigningKey = true,
-                  IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(key)),
+                  IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(settings.JwtSecurityKey)),
 
                   ValidateLifetime = true,
                   RequireExpirationTime = true,
