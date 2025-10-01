@@ -18,7 +18,7 @@ public static class ConfigureServices
         services.AddAutoMapper(Assembly.GetExecutingAssembly());
 
         services.AddTransient<ITemplateRenderer, TemplateRenderer>();
-        services.AddTransient<INotificationService, NotificationService>();
+        services.AddScoped<INotificationService, NotificationService>();
 
         return services;
     }
