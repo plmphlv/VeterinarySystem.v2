@@ -7,7 +7,7 @@ namespace Application.Common.Services
     {
         private readonly IEmailService emailService;
         private readonly ITemplateRenderer templateRenderer;
-        private IApplicationDbContext context;
+        private readonly IApplicationDbContext context;
 
         public NotificationService(IEmailService emailService, ITemplateRenderer templateRenderer, IApplicationDbContext context)
         {
