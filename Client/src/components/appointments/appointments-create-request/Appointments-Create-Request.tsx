@@ -5,7 +5,7 @@ import Dialog from "../../dialog/Dialog";
 import type { CreateAppointmentRequest, CreateAppointmentRequestError } from "../../../types";
 import { useEffect, useState } from "react";
 import { useForm } from "../../../hooks/useForm";
-import { useCreateRequestAppointment } from "../../../api/userAppointmentsAPI";
+import { useCreateRequestAppointment } from "../../../api/appointmentsAPI";
 import { getJwtDecodedData } from "../../../utils/getJwtDecodedData";
 
 const initialValues: CreateAppointmentRequest = {

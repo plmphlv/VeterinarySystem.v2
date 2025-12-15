@@ -1,6 +1,5 @@
 import { Link } from "react-router";
-import { getJwtDecodedData } from "../../../utils/getJwtDecodedData";
-import { useGetAllAppointments } from "../../../api/userAppointmentsAPI";
+import { useGetAllAppointments } from "../../../api/appointmentsAPI";
 import { useEffect, useState } from "react";
 import type { Appointment, AppointmentStatus, GetAllAppointmentsErrors } from "../../../types";
 import Spinner from "../../spinner/Spinner";
@@ -11,32 +10,36 @@ import { formatDate, formatStatus, formatTime } from "../../../utils/formatAppoi
 const AppointmentsItem: React.FC = () => {
     const { userData, isLoading, error } = useGetUserData();
     const [showError, setShowError] = useState(true);
-    const decodedData = getJwtDecodedData();
     const { getAllAppointments, cancelGetAllAppointments } = useGetAllAppointments();
 
     const [errors, setErrors] = useState<GetAllAppointmentsErrors>({});
     const [dialog, setDialog] = useState<{ message: string; type: "success" | "error" } | null>(null);
     const [appointments, setAppointments] = useState<Appointment[]>([]);
-    const [loading, setLoading] = useState(true);
+    const [loading, setLoading] = useState(false);
 
     const [staffId, setStaffId] = useState("");
     const [status, setStatus] = useState("");
     const [startDate, setStartDate] = useState("");
     const [endDate, setEndDate] = useState("");
 
+    console.log(appointments);
+    
+
     const fetchAppointments = async () => {
+        if (!userData?.id) return;
+
         try {
-            setErrors({});
             setLoading(true);
+            setErrors({});
 
-            const filters: any = {};
+            const filters: any = {
+                OwnerId: userData.id,
+            };
 
-            if (decodedData?.AccountId) filters.OwnerId = decodedData.AccountId;
-            if (decodedData?.StaffId) filters.StaffId = decodedData.StaffId;
-            if (staffId.trim() !== "") filters.StaffId = staffId.trim();
-            if (status !== "") filters.Status = status as AppointmentStatus;
-            if (startDate !== "") filters.StartDate = startDate;
-            if (endDate !== "") filters.EndDate = endDate;
+            if (staffId.trim()) filters.StaffId = staffId.trim();
+            if (status) filters.Status = status as AppointmentStatus;
+            if (startDate) filters.StartDate = startDate;
+            if (endDate) filters.EndDate = endDate;
 
             const fetchedAppointments = await getAllAppointments(filters) || [];
 
@@ -46,24 +49,22 @@ const AppointmentsItem: React.FC = () => {
 
             setAppointments(fetchedAppointments);
         } catch (err: any) {
-            console.log(err);
-            let errorMessage = "An error occurred while fetching appointments.";
-            if (err?.errors && typeof err.errors === "object") {
-                const firstKey = Object.keys(err.errors)[0];
-                if (firstKey && Array.isArray(err.errors[firstKey]) && err.errors[firstKey][0]) {
-                    errorMessage = err.errors[firstKey][0];
-                }
-            }
-            setDialog({ message: errorMessage, type: "error" });
-            setErrors(err.errors);
+            setDialog({
+                message: "An error occurred while fetching appointments.",
+                type: "error",
+            });
         } finally {
             setLoading(false);
         }
     };
 
+
     useEffect(() => {
+        if (!userData?.id) return;
+
         fetchAppointments();
     }, [userData, staffId, status, startDate, endDate]);
+
 
     useEffect(() => {
         return () => {

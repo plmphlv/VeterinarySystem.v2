@@ -10,6 +10,9 @@ const Profile: React.FC = () => {
 
     if (isLoading) return <Spinner />;
 
+    console.log(userData);
+    
+
     return (
         <>
             {error && showError && (
@@ -58,7 +61,7 @@ const Profile: React.FC = () => {
                             <div className="profile-buttons">
                                 <Link to="/profile/edit" className="edit-button">Edit Profile</Link>
                                 <Link to="/profile/change-password" className="edit-button">Change Password</Link>
-                                <Link to="/profile/change-email" className="edit-button">Change Email Address</Link>
+                                {/* <Link to="/profile/change-email" className="edit-button">Change Email Address</Link> */}
                             </div>
                         </div>
                     </div>

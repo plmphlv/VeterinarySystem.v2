@@ -51,6 +51,8 @@ export interface UserDataFromId {
     firstName: string,
     lastName: string,
     phoneNumber: string
+    accountId?: string,
+    staffId?: string
 }
 
 export interface UpdateAccountRequest {

@@ -3,13 +3,14 @@ import { useGetUserData } from "../../hooks/useGetUserData";
 import AppointmentsItem from "./appointments-item/Appointments-Item";
 import Dialog from "../dialog/Dialog";
 import { useState } from "react";
+import Spinner from "../spinner/Spinner";
 
 const Appointments: React.FC = () => {
     const { userData, error } = useGetUserData();
     const [showError, setShowError] = useState(true);
 
     if (!userData) {
-        return;
+        return <Spinner />;
     }
 
     return (

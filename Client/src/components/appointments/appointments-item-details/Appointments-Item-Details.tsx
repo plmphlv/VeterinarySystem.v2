@@ -3,7 +3,7 @@ import { useEffect, useState } from "react";
 import type { GetAppointmentDetailsErrors, GetAppointmentDetailsResponse } from "../../../types";
 import Spinner from "../../spinner/Spinner";
 import Dialog from "../../dialog/Dialog";
-import { useGetAppointmentDetails } from "../../../api/userAppointmentsAPI";
+import { useGetAppointmentDetails } from "../../../api/appointmentsAPI";
 import { formatDate, formatStatus, formatTime } from "../../../utils/formatAppointmentDetails";
 
 const AppointmentsItemDetails: React.FC = () => {

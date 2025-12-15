@@ -1,11 +1,15 @@
 import { useEffect, useRef } from "react";
 import http from "../utils/request";
-import { getJwtDecodedData } from "../utils/getJwtDecodedData";
+
+// Import for user appointments:
 import type { Appointment, CreateRequestAppointment, CreateRequestAppointmentResponse, DeleteAppointmentRequest, DeleteAppointmentResponse, GetAllAppointmentsRequest, GetAppointmentDetailsRequest, GetAppointmentDetailsResponse, GetOwnerAppointmentsRequest, UpdateAppointmentRequest, UpdateAppointmentResponse } from "../types";
 
-const baseUrl = `${import.meta.env.VITE_BASE_API_URL}/Appointments`;
-const decodedData = getJwtDecodedData();
+// Import for staff appointments:
+import type {CompleteAppointmentRequest, CreateAppointmentRequest, CreateAppointmentResponse, EditAppointmentRequest, EditAppointmentResponse } from "../types";
 
+const baseUrl = `${import.meta.env.VITE_BASE_API_URL}/Appointments`;
+
+// User appointments (staff members have access too):
 export const useGetAllAppointments = () => {
     const abortControllerRef = useRef<AbortController | null>(null);
 
@@ -15,22 +19,26 @@ export const useGetAllAppointments = () => {
         };
     }, []);
 
-    const getAllAppointments = async (data: GetOwnerAppointmentsRequest | GetAllAppointmentsRequest) => {
+    const getAllAppointments = async (
+        data: GetOwnerAppointmentsRequest | GetAllAppointmentsRequest
+    ) => {
         abortControllerRef.current = new AbortController();
 
         const queryParams = new URLSearchParams();
 
-        if (decodedData?.AccountId || decodedData?.StaffId) {
-            if (data.OwnerId) queryParams.append("OwnerId", data.OwnerId);
-            if (data.StaffId) queryParams.append("StaffId", data.StaffId);
-            if (data.Status) queryParams.append("Status", data.Status);
-            if (data.StartDate) queryParams.append("StartDate", data.StartDate);
-            if (data.EndDate) queryParams.append("EndDate", data.EndDate);
+        if (data.OwnerId) queryParams.append("OwnerId", data.OwnerId);
+        if (data.StaffId) queryParams.append("StaffId", data.StaffId);
+        if (data.Status) queryParams.append("Status", data.Status);
+        if (data.StartDate) queryParams.append("StartDate", data.StartDate);
+        if (data.EndDate) queryParams.append("EndDate", data.EndDate);
 
-            const url = `${baseUrl}/GetAppointments?${queryParams.toString()}`;
-            return http.get<Appointment[]>(url, { signal: abortControllerRef.current.signal });
-        }
+        const url = `${baseUrl}/GetAppointments?${queryParams.toString()}`;
+
+        return http.get<Appointment[]>(url, {
+            signal: abortControllerRef.current.signal,
+        });
     };
+
 
     return { getAllAppointments, cancelGetAllAppointments: () => abortControllerRef.current?.abort() };
 };
@@ -123,4 +131,95 @@ export const useDeleteAppointmentRequest = () => {
     };
 
     return { deleteAppointmentRequest, cancelDeleteAppointmentRequest: () => abortControllerRef.current?.abort() };
+};
+
+// Staff Appointments (only for staff members):
+export const useCreateAppointment = () => {
+    const abortControllerRef = useRef<AbortController | null>(null);
+
+    useEffect(() => {
+        return () => {
+            abortControllerRef.current?.abort();
+        };
+    }, []);
+
+    const createAppointment = async (data: CreateAppointmentRequest) => {
+        abortControllerRef.current?.abort();
+        abortControllerRef.current = new AbortController();
+
+        return http.post<CreateAppointmentRequest, CreateAppointmentResponse>(
+            `${baseUrl}`,
+            data,
+            { signal: abortControllerRef.current.signal }
+        );
+    };
+
+    return { createAppointment, cancelCreateAppointment: () => abortControllerRef.current?.abort() };
+};
+
+export const useEditAppointment = () => {
+    const abortControllerRef = useRef<AbortController | null>(null);
+
+    useEffect(() => {
+        return () => {
+            abortControllerRef.current?.abort();
+        };
+    }, []);
+
+    const editAppointment = async (data: EditAppointmentRequest) => {
+        abortControllerRef.current?.abort();
+        abortControllerRef.current = new AbortController();
+
+        return http.put<EditAppointmentRequest, EditAppointmentResponse>(
+            `${baseUrl}/${data.id}`,
+            data,
+            { signal: abortControllerRef.current.signal }
+        );
+    };
+
+    return { editAppointment, cancelEditAppointment: () => abortControllerRef.current?.abort() };
+};
+
+export const useCompleteAppointment = () => {
+    const abortControllerRef = useRef<AbortController | null>(null);
+
+    useEffect(() => {
+        return () => {
+            abortControllerRef.current?.abort();
+        };
+    }, []);
+
+    const completeAppointment = async (id: CompleteAppointmentRequest) => {
+        abortControllerRef.current?.abort();
+        abortControllerRef.current = new AbortController();
+
+        return http.put(
+            `${baseUrl}/CompleteAppointment/${id}`,
+            { signal: abortControllerRef.current.signal }
+        );
+    };
+
+    return { completeAppointment, cancelCompleteAppointment: () => abortControllerRef.current?.abort() };
+};
+
+export const useDeleteAppointment = () => {
+    const abortControllerRef = useRef<AbortController | null>(null);
+
+    useEffect(() => {
+        return () => {
+            abortControllerRef.current?.abort();
+        };
+    }, []);
+
+    const deleteAppointment = async (data: DeleteAppointmentRequest) => {
+        abortControllerRef.current?.abort();
+        abortControllerRef.current = new AbortController();
+
+        return http.delete<DeleteAppointmentRequest>(
+            `${baseUrl}/${data.id}`,
+            { signal: abortControllerRef.current.signal }
+        );
+    };
+
+    return { deleteAppointment, cancelDeleteAppointment: () => abortControllerRef.current?.abort() };
 };

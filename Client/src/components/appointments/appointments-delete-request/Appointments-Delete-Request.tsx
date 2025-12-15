@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router";
 import Spinner from "../../spinner/Spinner";
 import Dialog from "../../dialog/Dialog";
-import { useDeleteAppointmentRequest } from "../../../api/userAppointmentsAPI";
+import { useDeleteAppointmentRequest } from "../../../api/appointmentsAPI";
 
 const AppointmentsDeleteRequest: React.FC = () => {
     const { id } = useParams();

@@ -65,7 +65,9 @@
 }
 
 .navbar a,
-.navbar-success a {
+.navbar-success a,
+.navbar-success-staffMember a,
+.navbar-success-superAdministrator a {
     color: #fff;
     position: relative;
     text-decoration: none;
@@ -75,7 +77,9 @@
 }
 
 .navbar a::before,
-.navbar-success a::before {
+.navbar-success a::before,
+.navbar-success-staffMember a::before,
+.navbar-success-superAdministrator a::before {
     content: '';
     position: absolute;
     width: 100%;
@@ -108,13 +112,17 @@
     }
 
     .navbar a:hover::before,
-    .navbar-success a:hover::before {
+    .navbar-success a:hover::before,
+    .navbar-success-staffMember a:hover::before,
+    .navbar-success-superAdministrator a:hover::before {
         transform-origin: left;
         transform: scaleX(1);
     }
 
     .navbar a.active::before,
-    .navbar-success a.active::before {
+    .navbar-success a.active::before,
+    .navbar-success-staffMember a.active::before,
+    .navbar-success-superAdministrator a.active::before {
         transform-origin: left;
         transform: scaleX(1);
     }
@@ -146,7 +154,9 @@
     }
 
     .navbar,
-    .navbar-success {
+    .navbar-success,
+    .navbar-success-staffMember,
+    .navbar-success-superAdministrator {
         position: absolute;
         top: 100%;
         left: 0;
@@ -159,18 +169,30 @@
         transition: height 0.3s ease;
     }
 
-    /* For logged in users: */
-    #check:checked~.navbar-success {
-        height: 30rem;
-    }
-
     /* Navbar not logged in users: */
     #check:checked~.navbar {
         height: 22rem;
     }
 
+    /* For logged in users: */
+    #check:checked~.navbar-success {
+        height: 30rem;
+    }
+
+    /* For logged in staff members: */
+    #check:checked~.navbar-success-staffMember {
+        height: 32rem;
+    }
+
+    /* For logged in super administrators: */
+    #check:checked~.navbar-success-superAdministrator {
+        height: 34rem;
+    }
+
     .navbar a,
-    .navbar-success a {
+    .navbar-success a,
+    .navbar-success-staffMember a,
+    .navbar-success-superAdministrator a{
         display: block;
         font-size: 1.1rem;
         margin: 1.5rem 0;
@@ -181,14 +203,18 @@
     }
 
     #check:checked~.navbar a,
-    #check:checked~.navbar-success a {
+    #check:checked~.navbar-success a,
+    #check:checked~.navbar-success-staffMember a,
+    #check:checked~.navbar-success-superAdministrator a {
         transform: translateY(0);
         opacity: 1;
         transition-delay: calc(.15s * var(--i));
     }
 
     .navbar a.active,
-    .navbar-success a.active {
+    .navbar-success a.active,
+    .navbar-success-staffMember a.active,
+    .navbar-success-superAdministrator a.active {
         text-decoration: underline;
         text-underline-offset: 8px;
         text-decoration-thickness: 3px;

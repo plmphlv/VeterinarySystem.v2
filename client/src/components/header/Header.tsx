@@ -5,12 +5,20 @@ import { getJwtDecodedData } from "../../utils/getJwtDecodedData";
 
 const Header: React.FC = () => {
     const { isSuccessful } = useUserContext();
-
-    // TODO: Да направя логиката да се показват страниците според различните роли на потребителите ():
     const decodedData = getJwtDecodedData();
     const location = useLocation();
     const checkRef = useRef<HTMLInputElement>(null);
     const headerRef = useRef<HTMLElement>(null);
+
+    const role = decodedData?.["http://schemas.microsoft.com/ws/2008/06/identity/claims/role"];
+
+    const successNavClassName =
+        role === "SuperAdministrator"
+            ? "navbar-success-superAdministrator"
+            : role === "StaffMember"
+                ? "navbar-success-staffMember"
+                : "navbar-success";
+
 
     // Затваря менюто, когато се кликне върху линк
     useEffect(() => {
@@ -49,7 +57,7 @@ const Header: React.FC = () => {
             </label>
 
             {isSuccessful ? (
-                <nav className="navbar-success">
+                <nav className={successNavClassName}>
                     <NavLink to="/" style={{ "--i": "0" } as React.CSSProperties}>Home</NavLink>
                     <NavLink to="/about" style={{ "--i": "1" } as React.CSSProperties}>About</NavLink>
                     <NavLink to="/contact" style={{ "--i": "2" } as React.CSSProperties}>Contact</NavLink>
@@ -57,12 +65,23 @@ const Header: React.FC = () => {
                     <NavLink to="/appointments" style={{ "--i": "4" } as React.CSSProperties}>Appointments</NavLink>
                     <NavLink to="/my-pets" style={{ "--i": "5" } as React.CSSProperties}>My Pets</NavLink>
                     <NavLink to="/profile" style={{ "--i": "6" } as React.CSSProperties}>Profile</NavLink>
-                    {decodedData?.StaffId ? (
+
+                    {role === "SuperAdministrator" && (
                         <>
-                            <NavLink to="/administration" style={{ "--i": "7" } as React.CSSProperties}>Administration</NavLink>
+                            <NavLink to="/staffArea" style={{ "--i": "7" } as React.CSSProperties}>Staff Area</NavLink>
+                            <NavLink to="/administration" style={{ "--i": "8" } as React.CSSProperties}>Administration</NavLink>
+                            <NavLink to="/logout" style={{ "--i": "9" } as React.CSSProperties}>Logout</NavLink>
+                        </>
+                    )}
+
+                    {role === "StaffMember" && (
+                        <>
+                            <NavLink to="/staffArea" style={{ "--i": "7" } as React.CSSProperties}>Staff Area</NavLink>
                             <NavLink to="/logout" style={{ "--i": "8" } as React.CSSProperties}>Logout</NavLink>
                         </>
-                    ) : (
+                    )}
+
+                    {!role && (
                         <NavLink to="/logout" style={{ "--i": "7" } as React.CSSProperties}>Logout</NavLink>
                     )}
                 </nav>

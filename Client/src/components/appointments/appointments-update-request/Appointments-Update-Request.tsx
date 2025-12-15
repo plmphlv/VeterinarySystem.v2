@@ -6,7 +6,7 @@ import { useForm } from "../../../hooks/useForm";
 import { useGetUserData } from "../../../hooks/useGetUserData";
 import Dialog from "../../dialog/Dialog";
 import Spinner from "../../spinner/Spinner";
-import { useGetAppointmentDetails, useUpdateAppointmentRequest } from "../../../api/userAppointmentsAPI";
+import { useGetAppointmentDetails, useUpdateAppointmentRequest } from "../../../api/appointmentsAPI";
 
 const initialValues: UpdateAppointmentRequest = {
     date: "",
