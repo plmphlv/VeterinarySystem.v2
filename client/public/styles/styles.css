@@ -192,7 +192,7 @@
     .navbar a,
     .navbar-success a,
     .navbar-success-staffMember a,
-    .navbar-success-superAdministrator a{
+    .navbar-success-superAdministrator a {
         display: block;
         font-size: 1.1rem;
         margin: 1.5rem 0;
@@ -652,6 +652,7 @@
     font-size: 1rem;
     cursor: pointer;
     transition: background 0.7s ease;
+    animation: fadeInOpacity 1s;
 }
 
 .appointments-filter {
@@ -681,10 +682,6 @@
     cursor: pointer;
     border: none;
     transition: background 0.3s ease;
-}
-
-.appointments-filter button:hover {
-    background-color: #2a796f;
 }
 
 .appointments-filter {
@@ -729,7 +726,11 @@
     }
 }
 
-@media (hover: none) and (pointer: coarse) {
+@media (min-width: 1025px) {
+    .my-pets-request-appointment-btn:hover {
+        background-color: #2f8a58;
+    }
+
     .more-details-btn:hover {
         background-color: #2a796f;
     }
@@ -747,9 +748,9 @@
         background-color: #2a796f;
     }
 
-    .my-pets-request-appointment-btn:hover {
-        background-color: #2f8a58;
-    }
+    .appointments-filter button:hover {
+    background-color: #2a796f;
+}
 }
 
 /* Appointments end */
@@ -837,6 +838,7 @@
     cursor: pointer;
     transition: background 0.7s ease;
     margin-bottom: 3rem;
+    animation: fadeInOpacity 1s;
 }
 
 @media(min-width: 1025px) {
@@ -1612,6 +1614,231 @@
 }
 
 /* Register End */
+
+/* Staff Area */
+
+.staff-area {
+    animation: fadeInOpacity 1s;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 2rem;
+    padding: 60px 15px;
+    max-width: 1200px;
+    width: 100%;
+}
+
+.staff-area-h1 {
+    animation: fadeInOpacity 1s;
+    margin-top: 3rem;
+    text-align: center;
+    background-color: #4EC5B4;
+    color: #fff;
+    padding: 0.3em 1em;
+    border-radius: 1em;
+}
+
+.staff-area-card {
+    background-color: #ffffff;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+    transition: transform 0.3s ease;
+}
+
+.staff-area-card img {
+    width: 100%;
+    height: 200px;
+    object-fit: cover;
+}
+
+.staff-area-card .content {
+    padding: 1.5rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+}
+
+.staff-area-card h2 {
+    color: #4EC5B4;
+    margin-bottom: 0.5rem;
+}
+
+.staff-area-card p {
+    font-size: 0.95rem;
+    margin-bottom: 1rem;
+}
+
+.learn-more-btn {
+    margin-top: 0.5rem;
+    display: inline-block;
+    background-color: #4EC5B4;
+    color: #fff;
+    padding: 0.5rem 1rem;
+    border: none;
+    border-radius: 5px;
+    text-decoration: none;
+    transition: background-color 0.7s ease;
+}
+
+@media(min-width: 1025px) {
+    .staff-area-card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 6px 16px rgba(0, 0, 0, 0.12);
+    }
+
+    .learn-more-btn:hover {
+        background-color: #2a796f;
+    }
+}
+
+/* Animal Types */
+
+.animal-types-h1 {
+    animation: fadeInOpacity 1s;
+    margin-top: 3rem;
+    margin-bottom: 3rem;
+    text-align: center;
+    background-color: #4EC5B4;
+    color: #fff;
+    padding: 0.3em 1em;
+    border-radius: 1em;
+}
+
+.animal-types {
+    animation: fadeInOpacity 1s;
+    max-width: 700px;
+    margin: 0 auto 2rem auto;
+    background: #ffffff;
+    border-radius: 16px;
+    padding: 1.5rem;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+}
+
+.animal-types ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.animal-type-item {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    padding: 1rem 1.25rem;
+    margin-bottom: 1rem;
+
+    background-color: #f9fefe;
+    border-left: 5px solid #4EC5B4;
+    border-radius: 12px;
+
+    font-size: 1.05rem;
+    font-weight: 500;
+    color: #000;
+
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.animal-type-item:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 18px rgba(78, 197, 180, 0.25);
+}
+
+.no-animal-types-h1 {
+    animation: fadeInOpacity 1s;
+    margin-top: 100px;
+    margin-bottom: 100px;
+    background-color: #4EC5B4;
+    color: #fff;
+    padding: 0.3em 1em;
+    border-radius: 0.5em;
+}
+
+.animal-types-add-btn-container {
+    text-align: center;
+    margin-bottom: 2.5rem;
+}
+
+.animal-types-btns {
+    margin-left: 2.5rem;
+    display: flex;
+}
+
+.animal-types-add-btn {
+    animation: fadeInOpacity 1s;
+    display: inline-block;
+    margin: 0.5rem 0.5rem 0 0;
+    padding: 0.75rem 1.6rem;
+    text-align: center;
+
+    background-color: #4EC5B4;
+    color: #fff;
+    text-decoration: none;
+    font-weight: 500;
+
+    border-radius: 999px;
+    border: none;
+
+    transition: background-color 0.2s ease, transform 0.2s ease;
+}
+
+.animal-types-edit-btn {
+    display: inline-block;
+    margin: 0.5rem 0.5rem 0 0;
+    padding: 0.75rem 1.6rem;
+    text-align: center;
+
+    background-color: rgb(225, 225, 0);
+    color: #fff;
+    text-decoration: none;
+    font-weight: 500;
+
+    border-radius: 999px;
+    border: none;
+
+    transition: background-color 0.2s ease, transform 0.2s ease;
+}
+
+.animal-types-delete-btn {
+    display: inline-block;
+    margin: 0.5rem 0.5rem 0 0;
+    padding: 0.75rem 1.6rem;
+    text-align: center;
+
+    background-color: #ff4d4d;
+    color: #fff;
+    text-decoration: none;
+    font-weight: 500;
+
+    border-radius: 999px;
+    border: none;
+
+    transition: background-color 0.2s ease, transform 0.2s ease;
+}
+
+@media (min-width: 1025px) {
+    .animal-types-add-btn:hover {
+        background-color: #3db3a4;
+        transform: translateY(-1px);
+    }
+
+    .animal-types-edit-btn:hover {
+        background-color: rgb(190, 190, 0);
+        transform: translateY(-1px);
+    }
+
+    .animal-types-delete-btn:hover {
+        background-color: #ba3838;
+        transform: translateY(-1px);
+    }
+}
+
+@media (hover: none) and (pointer: coarse) {
+    .animal-types-btns {
+        flex-direction: column;
+    }
+}
 
 /* Spinner start */
 

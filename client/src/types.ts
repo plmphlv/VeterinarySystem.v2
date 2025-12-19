@@ -281,7 +281,6 @@ export interface AnimalType {
 }
 
 export interface AddAnimalTypeRequest {
-    id: number;
     typeName: string;
 }
 
@@ -305,6 +304,10 @@ export interface DeleteAnimalTypeRequest {
 export interface DeleteAnimalTypeResponse {
     message: string;
 }
+
+export type AddAnimalTypeRequestFieldErrors = Partial<Record<keyof AddAnimalTypeRequest, string>>;
+export type EditAnimalTypeRequestFieldErrors = Partial<Record<keyof EditAnimalTypeRequest, string>>;
+
 // AnimalTypes types end
 
 // OwnerAccounts types start

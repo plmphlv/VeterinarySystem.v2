@@ -10,9 +10,6 @@ const Profile: React.FC = () => {
 
     if (isLoading) return <Spinner />;
 
-    console.log(userData);
-    
-
     return (
         <>
             {error && showError && (

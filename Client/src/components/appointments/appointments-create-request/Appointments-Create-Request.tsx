@@ -83,7 +83,6 @@ const AppointmentsCreateRequest: React.FC = () => {
                 date: new Date(values.date).toISOString(),
             };
 
-            console.log(payload);
             
             const response = await createRequestAppointment(payload);
 
@@ -169,7 +168,7 @@ const AppointmentsCreateRequest: React.FC = () => {
                         <button type="submit" className="add-pet-btn" disabled={formLoading}>
                             Request
                         </button>
-                        <Link to="/my-pets" className="cancel-btn">Cancel</Link>
+                        <Link to="/appointments" className="cancel-btn">Cancel</Link>
                     </form>
                 </div>
             </section>

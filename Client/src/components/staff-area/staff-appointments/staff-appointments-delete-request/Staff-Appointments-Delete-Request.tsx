@@ -1,10 +1,10 @@
 import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router";
-import Spinner from "../../spinner/Spinner";
-import Dialog from "../../dialog/Dialog";
-import { useDeleteAppointmentRequest } from "../../../api/appointmentsAPI";
+import { useDeleteAppointmentRequest } from "../../../../api/appointmentsAPI";
+import Spinner from "../../../spinner/Spinner";
+import Dialog from "../../../dialog/Dialog";
 
-const AppointmentsDeleteRequest: React.FC = () => {
+const StaffAppointmentsDeleteRequest: React.FC = () => {
     const { id } = useParams();
     const navigate = useNavigate();
     const { deleteAppointmentRequest, cancelDeleteAppointmentRequest } = useDeleteAppointmentRequest();
@@ -13,14 +13,14 @@ const AppointmentsDeleteRequest: React.FC = () => {
 
     useEffect(() => {
         if (!id) {
-            navigate("/appointments");
+            navigate("/staff-area/appointments");
             return;
         }
 
         const doDelete = async () => {
             const confirmed = window.confirm("Are you sure you want to delete this appointment request?");
             if (!confirmed) {
-                navigate(`/appointments/${id}/details`);
+                navigate(`/staff-area/appointments/${id}/details`);
                 return;
             }
 
@@ -31,7 +31,7 @@ const AppointmentsDeleteRequest: React.FC = () => {
                 setDialog({ message: "Failed to delete appointment request.", type: "error" });
             } finally {
                 setDialog({ message: "Appointment request deleted successfully.", type: "success" });
-                setTimeout(() => navigate(`/appointments`), 1500);
+                setTimeout(() => navigate(`/staff-area/appointments`), 1500);
                 setLoading(false);
             }
         };
@@ -64,4 +64,4 @@ const AppointmentsDeleteRequest: React.FC = () => {
     );
 };
 
-export default AppointmentsDeleteRequest;
+export default StaffAppointmentsDeleteRequest;

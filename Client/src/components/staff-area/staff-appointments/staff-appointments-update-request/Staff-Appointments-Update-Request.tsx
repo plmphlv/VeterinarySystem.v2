@@ -1,12 +1,12 @@
 import type React from "react";
 import { Link, useNavigate, useParams } from "react-router";
 import { useEffect, useState } from "react";
-import type { UpdateAppointmentRequest, UpdateAppointmentRequestFieldErrors } from "../../../types";
-import { useForm } from "../../../hooks/useForm";
-import { useGetUserData } from "../../../hooks/useGetUserData";
-import Dialog from "../../dialog/Dialog";
-import Spinner from "../../spinner/Spinner";
-import { useGetAppointmentDetails, useUpdateAppointmentRequest } from "../../../api/appointmentsAPI";
+import type { UpdateAppointmentRequest, UpdateAppointmentRequestFieldErrors } from "../../../../types";
+import { useGetAppointmentDetails, useUpdateAppointmentRequest } from "../../../../api/appointmentsAPI";
+import { useGetUserData } from "../../../../hooks/useGetUserData";
+import { useForm } from "../../../../hooks/useForm";
+import Spinner from "../../../spinner/Spinner";
+import Dialog from "../../../dialog/Dialog";
 
 const initialValues: UpdateAppointmentRequest = {
     date: "",
@@ -14,14 +14,13 @@ const initialValues: UpdateAppointmentRequest = {
     id: 0
 };
 
-const AppointmentsUpdateRequest: React.FC = () => {
+const StaffAppointmentsUpdateRequest: React.FC = () => {
     const { id } = useParams();
     const [errors, setErrors] = useState<UpdateAppointmentRequestFieldErrors>({});
     const [formLoading, setFormLoading] = useState(false);
     const [isLoading, setLoading] = useState(false);
     const [dialog, setDialog] = useState<{ message: string; type: "success" | "error" } | null>(null);
 
-    const { userData, isLoading: userLoading } = useGetUserData();
     const { getAppointmentDetails, cancelGetAppointmentDetails } = useGetAppointmentDetails();
     const { updateAppointmentRequest, cancelUpdateAppointmentRequest } = useUpdateAppointmentRequest();
     const navigate = useNavigate();
@@ -84,7 +83,7 @@ const AppointmentsUpdateRequest: React.FC = () => {
             await updateAppointmentRequest(payload);
 
             setDialog({ message: "Appointment request updated successfully!", type: "success" });
-            setTimeout(() => navigate(`/appointments/${id}/details`), 1500);
+            setTimeout(() => navigate(`/staff-area/appointments/${id}/details`), 1500);
         } catch (err) {
             setDialog({ message: "Updating appointment request failed.", type: "error" });
         } finally {
@@ -152,7 +151,7 @@ const AppointmentsUpdateRequest: React.FC = () => {
 
     return (
         <>
-            {(formLoading || userLoading || isLoading) && (
+            {(formLoading || isLoading) && (
                 <div className="spinner-overlay">
                     <Spinner />
                 </div>
@@ -195,7 +194,7 @@ const AppointmentsUpdateRequest: React.FC = () => {
                         <button type="submit" className="add-pet-btn" disabled={formLoading}>
                             Update
                         </button>
-                        <Link to={`/appointments/${id}/details`} className="cancel-btn">Cancel</Link>
+                        <Link to={`/staff-area/appointments/${id}/details`} className="cancel-btn">Cancel</Link>
                     </form>
                 </div>
             </section>
@@ -211,4 +210,4 @@ const AppointmentsUpdateRequest: React.FC = () => {
     );
 };
 
-export default AppointmentsUpdateRequest;
+export default StaffAppointmentsUpdateRequest;

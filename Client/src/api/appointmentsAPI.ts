@@ -5,7 +5,7 @@ import http from "../utils/request";
 import type { Appointment, CreateRequestAppointment, CreateRequestAppointmentResponse, DeleteAppointmentRequest, DeleteAppointmentResponse, GetAllAppointmentsRequest, GetAppointmentDetailsRequest, GetAppointmentDetailsResponse, GetOwnerAppointmentsRequest, UpdateAppointmentRequest, UpdateAppointmentResponse } from "../types";
 
 // Import for staff appointments:
-import type {CompleteAppointmentRequest, CreateAppointmentRequest, CreateAppointmentResponse, EditAppointmentRequest, EditAppointmentResponse } from "../types";
+import type { CompleteAppointmentRequest, CreateAppointmentRequest, CreateAppointmentResponse, EditAppointmentRequest, EditAppointmentResponse } from "../types";
 
 const baseUrl = `${import.meta.env.VITE_BASE_API_URL}/Appointments`;
 
@@ -101,6 +101,8 @@ export const useUpdateAppointmentRequest = () => {
         abortControllerRef.current?.abort();
         abortControllerRef.current = new AbortController();
 
+        console.log(`API: ${data.date}`);
+
         return http.put<UpdateAppointmentRequest, UpdateAppointmentResponse>(
             `${baseUrl}/UpdateAppointmentRequest/${data.id}`,
             data,
@@ -134,6 +136,37 @@ export const useDeleteAppointmentRequest = () => {
 };
 
 // Staff Appointments (only for staff members):
+export const useGetAllAppointmentsStaff = () => {
+    const abortControllerRef = useRef<AbortController | null>(null);
+
+    useEffect(() => {
+        return () => {
+            abortControllerRef.current?.abort();
+        };
+    }, []);
+
+    const getAllAppointmentsStaff = async (data: GetOwnerAppointmentsRequest | GetAllAppointmentsRequest) => {
+        abortControllerRef.current = new AbortController();
+
+        const queryParams = new URLSearchParams();
+
+        if (data.OwnerId) queryParams.append("OwnerId", data.OwnerId);
+        if (data.StaffId) queryParams.append("StaffId", data.StaffId);
+        if (data.Status) queryParams.append("Status", data.Status);
+        if (data.StartDate) queryParams.append("StartDate", data.StartDate);
+        if (data.EndDate) queryParams.append("EndDate", data.EndDate);
+
+        const url = `${baseUrl}/GetAppointments?${queryParams.toString()}`;
+
+        return http.get<Appointment[]>(url, {
+            signal: abortControllerRef.current.signal,
+        });
+    };
+
+
+    return { getAllAppointmentsStaff, cancelGetAllAppointmentsStaff: () => abortControllerRef.current?.abort() };
+};
+
 export const useCreateAppointment = () => {
     const abortControllerRef = useRef<AbortController | null>(null);
 

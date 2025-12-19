@@ -68,7 +68,7 @@ const Header: React.FC = () => {
 
                     {role === "SuperAdministrator" && (
                         <>
-                            <NavLink to="/staffArea" style={{ "--i": "7" } as React.CSSProperties}>Staff Area</NavLink>
+                            <NavLink to="/staff-area" style={{ "--i": "7" } as React.CSSProperties}>Staff Area</NavLink>
                             <NavLink to="/administration" style={{ "--i": "8" } as React.CSSProperties}>Administration</NavLink>
                             <NavLink to="/logout" style={{ "--i": "9" } as React.CSSProperties}>Logout</NavLink>
                         </>
@@ -76,7 +76,7 @@ const Header: React.FC = () => {
 
                     {role === "StaffMember" && (
                         <>
-                            <NavLink to="/staffArea" style={{ "--i": "7" } as React.CSSProperties}>Staff Area</NavLink>
+                            <NavLink to="/staff-area" style={{ "--i": "7" } as React.CSSProperties}>Staff Area</NavLink>
                             <NavLink to="/logout" style={{ "--i": "8" } as React.CSSProperties}>Logout</NavLink>
                         </>
                     )}

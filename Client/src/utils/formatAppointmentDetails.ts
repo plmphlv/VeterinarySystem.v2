@@ -29,7 +29,7 @@ export const formatDate = (isoDate: string) => {
 
 export const formatTime = (isoDate: string) => {
     const date = new Date(isoDate);
-    let hours = date.getHours();
+    let hours = date.getHours() + 2;
     const minutes = date.getMinutes().toString().padStart(2, "0");
 
     const ampm = hours >= 12 ? "PM" : "AM";
@@ -37,4 +37,28 @@ export const formatTime = (isoDate: string) => {
     const formattedHours = hours.toString().padStart(2, "0");
 
     return `${formattedHours}:${minutes} ${ampm}`;
+};
+
+// UTC (ISO) → datetime-local (local time)
+export const isoToDatetimeLocal = (isoString: string): string => {
+    const date = new Date(isoString);
+
+    const pad = (n: number) => String(n).padStart(2, "0");
+
+    return (
+        date.getFullYear() +
+        "-" +
+        pad(date.getMonth() + 1) +
+        "-" +
+        pad(date.getDate()) +
+        "T" +
+        pad(date.getHours()) +
+        ":" +
+        pad(date.getMinutes())
+    );
+};
+
+// datetime-local (local time) → ISO (UTC)
+export const datetimeLocalToIso = (localDate: string): string => {
+    return new Date(localDate).toISOString();
 };

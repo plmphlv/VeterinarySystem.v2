@@ -3,6 +3,7 @@ import { Route, Routes } from "react-router";
 import UserProvider from "./providers/UserProvider";
 import AuthGuard from "./components/guards/AuthGuard";
 import GuestGuard from "./components/guards/GuestGuard";
+import StaffGuard from "./components/guards/StaffGuard";
 
 import Header from "./components/header/Header";
 import Home from "./components/home/Home";
@@ -30,6 +31,15 @@ import EditProfile from "./components/profile/edit-profile/Edit-Profile";
 import ChangePassword from "./components/profile/change-password/Change-Password";
 import Login from "./components/login/Login";
 import Register from "./components/register/Register";
+import StaffArea from "./components/staff-area/Staff-Area";
+import AnimalTypes from "./components/staff-area/animal-types/Animal-Types";
+import AnimalTypesAdd from "./components/staff-area/animal-types/animal-types-add/Animal-Types-Add";
+import AnimalTypesEdit from "./components/staff-area/animal-types/animal-types-edit/Animal-Types-Edit";
+import AnimalTypesDelete from "./components/staff-area/animal-types/animal-types-delete/Animal-Types-Delete";
+import StaffAppointments from "./components/staff-area/staff-appointments/Staff-Appointments";
+import StaffAppointmentsItemDetails from "./components/staff-area/staff-appointments/staff-appointments-item-details/Staff-Appointments-Item-Details";
+import StaffAppointmentsUpdateRequest from "./components/staff-area/staff-appointments/staff-appointments-update-request/Staff-Appointments-Update-Request";
+import StaffAppointmentsDeleteRequest from "./components/staff-area/staff-appointments/staff-appointments-delete-request/Staff-Appointments-Delete-Request";
 import Logout from "./components/logout/Logout";
 import Error from "./components/error/Error";
 import Footer from "./components/footer/Footer";
@@ -65,6 +75,18 @@ function App() {
           <Route path="/profile" element={<Profile />}></Route>
           <Route path="/profile/edit" element={<EditProfile />}></Route>
           <Route path="/profile/change-password" element={<ChangePassword />}></Route>
+
+          <Route element={<StaffGuard />}>
+            <Route path="/staff-area" element={<StaffArea />}></Route>
+            <Route path="/staff-area/animal-types" element={<AnimalTypes />}></Route>
+            <Route path="/staff-area/animal-types/add" element={<AnimalTypesAdd />}></Route>
+            <Route path="/staff-area/animal-types/:id/edit" element={<AnimalTypesEdit />}></Route>
+            <Route path="/staff-area/animal-types/:id/delete" element={<AnimalTypesDelete />}></Route>
+            <Route path="/staff-area/appointments" element={<StaffAppointments />}></Route>
+            <Route path="/staff-area/appointments/:id/details" element={<StaffAppointmentsItemDetails />}></Route>
+            <Route path="/staff-area/appointments/:id/update-request" element={<StaffAppointmentsUpdateRequest />}></Route>
+            <Route path="/staff-area/appointments/:id/delete-request" element={<StaffAppointmentsDeleteRequest />}></Route>
+          </Route>
           <Route path="/logout" element={<Logout />}></Route>
         </Route>
 

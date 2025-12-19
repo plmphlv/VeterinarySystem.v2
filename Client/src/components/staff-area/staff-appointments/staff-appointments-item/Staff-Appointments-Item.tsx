@@ -1,13 +1,14 @@
 import { Link } from "react-router";
-import { useGetAllAppointments } from "../../../api/appointmentsAPI";
 import { useEffect, useState } from "react";
-import type { Appointment, AppointmentStatus, GetAllAppointmentsErrors } from "../../../types";
-import Spinner from "../../spinner/Spinner";
-import Dialog from "../../dialog/Dialog";
-import { useGetUserData } from "../../../hooks/useGetUserData";
-import { formatDate, formatStatus, formatTime } from "../../../utils/formatAppointmentDetails";
+import { useGetUserData } from "../../../../hooks/useGetUserData";
+import { useGetAllAppointments } from "../../../../api/appointmentsAPI";
+import type { Appointment, AppointmentStatus, GetAllAppointmentsErrors } from "../../../../types";
+import Spinner from "../../../spinner/Spinner";
+import Dialog from "../../../dialog/Dialog";
+import { formatDate, formatStatus, formatTime } from "../../../../utils/formatAppointmentDetails";
 
-const AppointmentsItem: React.FC = () => {
+
+const StaffAppointmentsItem: React.FC = () => {
     const { userData, isLoading, error } = useGetUserData();
     const [showError, setShowError] = useState(true);
     const { getAllAppointments, cancelGetAllAppointments } = useGetAllAppointments();
@@ -17,26 +18,31 @@ const AppointmentsItem: React.FC = () => {
     const [appointments, setAppointments] = useState<Appointment[]>([]);
     const [loading, setLoading] = useState(false);
 
+    const [ownerId, setOwnerId] = useState("");
     const [staffId, setStaffId] = useState("");
     const [status, setStatus] = useState("");
     const [startDate, setStartDate] = useState("");
     const [endDate, setEndDate] = useState("");
 
     const fetchAppointments = async () => {
-        if (!userData?.id) return;
-
         try {
             setLoading(true);
             setErrors({});
 
-            const filters: any = {
-                OwnerId: userData.id,
-            };
+            const filters: any = {};
 
-            if (staffId.trim()) filters.StaffId = staffId.trim();
+            if (ownerId.trim()) {
+                filters.OwnerId = ownerId.trim();
+            }
+
+            if (staffId.trim()) {
+                filters.StaffId = staffId.trim();
+            }
+
             if (status) filters.Status = status as AppointmentStatus;
             if (startDate) filters.StartDate = startDate;
             if (endDate) filters.EndDate = endDate;
+
 
             const fetchedAppointments = await getAllAppointments(filters) || [];
 
@@ -57,10 +63,8 @@ const AppointmentsItem: React.FC = () => {
 
 
     useEffect(() => {
-        if (!userData?.id) return;
-
         fetchAppointments();
-    }, [userData, staffId, status, startDate, endDate]);
+    }, [ownerId, staffId, status, startDate, endDate]);
 
 
     useEffect(() => {
@@ -88,6 +92,16 @@ const AppointmentsItem: React.FC = () => {
                     )}
 
                     <section className="appointments-filter">
+                        <div className="filter-item">
+                            <label htmlFor="ownerId">Owner Account ID:</label>
+                            <input
+                                id="ownerId"
+                                type="text"
+                                value={ownerId}
+                                onChange={(e) => setOwnerId(e.target.value)}
+                            />
+                        </div>
+
                         {/* <div className="filter-item">
                             <label htmlFor="staffId">Staff ID:</label>
                             <input
@@ -152,7 +166,7 @@ const AppointmentsItem: React.FC = () => {
                                     <p><i className="fa-solid fa-clock"></i> Hour: {formatTime(appointment.date)}</p>
                                     <p><i className="fa-solid fa-pen"></i> Status: {formatStatus(appointment.status)}</p>
                                     <div className="appointment-actions">
-                                        <Link to={`/appointments/${appointment.id}/details`} className="more-details-btn">
+                                        <Link to={`/staff-area/appointments/${appointment.id}/details`} className="more-details-btn">
                                             → More Details
                                         </Link>
                                     </div>
@@ -162,7 +176,7 @@ const AppointmentsItem: React.FC = () => {
                     </section>
                 </>
             ) : (
-                (staffId || status || startDate || endDate) ? (
+                (ownerId ||staffId || status || startDate || endDate) ? (
                     <>
                         {loading && (
                             <div className="spinner-overlay">
@@ -179,6 +193,15 @@ const AppointmentsItem: React.FC = () => {
                         )}
 
                         <section className="appointments-filter">
+                            <div className="filter-item">
+                                <label htmlFor="ownerId">Owner Account ID:</label>
+                                <input
+                                    id="ownerId"
+                                    type="text"
+                                    value={ownerId}
+                                    onChange={(e) => setOwnerId(e.target.value)}
+                                />
+                            </div>
                             {/* <div className="filter-item">
                                 <label htmlFor="staffId">Staff ID:</label>
                                 <input
@@ -253,4 +276,4 @@ const AppointmentsItem: React.FC = () => {
     );
 };
 
-export default AppointmentsItem;
+export default StaffAppointmentsItem;
