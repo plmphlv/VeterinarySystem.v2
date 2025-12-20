@@ -147,11 +147,11 @@ const EditProfile: React.FC = () => {
                 </div>
             )}
 
-            <h1 className="h1-profile">Edit Profile</h1>
+            <h1 className="edit-profile-h1">Edit Profile</h1>
 
             {userData ? (
-                <div className="profile">
-                    <div className="profile-card">
+                <div className="edit-profile-container">
+                    <div className="edit-profile-card">
                         <form onSubmit={onSubmit} noValidate>
                             {([
                                 { name: "firstName", label: "First Name", type: "text", icon: "fa-pen", placeholder: "Enter your new first name" },
@@ -159,7 +159,7 @@ const EditProfile: React.FC = () => {
                                 { name: "phoneNumber", label: "Phone Number", type: "tel", icon: "fa-phone", placeholder: "Enter your new phone number" },
                                 { name: "address", label: "Address (Optional)", type: "text", icon: "fa-solid fa-map-marker-alt", placeholder: "Enter your address" },
                             ] as const).map(({ name, label, type, icon, placeholder }) => (
-                                <div className="field-edit-profile" key={name}>
+                                <div className="edit-profile-field" key={name}>
                                     <label htmlFor={name}>
                                         <i className={`fa-solid ${icon}`}></i> {label}:
                                     </label>
@@ -178,14 +178,13 @@ const EditProfile: React.FC = () => {
                                 </div>
                             ))}
 
-                            <div className="profile-buttons">
+                            <div className="edit-profile-btns">
 
-
-                                <button className="edit-button" type="submit" disabled={isLoading}>
+                                <button className="edit-profile-save-edit-btn" type="submit" disabled={isLoading}>
                                     Save
                                 </button>
 
-                                <Link to="/profile" className="edit-button">Cancel</Link>
+                                <Link to="/profile" className="edit-profile-cancel-edit-btn">Cancel</Link>
                             </div>
 
                             {dialog && <div className={`dialog ${dialog.type}`}>{dialog.message}</div>}

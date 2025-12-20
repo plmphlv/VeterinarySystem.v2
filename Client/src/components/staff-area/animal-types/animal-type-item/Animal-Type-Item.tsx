@@ -78,7 +78,7 @@ const AnimalTypeItem: React.FC = () => {
             {animalTypes.length > 0 ? (
                 <>
                     {animalTypes.map((animalType) => (
-                        <li key={animalType.id} className="animal-type-item">{animalType.value}
+                        <li key={animalType.id} className="animal-types-item">{animalType.value}
                             <div className="animal-types-btns">
                                 <Link to={`/staff-area/animal-types/${animalType.id}/edit`} className="animal-types-edit-btn">Edit</Link>
                                 <Link to={`/staff-area/animal-types/${animalType.id}/delete`} className="animal-types-delete-btn">Delete</Link>

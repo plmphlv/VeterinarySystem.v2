@@ -22,9 +22,9 @@ const Profile: React.FC = () => {
 
             {userData ? (
                 <>
-                    <h1 className="h1-profile">{userData.firstName}'s Profile</h1>
-                    <div className="profile">
-                        <div className="profile-card">
+                    <h1 className="profile-h1">{userData.firstName}'s Profile</h1>
+                    <div className="profile-container">
+                        <div className="profile-item-card">
                             <div className="avatar">
                                 {userData.firstName[0]}{userData.lastName[0]}
                             </div>
@@ -55,16 +55,16 @@ const Profile: React.FC = () => {
                                     <span>{userData.address}</span>
                                 </div>
                             )}
-                            <div className="profile-buttons">
-                                <Link to="/profile/edit" className="edit-button">Edit Profile</Link>
-                                <Link to="/profile/change-password" className="edit-button">Change Password</Link>
-                                {/* <Link to="/profile/change-email" className="edit-button">Change Email Address</Link> */}
+                            <div className="profile-btns">
+                                <Link to="/profile/edit" className="profile-edit-btn">Edit Profile</Link>
+                                <Link to="/profile/change-password" className="profile-change-pass-btn">Change Password</Link>
+                                {/* <Link to="/profile/change-email" className="profile-change-email-btn">Change Email Address</Link> */}
                             </div>
                         </div>
                     </div>
                 </>
             ) : (
-                // <h1 className="no-user-data">No user data found, please try again later.</h1>
+                // <h1 className="profile-no-user-data">No user data found, please try again later.</h1>
                 null
             )}
         </>

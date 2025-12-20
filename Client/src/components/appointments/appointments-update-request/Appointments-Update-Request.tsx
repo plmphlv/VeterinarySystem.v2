@@ -158,11 +158,11 @@ const AppointmentsUpdateRequest: React.FC = () => {
                 </div>
             )}
 
-            <section className="my-pets-add">
-                <div className="my-pets-add-container">
+            <section className="appointments-update-request">
+                <div className="appointments-update-request-container">
                     <h2>Update Appointment Request</h2>
                     <form onSubmit={onSubmit} noValidate>
-                        <div className="my-pets-add-form-group">
+                        <div className="appointments-update-request-form-group">
                             <label htmlFor="date">Date of appointment:</label>
                             <input
                                 type="datetime-local"
@@ -176,7 +176,7 @@ const AppointmentsUpdateRequest: React.FC = () => {
                             {errors.date && <p className="error-text">{errors.date}</p>}
                         </div>
 
-                        <div className="my-pets-add-form-group">
+                        <div className="appointments-update-request-form-group">
                             <label htmlFor="description">Description:</label>
                             <input
                                 type="text"
@@ -192,10 +192,10 @@ const AppointmentsUpdateRequest: React.FC = () => {
                             {errors.description && <p className="error-text">{errors.description}</p>}
                         </div>
 
-                        <button type="submit" className="add-pet-btn" disabled={formLoading}>
+                        <button type="submit" className="appointments-update-request-btn" disabled={formLoading}>
                             Update
                         </button>
-                        <Link to={`/appointments/${id}/details`} className="cancel-btn">Cancel</Link>
+                        <Link to={`/appointments/${id}/details`} className="appointments-update-request-cancel-btn">Cancel</Link>
                     </form>
                 </div>
             </section>

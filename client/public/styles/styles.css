@@ -749,8 +749,8 @@
     }
 
     .appointments-filter button:hover {
-    background-color: #2a796f;
-}
+        background-color: #2a796f;
+    }
 }
 
 /* Appointments end */
@@ -794,6 +794,342 @@
 
 /* Appointments Details end */
 
+/* Appointments Create Request Start */
+
+.appointments-create-request {
+    min-height: 100vh;
+    padding: 60px 20px;
+    width: 100%;
+    background-image: url('../images/veterinary-hospital.png');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    padding: 2rem 1rem;
+    box-sizing: border-box;
+}
+
+.appointments-create-request::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.7);
+    z-index: 1;
+    pointer-events: none;
+}
+
+.appointments-create-request-container {
+    z-index: 2;
+    text-align: start;
+    background-color: rgb(78, 197, 180, 0.8);
+    padding: 40px;
+    border-radius: 16px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+    max-width: 400px;
+    animation: fadeInOpacity 1s;
+    width: 90%;
+}
+
+.appointments-create-request-container h2 {
+    text-align: center;
+    color: #fff;
+    margin-bottom: 30px;
+}
+
+.appointments-create-request-form-group {
+    margin-bottom: 20px;
+}
+
+.appointments-create-request-form-group select {
+    padding: 0.7rem;
+    border-radius: 0.5rem;
+}
+
+.appointments-create-request-form-group label {
+    display: block;
+    margin-bottom: 6px;
+    font-weight: bold;
+    color: #fff;
+}
+
+.appointments-create-request-form-group input {
+    width: 100%;
+    padding: 12px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    outline: none;
+    transition: 0.3s;
+}
+
+.appointments-create-request-form-group input:focus {
+    border-color: #000;
+}
+
+.appointments-create-request-btn {
+    width: 100%;
+    padding: 12px;
+    background-color: #48d889;
+    color: 4EC5B4;
+    border: none;
+    margin-bottom: 0.5rem;
+    border-radius: 8px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.appointments-create-request-cancel-btn {
+    width: 100%;
+    padding: 12px;
+    font-size: 14px;
+    display: inline-block;
+    text-align: center;
+    text-decoration: none;
+    background-color: #fff;
+    color: #000;
+    border: none;
+    border-radius: 8px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.appointments-create-request-bottom-text {
+    text-align: center;
+    margin-top: 20px;
+    font-size: 14px;
+    color: #333;
+}
+
+.appointments-create-request-bottom-text a {
+    color: #fff;
+    position: relative;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+.appointments-create-request-bottom-text a::before {
+    content: '';
+    position: absolute;
+    width: 100%;
+    height: 3px;
+    border-radius: 4px;
+    background-color: #fff;
+    bottom: -2px;
+    left: 0;
+    transform-origin: left;
+    transform: scaleX(0);
+    transition: transform .3s ease-in-out;
+}
+
+.appointments-create-request-form-group input.error {
+    border: 3px solid #ff4d4d;
+}
+
+.appointments-create-request-form-group input.success {
+    border: 3px solid #3cb371;
+}
+
+.error-text {
+    color: #ff4d4d;
+    font-weight: bold;
+    font-size: 13px;
+    margin-top: 5px;
+}
+
+@media(min-width: 1025px) {
+    .appointments-create-request-btn:hover {
+        background-color: #D3D3D3;
+    }
+
+    .appointments-create-request-bottom-text a:hover::before {
+        transform-origin: left;
+        transform: scaleX(1);
+    }
+
+    .appointments-create-request-btn:hover {
+        background-color: #2f8a58;
+    }
+
+    .appointments-create-request-cancel-btn:hover {
+        background-color: #D3D3D3;
+    }
+}
+
+/* Appointments Create Request End */
+
+/* Appointments Update Request Start */
+
+.appointments-update-request {
+    min-height: 100vh;
+    padding: 60px 20px;
+    width: 100%;
+    background-image: url('../images/veterinary-hospital.png');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    padding: 2rem 1rem;
+    box-sizing: border-box;
+}
+
+.appointments-update-request::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.7);
+    z-index: 1;
+    pointer-events: none;
+}
+
+.appointments-update-request-container {
+    z-index: 2;
+    text-align: start;
+    background-color: rgb(78, 197, 180, 0.8);
+    padding: 40px;
+    border-radius: 16px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+    max-width: 400px;
+    animation: fadeInOpacity 1s;
+    width: 90%;
+}
+
+.appointments-update-request-container h2 {
+    text-align: center;
+    color: #fff;
+    margin-bottom: 30px;
+}
+
+.appointments-update-request-form-group {
+    margin-bottom: 20px;
+}
+
+.appointments-update-request-form-group select {
+    padding: 0.7rem;
+    border-radius: 0.5rem;
+}
+
+.appointments-update-request-form-group label {
+    display: block;
+    margin-bottom: 6px;
+    font-weight: bold;
+    color: #fff;
+}
+
+.appointments-update-request-form-group input {
+    width: 100%;
+    padding: 12px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    outline: none;
+    transition: 0.3s;
+}
+
+.appointments-update-request-form-group input:focus {
+    border-color: #000;
+}
+
+.appointments-update-request-btn {
+    width: 100%;
+    padding: 12px;
+    background-color: #48d889;
+    color: 4EC5B4;
+    border: none;
+    margin-bottom: 0.5rem;
+    border-radius: 8px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.appointments-update-request-cancel-btn {
+    width: 100%;
+    padding: 12px;
+    font-size: 14px;
+    display: inline-block;
+    text-align: center;
+    text-decoration: none;
+    background-color: #fff;
+    color: #000;
+    border: none;
+    border-radius: 8px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.appointments-update-request-bottom-text {
+    text-align: center;
+    margin-top: 20px;
+    font-size: 14px;
+    color: #333;
+}
+
+.appointments-update-request-bottom-text a {
+    color: #fff;
+    position: relative;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+.appointments-update-request-bottom-text a::before {
+    content: '';
+    position: absolute;
+    width: 100%;
+    height: 3px;
+    border-radius: 4px;
+    background-color: #fff;
+    bottom: -2px;
+    left: 0;
+    transform-origin: left;
+    transform: scaleX(0);
+    transition: transform .3s ease-in-out;
+}
+
+.appointments-update-request-form-group input.error {
+    border: 3px solid #ff4d4d;
+}
+
+.appointments-update-request-form-group input.success {
+    border: 3px solid #3cb371;
+}
+
+.error-text {
+    color: #ff4d4d;
+    font-weight: bold;
+    font-size: 13px;
+    margin-top: 5px;
+}
+
+@media(min-width: 1025px) {
+    .appointments-update-request-btn:hover {
+        background-color: #D3D3D3;
+    }
+
+    .appointments-update-request-bottom-text a:hover::before {
+        transform-origin: left;
+        transform: scaleX(1);
+    }
+
+    .appointments-update-request-btn:hover {
+        background-color: #2f8a58;
+    }
+
+    .appointments-update-request-cancel-btn:hover {
+        background-color: #D3D3D3;
+    }
+}
+
+/* Appointments Update Request End */
+
 /* My Pets Start */
 .my-pets {
     padding: 60px 20px;
@@ -816,7 +1152,7 @@
     border-radius: 1em;
 }
 
-.no-pets-h1 {
+.my-pets-no-pets-h1 {
     animation: fadeInOpacity 1s;
     margin-top: 100px;
     margin-bottom: 100px;
@@ -850,14 +1186,6 @@
 /* My Pets End */
 
 /* My Pets Item Start */
-.my-pets-item-section {
-    animation: fadeInOpacity 1s;
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-    gap: 2rem;
-    padding: 2rem;
-    max-width: 400px;
-}
 
 .my-pets-item-card {
     background-color: #ffffff;
@@ -873,8 +1201,8 @@
     object-fit: cover;
 }
 
-.my-pets-item-card .content {
-    padding: 1.5rem;
+.my-pets-item-card-content {
+    padding: 1rem 3rem 1rem 3rem;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -915,8 +1243,29 @@
 
 /* My Pets Item End */
 
-/* My Pet Item Info Start */
-.my-pets-item-info-content {
+/* My Pet Item Details Start */
+.my-pets-item-details-h1 {
+    margin-top: 3rem;
+    animation: fadeInOpacity 1s;
+    background-color: #4EC5B4;
+    color: #fff;
+    padding: 0.3em 1em;
+    border-radius: 1em;
+}
+
+.my-pets-item-details {
+    padding: 60px 20px;
+    animation: fadeInOpacity 1s;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    text-align: center;
+    position: relative;
+}
+
+.my-pets-item-details-content {
     max-width: 350px;
     animation: fadeInOpacity 1s;
     width: 100%;
@@ -932,32 +1281,42 @@
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
-.my-pets-item-info-h1 {
+.my-pets-item-details-h1 {
     display: inline-block;
     animation: fadeInOpacity 1s;
-    margin-bottom: 3rem;
+    margin-bottom: 2rem;
     background-color: #4EC5B4;
     color: #fff;
     padding: 0.3em 1em;
     border-radius: 1em;
 }
 
-.my-pets-item-info-content img {
+.my-pets-item-details-content-h1 {
+    display: inline-block;
+    animation: fadeInOpacity 1s;
+    margin-bottom: 2rem;
+    background-color: #4EC5B4;
+    color: #fff;
+    padding: 0.3em 1em;
+    border-radius: 1em;
+}
+
+.my-pets-item-details-content img {
     width: 100%;
     border-radius: 10px;
     margin-bottom: 1.5rem;
 }
 
-.my-pets-item-info-content h2 {
+.my-pets-item-details-content h2 {
     color: #4EC5B4;
     margin-bottom: 1rem;
 }
 
-.my-pets-item-info-content p {
+.my-pets-item-details-content p {
     margin-bottom: 0.5rem;
 }
 
-.my-pets-item-info-back-link {
+.my-pets-item-details-back-link {
     margin-top: 1rem;
     display: inline-block;
     background-color: #4EC5B4;
@@ -969,7 +1328,7 @@
     transition: background-color 0.7s ease;
 }
 
-.my-pets-item-info-edit {
+.my-pets-item-details-edit-btn {
     margin-top: 1rem;
     margin-right: 0.5rem;
     display: inline-block;
@@ -982,7 +1341,7 @@
     transition: background-color 0.7s ease;
 }
 
-.my-pets-item-info-delete {
+.my-pets-item-details-delete-btn {
     margin-top: 1rem;
     display: inline-block;
     background-color: #ff4d4d;
@@ -994,23 +1353,22 @@
 }
 
 @media(min-width: 1025px) {
-    .my-pets-item-info-back-link:hover {
+    .my-pets-item-details-back-link:hover {
         background-color: #2a796f;
     }
 
-    .my-pets-item-info-delete:hover {
+    .my-pets-item-details-delete:hover {
         background-color: #ba3838;
     }
 
-    .my-pets-item-info-edit:hover {
+    .my-pets-item-details-edit:hover {
         background-color: rgb(190, 190, 0);
     }
 }
 
-/* My Pet Item Info End */
+/* My Pet Item Details End */
 
-/* Add Pet Start*/
-
+/* My Pets Add Start*/
 .my-pets-add {
     min-height: 100vh;
     padding: 60px 20px;
@@ -1175,15 +1533,183 @@
     }
 }
 
-/* Add Pet End */
+/* My Pets Add End */
+
+/* My Pets Edit Start*/
+
+.my-pets-edit {
+    min-height: 100vh;
+    padding: 60px 20px;
+    width: 100%;
+    background-image: url('../images/veterinary-hospital.png');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    padding: 2rem 1rem;
+    box-sizing: border-box;
+}
+
+.my-pets-edit::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.7);
+    z-index: 1;
+    pointer-events: none;
+}
+
+.my-pets-edit-container {
+    z-index: 2;
+    text-align: start;
+    background-color: rgb(78, 197, 180, 0.8);
+    padding: 40px;
+    border-radius: 16px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+    max-width: 400px;
+    animation: fadeInOpacity 1s;
+    width: 90%;
+}
+
+.my-pets-edit-container h2 {
+    text-align: center;
+    color: #fff;
+    margin-bottom: 30px;
+}
+
+.my-pets-edit-form-group {
+    margin-bottom: 20px;
+}
+
+.my-pets-edit-form-group select {
+    padding: 0.7rem;
+    border-radius: 0.5rem;
+}
+
+.my-pets-edit-form-group label {
+    display: block;
+    margin-bottom: 6px;
+    font-weight: bold;
+    color: #fff;
+}
+
+.my-pets-edit-form-group input {
+    width: 100%;
+    padding: 12px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    outline: none;
+    transition: 0.3s;
+}
+
+.my-pets-edit-form-group input:focus {
+    border-color: #000;
+}
+
+.my-pets-edit-pet-btn {
+    width: 100%;
+    padding: 12px;
+    background-color: #48d889;
+    color: 4EC5B4;
+    border: none;
+    margin-bottom: 0.5rem;
+    border-radius: 8px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.my-pets-edit-cancel-btn {
+    width: 100%;
+    padding: 12px;
+    font-size: 14px;
+    display: inline-block;
+    text-align: center;
+    text-decoration: none;
+    background-color: #fff;
+    color: #000;
+    border: none;
+    border-radius: 8px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.my-pets-edit-bottom-text {
+    text-align: center;
+    margin-top: 20px;
+    font-size: 14px;
+    color: #333;
+}
+
+.my-pets-edit-bottom-text a {
+    color: #fff;
+    position: relative;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+.my-pets-edit-bottom-text a::before {
+    content: '';
+    position: absolute;
+    width: 100%;
+    height: 3px;
+    border-radius: 4px;
+    background-color: #fff;
+    bottom: -2px;
+    left: 0;
+    transform-origin: left;
+    transform: scaleX(0);
+    transition: transform .3s ease-in-out;
+}
+
+.my-pets-edit-form-group input.error {
+    border: 3px solid #ff4d4d;
+}
+
+.my-pets-edit-form-group input.success {
+    border: 3px solid #3cb371;
+}
+
+.error-text {
+    color: #ff4d4d;
+    font-weight: bold;
+    font-size: 13px;
+    margin-top: 5px;
+}
+
+@media(min-width: 1025px) {
+    .my-pets-edit-btn:hover {
+        background-color: #D3D3D3;
+    }
+
+    .my-pets-edit-bottom-text a:hover::before {
+        transform-origin: left;
+        transform: scaleX(1);
+    }
+
+    .my-pets-edit-pet-btn:hover {
+        background-color: #2f8a58;
+    }
+
+    .my-pets-edit-cancel-btn:hover {
+        background-color: #D3D3D3;
+    }
+}
+
+/* My Pets Edit End */
 
 /* Profile Page Start */
 
-.profile {
+.profile-container {
     padding: 60px 15px;
 }
 
-.profile-card {
+.profile-item-card {
     background-color: #fff;
     animation: fadeInOpacity 1s;
     max-width: 700px;
@@ -1194,7 +1720,7 @@
     position: relative;
 }
 
-.no-user-data {
+.profile-no-user-data {
     animation: fadeInOpacity 1s;
     margin-top: 150px;
     background-color: #4EC5B4;
@@ -1203,7 +1729,7 @@
     border-radius: 0.5em;
 }
 
-.h1-profile {
+.profile-h1 {
     animation: fadeInOpacity 1s;
     margin-top: 3rem;
     background-color: #4EC5B4;
@@ -1212,7 +1738,7 @@
     border-radius: 1em;
 }
 
-.avatar {
+.profile-container .avatar {
     width: 100px;
     height: 100px;
     background-color: #4EC5B4;
@@ -1226,7 +1752,7 @@
     margin-bottom: 3rem;
 }
 
-.field {
+.profile-container .field {
     display: flex;
     justify-content: space-between;
     margin: 1rem 0;
@@ -1236,18 +1762,18 @@
     margin-bottom: 2rem;
 }
 
-.field label {
+.profile-container .field label {
     font-weight: 600;
     color: #4EC5B4;
 }
 
-.field span {
+.profile-container .field span {
     color: #333;
     text-align: right;
     max-width: 65%;
 }
 
-.profile-buttons {
+.profile-btns {
     margin-top: 1rem;
     display: flex;
     flex-wrap: wrap;
@@ -1255,7 +1781,7 @@
     justify-content: center;
 }
 
-.edit-button {
+.profile-edit-btn {
     background-color: #4EC5B4;
     color: #fff;
     text-decoration: none;
@@ -1268,7 +1794,7 @@
     white-space: nowrap;
 }
 
-.change-button {
+.profile-change-pass-btn {
     background-color: #4EC5B4;
     color: #fff;
     text-decoration: none;
@@ -1281,19 +1807,19 @@
 }
 
 @media(min-width: 1025px) {
-    .edit-button:hover {
+    .profile-edit-btn:hover {
         background-color: #2a796f;
         transition: 0.3s ease-in;
     }
 }
 
 @media (max-width: 480px) {
-    .field {
+    .profile-container .field {
         flex-direction: column;
         align-items: flex-start;
     }
 
-    .field span {
+    .profile-container .field span {
         margin-top: 0.3rem;
         max-width: 100%;
     }
@@ -1301,9 +1827,142 @@
 
 /* Profile Page End */
 
-/* Edit Profile & Change Password Page Start */
+/* Edit Profile Page Start */
 
-.field-edit-profile {
+.edit-profile-container {
+    padding: 60px 40px;
+}
+
+.edit-profile-card {
+    background-color: #fff;
+    animation: fadeInOpacity 1s;
+    max-width: 700px;
+    border-radius: 15px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+    padding: 40px 60px;
+    text-align: center;
+    position: relative;
+}
+
+.edit-profile-no-user-data {
+    animation: fadeInOpacity 1s;
+    margin-top: 150px;
+    background-color: #4EC5B4;
+    color: #fff;
+    padding: 0.3em 1em;
+    border-radius: 0.5em;
+}
+
+.edit-profile-h1 {
+    animation: fadeInOpacity 1s;
+    margin-top: 3rem;
+    background-color: #4EC5B4;
+    color: #fff;
+    padding: 0.3em 1em;
+    border-radius: 1em;
+}
+
+.edit-profile-container .avatar {
+    width: 100px;
+    height: 100px;
+    background-color: #4EC5B4;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 2.5rem;
+    color: white;
+    margin: 0 auto 1.5rem;
+    margin-bottom: 3rem;
+}
+
+.edit-profile-container .field {
+    display: flex;
+    justify-content: space-between;
+    margin: 1rem 0;
+    border-bottom: 1px solid #e0e0e0;
+    padding-bottom: 0.5rem;
+    font-size: 1rem;
+    margin-bottom: 2rem;
+}
+
+.edit-profile-container .field label {
+    font-weight: 600;
+    color: #4EC5B4;
+}
+
+.edit-profile-container .field span {
+    color: #333;
+    text-align: right;
+    max-width: 65%;
+}
+
+.edit-profile-btns {
+    margin-top: 1rem;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+    justify-content: center;
+}
+
+.edit-profile-save-edit-btn {
+    background-color: #4EC5B4;
+    color: #fff;
+    text-decoration: none;
+    border: none;
+    padding: 0.8rem 2rem;
+    border-radius: 25px;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: background 0.3s ease;
+    white-space: nowrap;
+}
+
+.edit-profile-cancel-edit-btn {
+    background-color: #4EC5B4;
+    color: #fff;
+    text-decoration: none;
+    border: none;
+    padding: 0.8rem 2rem;
+    border-radius: 25px;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: background 0.3s ease;
+    white-space: nowrap;
+}
+
+.edit-profile-change-pass-btn {
+    background-color: #4EC5B4;
+    color: #fff;
+    text-decoration: none;
+    border: none;
+    padding: 0.8rem 2rem;
+    border-radius: 25px;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: background 0.3s ease;
+}
+
+@media(min-width: 1025px) {
+    .profile-edit-btn:hover {
+        background-color: #2a796f;
+        transition: 0.3s ease-in;
+    }
+}
+
+@media (max-width: 480px) {
+    .edit-profile-container .field {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .edit-profile-container .field span {
+        margin-top: 0.3rem;
+        max-width: 100%;
+    }
+}
+
+.edit-profile-field {
     display: flex;
     flex-direction: column;
     justify-content: space-between;
@@ -1314,18 +1973,18 @@
     text-align: left;
 }
 
-.field-edit-profile label {
+.edit-profile-field label {
     font-weight: 600;
     color: #4EC5B4;
 }
 
-.field-edit-profile span {
+.edit-profile-field span {
     color: #333;
     text-align: right;
     max-width: 65%;
 }
 
-.field-edit-profile input {
+.edit-profile-field input {
     border: none;
     border-bottom: 1px solid #e0e0e0;
     font-size: 1rem;
@@ -1339,7 +1998,168 @@
     transition: border-color 0.3s ease;
 }
 
-/* Edit Profile & Change Password Page End */
+/* Edit Profile Page End */
+
+/* Change Password Page Start */
+
+.change-password-container {
+    padding: 60px 40px;
+}
+
+.change-password-card {
+    background-color: #fff;
+    animation: fadeInOpacity 1s;
+    max-width: 700px;
+    border-radius: 15px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+    padding: 40px 60px;
+    text-align: center;
+    position: relative;
+}
+
+.change-password-no-user-data {
+    animation: fadeInOpacity 1s;
+    margin-top: 150px;
+    background-color: #4EC5B4;
+    color: #fff;
+    padding: 0.3em 1em;
+    border-radius: 0.5em;
+}
+
+.change-password-h1 {
+    animation: fadeInOpacity 1s;
+    margin-top: 3rem;
+    background-color: #4EC5B4;
+    color: #fff;
+    padding: 0.3em 1em;
+    border-radius: 1em;
+}
+
+.change-password-container .avatar {
+    width: 100px;
+    height: 100px;
+    background-color: #4EC5B4;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 2.5rem;
+    color: white;
+    margin: 0 auto 1.5rem;
+    margin-bottom: 3rem;
+}
+
+.change-password-container .field {
+    display: flex;
+    justify-content: space-between;
+    margin: 1rem 0;
+    border-bottom: 1px solid #e0e0e0;
+    padding-bottom: 0.5rem;
+    font-size: 1rem;
+    margin-bottom: 2rem;
+}
+
+.change-password-container .field label {
+    font-weight: 600;
+    color: #4EC5B4;
+}
+
+.change-password-container .field span {
+    color: #333;
+    text-align: right;
+    max-width: 65%;
+}
+
+.change-password-btns {
+    margin-top: 1rem;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+    justify-content: center;
+}
+
+.change-password-save-btn {
+    background-color: #4EC5B4;
+    color: #fff;
+    text-decoration: none;
+    border: none;
+    padding: 0.8rem 2rem;
+    border-radius: 25px;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: background 0.3s ease;
+    white-space: nowrap;
+}
+
+.change-password-cancel-btn {
+    background-color: #4EC5B4;
+    color: #fff;
+    text-decoration: none;
+    border: none;
+    padding: 0.8rem 2rem;
+    border-radius: 25px;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: background 0.3s ease;
+    white-space: nowrap;
+}
+
+@media(min-width: 1025px) {
+    .change-password-btn:hover {
+        background-color: #2a796f;
+        transition: 0.3s ease-in;
+    }
+}
+
+@media (max-width: 480px) {
+    .change-password-container .field {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .change-password-container .field span {
+        margin-top: 0.3rem;
+        max-width: 100%;
+    }
+}
+
+.change-password-field {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    margin: 1rem 0;
+    padding-bottom: 0.5rem;
+    font-size: 1rem;
+    margin-bottom: 2rem;
+    text-align: left;
+}
+
+.change-password-field label {
+    font-weight: 600;
+    color: #4EC5B4;
+}
+
+.change-password-field span {
+    color: #333;
+    text-align: right;
+    max-width: 65%;
+}
+
+.change-password-field input {
+    border: none;
+    border-bottom: 1px solid #e0e0e0;
+    font-size: 1rem;
+    color: #333;
+    max-width: 100%;
+    text-align: left;
+    padding: 0.3rem 0;
+    background: transparent;
+    outline: none;
+    font-family: inherit;
+    transition: border-color 0.3s ease;
+}
+
+/* Change Password Page End */
 
 /* Login Start */
 
@@ -1721,7 +2541,7 @@
     margin: 0;
 }
 
-.animal-type-item {
+.animal-types-item {
     display: flex;
     align-items: center;
     justify-content: space-between;
@@ -1839,6 +2659,298 @@
         flex-direction: column;
     }
 }
+
+/* Animal Types Add Start */
+
+.animal-types-add {
+    min-height: 100vh;
+    padding: 60px 20px;
+    width: 100%;
+    background-image: url('../images/veterinary-hospital.png');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    padding: 2rem 1rem;
+    box-sizing: border-box;
+}
+
+.animal-types-add::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.7);
+    z-index: 1;
+    pointer-events: none;
+}
+
+.animal-types-add-container {
+    z-index: 2;
+    text-align: start;
+    background-color: rgb(78, 197, 180, 0.8);
+    padding: 40px;
+    border-radius: 16px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+    max-width: 400px;
+    animation: fadeInOpacity 1s;
+    width: 90%;
+}
+
+.animal-types-add-container h2 {
+    text-align: center;
+    color: #fff;
+    margin-bottom: 30px;
+}
+
+.animal-types-add-form-group {
+    margin-bottom: 20px;
+}
+
+.animal-types-add-form-group select {
+    padding: 0.7rem;
+    border-radius: 0.5rem;
+}
+
+.animal-types-add-form-group label {
+    display: block;
+    margin-bottom: 6px;
+    font-weight: bold;
+    color: #fff;
+}
+
+.animal-types-add-form-group input {
+    width: 100%;
+    padding: 12px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    outline: none;
+    transition: 0.3s;
+}
+
+.animal-types-add-form-group input:focus {
+    border-color: #000;
+}
+
+.animal-types-add-btn {
+    width: 100%;
+    padding: 12px;
+    background-color: #48d889;
+    color: 4EC5B4;
+    border: none;
+    margin-bottom: 0.5rem;
+    border-radius: 8px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.animal-types-add-cancel-btn {
+    width: 100%;
+    padding: 12px;
+    font-size: 14px;
+    display: inline-block;
+    text-align: center;
+    text-decoration: none;
+    background-color: #fff;
+    color: #000;
+    border: none;
+    border-radius: 8px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.animal-types-add-bottom-text {
+    text-align: center;
+    margin-top: 20px;
+    font-size: 14px;
+    color: #333;
+}
+
+.animal-types-add-bottom-text a {
+    color: #fff;
+    position: relative;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+.animal-types-add-bottom-text a::before {
+    content: '';
+    position: absolute;
+    width: 100%;
+    height: 3px;
+    border-radius: 4px;
+    background-color: #fff;
+    bottom: -2px;
+    left: 0;
+    transform-origin: left;
+    transform: scaleX(0);
+    transition: transform .3s ease-in-out;
+}
+
+.animal-types-add-form-group input.error {
+    border: 3px solid #ff4d4d;
+}
+
+.animal-types-add-form-group input.success {
+    border: 3px solid #3cb371;
+}
+
+.error-text {
+    color: #ff4d4d;
+    font-weight: bold;
+    font-size: 13px;
+    margin-top: 5px;
+}
+
+@media(min-width: 1025px) {
+    .animal-types-add-btn:hover {
+        background-color: #D3D3D3;
+    }
+
+    .animal-types-add-bottom-text a:hover::before {
+        transform-origin: left;
+        transform: scaleX(1);
+    }
+
+    .animal-types-add-btn:hover {
+        background-color: #2f8a58;
+    }
+
+    .animal-types-add-cancel-btn:hover {
+        background-color: #D3D3D3;
+    }
+}
+
+/* Animal Types Add End */
+
+/* Animal Types Edit Start */
+
+
+
+/* Animal Types Edit End */
+
+/* Owner Accounts Start */
+
+.owner-accounts-div {
+    padding: 60px 20px;
+    animation: fadeInOpacity 1s;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    text-align: center;
+    position: relative;
+}
+
+.owner-accounts {
+    animation: fadeInOpacity 1s;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 2rem;
+    padding: 2rem;
+    max-width: 500px;
+    width: 100%;
+}
+
+.owner-accounts-h1 {
+    animation: fadeInOpacity 1s;
+    margin-top: 3rem;
+    background-color: #4EC5B4;
+    color: #fff;
+    padding: 0.3em 1em;
+    text-align: center;
+    border-radius: 1em;
+}
+
+.no-owner-accounts {
+    margin-top: 100px;
+    margin-bottom: 100px;
+    animation: fadeInOpacity 1s;
+    background-color: #4EC5B4;
+    color: #fff;
+    text-align: center;
+    padding: 0.3em 1em;
+    border-radius: 0.5em;
+}
+
+.owner-accounts-item-card {
+    background-color: #ffffff;
+    border-radius: 10px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+    overflow: hidden;
+    transition: transform 0.3s ease;
+}
+
+.owner-accounts-item-card img {
+    width: 100%;
+    height: 200px;
+    object-fit: cover;
+}
+
+.owner-accounts-item-card .content {
+    padding: 1.5rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+}
+
+.owner-accounts-item-card h2 {
+    color: #4EC5B4;
+    margin-bottom: 0.5rem;
+}
+
+.owner-accounts-item-card p {
+    font-size: 0.95rem;
+    margin-bottom: 0.5rem;
+}
+
+@media (hover: none) and (pointer: coarse) {
+    .appointments-filter {
+        flex-direction: column;
+        align-items: stretch;
+        text-align: center;
+    }
+
+    .filter-actions {
+        justify-content: center;
+    }
+}
+
+@media (min-width: 1025px) {
+    .my-pets-request-appointment-btn:hover {
+        background-color: #2f8a58;
+    }
+
+    .more-details-btn:hover {
+        background-color: #2a796f;
+    }
+
+    .my-pets-item-info-back-link:hover {
+        background-color: #2a796f;
+    }
+
+    .owner-accounts-item-card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 6px 16px rgba(0, 0, 0, 0.12);
+    }
+
+    .learn-more-btn:hover {
+        background-color: #2a796f;
+    }
+
+    .appointments-filter button:hover {
+        background-color: #2a796f;
+    }
+}
+
+/* Owner Accounts End */
 
 /* Spinner start */
 

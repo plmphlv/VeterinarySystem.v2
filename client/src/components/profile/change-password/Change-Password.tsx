@@ -112,17 +112,17 @@ const ChangePassword: React.FC = () => {
                 </div>
             )}
 
-            <h1 className="h1-profile">Change Password</h1>
+            <h1 className="change-password-h1">Change Password</h1>
 
-            <div className="profile">
-                <div className="profile-card">
+            <div className="change-password-container">
+                <div className="change-password-card">
                     <form onSubmit={onSubmit} noValidate>
                         {([
                             { name: "currentPassword", label: "Current Password", type: "password", icon: "fa-key", placeholder: "Enter your current password" },
                             { name: "newPassword", label: "New Password", type: "password", icon: "fa-key", placeholder: "Create a new password" },
                             { name: "confirmNewPassword", label: "Confirm New Password", type: "password", icon: "fa-key", placeholder: "Confirm your new password" },
                         ] as const).map(({ name, label, type, icon, placeholder }) => (
-                            <div className="field-edit-profile" key={name}>
+                            <div className="change-password-field" key={name}>
                                 <label htmlFor={name}>
                                     <i className={`fa-solid ${icon}`}></i> {label}:
                                 </label>
@@ -140,12 +140,12 @@ const ChangePassword: React.FC = () => {
                             </div>
                         ))}
 
-                        <div className="profile-buttons">
-                            <button className="edit-button" type="submit" disabled={isLoading}>
+                        <div className="change-password-btns">
+                            <button className="change-password-save-btn" type="submit" disabled={isLoading}>
                                 Save
                             </button>
 
-                            <Link to="/profile" className="edit-button">Cancel</Link>
+                            <Link to="/profile" className="change-password-cancel-btn">Cancel</Link>
                         </div>
 
                         {dialog && <div className={`dialog ${dialog.type}`}>{dialog.message}</div>}

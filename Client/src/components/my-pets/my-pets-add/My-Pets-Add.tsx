@@ -300,7 +300,7 @@ const MyPetsAdd: React.FC = () => {
                         </div>
 
                         <button type="submit" className="add-pet-btn" disabled={formLoading}>
-                            Add Pet
+                            <i className="fa-solid fa-plus"></i> Add New Pet
                         </button>
                         <Link to="/my-pets" className="cancel-btn">Cancel</Link>
                     </form>

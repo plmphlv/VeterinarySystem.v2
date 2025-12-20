@@ -29,7 +29,7 @@ const AnimalTypes: React.FC = () => {
                     </section>
 
                     <div className="animal-types-add-btn-container">
-                        <Link to="/staff-area/animal-types/add" className="animal-types-add-btn">Add</Link>
+                        <Link to="/staff-area/animal-types/add" className="animal-types-add-btn"><i className="fa-solid fa-plus"></i> Add New Animal Type</Link>
                     </div>
                 </>
             )}

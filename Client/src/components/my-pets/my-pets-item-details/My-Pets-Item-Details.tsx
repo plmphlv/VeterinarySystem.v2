@@ -55,11 +55,11 @@ const MyPetsItemDetails: React.FC = () => {
                 </div>
             )}
 
-            <h1 className="my-pets-h1">My Pet Details:</h1>
+            <h1 className="my-pets-item-details-h1">My Pet Details:</h1>
 
-            <div className="my-pets">
-                <div className="my-pets-item-info-content">
-                    <h1 className="my-pets-item-info-h1">{animalDetails?.name}</h1>
+            <div className="my-pets-item-details">
+                <div className="my-pets-item-details-content">
+                    <h1 className="my-pets-item-details-content-h1">{animalDetails?.name}</h1>
                     {/* <img src="/images/general-check-up.png" alt={animalDetails?.name} /> */}
                     <h2>General Information:</h2>
                     <p><i className="fa-solid fa-pen"></i> Name: {animalDetails?.name}</p>
@@ -75,11 +75,11 @@ const MyPetsItemDetails: React.FC = () => {
                         <p><i className="fa-solid fa-microchip"></i> Chip Number: {animalDetails?.chipNumber}</p>
                     )}
 
-                    <div className="pet-action-btns">
-                        <Link to={`/my-pets/${id}/edit`} className="my-pets-item-info-edit">Edit</Link>
-                        <Link to={`/my-pets/${id}/delete`} className="my-pets-item-info-delete">Delete</Link>
+                    <div className="my-pets-item-details-action-btns">
+                        <Link to={`/my-pets/${id}/edit`} className="my-pets-item-details-edit-btn">Edit</Link>
+                        <Link to={`/my-pets/${id}/delete`} className="my-pets-item-details-delete-btn">Delete</Link>
                     </div>
-                    <Link to="/my-pets" className="my-pets-item-info-back-link">← Back to My Pets</Link>
+                    <Link to="/my-pets" className="my-pets-item-details-back-link">← Back to My Pets</Link>
                 </div>
             </div>
 

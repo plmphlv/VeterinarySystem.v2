@@ -144,11 +144,11 @@ const AnimalTypesAdd: React.FC = () => {
                 </div>
             )}
 
-            <section className="my-pets-add">
-                <div className="my-pets-add-container">
+            <section className="animal-types-add">
+                <div className="animal-types-add-container">
                     <h2>Add Animal Type</h2>
                     <form onSubmit={onSubmit} noValidate>
-                        <div className="my-pets-add-form-group">
+                        <div className="animal-types-add-form-group">
                             <label htmlFor="typeName">
                                 <i className="fa-solid fa-pen"></i> Type Name:
                             </label>
@@ -166,10 +166,10 @@ const AnimalTypesAdd: React.FC = () => {
                             {errors.typeName && <p className="error-text">{errors.typeName}</p>}
                         </div>
 
-                        <button type="submit" className="add-pet-btn" disabled={formLoading}>
+                        <button type="submit" className="animal-types-add-btn" disabled={formLoading}>
                             Add
                         </button>
-                        <Link to="/staff-area/animal-types" className="cancel-btn">Cancel</Link>
+                        <Link to="/staff-area/animal-types" className="animal-types-add-cancel-btn">Cancel</Link>
                     </form>
                 </div>
 

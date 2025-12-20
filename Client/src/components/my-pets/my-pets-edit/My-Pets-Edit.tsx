@@ -211,12 +211,12 @@ const MyPetsEdit: React.FC = () => {
                 </div>
             )}
 
-            <section className="my-pets-add">
-                <div className="my-pets-add-container">
+            <section className="my-pets-edit">
+                <div className="my-pets-edit-container">
                     <h2>Edit Pet</h2>
                     <form onSubmit={onSubmit} noValidate>
                         {/* Inputs */}
-                        <div className="my-pets-add-form-group">
+                        <div className="my-pets-edit-form-group">
                             <label htmlFor="name">
                                 <i className="fa-solid fa-pen"></i> Name:
                             </label>
@@ -234,7 +234,7 @@ const MyPetsEdit: React.FC = () => {
                             {errors.name && <p className="error-text">{errors.name}</p>}
                         </div>
 
-                        <div className="my-pets-add-form-group">
+                        <div className="my-pets-edit-form-group">
                             <label htmlFor="age">
                                 <i className="fa-solid fa-calendar"></i> Age (Optional):
                             </label>
@@ -250,7 +250,7 @@ const MyPetsEdit: React.FC = () => {
                             {errors.age && <p className="error-text">{errors.age}</p>}
                         </div>
 
-                        <div className="my-pets-add-form-group">
+                        <div className="my-pets-edit-form-group">
                             <label htmlFor="weight">
                                 <i className="fa-solid fa-weight"></i> Weight:
                             </label>
@@ -267,7 +267,7 @@ const MyPetsEdit: React.FC = () => {
                             {errors.weight && <p className="error-text">{errors.weight}</p>}
                         </div>
 
-                        <div className="my-pets-add-form-group">
+                        <div className="my-pets-edit-form-group">
                             <label htmlFor="passportNumber">
                                 <i className="fa-solid fa-passport"></i> Passport Number (Optional):
                             </label>
@@ -283,7 +283,7 @@ const MyPetsEdit: React.FC = () => {
                             {errors.passportNumber && <p className="error-text">{errors.passportNumber}</p>}
                         </div>
 
-                        <div className="my-pets-add-form-group">
+                        <div className="my-pets-edit-form-group">
                             <label htmlFor="chipNumber">
                                 <i className="fa-solid fa-microchip"></i> Chip Number (Optional):
                             </label>
@@ -299,7 +299,7 @@ const MyPetsEdit: React.FC = () => {
                             {errors.chipNumber && <p className="error-text">{errors.chipNumber}</p>}
                         </div>
 
-                        <div className="my-pets-add-form-group">
+                        <div className="my-pets-edit-form-group">
                             <label htmlFor="animalTypeId">
                                 <i className="fa-solid fa-paw"></i> Animal Type:
                             </label>
@@ -321,10 +321,10 @@ const MyPetsEdit: React.FC = () => {
                             {errors.animalTypeId && <p className="error-text">{errors.animalTypeId}</p>}
                         </div>
 
-                        <button type="submit" className="add-pet-btn" disabled={formLoading}>
+                        <button type="submit" className="my-pets-edit-pet-btn" disabled={formLoading}>
                             Save
                         </button>
-                        <Link to={`/my-pets/${id}/details`} className="cancel-btn">Cancel</Link>
+                        <Link to={`/my-pets/${id}/details`} className="my-pets-edit-cancel-btn">Cancel</Link>
                     </form>
                 </div>
             </section>

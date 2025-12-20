@@ -3,7 +3,6 @@ import { Link, useNavigate, useParams } from "react-router";
 import { useEffect, useState } from "react";
 import type { UpdateAppointmentRequest, UpdateAppointmentRequestFieldErrors } from "../../../../types";
 import { useGetAppointmentDetails, useUpdateAppointmentRequest } from "../../../../api/appointmentsAPI";
-import { useGetUserData } from "../../../../hooks/useGetUserData";
 import { useForm } from "../../../../hooks/useForm";
 import Spinner from "../../../spinner/Spinner";
 import Dialog from "../../../dialog/Dialog";

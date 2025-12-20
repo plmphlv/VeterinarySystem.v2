@@ -131,11 +131,11 @@ const AppointmentsCreateRequest: React.FC = () => {
                 </div>
             )}
 
-            <section className="my-pets-add">
-                <div className="my-pets-add-container">
+            <section className="appointments-create-request">
+                <div className="appointments-create-request-container">
                     <h2>Request Appointment</h2>
                     <form onSubmit={onSubmit} noValidate>
-                        <div className="my-pets-add-form-group">
+                        <div className="appointments-create-request-form-group">
                             <label htmlFor="date">Date of appointment:</label>
                             <input
                                 type="datetime-local"
@@ -149,7 +149,7 @@ const AppointmentsCreateRequest: React.FC = () => {
                             {errors.date && <p className="error-text">{errors.date}</p>}
                         </div>
 
-                        <div className="my-pets-add-form-group">
+                        <div className="appointments-create-request-form-group">
                             <label htmlFor="description">Description:</label>
                             <input
                                 type="text"
@@ -165,10 +165,10 @@ const AppointmentsCreateRequest: React.FC = () => {
                             {errors.description && <p className="error-text">{errors.description}</p>}
                         </div>
 
-                        <button type="submit" className="add-pet-btn" disabled={formLoading}>
+                        <button type="submit" className="appointments-create-request-btn" disabled={formLoading}>
                             Request
                         </button>
-                        <Link to="/appointments" className="cancel-btn">Cancel</Link>
+                        <Link to="/appointments" className="appointments-create-request-cancel-btn">Cancel</Link>
                     </form>
                 </div>
             </section>

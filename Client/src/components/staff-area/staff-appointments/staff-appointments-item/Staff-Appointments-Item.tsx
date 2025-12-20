@@ -7,7 +7,6 @@ import Spinner from "../../../spinner/Spinner";
 import Dialog from "../../../dialog/Dialog";
 import { formatDate, formatStatus, formatTime } from "../../../../utils/formatAppointmentDetails";
 
-
 const StaffAppointmentsItem: React.FC = () => {
     const { userData, isLoading, error } = useGetUserData();
     const [showError, setShowError] = useState(true);

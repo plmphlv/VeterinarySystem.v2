@@ -312,6 +312,12 @@ export type EditAnimalTypeRequestFieldErrors = Partial<Record<keyof EditAnimalTy
 
 // OwnerAccounts types start
 
+export interface OwnerAccount {
+    id: string;
+    fullName: string;
+    phoneNumber: string;
+}
+
 export interface GetOwnerAccountDetailsRequest {
     id: string;
 }
@@ -319,7 +325,7 @@ export interface GetOwnerAccountDetailsRequest {
 export interface GetOwnerAccountDetailsResponse {
     firstName: string,
     lastName: string,
-    address: string,
+    address?: string,
     phoneNumber: string,
     id: string
 }
@@ -361,6 +367,21 @@ export interface DeleteOwnerAccountRequest {
 export interface DeleteOwnerAccountResponse {
     message: string;
 }
+
+export interface SearchOwnerAccountRequest {
+    name?: string;
+    email?: string;
+    phoneNumber?: string;
+}
+
+export interface SearchOwnerAccountResponse {
+    id: string;
+    fullName: string;
+    phoneNumber: string;
+}
+
+export type GetOwnerAccountDetailsRequestErrors = Partial<Record<keyof GetOwnerAccountDetailsRequest, string>>;
+export type SearchOwnerAccountRequestErrors = Partial<Record<keyof SearchOwnerAccountRequest, string>>;
 
 // OwnerAccounts types end
 

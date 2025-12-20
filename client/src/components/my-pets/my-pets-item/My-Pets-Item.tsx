@@ -91,10 +91,10 @@ const MyPetItem: React.FC = () => {
             )}
 
             {animals.length > 0 ? (
-                <section className="my-pets-item-section">
+                <section className="my-pets-item">
                     {animals.map((animal) => (
                         <div key={animal.id} className="my-pets-item-card">
-                            <div className="content">
+                            <div className="my-pets-item-card-content">
                                 <h2>{animal.name}</h2>
                                 <p>
                                     <i className="fa-solid fa-paw"></i> Animal type: {animal.animalType}
@@ -110,7 +110,7 @@ const MyPetItem: React.FC = () => {
                     ))}
                 </section>
             ) : (
-                <h1 className="no-pets-h1">No Animals Found.</h1>
+                <h1 className="my-pets-no-pets-h1">No Animals Found.</h1>
             )}
         </>
     );

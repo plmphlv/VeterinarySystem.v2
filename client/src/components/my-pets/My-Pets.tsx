@@ -23,7 +23,7 @@ const MyPets: React.FC = () => {
                     <div className="my-pets">
                         <MyPetItem />
                     </div>
-                    <Link to="/my-pets/add" className="my-pets-add-pet-btn">+ Add New Pet</Link>
+                    <Link to="/my-pets/add" className="my-pets-add-pet-btn"><i className="fa-solid fa-plus"></i> Add New Pet</Link>
                 </>
             )}
 
