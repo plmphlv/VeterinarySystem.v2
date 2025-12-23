@@ -1,0 +1,117 @@
+@mixin fade-in {
+    opacity: 1;
+    animation-name: fadeInOpacity;
+    animation-iteration-count: 1;
+    animation-timing-function: ease-in;
+    animation-duration: 2s;
+}
+
+@keyframes fadeInOpacity {
+    0% {
+        opacity: 0;
+    }
+
+    100% {
+        opacity: 1;
+    }
+}
+
+.owner-accounts-item-details-h1 {
+    animation: fadeInOpacity 1s;
+    margin-top: 3rem;
+    background-color: #4EC5B4;
+    color: #fff;
+    padding: 0.3em 1em;
+    border-radius: 1em;
+}
+
+.owner-accounts-item-details-container {
+    padding: 60px 15px;
+}
+
+.owner-accounts-item-details-card {
+    background-color: #fff;
+    animation: fadeInOpacity 1s;
+    max-width: 700px;
+    border-radius: 15px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+    padding: 60px 40px;
+    text-align: center;
+    position: relative;
+}
+
+.owner-accounts-item-details-card .avatar {
+    width: 100px;
+    height: 100px;
+    background-color: #4EC5B4;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 2.5rem;
+    color: white;
+    margin: 0 auto 3rem;
+}
+
+.owner-accounts-item-details-card .field {
+    display: flex;
+    justify-content: space-between;
+    margin: 1rem 0;
+    border-bottom: 1px solid #e0e0e0;
+    padding-bottom: 0.5rem;
+    font-size: 1rem;
+    margin-bottom: 2rem;
+}
+
+.owner-accounts-item-details-card .field label {
+    font-weight: 600;
+    color: #4EC5B4;
+}
+
+.owner-accounts-item-details-card .field span {
+    color: #333;
+    text-align: right;
+    max-width: 65%;
+}
+
+.owner-accounts-item-details-btns {
+    margin-top: 1rem;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+    justify-content: center;
+}
+
+.owner-accounts-item-details-btns .edit-btn,
+.owner-accounts-item-details-btns .delete-btn {
+    background-color: #4EC5B4;
+    color: #fff;
+    text-decoration: none;
+    border: none;
+    padding: 0.8rem 2rem;
+    border-radius: 25px;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: background 0.3s ease;
+    white-space: nowrap;
+}
+
+@media(min-width: 1025px) {
+    .owner-accounts-item-details-btns .edit-btn:hover,
+    .owner-accounts-item-details-btns .delete-btn:hover {
+        background-color: #2a796f;
+        transition: 0.3s ease-in;
+    }
+}
+
+@media (max-width: 480px) {
+    .owner-accounts-item-details-card .field {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .owner-accounts-item-details-card .field span {
+        margin-top: 0.3rem;
+        max-width: 100%;
+    }
+}

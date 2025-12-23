@@ -6,6 +6,7 @@ import { useGetAppointmentDetails, useUpdateAppointmentRequest } from "../../../
 import { useForm } from "../../../../hooks/useForm";
 import Spinner from "../../../spinner/Spinner";
 import Dialog from "../../../dialog/Dialog";
+import styles from "./Staff-Appointments-Update-Request.module.css";
 
 const initialValues: UpdateAppointmentRequest = {
     date: "",
@@ -35,18 +36,14 @@ const StaffAppointmentsUpdateRequest: React.FC = () => {
 
                 const selectedDate = new Date(value);
                 const now = new Date();
-
                 const minDate = new Date();
                 minDate.setDate(now.getDate() + 1);
 
-                if (selectedDate < minDate) {
-                    return "Date must be at least one day in the future.";
-                }
+                if (selectedDate < minDate) return "Date must be at least one day in the future.";
                 return undefined;
 
             case "description":
                 if (!value) return "Description is required.";
-                // value.trim().length < 10
                 if (value.length < 10 || value.length > 255) return "Description must be between 10 and 255 characters.";
                 return undefined;
 
@@ -80,7 +77,6 @@ const StaffAppointmentsUpdateRequest: React.FC = () => {
             };
 
             await updateAppointmentRequest(payload);
-
             setDialog({ message: "Appointment request updated successfully!", type: "success" });
             setTimeout(() => navigate(`/staff-area/appointments/${id}/details`), 1500);
         } catch (err) {
@@ -93,26 +89,19 @@ const StaffAppointmentsUpdateRequest: React.FC = () => {
     const { values, changeHandler, onSubmit, changeValues } = useForm(initialValues, updateAppointmentRequestHandler);
 
     const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
-        const { name, value, type } = e.target;
+        const { name, value } = e.target;
         const fieldName = name as keyof UpdateAppointmentRequest;
 
-        let parsedValue: string | number | null = value;
+        changeValues({ ...values, [fieldName]: value });
 
-        changeValues({ ...values, [fieldName]: parsedValue });
-
-        const valueForValidation = parsedValue ?? "";
-        const errorMsg = validateField(fieldName, valueForValidation, { ...values, [fieldName]: parsedValue });
-
-        setErrors(prev => ({
-            ...prev,
-            [fieldName]: errorMsg || undefined
-        }));
+        const errorMsg = validateField(fieldName, value, { ...values, [fieldName]: value });
+        setErrors(prev => ({ ...prev, [fieldName]: errorMsg || undefined }));
     };
 
     const inputClass = (field: keyof UpdateAppointmentRequest) => {
-        if (errors[field]) return "input error";
-        if (values[field] && !errors[field]) return "input success";
-        return "input";
+        if (errors[field]) return styles.error;
+        if (values[field] && !errors[field]) return styles.success;
+        return "";
     };
 
     useEffect(() => cancelUpdateAppointmentRequest, []);
@@ -144,10 +133,6 @@ const StaffAppointmentsUpdateRequest: React.FC = () => {
         return () => cancelGetAppointmentDetails();
     }, [id]);
 
-    useEffect(() => {
-        return () => cancelUpdateAppointmentRequest();
-    }, []);
-
     return (
         <>
             {(formLoading || isLoading) && (
@@ -156,11 +141,11 @@ const StaffAppointmentsUpdateRequest: React.FC = () => {
                 </div>
             )}
 
-            <section className="my-pets-add">
-                <div className="my-pets-add-container">
+            <section className={styles["staff-appointments-update-request"]}>
+                <div className={styles["staff-appointments-update-request-container"]}>
                     <h2>Update Appointment Request</h2>
                     <form onSubmit={onSubmit} noValidate>
-                        <div className="my-pets-add-form-group">
+                        <div className={styles["staff-appointments-update-request-form-group"]}>
                             <label htmlFor="date">Date of appointment:</label>
                             <input
                                 type="datetime-local"
@@ -171,10 +156,10 @@ const StaffAppointmentsUpdateRequest: React.FC = () => {
                                 className={inputClass("date")}
                                 required
                             />
-                            {errors.date && <p className="error-text">{errors.date}</p>}
+                            {errors.date && <p className={styles["error-text"]}>{errors.date}</p>}
                         </div>
 
-                        <div className="my-pets-add-form-group">
+                        <div className={styles["staff-appointments-update-request-form-group"]}>
                             <label htmlFor="description">Description:</label>
                             <input
                                 type="text"
@@ -187,13 +172,13 @@ const StaffAppointmentsUpdateRequest: React.FC = () => {
                                 autoComplete="off"
                                 required
                             />
-                            {errors.description && <p className="error-text">{errors.description}</p>}
+                            {errors.description && <p className={styles["error-text"]}>{errors.description}</p>}
                         </div>
 
-                        <button type="submit" className="add-pet-btn" disabled={formLoading}>
+                        <button type="submit" className={styles["staff-appointments-update-request-btn"]} disabled={formLoading}>
                             Update
                         </button>
-                        <Link to={`/staff-area/appointments/${id}/details`} className="cancel-btn">Cancel</Link>
+                        <Link to={`/staff-area/appointments/${id}/details`} className={styles["staff-appointments-cancel-request-btn"]}>Cancel</Link>
                     </form>
                 </div>
             </section>

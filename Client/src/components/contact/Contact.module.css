@@ -1,0 +1,78 @@
+@mixin fade-in {
+    opacity: 1;
+    animation-name: fadeInOpacity;
+    animation-iteration-count: 1;
+    animation-timing-function: ease-in;
+    animation-duration: 2s;
+}
+
+@keyframes fadeInOpacity {
+    0% {
+        opacity: 0;
+    }
+
+    100% {
+        opacity: 1;
+    }
+}
+
+.contact {
+    min-height: 100vh;
+    width: 100%;
+    background-image: url('/images/veterinary-hospital.png');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    color: white;
+    padding: 2rem 1rem;
+    box-sizing: border-box;
+}
+
+.contact::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.7);
+    z-index: 1;
+    pointer-events: none;
+}
+
+.contact-container {
+    z-index: 2;
+    background-color: rgba(78, 197, 180, 0.8);
+    padding: 40px;
+    border-radius: 16px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+    max-width: 700px;
+    animation: fadeInOpacity 1s;
+    width: 90%;
+    font-family: Arial, sans-serif;
+}
+
+.contact-container h2 {
+    text-align: center;
+    color: #fff;
+    margin-bottom: 20px;
+    font-size: 26px;
+}
+
+.contact-paragraph {
+    font-size: 16px;
+    color: #fff;
+    line-height: 1.6;
+    margin-bottom: 25px;
+    text-align: justify;
+}
+
+.contact-info {
+    font-size: 16px;
+    color: #fff;
+    line-height: 1.8;
+    text-align: center;
+    margin-top: 30px;
+}

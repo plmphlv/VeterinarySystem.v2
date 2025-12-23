@@ -4,6 +4,7 @@ import type { ChangePasswordRequest } from "../../../types";
 import { useChangePassword } from "../../../api/authAPI";
 import { useForm } from "../../../hooks/useForm";
 import Spinner from "../../spinner/Spinner";
+import styles from "./Change-Password.module.css";
 
 const initialValues: ChangePasswordRequest = {
     currentPassword: "",
@@ -57,7 +58,6 @@ const ChangePassword: React.FC = () => {
         return fieldErrors;
     };
 
-
     const changePasswordHandler = async (values: ChangePasswordRequest) => {
         const validationErrors = validate(values);
         if (Object.keys(validationErrors).length > 0) {
@@ -98,11 +98,7 @@ const ChangePassword: React.FC = () => {
         return "input";
     };
 
-    useEffect(() => {
-        return () => {
-            cancelChangePassword();
-        };
-    }, []);
+    useEffect(() => cancelChangePassword, []);
 
     return (
         <>
@@ -112,17 +108,17 @@ const ChangePassword: React.FC = () => {
                 </div>
             )}
 
-            <h1 className="change-password-h1">Change Password</h1>
+            <h1 className={styles["change-password-h1"]}>Change Password</h1>
 
-            <div className="change-password-container">
-                <div className="change-password-card">
+            <div className={styles["change-password-container"]}>
+                <div className={styles["change-password-card"]}>
                     <form onSubmit={onSubmit} noValidate>
                         {([
                             { name: "currentPassword", label: "Current Password", type: "password", icon: "fa-key", placeholder: "Enter your current password" },
                             { name: "newPassword", label: "New Password", type: "password", icon: "fa-key", placeholder: "Create a new password" },
                             { name: "confirmNewPassword", label: "Confirm New Password", type: "password", icon: "fa-key", placeholder: "Confirm your new password" },
                         ] as const).map(({ name, label, type, icon, placeholder }) => (
-                            <div className="change-password-field" key={name}>
+                            <div className={styles["change-password-field"]} key={name}>
                                 <label htmlFor={name}>
                                     <i className={`fa-solid ${icon}`}></i> {label}:
                                 </label>
@@ -140,12 +136,9 @@ const ChangePassword: React.FC = () => {
                             </div>
                         ))}
 
-                        <div className="change-password-btns">
-                            <button className="change-password-save-btn" type="submit" disabled={isLoading}>
-                                Save
-                            </button>
-
-                            <Link to="/profile" className="change-password-cancel-btn">Cancel</Link>
+                        <div className={styles["change-password-btns"]}>
+                            <button className={styles["change-password-save-btn"]} type="submit" disabled={isLoading}>Save</button>
+                            <Link to="/profile" className={styles["change-password-cancel-btn"]}>Cancel</Link>
                         </div>
 
                         {dialog && <div className={`dialog ${dialog.type}`}>{dialog.message}</div>}

@@ -7,6 +7,7 @@ import { useEffect, useState } from "react";
 import { useForm } from "../../../hooks/useForm";
 import { useCreateRequestAppointment } from "../../../api/appointmentsAPI";
 import { getJwtDecodedData } from "../../../utils/getJwtDecodedData";
+import styles from "./Appointments-Create-Request.module.css";
 
 const initialValues: CreateAppointmentRequest = {
     date: "",
@@ -30,24 +31,15 @@ const AppointmentsCreateRequest: React.FC = () => {
         switch (field) {
             case "date":
                 if (!value) return "Date is required.";
-
                 const selectedDate = new Date(value);
-                const now = new Date();
-
                 const minDate = new Date();
-                minDate.setDate(now.getDate() + 1);
-
-                if (selectedDate < minDate) {
-                    return "Date must be at least one day in the future.";
-                }
+                minDate.setDate(minDate.getDate() + 1);
+                if (selectedDate < minDate) return "Date must be at least one day in the future.";
                 return undefined;
-
             case "description":
                 if (!value) return "Description is required.";
-                // value.trim().length < 10
                 if (value.length < 10 || value.length > 255) return "Description must be between 10 and 255 characters.";
                 return undefined;
-
             default:
                 return undefined;
         }
@@ -56,8 +48,7 @@ const AppointmentsCreateRequest: React.FC = () => {
     const validate = (values: CreateAppointmentRequest): CreateAppointmentRequestError => {
         const fieldErrors: CreateAppointmentRequestError = {};
         (Object.keys(values) as (keyof CreateAppointmentRequest)[]).forEach(field => {
-            const fieldValue = values[field] ?? "";
-            const error = validateField(field, String(fieldValue), values);
+            const error = validateField(field, String(values[field] ?? ""), values);
             if (error) fieldErrors[field] = error;
         });
         return fieldErrors;
@@ -73,22 +64,15 @@ const AppointmentsCreateRequest: React.FC = () => {
         setFormLoading(true);
         try {
             setErrors({});
-
-            if (!decodedData) {
-                return;
-            }
+            if (!decodedData) return;
 
             const payload: CreateAppointmentRequest = {
                 ...values,
                 date: new Date(values.date).toISOString(),
             };
 
-            
             const response = await createRequestAppointment(payload);
-
-            if (!response) {
-                return;
-            }
+            if (!response) return;
 
             setDialog({ message: "Appointment request created successfully!", type: "success" });
             setTimeout(() => navigate(`/appointments`), 1500);
@@ -112,15 +96,13 @@ const AppointmentsCreateRequest: React.FC = () => {
     };
 
     const inputClass = (field: keyof CreateAppointmentRequest) => {
-        if (errors[field]) return "input error";
-        if (values[field] && !errors[field]) return "input success";
-        return "input";
+        if (errors[field]) return "error";
+        if (values[field] && !errors[field]) return "success";
+        return "";
     };
 
     useEffect(() => {
-        return () => {
-            cancelCreateRequestAppointment();
-        };
+        return () => cancelCreateRequestAppointment();
     }, []);
 
     return (
@@ -131,11 +113,11 @@ const AppointmentsCreateRequest: React.FC = () => {
                 </div>
             )}
 
-            <section className="appointments-create-request">
-                <div className="appointments-create-request-container">
+            <section className={styles["appointments-create-request"]}>
+                <div className={styles["appointments-create-request-container"]}>
                     <h2>Request Appointment</h2>
                     <form onSubmit={onSubmit} noValidate>
-                        <div className="appointments-create-request-form-group">
+                        <div className={styles["appointments-create-request-form-group"]}>
                             <label htmlFor="date">Date of appointment:</label>
                             <input
                                 type="datetime-local"
@@ -143,13 +125,13 @@ const AppointmentsCreateRequest: React.FC = () => {
                                 name="date"
                                 value={values.date ?? ""}
                                 onChange={handleChange}
-                                className={inputClass("date")}
+                                className={`${styles["appointments-create-request-form-group"]} ${inputClass("date")}`}
                                 required
                             />
-                            {errors.date && <p className="error-text">{errors.date}</p>}
+                            {errors.date && <p className={styles["error-text"]}>{errors.date}</p>}
                         </div>
 
-                        <div className="appointments-create-request-form-group">
+                        <div className={styles["appointments-create-request-form-group"]}>
                             <label htmlFor="description">Description:</label>
                             <input
                                 type="text"
@@ -157,18 +139,18 @@ const AppointmentsCreateRequest: React.FC = () => {
                                 name="description"
                                 value={values.description ?? ""}
                                 onChange={handleChange}
-                                className={inputClass("description")}
+                                className={`${styles["appointments-create-request-form-group"]} ${inputClass("description")}`}
                                 placeholder="Enter appointment description"
                                 autoComplete="off"
                                 required
                             />
-                            {errors.description && <p className="error-text">{errors.description}</p>}
+                            {errors.description && <p className={styles["error-text"]}>{errors.description}</p>}
                         </div>
 
-                        <button type="submit" className="appointments-create-request-btn" disabled={formLoading}>
+                        <button type="submit" className={styles["appointments-create-request-btn"]} disabled={formLoading}>
                             Request
                         </button>
-                        <Link to="/appointments" className="appointments-create-request-cancel-btn">Cancel</Link>
+                        <Link to="/appointments" className={styles["appointments-create-request-cancel-btn"]}>Cancel</Link>
                     </form>
                 </div>
             </section>

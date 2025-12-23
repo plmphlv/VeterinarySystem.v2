@@ -5,6 +5,7 @@ import Spinner from "../../../spinner/Spinner";
 import Dialog from "../../../dialog/Dialog";
 import type { AnimalType, GetAllAnimalsErrors } from "../../../../types";
 import { useGetAnimalTypes } from "../../../../api/animalTypesAPI";
+import styles from "./Animal-Type-Item.module.css";
 
 const AnimalTypeItem: React.FC = () => {
     const { getAnimalTypes, cancelGetAnimalTypes } = useGetAnimalTypes();
@@ -12,39 +13,29 @@ const AnimalTypeItem: React.FC = () => {
 
     const { userData, isLoading, error } = useGetUserData();
     const [showError, setShowError] = useState(true);
-
-
     const [dialog, setDialog] = useState<{ message: string; type: "success" | "error" } | null>(null);
-
     const [animalTypes, setAnimalTypes] = useState<AnimalType[]>([]);
     const [loading, setLoading] = useState(true);
 
     useEffect(() => {
-        if (!userData?.id) {
-            return;
-        };
+        if (!userData?.id) return;
 
         const fetchAnimalTypes = async () => {
             try {
                 setErrors({});
-                setLoading(true)
-
+                setLoading(true);
                 const animalTypes = await getAnimalTypes();
-
                 setAnimalTypes(animalTypes || []);
             } catch (err: any) {
                 let errorMessage = "An error occurred while fetching animal types.";
-
                 if (err?.errors && typeof err.errors === "object") {
                     const firstKey = Object.keys(err.errors)[0];
                     if (firstKey && Array.isArray(err.errors[firstKey]) && err.errors[firstKey][0]) {
                         errorMessage = err.errors[firstKey][0];
                     }
                 }
-
                 setDialog({ message: errorMessage, type: "error" });
                 setErrors(err.errors);
-                return;
             } finally {
                 setLoading(false);
             }
@@ -78,21 +69,30 @@ const AnimalTypeItem: React.FC = () => {
             {animalTypes.length > 0 ? (
                 <>
                     {animalTypes.map((animalType) => (
-                        <li key={animalType.id} className="animal-types-item">{animalType.value}
-                            <div className="animal-types-btns">
-                                <Link to={`/staff-area/animal-types/${animalType.id}/edit`} className="animal-types-edit-btn">Edit</Link>
-                                <Link to={`/staff-area/animal-types/${animalType.id}/delete`} className="animal-types-delete-btn">Delete</Link>
+                        <li key={animalType.id} className={styles["animal-types-item"]}>
+                            {animalType.value}
+                            <div className={styles["animal-types-btns"]}>
+                                <Link 
+                                    to={`/staff-area/animal-types/${animalType.id}/edit`} 
+                                    className={styles["animal-types-edit-btn"]}
+                                >
+                                    Edit
+                                </Link>
+                                <Link 
+                                    to={`/staff-area/animal-types/${animalType.id}/delete`} 
+                                    className={styles["animal-types-delete-btn"]}
+                                >
+                                    Delete
+                                </Link>
                             </div>
                         </li>
-
                     ))}
                 </>
             ) : (
-                <h1 className="no-animal-types-h1">No Animal Types Found.</h1>
+                <h1 className={styles["no-animal-types-h1"]}>No Animal Types Found.</h1>
             )}
         </>
     );
-
 };
 
 export default AnimalTypeItem;

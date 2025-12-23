@@ -1,9 +1,13 @@
 import type React from "react";
 import { NavLink } from "react-router";
 import { useUserContext } from "../../contexts/UserContext";
+import { getJwtDecodedData } from "../../utils/getJwtDecodedData";
 
 const Footer: React.FC = () => {
     const { isSuccessful } = useUserContext();
+    const decodedData = getJwtDecodedData();
+
+    const role = decodedData?.["http://schemas.microsoft.com/ws/2008/06/identity/claims/role"];
 
     return (
         <section className="footer">
@@ -27,6 +31,7 @@ const Footer: React.FC = () => {
                 <li>
                     <NavLink to="/services">Services</NavLink>
                 </li>
+
                 {isSuccessful ? (
                     <>
                         <li>
@@ -38,6 +43,23 @@ const Footer: React.FC = () => {
                         <li>
                             <NavLink to="/profile">Profile</NavLink>
                         </li>
+
+                        {role === "SuperAdministrator" && (
+                            <>
+                                <li>
+                                    <NavLink to="/staff-area">Staff Area</NavLink>
+                                </li>
+                                <li>
+                                    <NavLink to="/administration">Administration</NavLink>
+                                </li>
+                            </>
+                        )}
+
+                        {role === "StaffMember" && (
+                            <li>
+                                <NavLink to="/staff-area">Staff Area</NavLink>
+                            </li>
+                        )}
 
                         <li>
                             <NavLink to="/logout">Logout</NavLink>
@@ -53,12 +75,12 @@ const Footer: React.FC = () => {
                         </li>
                     </>
                 )}
-            </ul >
+            </ul>
 
             <p className="copyright">
                 Veteriq @ 2025
             </p>
-        </section >
+        </section>
     );
 };
 

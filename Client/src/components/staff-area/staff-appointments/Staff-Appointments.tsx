@@ -4,6 +4,7 @@ import { useGetUserData } from "../../../hooks/useGetUserData";
 import Spinner from "../../spinner/Spinner";
 import Dialog from "../../dialog/Dialog";
 import StaffAppointmentsItem from "./staff-appointments-item/Staff-Appointments-Item";
+import styles from "./Staff-Appointments.module.css";
 
 const StaffAppointments: React.FC = () => {
     const { userData, error } = useGetUserData();
@@ -23,10 +24,17 @@ const StaffAppointments: React.FC = () => {
                 />
             ) : (
                 <>
-                    <h1 className="appointments-h1">All Appointments Requests:</h1>
-                    <div className="appointments-div">
+                    <h1 className={styles["staff-appointments-h1"]}>All Appointments Requests:</h1>
+                    <div className={styles["staff-appointments-div"]}>
                         <StaffAppointmentsItem />
                     </div>
+
+                    <Link
+                        to="/staff-area/appointments/create-appointment"
+                        className={styles["staff-appointments-create-appointment-btn"]}
+                    >
+                        Create New Appointment
+                    </Link>
                 </>
             )}
         </>

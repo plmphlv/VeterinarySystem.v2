@@ -1,0 +1,94 @@
+@mixin fade-in {
+    opacity: 1;
+    animation-name: fadeInOpacity;
+    animation-iteration-count: 1;
+    animation-timing-function: ease-in;
+    animation-duration: 2s;
+}
+
+@keyframes fadeInOpacity {
+    0% {
+        opacity: 0;
+    }
+
+    100% {
+        opacity: 1;
+    }
+}
+
+.owner-accounts {
+    animation: fadeInOpacity 1s;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 2rem;
+    padding: 2rem;
+    max-width: 500px;
+    width: 100%;
+}
+
+.no-owner-accounts {
+    margin-top: 100px;
+    margin-bottom: 100px;
+    animation: fadeInOpacity 1s;
+    background-color: #4EC5B4;
+    color: #fff;
+    text-align: center;
+    padding: 0.3em 1em;
+    border-radius: 0.5em;
+}
+
+.owner-accounts-item-card {
+    background-color: #ffffff;
+    border-radius: 10px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+    overflow: hidden;
+    transition: transform 0.3s ease;
+}
+
+.owner-accounts-item-card img {
+    width: 100%;
+    height: 200px;
+    object-fit: cover;
+}
+
+.owner-accounts-item-card .content {
+    padding: 1.5rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+}
+
+.owner-accounts-item-card h2 {
+    color: #4EC5B4;
+    margin-bottom: 0.5rem;
+}
+
+.owner-accounts-item-card p {
+    font-size: 0.95rem;
+    margin-bottom: 0.5rem;
+}
+
+.owner-accounts-more-details-btn {
+    margin-top: 0.5rem;
+    display: inline-block;
+    background-color: #4EC5B4;
+    color: #fff;
+    padding: 0.5rem 1rem;
+    border: none;
+    border-radius: 5px;
+    text-decoration: none;
+    transition: background-color 0.7s ease;
+}
+
+@media (min-width: 1025px) {
+    .owner-accounts-item-card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 6px 16px rgba(0, 0, 0, 0.12);
+    }
+
+    .owner-accounts-more-details-btn:hover {
+        background-color: #2a796f;
+        transition: 0.3s ease-in;
+    }
+}

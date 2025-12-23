@@ -6,6 +6,7 @@ import type { EditProfileRequest } from "../../../types";
 import { useForm } from "../../../hooks/useForm";
 import { useEditProfile } from "../../../api/authAPI";
 import { Link, useNavigate } from "react-router";
+import styles from "./Edit-Profile.module.css";
 
 const initialValues: EditProfileRequest = {
     id: "",
@@ -21,9 +22,7 @@ const EditProfile: React.FC = () => {
     const [dialog, setDialog] = useState<{ message: string; type: "success" | "error" } | null>(null);
 
     const { userData, isLoading: isUserLoading, error } = useGetUserData();
-
     const { editProfile, cancelEditProfile } = useEditProfile();
-
     const navigate = useNavigate();
 
     const validateField = (
@@ -53,7 +52,6 @@ const EditProfile: React.FC = () => {
                 return undefined;
         }
     };
-
 
     const validate = (values: EditProfileRequest): Partial<Record<keyof EditProfileRequest, string>> => {
         const fieldErrors: Partial<Record<keyof EditProfileRequest, string>> = {};
@@ -86,7 +84,6 @@ const EditProfile: React.FC = () => {
             };
 
             await editProfile(payload);
-
             setDialog({ message: "Profile edit is successful!", type: "success" });
         } catch (err: any) {
             setDialog({ message: err.detail || "Edit failed.", type: "error" });
@@ -96,22 +93,15 @@ const EditProfile: React.FC = () => {
         }
     };
 
-    const { values, changeHandler, onSubmit, changeValues } = useForm(initialValues, editProfileHandler);
+    const { values, changeValues, onSubmit } = useForm(initialValues, editProfileHandler);
 
     const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         const { name, value } = e.target;
         const fieldName = name as keyof EditProfileRequest;
-
-        const valueForValidation = value ?? "";
-
         changeValues({ ...values, [fieldName]: value });
 
-        const errorMsg = validateField(fieldName, valueForValidation, { ...values, [fieldName]: value });
-
-        setErrors(prev => ({
-            ...prev,
-            [fieldName]: errorMsg || undefined
-        }));
+        const errorMsg = validateField(fieldName, value ?? "", { ...values, [fieldName]: value });
+        setErrors(prev => ({ ...prev, [fieldName]: errorMsg || undefined }));
     };
 
     const inputClass = (field: keyof EditProfileRequest) => {
@@ -120,46 +110,41 @@ const EditProfile: React.FC = () => {
         return "input";
     };
 
-    useEffect(() => {
-        return () => {
-            cancelEditProfile();
-        };
-    }, []);
+    useEffect(() => cancelEditProfile, []);
 
     useEffect(() => {
         if (userData) {
-            const safeValues: EditProfileRequest = {
+            changeValues({
                 id: userData.id,
                 firstName: userData.firstName || "",
                 lastName: userData.lastName || "",
                 phoneNumber: userData.phoneNumber || "",
-                address: userData.address || ""
-            };
-            changeValues(safeValues);
+                address: userData.address || "",
+            });
         }
     }, [userData]);
 
     return (
         <>
-            {isLoading || isUserLoading && (
+            {(isLoading || isUserLoading) && (
                 <div className="spinner-overlay">
                     <Spinner />
                 </div>
             )}
 
-            <h1 className="edit-profile-h1">Edit Profile</h1>
+            <h1 className={styles["edit-profile-h1"]}>Edit Profile</h1>
 
             {userData ? (
-                <div className="edit-profile-container">
-                    <div className="edit-profile-card">
+                <div className={styles["edit-profile-container"]}>
+                    <div className={styles["edit-profile-card"]}>
                         <form onSubmit={onSubmit} noValidate>
                             {([
                                 { name: "firstName", label: "First Name", type: "text", icon: "fa-pen", placeholder: "Enter your new first name" },
                                 { name: "lastName", label: "Last Name", type: "text", icon: "fa-pen", placeholder: "Enter your new last name" },
                                 { name: "phoneNumber", label: "Phone Number", type: "tel", icon: "fa-phone", placeholder: "Enter your new phone number" },
-                                { name: "address", label: "Address (Optional)", type: "text", icon: "fa-solid fa-map-marker-alt", placeholder: "Enter your address" },
+                                { name: "address", label: "Address (Optional)", type: "text", icon: "fa-map-marker-alt", placeholder: "Enter your address" },
                             ] as const).map(({ name, label, type, icon, placeholder }) => (
-                                <div className="edit-profile-field" key={name}>
+                                <div className={styles["edit-profile-field"]} key={name}>
                                     <label htmlFor={name}>
                                         <i className={`fa-solid ${icon}`}></i> {label}:
                                     </label>
@@ -178,13 +163,9 @@ const EditProfile: React.FC = () => {
                                 </div>
                             ))}
 
-                            <div className="edit-profile-btns">
-
-                                <button className="edit-profile-save-edit-btn" type="submit" disabled={isLoading}>
-                                    Save
-                                </button>
-
-                                <Link to="/profile" className="edit-profile-cancel-edit-btn">Cancel</Link>
+                            <div className={styles["edit-profile-btns"]}>
+                                <button className={styles["edit-profile-save-edit-btn"]} type="submit" disabled={isLoading}>Save</button>
+                                <Link to="/profile" className={styles["edit-profile-cancel-edit-btn"]}>Cancel</Link>
                             </div>
 
                             {dialog && <div className={`dialog ${dialog.type}`}>{dialog.message}</div>}
@@ -192,10 +173,10 @@ const EditProfile: React.FC = () => {
                     </div>
                 </div>
             ) : !isLoading && !error ? (
-                <p>No user data found.</p>
+                <p className={styles["edit-profile-no-user-data"]}>No user data found.</p>
             ) : null}
         </>
-    )
-}
+    );
+};
 
 export default EditProfile;

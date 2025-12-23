@@ -1,0 +1,61 @@
+@mixin fade-in {
+    opacity: 1;
+    animation-name: fadeInOpacity;
+    animation-iteration-count: 1;
+    animation-timing-function: ease-in;
+    animation-duration: 2s;
+}
+
+@keyframes fadeInOpacity {
+    0% {
+        opacity: 0;
+    }
+
+    100% {
+        opacity: 1;
+    }
+}
+
+.staff-appointments-h1 {
+    animation: fadeInOpacity 1s;
+    margin-top: 3rem;
+    background-color: #4EC5B4;
+    color: #fff;
+    padding: 0.3em 1em;
+    text-align: center;
+    border-radius: 1em;
+}
+
+.staff-appointments-div {
+    padding: 60px 20px;
+    animation: fadeInOpacity 1s;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    text-align: center;
+    position: relative;
+}
+
+.staff-appointments-create-appointment-btn {
+    background-color: #48d889;
+    font-weight: bold;
+    color: #fff;
+    text-decoration: none;
+    border: none;
+    margin-bottom: 3rem;
+    padding: 0.8rem 2rem;
+    border-radius: 25px;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: background 0.7s ease;
+    animation: fadeInOpacity 1s;
+}
+
+@media (min-width: 1025px) {
+    .staff-appointments-create-appointment-btn:hover {
+        background-color: #2f8a58;
+        transition: 0.3s ease-in;
+    }
+}

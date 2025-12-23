@@ -7,6 +7,7 @@ import { Link, useNavigate } from "react-router";
 import { useForm } from "../../../../hooks/useForm";
 import Spinner from "../../../spinner/Spinner";
 import Dialog from "../../../dialog/Dialog";
+import styles from "./Animal-Types-Add.module.css";
 
 const initialValues: AddAnimalTypeRequest = {
     typeName: ""
@@ -27,17 +28,13 @@ const AnimalTypesAdd: React.FC = () => {
         const fetchAnimalTypes = async () => {
             try {
                 setErrors({});
-
                 const animalTypes = await getAnimalTypes();
-
                 setAnimalTypes(animalTypes || []);
             } catch (err: any) {
                 setDialog({ message: "An error occurred while fetching animal types.", type: "error" });
                 setTimeout(() => navigate(`/staff-area/animal-types`), 1500);
                 return;
-            } finally {
-
-            }
+            } finally {}
         };
 
         fetchAnimalTypes();
@@ -53,7 +50,6 @@ const AnimalTypesAdd: React.FC = () => {
                 if (!String(value).trim()) return "Type name is required.";
                 if (String(value).trim().length < 2) return "Type name must be at least 2 characters.";
                 return undefined;
-
             default:
                 return undefined;
         }
@@ -79,9 +75,7 @@ const AnimalTypesAdd: React.FC = () => {
         setFormLoading(true);
         try {
             setErrors({});
-            if (!userData) {
-                return;
-            }
+            if (!userData) return;
 
             const payload: AddAnimalTypeRequest = {
                 ...values,
@@ -102,7 +96,7 @@ const AnimalTypesAdd: React.FC = () => {
     const { values, changeHandler, onSubmit, changeValues } = useForm(initialValues, addAnimalTypeHandler);
 
     const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
-        const { name, value, type } = e.target;
+        const { name, value } = e.target;
         const fieldName = name as keyof AddAnimalTypeRequest;
 
         let parsedValue: string | number | null = value;
@@ -119,21 +113,17 @@ const AnimalTypesAdd: React.FC = () => {
     };
 
     const inputClass = (field: keyof AddAnimalTypeRequest) => {
-        if (errors[field]) return "input error";
-        if (values[field] && !errors[field]) return "input success";
-        return "input";
+        if (errors[field]) return `${styles.input} ${styles.error}`;
+        if (values[field] && !errors[field]) return `${styles.input} ${styles.success}`;
+        return styles.input;
     };
 
     useEffect(() => {
-        return () => {
-            cancelAddAnimalType();
-        };
+        return () => cancelAddAnimalType();
     }, []);
 
     useEffect(() => {
-        return () => {
-            cancelGetAnimalTypes();
-        };
+        return () => cancelGetAnimalTypes();
     }, []);
 
     return (
@@ -144,14 +134,16 @@ const AnimalTypesAdd: React.FC = () => {
                 </div>
             )}
 
-            <section className="animal-types-add">
-                <div className="animal-types-add-container">
+            <section className={styles["animal-types-add"]}>
+                <div className={styles["animal-types-add-container"]}>
                     <h2>Add Animal Type</h2>
+
                     <form onSubmit={onSubmit} noValidate>
-                        <div className="animal-types-add-form-group">
+                        <div className={styles["animal-types-add-form-group"]}>
                             <label htmlFor="typeName">
                                 <i className="fa-solid fa-pen"></i> Type Name:
                             </label>
+
                             <input
                                 type="text"
                                 id="typeName"
@@ -163,13 +155,26 @@ const AnimalTypesAdd: React.FC = () => {
                                 autoComplete="off"
                                 required
                             />
-                            {errors.typeName && <p className="error-text">{errors.typeName}</p>}
+
+                            {errors.typeName && (
+                                <p className={styles["error-text"]}>{errors.typeName}</p>
+                            )}
                         </div>
 
-                        <button type="submit" className="animal-types-add-btn" disabled={formLoading}>
+                        <button
+                            type="submit"
+                            className={styles["animal-types-add-btn-small"]}
+                            disabled={formLoading}
+                        >
                             Add
                         </button>
-                        <Link to="/staff-area/animal-types" className="animal-types-add-cancel-btn">Cancel</Link>
+
+                        <Link
+                            to="/staff-area/animal-types"
+                            className={styles["animal-types-add-cancel-btn"]}
+                        >
+                            Cancel
+                        </Link>
                     </form>
                 </div>
 

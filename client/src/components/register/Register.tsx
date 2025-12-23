@@ -6,6 +6,7 @@ import { useForm } from "../../hooks/useForm";
 import Dialog from "../dialog/Dialog";
 import { UserContext } from "../../contexts/UserContext";
 import Spinner from "../spinner/Spinner";
+import styles from "./Register.module.css";
 
 const initialValues: RegisterRequest = {
     userName: "",
@@ -104,17 +105,17 @@ const Register: React.FC = () => {
             await register(values);
 
             const IdentifyingCredential = values.email;
-            const password = values.password
+            const password = values.password;
             const authData = await login({ IdentifyingCredential, password });
 
-            if (!authData || !authData.hasOwnProperty('accessToken') || authData?.errorMessage || authData.isSuccessful === false) {
+            if (!authData || !authData.hasOwnProperty("accessToken") || authData?.errorMessage || authData.isSuccessful === false) {
                 throw new Error(`${authData?.errorMessage}`);
             }
 
             setDialog({ message: "Register is successful!", type: "success" });
             setTimeout(() => {
                 userLoginHandler(authData);
-                navigate('/');
+                navigate("/");
             }, 500);
         } catch (err: any) {
             if (err.status === 400) {
@@ -125,7 +126,7 @@ const Register: React.FC = () => {
                     confirmPassword: ""
                 });
                 return;
-            } else if (err.status === 500){
+            } else if (err.status === 500) {
                 setDialog({ message: "Registration failed, please try again later.", type: "error" });
                 changeValues({
                     ...values,
@@ -155,9 +156,9 @@ const Register: React.FC = () => {
     };
 
     const inputClass = (field: keyof RegisterRequest) => {
-        if (errors[field]) return "input error";
-        if (values[field] && !errors[field]) return "input success";
-        return "input";
+        if (errors[field]) return `${styles.input} ${styles.error}`;
+        if (values[field] && !errors[field]) return `${styles.input} ${styles.success}`;
+        return styles.input;
     };
 
     useEffect(() => {
@@ -174,9 +175,10 @@ const Register: React.FC = () => {
                 </div>
             )}
 
-            <section className="register">
-                <div className="register-container">
+            <section className={styles.register}>
+                <div className={styles["register-container"]}>
                     <h2>Register</h2>
+
                     <form onSubmit={onSubmit} noValidate>
                         {([
                             { name: "userName", label: "Username", type: "text", icon: "fa-user", placeholder: "Enter your username" },
@@ -187,10 +189,11 @@ const Register: React.FC = () => {
                             { name: "password", label: "Password", type: "password", icon: "fa-key", placeholder: "Create a password" },
                             { name: "confirmPassword", label: "Confirm Password", type: "password", icon: "fa-key", placeholder: "Confirm your password" },
                         ] as const).map(({ name, label, type, icon, placeholder }) => (
-                            <div className="register-form-group" key={name}>
+                            <div className={styles["register-form-group"]} key={name}>
                                 <label htmlFor={name}>
                                     <i className={`fa-solid ${icon}`}></i> {label}:
                                 </label>
+
                                 <input
                                     type={type}
                                     id={name}
@@ -201,16 +204,23 @@ const Register: React.FC = () => {
                                     placeholder={placeholder}
                                     autoComplete="off"
                                 />
-                                {errors[name] && <p className="error-text">{errors[name]}</p>}
+
+                                {errors[name] && (
+                                    <p className={styles["error-text"]}>{errors[name]}</p>
+                                )}
                             </div>
                         ))}
 
-                        <button type="submit" className="register-btn" disabled={isLoading}>
+                        <button
+                            type="submit"
+                            className={styles["register-btn"]}
+                            disabled={isLoading}
+                        >
                             Register
                         </button>
                     </form>
 
-                    <div className="register-bottom-text">
+                    <div className={styles["register-bottom-text"]}>
                         Already registered? <Link to="/login">Login</Link>
                     </div>
                 </div>

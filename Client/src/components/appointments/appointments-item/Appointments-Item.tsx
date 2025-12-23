@@ -6,6 +6,7 @@ import Spinner from "../../spinner/Spinner";
 import Dialog from "../../dialog/Dialog";
 import { useGetUserData } from "../../../hooks/useGetUserData";
 import { formatDate, formatStatus, formatTime } from "../../../utils/formatAppointmentDetails";
+import styles from "./Appointments-Item.module.css";
 
 const AppointmentsItem: React.FC = () => {
     const { userData, isLoading, error } = useGetUserData();
@@ -29,10 +30,7 @@ const AppointmentsItem: React.FC = () => {
             setLoading(true);
             setErrors({});
 
-            const filters: any = {
-                OwnerId: userData.id,
-            };
-
+            const filters: any = { OwnerId: userData.id };
             if (staffId.trim()) filters.StaffId = staffId.trim();
             if (status) filters.Status = status as AppointmentStatus;
             if (startDate) filters.StartDate = startDate;
@@ -55,13 +53,10 @@ const AppointmentsItem: React.FC = () => {
         }
     };
 
-
     useEffect(() => {
         if (!userData?.id) return;
-
         fetchAppointments();
     }, [userData, staffId, status, startDate, endDate]);
-
 
     useEffect(() => {
         return () => {
@@ -87,18 +82,8 @@ const AppointmentsItem: React.FC = () => {
                         />
                     )}
 
-                    <section className="appointments-filter">
-                        {/* <div className="filter-item">
-                            <label htmlFor="staffId">Staff ID:</label>
-                            <input
-                                id="staffId"
-                                type="text"
-                                value={staffId}
-                                onChange={(e) => setStaffId(e.target.value)}
-                            />
-                        </div> */}
-
-                        <div className="filter-item">
+                    <section className={styles["appointments-filter"]}>
+                        <div className={styles["filter-item"]}>
                             <label htmlFor="status">Select Status:</label>
                             <select id="status" value={status} onChange={(e) => setStatus(e.target.value)}>
                                 <option value="">--</option>
@@ -110,27 +95,17 @@ const AppointmentsItem: React.FC = () => {
                             </select>
                         </div>
 
-                        <div className="filter-item">
+                        <div className={styles["filter-item"]}>
                             <label htmlFor="startDate">Start Date:</label>
-                            <input
-                                id="startDate"
-                                type="date"
-                                value={startDate}
-                                onChange={(e) => setStartDate(e.target.value)}
-                            />
+                            <input id="startDate" type="date" value={startDate} onChange={(e) => setStartDate(e.target.value)} />
                         </div>
 
-                        <div className="filter-item">
+                        <div className={styles["filter-item"]}>
                             <label htmlFor="endDate">End Date:</label>
-                            <input
-                                id="endDate"
-                                type="date"
-                                value={endDate}
-                                onChange={(e) => setEndDate(e.target.value)}
-                            />
+                            <input id="endDate" type="date" value={endDate} onChange={(e) => setEndDate(e.target.value)} />
                         </div>
 
-                        <div className="filter-actions">
+                        <div className={styles["filter-actions"]}>
                             <button
                                 onClick={() => {
                                     setStaffId("");
@@ -144,15 +119,15 @@ const AppointmentsItem: React.FC = () => {
                         </div>
                     </section>
 
-                    <section className="appointments">
+                    <section className={styles.appointments}>
                         {appointments.map((appointment) => (
-                            <div className="appointment-card" key={appointment.id}>
-                                <div className="content">
+                            <div className={styles["appointment-card"]} key={appointment.id}>
+                                <div className={styles.content}>
                                     <h2><i className="fa-solid fa-calendar-days"></i> {formatDate(appointment.date)}</h2>
                                     <p><i className="fa-solid fa-clock"></i> Hour: {formatTime(appointment.date)}</p>
                                     <p><i className="fa-solid fa-pen"></i> Status: {formatStatus(appointment.status)}</p>
-                                    <div className="appointment-actions">
-                                        <Link to={`/appointments/${appointment.id}/details`} className="more-details-btn">
+                                    <div className={styles["appointment-actions"]}>
+                                        <Link to={`/appointments/${appointment.id}/details`} className={styles["appointments-more-details-btn"]}>
                                             → More Details
                                         </Link>
                                     </div>
@@ -162,7 +137,7 @@ const AppointmentsItem: React.FC = () => {
                     </section>
                 </>
             ) : (
-                (staffId || status || startDate || endDate) ? (
+                <>
                     <>
                         {loading && (
                             <div className="spinner-overlay">
@@ -178,18 +153,8 @@ const AppointmentsItem: React.FC = () => {
                             />
                         )}
 
-                        <section className="appointments-filter">
-                            {/* <div className="filter-item">
-                                <label htmlFor="staffId">Staff ID:</label>
-                                <input
-                                    id="staffId"
-                                    type="text"
-                                    value={staffId}
-                                    onChange={(e) => setStaffId(e.target.value)}
-                                />
-                            </div> */}
-
-                            <div className="filter-item">
+                        <section className={styles["appointments-filter"]}>
+                            <div className={styles["filter-item"]}>
                                 <label htmlFor="status">Select Status:</label>
                                 <select id="status" value={status} onChange={(e) => setStatus(e.target.value)}>
                                     <option value="">--</option>
@@ -201,27 +166,17 @@ const AppointmentsItem: React.FC = () => {
                                 </select>
                             </div>
 
-                            <div className="filter-item">
+                            <div className={styles["filter-item"]}>
                                 <label htmlFor="startDate">Start Date:</label>
-                                <input
-                                    id="startDate"
-                                    type="date"
-                                    value={startDate}
-                                    onChange={(e) => setStartDate(e.target.value)}
-                                />
+                                <input id="startDate" type="date" value={startDate} onChange={(e) => setStartDate(e.target.value)} />
                             </div>
 
-                            <div className="filter-item">
+                            <div className={styles["filter-item"]}>
                                 <label htmlFor="endDate">End Date:</label>
-                                <input
-                                    id="endDate"
-                                    type="date"
-                                    value={endDate}
-                                    onChange={(e) => setEndDate(e.target.value)}
-                                />
+                                <input id="endDate" type="date" value={endDate} onChange={(e) => setEndDate(e.target.value)} />
                             </div>
 
-                            <div className="filter-actions">
+                            <div className={styles["filter-actions"]}>
                                 <button
                                     onClick={() => {
                                         setStaffId("");
@@ -235,11 +190,11 @@ const AppointmentsItem: React.FC = () => {
                             </div>
                         </section>
 
-                        <h1 className="no-appointments">No appointments found for the current filter.</h1>
+                        <h1 className={styles["no-appointments"]}>
+                            No appointments found{staffId || status || startDate || endDate ? " for the current filter." : "."}
+                        </h1>
                     </>
-                ) : (
-                    <h1 className="no-appointments">No appointments found.</h1>
-                )
+                </>
             )}
 
             {error && showError && (

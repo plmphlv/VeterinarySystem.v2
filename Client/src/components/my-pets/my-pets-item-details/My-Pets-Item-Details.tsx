@@ -4,35 +4,29 @@ import { useGetAnimalDetails } from "../../../api/animalsAPI";
 import type { GetAnimalDetailsErrors, GetAnimalDetailsResponse } from "../../../types";
 import Spinner from "../../spinner/Spinner";
 import Dialog from "../../dialog/Dialog";
+import styles from "./My-Pets-Item-Details.module.css";
 
 const MyPetsItemDetails: React.FC = () => {
     const { id } = useParams();
     const { getAnimalDetails, cancelGetAnimalDetails } = useGetAnimalDetails();
     const [errors, setErrors] = useState<GetAnimalDetailsErrors>({});
-
     const [dialog, setDialog] = useState<{ message: string; type: "success" | "error" } | null>(null);
-
     const [animalDetails, setAnimalDetails] = useState<GetAnimalDetailsResponse>();
     const [isLoading, setLoading] = useState(true);
 
     useEffect(() => {
-        if (!id) {
-            return;
-        }
+        if (!id) return;
 
         const fetchAnimalDetails = async () => {
             try {
                 setErrors({});
-                setLoading(true)
+                setLoading(true);
 
-                const animalDetails = await getAnimalDetails(Number(id));
-
-                setAnimalDetails(animalDetails || undefined);
-
+                const details = await getAnimalDetails(Number(id));
+                setAnimalDetails(details || undefined);
             } catch (err: any) {
                 setDialog({ message: err.title || "An error occurred while fetching animal details.", type: "error" });
                 setErrors(err);
-                return;
             } finally {
                 setLoading(false);
             }
@@ -41,11 +35,7 @@ const MyPetsItemDetails: React.FC = () => {
         fetchAnimalDetails();
     }, [id]);
 
-    useEffect(() => {
-        return () => {
-            cancelGetAnimalDetails();
-        };
-    }, []);
+    useEffect(() => () => cancelGetAnimalDetails(), []);
 
     return (
         <>
@@ -55,31 +45,25 @@ const MyPetsItemDetails: React.FC = () => {
                 </div>
             )}
 
-            <h1 className="my-pets-item-details-h1">My Pet Details:</h1>
+            <h1 className={styles["my-pets-item-details-h1"]}>My Pet Details:</h1>
 
-            <div className="my-pets-item-details">
-                <div className="my-pets-item-details-content">
-                    <h1 className="my-pets-item-details-content-h1">{animalDetails?.name}</h1>
+            <div className={styles["my-pets-item-details"]}>
+                <div className={styles["my-pets-item-details-content"]}>
+                    <h1 className={styles["my-pets-item-details-content-h1"]}>{animalDetails?.name}</h1>
                     {/* <img src="/images/general-check-up.png" alt={animalDetails?.name} /> */}
                     <h2>General Information:</h2>
                     <p><i className="fa-solid fa-pen"></i> Name: {animalDetails?.name}</p>
-                    {animalDetails?.age && (
-                        <p><i className="fa-solid fa-calendar-days"></i> Age: {animalDetails?.age} years</p>
-                    )}
+                    {animalDetails?.age && <p><i className="fa-solid fa-calendar-days"></i> Age: {animalDetails?.age} years</p>}
                     <p><i className="fa-solid fa-paw"></i> Animal type: {animalDetails?.animalType}</p>
                     <p><i className="fa-solid fa-weight"></i> Weight: {animalDetails?.weight}kg</p>
-                    {animalDetails?.passportNumber && (
-                        <p><i className="fa-solid fa-passport"></i> Passport Number: {animalDetails?.passportNumber}</p>
-                    )}
-                    {animalDetails?.chipNumber && (
-                        <p><i className="fa-solid fa-microchip"></i> Chip Number: {animalDetails?.chipNumber}</p>
-                    )}
+                    {animalDetails?.passportNumber && <p><i className="fa-solid fa-passport"></i> Passport Number: {animalDetails?.passportNumber}</p>}
+                    {animalDetails?.chipNumber && <p><i className="fa-solid fa-microchip"></i> Chip Number: {animalDetails?.chipNumber}</p>}
 
-                    <div className="my-pets-item-details-action-btns">
-                        <Link to={`/my-pets/${id}/edit`} className="my-pets-item-details-edit-btn">Edit</Link>
-                        <Link to={`/my-pets/${id}/delete`} className="my-pets-item-details-delete-btn">Delete</Link>
+                    <div className={styles["my-pets-item-details-action-btns"]}>
+                        <Link to={`/my-pets/${id}/edit`} className={styles["my-pets-item-details-edit-btn"]}>Edit</Link>
+                        <Link to={`/my-pets/${id}/delete`} className={styles["my-pets-item-details-delete-btn"]}>Delete</Link>
                     </div>
-                    <Link to="/my-pets" className="my-pets-item-details-back-link">← Back to My Pets</Link>
+                    <Link to="/my-pets" className={styles["my-pets-item-details-back-link"]}>← Back to My Pets</Link>
                 </div>
             </div>
 
@@ -91,7 +75,7 @@ const MyPetsItemDetails: React.FC = () => {
                 />
             )}
         </>
-    )
-}
+    );
+};
 
 export default MyPetsItemDetails;

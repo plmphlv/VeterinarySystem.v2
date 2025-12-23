@@ -1,0 +1,95 @@
+@mixin fade-in {
+    opacity: 1;
+    animation-name: fadeInOpacity;
+    animation-iteration-count: 1;
+    animation-timing-function: ease-in;
+    animation-duration: 2s;
+}
+
+@keyframes fadeInOpacity {
+    0% {
+        opacity: 0;
+    }
+
+    100% {
+        opacity: 1;
+    }
+}
+
+.staff-area-h1 {
+    animation: fadeInOpacity 1s;
+    margin-top: 3rem;
+    text-align: center;
+    background-color: #4EC5B4;
+    color: #fff;
+    padding: 0.3em 1em;
+    border-radius: 1em;
+}
+
+.staff-area {
+    animation: fadeInOpacity 1s;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 2rem;
+    padding: 60px 15px;
+    max-width: 1200px;
+    width: 100%;
+}
+
+.staff-area-card {
+    background-color: #ffffff;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+    transition: transform 0.3s ease;
+}
+
+.staff-area-card img {
+    width: 100%;
+    height: 200px;
+    object-fit: cover;
+}
+
+.staff-area-card .content {
+    padding: 1.5rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+}
+
+.staff-area-card h2 {
+    color: #4EC5B4;
+    margin-bottom: 0.5rem;
+}
+
+.staff-area-card p {
+    font-size: 0.95rem;
+    margin-bottom: 1rem;
+}
+
+.staff-area-make-changes-btn,
+.learn-more-btn {
+    margin-top: 0.5rem;
+    display: inline-block;
+    background-color: #4EC5B4;
+    color: #fff;
+    padding: 0.5rem 1rem;
+    border: none;
+    border-radius: 5px;
+    text-decoration: none;
+    transition: background-color 0.7s ease;
+}
+
+@media(min-width: 1025px) {
+    .staff-area-card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 6px 16px rgba(0, 0, 0, 0.12);
+    }
+
+    .learn-more-btn:hover,
+    .staff-area-make-changes-btn:hover {
+        background-color: #2a796f;
+        transition: 0.3s ease-in;
+    }
+}

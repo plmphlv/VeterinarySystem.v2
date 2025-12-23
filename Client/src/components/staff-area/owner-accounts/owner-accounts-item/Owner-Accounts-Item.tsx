@@ -5,6 +5,7 @@ import { useSearchOwnerAccount } from "../../../../api/ownerAccountsAPI";
 import type { OwnerAccount, SearchOwnerAccountRequest, SearchOwnerAccountRequestErrors } from "../../../../types";
 import Spinner from "../../../spinner/Spinner";
 import Dialog from "../../../dialog/Dialog";
+import styles from "./Owner-Accounts-Item.module.css";
 
 const OwnerAccounts: React.FC = () => {
     const { searchOwnerAccount, cancelSearchOwnerAccount } = useSearchOwnerAccount();
@@ -25,20 +26,11 @@ const OwnerAccounts: React.FC = () => {
 
             const filters: SearchOwnerAccountRequest = {};
 
-            if (name.trim()) {
-                filters.name = name.trim();
-            }
-
-            if (email.trim()) {
-                filters.email = email.trim();
-            }
-
-            if (phoneNumber.trim()) {
-                filters.phoneNumber = phoneNumber.trim();
-            }
+            if (name.trim()) filters.name = name.trim();
+            if (email.trim()) filters.email = email.trim();
+            if (phoneNumber.trim()) filters.phoneNumber = phoneNumber.trim();
 
             const result = await searchOwnerAccount(filters);
-
             setOwnerAccounts(result ?? []);
         } catch (err) {
             setDialog({
@@ -76,31 +68,29 @@ const OwnerAccounts: React.FC = () => {
                 />
             )}
 
-            <section className="owner-accounts">
-                {ownerAccounts.map((owner) => (
-                    <div className="owner-accounts-item-card" key={owner.id}>
-                        <div className="content">
-                            <p>
-                                <i className="fa-solid fa-id-badge"></i> ID: {owner.id}
-                            </p>
-                            <p>
-                                <i className="fa-solid fa-user"></i> Name: {owner.fullName}
-                            </p>
-                            <p>
-                                <i className="fa-solid fa-phone"></i> Phone Number: {owner.phoneNumber}
-                            </p>
+            <section className={styles["owner-accounts"]}>
+                {ownerAccounts.length > 0 ? ownerAccounts.map((owner) => (
+                    <div className={styles["owner-accounts-item-card"]} key={owner.id}>
+                        <div className={styles["content"]}>
+                            <p><i className="fa-solid fa-id-badge"></i> ID: {owner.id}</p>
+                            <p><i className="fa-solid fa-user"></i> Name: {owner.fullName}</p>
+                            <p><i className="fa-solid fa-phone"></i> Phone Number: {owner.phoneNumber}</p>
 
-                            <div className="actions">
+                            <div className={styles["actions"]}>
                                 <Link
                                     to={`/staff-area/owner-accounts/${owner.id}/details`}
-                                    className="more-details-btn"
+                                    className={styles["owner-accounts-more-details-btn"]}
                                 >
                                     → More Details
                                 </Link>
                             </div>
                         </div>
                     </div>
-                ))}
+                )) : (
+                    <h1 className={styles["no-owner-accounts"]}>
+                        No owner accounts found.
+                    </h1>
+                )}
             </section>
         </>
     );

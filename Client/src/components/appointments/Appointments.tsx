@@ -4,6 +4,7 @@ import AppointmentsItem from "./appointments-item/Appointments-Item";
 import Dialog from "../dialog/Dialog";
 import { useState } from "react";
 import Spinner from "../spinner/Spinner";
+import styles from "./Appointments.module.css";
 
 const Appointments: React.FC = () => {
     const { userData, error } = useGetUserData();
@@ -23,15 +24,24 @@ const Appointments: React.FC = () => {
                 />
             ) : (
                 <>
-                    <h1 className="appointments-h1">My Appointment Requests:</h1>
-                    <div className="appointments-div">
+                    <h1 className={styles["appointments-h1"]}>
+                        My Appointments Requests:
+                    </h1>
+
+                    <div className={styles["appointments-div"]}>
                         <AppointmentsItem />
                     </div>
-                    <Link to="/appointments/request-appointment" className="my-pets-request-appointment-btn">Request New Appointment</Link>
+
+                    <Link
+                        to="/appointments/request-appointment"
+                        className={styles["appointments-request-appointment-btn"]}
+                    >
+                        Request New Appointment
+                    </Link>
                 </>
             )}
         </>
-    )
-}
+    );
+};
 
 export default Appointments;

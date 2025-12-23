@@ -7,6 +7,7 @@ import { useGetUserData } from "../../../hooks/useGetUserData";
 import Dialog from "../../dialog/Dialog";
 import Spinner from "../../spinner/Spinner";
 import { useGetAppointmentDetails, useUpdateAppointmentRequest } from "../../../api/appointmentsAPI";
+import styles from "./Appointments-Update-Request.module.css";
 
 const initialValues: UpdateAppointmentRequest = {
     date: "",
@@ -26,32 +27,19 @@ const AppointmentsUpdateRequest: React.FC = () => {
     const { updateAppointmentRequest, cancelUpdateAppointmentRequest } = useUpdateAppointmentRequest();
     const navigate = useNavigate();
 
-    const validateField = (
-        field: keyof UpdateAppointmentRequest,
-        value: string,
-        allValues: UpdateAppointmentRequest
-    ): string | undefined => {
+    const validateField = (field: keyof UpdateAppointmentRequest, value: string, allValues: UpdateAppointmentRequest): string | undefined => {
         switch (field) {
             case "date":
                 if (!value) return "Date is required.";
-
                 const selectedDate = new Date(value);
-                const now = new Date();
-
                 const minDate = new Date();
-                minDate.setDate(now.getDate() + 1);
-
-                if (selectedDate < minDate) {
-                    return "Date must be at least one day in the future.";
-                }
+                minDate.setDate(minDate.getDate() + 1);
+                if (selectedDate < minDate) return "Date must be at least one day in the future.";
                 return undefined;
-
             case "description":
                 if (!value) return "Description is required.";
-                // value.trim().length < 10
                 if (value.length < 10 || value.length > 255) return "Description must be between 10 and 255 characters.";
                 return undefined;
-
             default:
                 return undefined;
         }
@@ -60,8 +48,7 @@ const AppointmentsUpdateRequest: React.FC = () => {
     const validate = (values: UpdateAppointmentRequest): UpdateAppointmentRequestFieldErrors => {
         const fieldErrors: UpdateAppointmentRequestFieldErrors = {};
         (Object.keys(values) as (keyof UpdateAppointmentRequest)[]).forEach(field => {
-            const fieldValue = values[field] ?? "";
-            const error = validateField(field, String(fieldValue), values);
+            const error = validateField(field, String(values[field] ?? ""), values);
             if (error) fieldErrors[field] = error;
         });
         return fieldErrors;
@@ -82,10 +69,9 @@ const AppointmentsUpdateRequest: React.FC = () => {
             };
 
             await updateAppointmentRequest(payload);
-
             setDialog({ message: "Appointment request updated successfully!", type: "success" });
             setTimeout(() => navigate(`/appointments/${id}/details`), 1500);
-        } catch (err) {
+        } catch {
             setDialog({ message: "Updating appointment request failed.", type: "error" });
         } finally {
             setFormLoading(false);
@@ -95,26 +81,18 @@ const AppointmentsUpdateRequest: React.FC = () => {
     const { values, changeHandler, onSubmit, changeValues } = useForm(initialValues, updateAppointmentRequestHandler);
 
     const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
-        const { name, value, type } = e.target;
+        const { name, value } = e.target;
         const fieldName = name as keyof UpdateAppointmentRequest;
 
-        let parsedValue: string | number | null = value;
-
-        changeValues({ ...values, [fieldName]: parsedValue });
-
-        const valueForValidation = parsedValue ?? "";
-        const errorMsg = validateField(fieldName, valueForValidation, { ...values, [fieldName]: parsedValue });
-
-        setErrors(prev => ({
-            ...prev,
-            [fieldName]: errorMsg || undefined
-        }));
+        changeValues({ ...values, [fieldName]: value });
+        const errorMsg = validateField(fieldName, value, { ...values, [fieldName]: value });
+        setErrors(prev => ({ ...prev, [fieldName]: errorMsg || undefined }));
     };
 
     const inputClass = (field: keyof UpdateAppointmentRequest) => {
-        if (errors[field]) return "input error";
-        if (values[field] && !errors[field]) return "input success";
-        return "input";
+        if (errors[field]) return styles.error;
+        if (values[field] && !errors[field]) return styles.success;
+        return "";
     };
 
     useEffect(() => cancelUpdateAppointmentRequest, []);
@@ -126,14 +104,12 @@ const AppointmentsUpdateRequest: React.FC = () => {
             try {
                 setLoading(true);
                 const details = await getAppointmentDetails({ id: Number(id) });
-
                 if (details) {
-                    const mapped: UpdateAppointmentRequest = {
+                    changeValues({
                         description: details.description,
                         date: new Date(details.date).toISOString().slice(0, 16),
                         id: Number(id),
-                    };
-                    changeValues(mapped);
+                    });
                 }
             } catch (err: any) {
                 setDialog({ message: err.title || "An error occurred while fetching appointment details.", type: "error" });
@@ -146,10 +122,6 @@ const AppointmentsUpdateRequest: React.FC = () => {
         return () => cancelGetAppointmentDetails();
     }, [id]);
 
-    useEffect(() => {
-        return () => cancelUpdateAppointmentRequest();
-    }, []);
-
     return (
         <>
             {(formLoading || userLoading || isLoading) && (
@@ -158,11 +130,11 @@ const AppointmentsUpdateRequest: React.FC = () => {
                 </div>
             )}
 
-            <section className="appointments-update-request">
-                <div className="appointments-update-request-container">
+            <section className={styles["appointments-update-request"]}>
+                <div className={styles["appointments-update-request-container"]}>
                     <h2>Update Appointment Request</h2>
                     <form onSubmit={onSubmit} noValidate>
-                        <div className="appointments-update-request-form-group">
+                        <div className={styles["appointments-update-request-form-group"]}>
                             <label htmlFor="date">Date of appointment:</label>
                             <input
                                 type="datetime-local"
@@ -173,10 +145,10 @@ const AppointmentsUpdateRequest: React.FC = () => {
                                 className={inputClass("date")}
                                 required
                             />
-                            {errors.date && <p className="error-text">{errors.date}</p>}
+                            {errors.date && <p className={styles["error-text"]}>{errors.date}</p>}
                         </div>
 
-                        <div className="appointments-update-request-form-group">
+                        <div className={styles["appointments-update-request-form-group"]}>
                             <label htmlFor="description">Description:</label>
                             <input
                                 type="text"
@@ -189,13 +161,13 @@ const AppointmentsUpdateRequest: React.FC = () => {
                                 autoComplete="off"
                                 required
                             />
-                            {errors.description && <p className="error-text">{errors.description}</p>}
+                            {errors.description && <p className={styles["error-text"]}>{errors.description}</p>}
                         </div>
 
-                        <button type="submit" className="appointments-update-request-btn" disabled={formLoading}>
+                        <button type="submit" className={styles["appointments-update-request-btn"]} disabled={formLoading}>
                             Update
                         </button>
-                        <Link to={`/appointments/${id}/details`} className="appointments-update-request-cancel-btn">Cancel</Link>
+                        <Link to={`/appointments/${id}/details`} className={styles["appointments-update-request-cancel-btn"]}>Cancel</Link>
                     </form>
                 </div>
             </section>
