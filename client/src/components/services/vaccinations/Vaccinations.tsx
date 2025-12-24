@@ -33,7 +33,7 @@ const Vaccinations: React.FC = () => {
                         <li>Long-term cost savings by preventing illness.</li>
                     </ul>
 
-                    <Link to="/services" className={styles["back-link"]}>
+                    <Link to="/services" className={styles["service-back-link"]}>
                         ← Back to Services
                     </Link>
                 </div>

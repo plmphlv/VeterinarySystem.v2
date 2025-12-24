@@ -16,7 +16,7 @@
     }
 }
 
-.appointments-details-h1 {
+.appointments-item-details-h1 {
     animation: fadeInOpacity 1s;
     margin-top: 3rem;
     background-color: #4EC5B4;
@@ -26,7 +26,7 @@
     border-radius: 1em;
 }
 
-.appointments-details {
+.appointments-item-details {
     animation: fadeInOpacity 1s;
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
@@ -36,7 +36,7 @@
     width: 100%;
 }
 
-.appointment-details-item-card {
+.appointment-item-details-card {
     background-color: #ffffff;
     border-radius: 10px;
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
@@ -44,7 +44,7 @@
     transition: transform 0.3s ease;
 }
 
-.appointment-details-content {
+.appointment-item-details-content {
     padding: 1.5rem;
     display: flex;
     flex-direction: column;
@@ -52,23 +52,23 @@
     text-align: center;
 }
 
-.appointment-details-item-card img {
+.appointment-item-details-card img {
     width: 100%;
     height: 200px;
     object-fit: cover;
 }
 
-.appointment-details-item-card h2 {
+.appointment-item-details-card h2 {
     color: #4EC5B4;
     margin-bottom: 0.5rem;
 }
 
-.appointment-details-item-card p {
+.appointment-item-details-card p {
     font-size: 0.95rem;
     margin-bottom: 0.5rem;
 }
 
-.appointments-details-actions {
+.appointments-item-details-actions {
     margin-top: 1rem;
 }
 

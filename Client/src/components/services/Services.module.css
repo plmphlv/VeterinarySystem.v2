@@ -16,16 +16,6 @@
     }
 }
 
-.services {
-    animation: fadeInOpacity 1s;
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-    gap: 2rem;
-    padding: 60px 15px;
-    max-width: 1200px;
-    width: 100%;
-}
-
 .services-h1 {
     animation: fadeInOpacity 1s;
     margin-top: 3rem;
@@ -36,7 +26,17 @@
     border-radius: 1em;
 }
 
-.service-card {
+.services {
+    animation: fadeInOpacity 1s;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 2rem;
+    padding: 60px 15px;
+    max-width: 1200px;
+    width: 100%;
+}
+
+.services-item-card {
     background-color: #ffffff;
     border-radius: 10px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
@@ -44,13 +44,13 @@
     transition: transform 0.3s ease;
 }
 
-.service-card img {
+.services-item-card img {
     width: 100%;
     height: 200px;
     object-fit: cover;
 }
 
-.service-card .content {
+.services-item-card .content {
     padding: 1.5rem;
     display: flex;
     flex-direction: column;
@@ -58,17 +58,17 @@
     text-align: center;
 }
 
-.service-card h2 {
+.services-item-card h2 {
     color: #4EC5B4;
     margin-bottom: 0.5rem;
 }
 
-.service-card p {
+.services-item-card p {
     font-size: 0.95rem;
     margin-bottom: 1rem;
 }
 
-.learn-more-btn {
+.services-learn-more-btn {
     margin-top: 0.5rem;
     display: inline-block;
     background-color: #4EC5B4;
@@ -101,12 +101,12 @@
         transition: 0.3s ease-in;
     }
 
-    .service-card:hover {
+    .services-item-card:hover {
         transform: translateY(-5px);
         box-shadow: 0 6px 16px rgba(0, 0, 0, 0.12);
     }
 
-    .learn-more-btn:hover {
+    .services-learn-more-btn:hover {
         background-color: #2a796f;
         transition: 0.3s ease-in;
     }

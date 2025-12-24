@@ -90,6 +90,13 @@
     border-color: #000;
 }
 
+.error-text {
+    color: #ff4d4d;
+    font-weight: bold;
+    font-size: 13px;
+    margin-top: 5px;
+}
+
 .appointments-create-request-btn {
     width: 100%;
     padding: 12px;
@@ -155,13 +162,6 @@
     border: 3px solid #3cb371;
 }
 
-.error-text {
-    color: #ff4d4d;
-    font-weight: bold;
-    font-size: 13px;
-    margin-top: 5px;
-}
-
 @media(min-width: 1025px) {
     .appointments-create-request-btn:hover {
         background-color: #2f8a58;
@@ -169,7 +169,7 @@
     }
 
     .appointments-create-request-cancel-btn:hover {
-        background-color: #D3D3D3;
+        background-color: #a8a8a8;
         transition: 0.3s ease-in;
     }
 

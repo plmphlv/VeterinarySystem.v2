@@ -95,11 +95,6 @@
     transition: background-color 0.3s;
 }
 
-.login-btn:hover {
-    background-color: #D3D3D3;
-    transition: 0.3s ease-in;
-}
-
 .login-bottom-text {
     text-align: center;
     margin-top: 20px;
@@ -145,7 +140,7 @@
 
 @media(min-width: 1025px) {
     .login-btn:hover {
-        background-color: #D3D3D3;
+        background-color: #a8a8a8;
         transition: 0.3s ease-in;
     }
 

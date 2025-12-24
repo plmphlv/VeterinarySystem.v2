@@ -16,6 +16,15 @@
     }
 }
 
+.my-pets-h1 {
+    margin-top: 3rem;
+    animation: fadeInOpacity 1s;
+    background-color: #4EC5B4;
+    color: #fff;
+    padding: 0.3em 1em;
+    border-radius: 1em;
+}
+
 .my-pets {
     padding: 60px 20px;
     animation: fadeInOpacity 1s;
@@ -26,15 +35,6 @@
     flex-direction: column;
     text-align: center;
     position: relative;
-}
-
-.my-pets-h1 {
-    margin-top: 3rem;
-    animation: fadeInOpacity 1s;
-    background-color: #4EC5B4;
-    color: #fff;
-    padding: 0.3em 1em;
-    border-radius: 1em;
 }
 
 .my-pets-add-pet-btn {

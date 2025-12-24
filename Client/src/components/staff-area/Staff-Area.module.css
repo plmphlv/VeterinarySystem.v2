@@ -68,8 +68,7 @@
     margin-bottom: 1rem;
 }
 
-.staff-area-make-changes-btn,
-.learn-more-btn {
+.staff-area-make-changes-btn {
     margin-top: 0.5rem;
     display: inline-block;
     background-color: #4EC5B4;
@@ -87,7 +86,6 @@
         box-shadow: 0 6px 16px rgba(0, 0, 0, 0.12);
     }
 
-    .learn-more-btn:hover,
     .staff-area-make-changes-btn:hover {
         background-color: #2a796f;
         transition: 0.3s ease-in;

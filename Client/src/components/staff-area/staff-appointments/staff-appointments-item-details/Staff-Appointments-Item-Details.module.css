@@ -75,7 +75,7 @@
     margin-top: 1rem;
 }
 
-.edit-request {
+.update-request {
     display: inline-block;
     background-color: rgb(225, 225, 0);
     color: white;
@@ -108,7 +108,7 @@
 }
 
 @media(min-width: 1025px) {
-    .edit-request:hover {
+    .update-request:hover {
         background-color: rgb(190, 190, 0);
         transition: 0.3s ease-in;
     }

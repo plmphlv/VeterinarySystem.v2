@@ -16,12 +16,6 @@
     }
 }
 
-.animal-types ul {
-    list-style: none;
-    padding: 0;
-    margin: 0;
-}
-
 .animal-types-h1 {
     animation: fadeInOpacity 1s;
     margin-top: 3rem;
@@ -41,6 +35,12 @@
     border-radius: 16px;
     padding: 1.5rem;
     box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+}
+
+.animal-types ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
 }
 
 .animal-types-add-btn-container {

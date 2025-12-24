@@ -89,6 +89,13 @@
     border-color: #000;
 }
 
+.error-text {
+    color: #ff4d4d;
+    font-weight: bold;
+    font-size: 13px;
+    margin-top: 5px;
+}
+
 .animal-types-add-btn-small {
     width: 100%;
     padding: 12px;
@@ -154,32 +161,19 @@
     border: 3px solid #3cb371;
 }
 
-.error-text {
-    color: #ff4d4d;
-    font-weight: bold;
-    font-size: 13px;
-    margin-top: 5px;
-}
-
 @media(min-width: 1025px) {
-    .animal-types-add-btn:hover {
-        background-color: #D3D3D3;
-    }
-
     .animal-types-add-bottom-text a:hover::before {
         transform-origin: left;
         transform: scaleX(1);
     }
 
-    .animal-types-add-btn:hover {
-        background-color: #2f8a58;
-    }
-
     .animal-types-add-btn-small:hover {
         background-color: #2f8a58;
+        transition: 0.3s ease-in;
     }
 
     .animal-types-add-cancel-btn:hover {
-        background-color: #D3D3D3;
+        background-color: #a8a8a8;
+        transition: 0.3s ease-in;
     }
 }

@@ -30,14 +30,6 @@
     object-fit: cover;
 }
 
-.my-pets-item-card-content {
-    padding: 1rem 3rem 1rem 3rem;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    text-align: center;
-}
-
 .my-pets-item-card h2 {
     color: #4EC5B4;
     margin-bottom: 1rem;
@@ -46,6 +38,14 @@
 .my-pets-item-card p {
     font-size: 0.95rem;
     margin-bottom: 0.5rem;
+}
+
+.my-pets-item-card-content {
+    padding: 1rem 3rem 1rem 3rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
 }
 
 .my-pets-item-more-info-btn {

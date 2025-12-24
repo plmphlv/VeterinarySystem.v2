@@ -78,18 +78,6 @@
     margin-bottom: 0.5rem;
 }
 
-.my-pets-item-details-back-link {
-    margin-top: 1rem;
-    display: inline-block;
-    background-color: #4EC5B4;
-    color: white;
-    padding: 0.5rem 1rem;
-    border-radius: 5px;
-    text-decoration: none;
-    margin-right: 0.5rem;
-    transition: background-color 0.7s ease;
-}
-
 .my-pets-item-details-edit-btn {
     margin-top: 1rem;
     margin-right: 0.5rem;
@@ -113,12 +101,19 @@
     transition: background-color 0.7s ease;
 }
 
-@media(min-width: 1025px) {
-    .my-pets-item-details-back-link:hover {
-        background-color: #2a796f;
-        transition: 0.3s ease-in;
-    }
+.my-pets-item-details-back-link {
+    margin-top: 1rem;
+    display: inline-block;
+    background-color: #4EC5B4;
+    color: white;
+    padding: 0.5rem 1rem;
+    border-radius: 5px;
+    text-decoration: none;
+    margin-right: 0.5rem;
+    transition: background-color 0.7s ease;
+}
 
+@media(min-width: 1025px) {
     .my-pets-item-details-delete-btn:hover {
         background-color: #ba3838;
         transition: 0.3s ease-in;
@@ -126,6 +121,11 @@
 
     .my-pets-item-details-edit-btn:hover {
         background-color: rgb(190, 190, 0);
+        transition: 0.3s ease-in;
+    }
+
+        .my-pets-item-details-back-link:hover {
+        background-color: #2a796f;
         transition: 0.3s ease-in;
     }
 }

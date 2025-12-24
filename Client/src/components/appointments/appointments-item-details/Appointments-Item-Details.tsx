@@ -58,11 +58,11 @@ const AppointmentsItemDetails: React.FC = () => {
 
             {appointmentDetails && (
                 <>
-                    <h1 className={styles["appointments-details-h1"]}>Appointment Request Details:</h1>
+                    <h1 className={styles["appointments-item-details-h1"]}>Appointment Request Details:</h1>
 
-                    <section className={styles["appointments-details"]}>
-                        <div className={styles["appointment-details-item-card"]} key={appointmentDetails.id}>
-                            <div className={styles["appointment-details-content"]}>
+                    <section className={styles["appointments-item-details"]}>
+                        <div className={styles["appointment-item-details-card"]} key={appointmentDetails.id}>
+                            <div className={styles["appointment-item-details-content"]}>
                                 <h2><i className="fa-solid fa-calendar-days"></i> {formatDate(appointmentDetails.date)}</h2>
                                 <p><i className="fa-solid fa-clock"></i> Hour: {formatTime(appointmentDetails.date)}</p>
                                 <p><i className="fa-solid fa-pen"></i> Status: {formatStatus(appointmentDetails.appointmentStatus)}</p>

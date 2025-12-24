@@ -65,7 +65,7 @@ const StaffAppointmentsItemDetails: React.FC = () => {
                                 <p><i className="fa-solid fa-comment"></i> Description: {appointmentDetails.description}</p>
 
                                 <div className={styles["staff-appointments-item-details-actions"]}>
-                                    <Link to={`/staff-area/appointments/${id}/update-request`} className={styles["edit-request"]}>Update</Link>
+                                    <Link to={`/staff-area/appointments/${id}/update-request`} className={styles["update-request"]}>Update</Link>
                                     <Link to={`/staff-area/appointments/${id}/delete-request`} className={styles["delete-request"]}>Delete</Link>
                                 </div>
                                 <Link to="/staff-area/appointments" className={styles["staff-appointments-item-details-back-link"]}>← Back to All Appointments</Link>

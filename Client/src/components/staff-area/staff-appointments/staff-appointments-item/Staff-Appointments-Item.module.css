@@ -16,48 +16,6 @@
     }
 }
 
-.staff-appointments-item {
-    animation: fadeInOpacity 1s;
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-    gap: 2rem;
-    padding: 2rem;
-    max-width: 500px;
-    width: 100%;
-}
-
-.staff-appointments-item-card {
-    background-color: #ffffff;
-    border-radius: 10px;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
-    overflow: hidden;
-    transition: transform 0.3s ease;
-}
-
-.staff-appointments-item-card img {
-    width: 100%;
-    height: 200px;
-    object-fit: cover;
-}
-
-.staff-appointments-item-card h2 {
-    color: #4EC5B4;
-    margin-bottom: 0.5rem;
-}
-
-.staff-appointments-item-card p {
-    font-size: 0.95rem;
-    margin-bottom: 0.5rem;
-}
-
-.staff-appointments-item-content {
-    padding: 1.5rem;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    text-align: center;
-}
-
 .staff-appointments-filter {
     justify-content: center;
     display: flex;
@@ -100,15 +58,46 @@
     color: #333;
 }
 
-.staff-appointments-item-no-appointments {
-    margin-top: 100px;
-    margin-bottom: 100px;
+.staff-appointments-item {
     animation: fadeInOpacity 1s;
-    background-color: #4EC5B4;
-    color: #fff;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 2rem;
+    padding: 2rem;
+    max-width: 500px;
+    width: 100%;
+}
+
+.staff-appointments-item-card {
+    background-color: #ffffff;
+    border-radius: 10px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+    overflow: hidden;
+    transition: transform 0.3s ease;
+}
+
+.staff-appointments-item-card img {
+    width: 100%;
+    height: 200px;
+    object-fit: cover;
+}
+
+.staff-appointments-item-card h2 {
+    color: #4EC5B4;
+    margin-bottom: 0.5rem;
+}
+
+.staff-appointments-item-card p {
+    font-size: 0.95rem;
+    margin-bottom: 0.5rem;
+}
+
+.staff-appointments-item-content {
+    padding: 1.5rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
     text-align: center;
-    padding: 0.3em 1em;
-    border-radius: 0.5em;
 }
 
 .staff-appointments-item-actions {
@@ -127,6 +116,17 @@
     border-radius: 5px;
     text-decoration: none;
     transition: background-color 0.7s ease;
+}
+
+.staff-appointments-item-no-appointments {
+    margin-top: 100px;
+    margin-bottom: 100px;
+    animation: fadeInOpacity 1s;
+    background-color: #4EC5B4;
+    color: #fff;
+    text-align: center;
+    padding: 0.3em 1em;
+    border-radius: 0.5em;
 }
 
 @media (hover: none) and (pointer: coarse) {

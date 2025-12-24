@@ -26,17 +26,6 @@
     width: 100%;
 }
 
-.no-owner-accounts {
-    margin-top: 100px;
-    margin-bottom: 100px;
-    animation: fadeInOpacity 1s;
-    background-color: #4EC5B4;
-    color: #fff;
-    text-align: center;
-    padding: 0.3em 1em;
-    border-radius: 0.5em;
-}
-
 .owner-accounts-item-card {
     background-color: #ffffff;
     border-radius: 10px;
@@ -79,6 +68,17 @@
     border-radius: 5px;
     text-decoration: none;
     transition: background-color 0.7s ease;
+}
+
+.no-owner-accounts {
+    margin-top: 100px;
+    margin-bottom: 100px;
+    animation: fadeInOpacity 1s;
+    background-color: #4EC5B4;
+    color: #fff;
+    text-align: center;
+    padding: 0.3em 1em;
+    border-radius: 0.5em;
 }
 
 @media (min-width: 1025px) {

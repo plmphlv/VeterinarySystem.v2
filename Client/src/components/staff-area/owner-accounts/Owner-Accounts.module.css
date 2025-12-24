@@ -38,7 +38,7 @@
     position: relative;
 }
 
-.owner-accounts-create-owner-account-btn {
+.owner-accounts-create-btn {
     background-color: #48d889;
     font-weight: bold;
     color: #fff;
@@ -54,7 +54,7 @@
 }
 
 @media (min-width: 1025px) {
-    .owner-accounts-create-owner-account-btn:hover {
+    .owner-accounts-create-btn:hover {
         background-color: #2f8a58;
         transition: 0.3s ease-in;
     }

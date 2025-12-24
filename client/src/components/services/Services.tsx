@@ -7,7 +7,7 @@ const Services: React.FC = () => {
             <h1 className={styles["services-h1"]}>Our Services:</h1>
 
             <section className={styles["services"]}>
-                <div className={styles["service-card"]}>
+                <div className={styles["services-item-card"]}>
                     <img src="/images/general-check-up.png" alt="General Check-up" />
                     <div className={styles["content"]}>
                         <h2>General Check-up</h2>
@@ -17,14 +17,14 @@ const Services: React.FC = () => {
                         </p>
                         <Link
                             to="/services/general-check-up"
-                            className={styles["learn-more-btn"]}
+                            className={styles["services-learn-more-btn"]}
                         >
                             → Learn More
                         </Link>
                     </div>
                 </div>
 
-                <div className={styles["service-card"]}>
+                <div className={styles["services-item-card"]}>
                     <img src="/images/vaccinations.png" alt="Vaccinations" />
                     <div className={styles["content"]}>
                         <h2>Vaccinations</h2>
@@ -34,14 +34,14 @@ const Services: React.FC = () => {
                         </p>
                         <Link
                             to="/services/vaccinations"
-                            className={styles["learn-more-btn"]}
+                            className={styles["services-learn-more-btn"]}
                         >
                             → Learn More
                         </Link>
                     </div>
                 </div>
 
-                <div className={styles["service-card"]}>
+                <div className={styles["services-item-card"]}>
                     <img src="/images/surgery.png" alt="Surgery" />
                     <div className={styles["content"]}>
                         <h2>Surgery</h2>
@@ -51,14 +51,14 @@ const Services: React.FC = () => {
                         </p>
                         <Link
                             to="/services/surgery"
-                            className={styles["learn-more-btn"]}
+                            className={styles["services-learn-more-btn"]}
                         >
                             → Learn More
                         </Link>
                     </div>
                 </div>
 
-                <div className={styles["service-card"]}>
+                <div className={styles["services-item-card"]}>
                     <img src="/images/dental-care.png" alt="Dental Care" />
                     <div className={styles["content"]}>
                         <h2>Dental Care</h2>
@@ -68,14 +68,14 @@ const Services: React.FC = () => {
                         </p>
                         <Link
                             to="/services/dental-care"
-                            className={styles["learn-more-btn"]}
+                            className={styles["services-learn-more-btn"]}
                         >
                             → Learn More
                         </Link>
                     </div>
                 </div>
 
-                <div className={styles["service-card"]}>
+                <div className={styles["services-item-card"]}>
                     <img src="/images/emergency-services.png" alt="Emergency Services" />
                     <div className={styles["content"]}>
                         <h2>Emergency Services</h2>
@@ -85,14 +85,14 @@ const Services: React.FC = () => {
                         </p>
                         <Link
                             to="/services/emergency-services"
-                            className={styles["learn-more-btn"]}
+                            className={styles["services-learn-more-btn"]}
                         >
                             → Learn More
                         </Link>
                     </div>
                 </div>
 
-                <div className={styles["service-card"]}>
+                <div className={styles["services-item-card"]}>
                     <img
                         src="/images/pet-nutrition-counseling.png"
                         alt="Pet Nutrition Counseling"
@@ -105,7 +105,7 @@ const Services: React.FC = () => {
                         </p>
                         <Link
                             to="/services/pet-nutrition-counseling"
-                            className={styles["learn-more-btn"]}
+                            className={styles["services-learn-more-btn"]}
                         >
                             → Learn More
                         </Link>

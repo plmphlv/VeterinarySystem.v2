@@ -88,6 +88,13 @@
     border-color: #000;
 }
 
+.error-text {
+    color: #ff4d4d;
+    font-weight: bold;
+    font-size: 13px;
+    margin-top: 5px;
+}
+
 .staff-appointments-update-request-btn {
     width: 100%;
     padding: 12px;
@@ -117,13 +124,6 @@
     transition: background-color 0.3s;
 }
 
-.error-text {
-    color: #ff4d4d;
-    font-weight: bold;
-    font-size: 13px;
-    margin-top: 5px;
-}
-
 .staff-appointments-update-request-form-group input.error {
     border: 3px solid #ff4d4d;
 }
@@ -139,7 +139,7 @@
     }
 
     .staff-appointments-cancel-request-btn:hover {
-        background-color: #D3D3D3;
+        background-color: #a8a8a8;
         transition: 0.3s ease-in;
     }
 }

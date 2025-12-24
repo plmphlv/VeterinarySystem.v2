@@ -93,9 +93,9 @@ const ChangePassword: React.FC = () => {
     };
 
     const inputClass = (field: keyof ChangePasswordRequest) => {
-        if (errors[field]) return "input error";
-        if (values[field] && !errors[field]) return "input success";
-        return "input";
+        if (errors[field]) return `${styles["input"]} ${styles.error}`;
+        if (values[field] && !errors[field]) return `${styles["input"]} ${styles.success}`;
+        return styles["input"];
     };
 
     useEffect(() => cancelChangePassword, []);
@@ -132,7 +132,7 @@ const ChangePassword: React.FC = () => {
                                     placeholder={placeholder}
                                     autoComplete="off"
                                 />
-                                {errors[name] && <p className="error-text">{errors[name]}</p>}
+                                {errors[name] && <p className={styles["error-text"]}>{errors[name]}</p>}
                             </div>
                         ))}
 

@@ -32,7 +32,7 @@ const Surgery: React.FC = () => {
                         <li>Detailed post-op instructions and support.</li>
                     </ul>
 
-                    <Link to="/services" className={styles["back-link"]}>
+                    <Link to="/services" className={styles["service-back-link"]}>
                         ← Back to Services
                     </Link>
                 </div>
