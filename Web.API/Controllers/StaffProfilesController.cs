@@ -1,10 +1,10 @@
 ﻿using Application.AnimalTypes.Queries.GetAnimalTypesList;
 using Application.Common.Models;
-using Application.StaffProfiles.Commands.Create;
+using Application.Features.StaffProfiles.Commands.Create;
+using Application.Features.StaffProfiles.Queries.GetStaffMemberDetails;
+using Application.Features.StaffProfiles.Queries.GetStaffMemberesList;
+using Application.Features.StaffProfiles.Queries.GetStaffMembers;
 using Application.StaffProfiles.Commands.Delete;
-using Application.StaffProfiles.Queries.GetStaffMemberDetails;
-using Application.StaffProfiles.Queries.GetStaffMemberesList;
-using Application.StaffProfiles.Queries.GetStaffMembers;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Web.API.Controllers;

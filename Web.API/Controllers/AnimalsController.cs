@@ -1,8 +1,9 @@
-﻿using Application.Animals.Commands.Create;
-using Application.Animals.Commands.Delete;
-using Application.Animals.Commands.Update;
+﻿using Application.Animals.Commands.Delete;
 using Application.Animals.Queries.GetAnimalDetails;
-using Application.Animals.Queries.GetOwnersAnimals;
+using Application.Features.Animals.Commands.Create;
+using Application.Features.Animals.Commands.Update;
+using Application.Features.Animals.Queries.GetAnimalDetails;
+using Application.Features.Animals.Queries.GetOwnersAnimals;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Web.API.Controllers;

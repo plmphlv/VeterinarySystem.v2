@@ -1,9 +1,9 @@
 ﻿using Application.Animals.Commands.Delete;
-using Application.AnimalTypes.Commands.Create;
 using Application.AnimalTypes.Commands.Delete;
-using Application.AnimalTypes.Commands.Update;
 using Application.AnimalTypes.Queries.GetAnimalTypesList;
 using Application.Common.Models;
+using Application.Features.AnimalTypes.Commands.Create;
+using Application.Features.AnimalTypes.Commands.Update;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Web.API.Controllers;
