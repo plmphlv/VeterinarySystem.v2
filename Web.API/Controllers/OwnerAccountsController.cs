@@ -16,7 +16,7 @@ public class OwnerAccountsController : ApiControllerBase
     }
 
     [HttpPut("{id}")]
-    public async Task<ActionResult> CreateOwnerAccount([FromRoute] string id, [FromBody] UpdateOwnerAccountCommand command)
+    public async Task<ActionResult> UpdateOwnerAccount([FromRoute] string id, [FromBody] UpdateOwnerAccountCommand command)
     {
         if (!string.Equals(id, command.Id))
         {

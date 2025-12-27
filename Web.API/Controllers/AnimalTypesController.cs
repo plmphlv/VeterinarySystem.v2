@@ -1,5 +1,6 @@
 ﻿using Application.Animals.Commands.Delete;
 using Application.AnimalTypes.Commands.Create;
+using Application.AnimalTypes.Commands.Delete;
 using Application.AnimalTypes.Commands.Update;
 using Application.AnimalTypes.Queries.GetAnimalTypesList;
 using Application.Common.Models;
@@ -31,7 +32,7 @@ public class AnimalTypesController : ApiControllerBase
     [HttpDelete("{id}")]
     public async Task<ActionResult> DeleteAnimalType([FromRoute] int id)
     {
-        await Mediator.Send(new DeleteAnimalCommand { Id = id });
+        await Mediator.Send(new DeleteTypeAnimalCommand { Id = id });
 
         return NoContent();
     }
