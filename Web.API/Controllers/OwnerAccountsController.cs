@@ -1,8 +1,8 @@
-﻿using Application.OwnerAccounts.Commands.Create;
-using Application.OwnerAccounts.Commands.Delete;
-using Application.OwnerAccounts.Commands.Update;
-using Application.OwnerAccounts.Queries.GetAnimalOwners;
-using Application.OwnerAccounts.Queries.GetOwnerAccountDetails;
+﻿using Application.Features.OwnerAccounts.Commands.Create;
+using Application.Features.OwnerAccounts.Commands.Delete;
+using Application.Features.OwnerAccounts.Commands.Update;
+using Application.Features.OwnerAccounts.Queries.GetAnimalOwners;
+using Application.Features.OwnerAccounts.Queries.GetOwnerAccountDetails;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Web.API.Controllers;
@@ -16,7 +16,7 @@ public class OwnerAccountsController : ApiControllerBase
     }
 
     [HttpPut("{id}")]
-    public async Task<ActionResult> CreateOwnerAccount([FromRoute] string id, [FromBody] UpdateOwnerAccountCommand command)
+    public async Task<ActionResult> UpdateOwnerAccount([FromRoute] string id, [FromBody] UpdateOwnerAccountCommand command)
     {
         if (!string.Equals(id, command.Id))
         {

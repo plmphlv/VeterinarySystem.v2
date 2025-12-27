@@ -1,11 +1,10 @@
-﻿using Application.Users.Commands.ChangePassword;
-using Application.Users.Commands.Login;
-using Application.Users.Commands.RefreshToken;
-using Application.Users.Commands.Register;
-using Application.Users.Commands.ResetPassword;
-using Application.Users.Commands.UpdateAccount;
-using Application.Users.Queries.GetAccountInforamtion;
-using Application.Users.Queries.GetAccountInformation;
+﻿using Application.Features.Users.Commands.ChangePassword;
+using Application.Features.Users.Commands.Login;
+using Application.Features.Users.Commands.RefreshToken;
+using Application.Features.Users.Commands.Register;
+using Application.Features.Users.Commands.ResetPassword;
+using Application.Features.Users.Commands.UpdateAccount;
+using Application.Features.Users.Queries.GetAccountInformation;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 

@@ -1,5 +1,5 @@
 ﻿using Application.Common.Models;
-using Application.Users.Commands.Common;
+using Application.Features.Users.Commands.Common;
 using Microsoft.AspNetCore.Identity;
 using System.Security.Claims;
 

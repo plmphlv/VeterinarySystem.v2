@@ -1,11 +1,11 @@
-﻿using Application.Appointments.Commands.ClearAppointment;
-using Application.Appointments.Commands.Create;
-using Application.Appointments.Commands.Delete;
-using Application.Appointments.Commands.RequestAppointment;
-using Application.Appointments.Commands.Update;
-using Application.Appointments.Commands.UpdateAppointmentRequest;
-using Application.Appointments.Queries.GetAppointmentDetails;
-using Application.Appointments.Queries.GetAppointments;
+﻿using Application.Features.Appointments.Commands.ClearAppointment;
+using Application.Features.Appointments.Commands.Create;
+using Application.Features.Appointments.Commands.Delete;
+using Application.Features.Appointments.Commands.RequestAppointment;
+using Application.Features.Appointments.Commands.Update;
+using Application.Features.Appointments.Commands.UpdateAppointmentRequest;
+using Application.Features.Appointments.Queries.GetAppointmentDetails;
+using Application.Features.Appointments.Queries.GetAppointments;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Web.API.Controllers;

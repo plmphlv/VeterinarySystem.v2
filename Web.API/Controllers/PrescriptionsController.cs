@@ -1,4 +1,4 @@
-﻿using Application.Prescriptions.Commands.Create;
+﻿using Application.Features.Prescriptions.Commands.Create;
 using Application.Prescriptions.Commands.Delete;
 using Application.Prescriptions.Commands.Update;
 using Application.Prescriptions.Queries.GetPrescription;

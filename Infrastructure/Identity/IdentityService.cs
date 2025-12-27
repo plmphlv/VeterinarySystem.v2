@@ -1,7 +1,7 @@
 ﻿using Application.Common.Exceptions;
 using Application.Common.Interfaces;
 using Application.Common.Models;
-using Application.Users.Commands.Common;
+using Application.Features.Users.Commands.Common;
 using Domain.Entities;
 using FluentValidation.Results;
 using Infrastructure.Extensions;
