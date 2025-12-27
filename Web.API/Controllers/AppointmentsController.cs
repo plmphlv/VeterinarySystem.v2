@@ -1,7 +1,6 @@
-﻿using Application.Appointments.Commands.ClearAppointment;
-using Application.Appointments.Commands.Delete;
-using Application.Appointments.Queries.GetAppointmentDetails;
+﻿using Application.Features.Appointments.Commands.ClearAppointment;
 using Application.Features.Appointments.Commands.Create;
+using Application.Features.Appointments.Commands.Delete;
 using Application.Features.Appointments.Commands.RequestAppointment;
 using Application.Features.Appointments.Commands.Update;
 using Application.Features.Appointments.Commands.UpdateAppointmentRequest;

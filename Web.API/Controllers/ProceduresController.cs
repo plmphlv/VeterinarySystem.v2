@@ -1,8 +1,8 @@
 ﻿using Application.Features.Procedures.Commands.Create;
+using Application.Features.Procedures.Commands.Delete;
 using Application.Features.Procedures.Commands.Update;
 using Application.Features.Procedures.Queries.GetProcedureDetails;
 using Application.Features.Procedures.Queries.SearchProcedures;
-using Application.Procedures.Commands.Delete;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Web.API.Controllers;

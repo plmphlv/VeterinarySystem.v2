@@ -5,7 +5,6 @@ using Application.Features.Users.Commands.Register;
 using Application.Features.Users.Commands.ResetPassword;
 using Application.Features.Users.Commands.UpdateAccount;
 using Application.Features.Users.Queries.GetAccountInformation;
-using Application.Users.Queries.GetAccountInforamtion;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 

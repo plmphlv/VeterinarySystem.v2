@@ -1,8 +1,8 @@
 ﻿using Application.Features.Templates.Commands.Create;
+using Application.Features.Templates.Commands.Delete;
 using Application.Features.Templates.Commands.Update;
 using Application.Features.Templates.Queries.GetTemplateDetails;
 using Application.Features.Templates.Queries.GetTemplates;
-using Application.Templates.Commands.Delete;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Web.API.Controllers

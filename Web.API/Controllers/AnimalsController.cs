@@ -1,6 +1,5 @@
-﻿using Application.Animals.Commands.Delete;
-using Application.Animals.Queries.GetAnimalDetails;
-using Application.Features.Animals.Commands.Create;
+﻿using Application.Features.Animals.Commands.Create;
+using Application.Features.Animals.Commands.Delete;
 using Application.Features.Animals.Commands.Update;
 using Application.Features.Animals.Queries.GetAnimalDetails;
 using Application.Features.Animals.Queries.GetOwnersAnimals;

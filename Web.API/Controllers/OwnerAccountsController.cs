@@ -1,8 +1,8 @@
 ﻿using Application.Features.OwnerAccounts.Commands.Create;
+using Application.Features.OwnerAccounts.Commands.Delete;
 using Application.Features.OwnerAccounts.Commands.Update;
 using Application.Features.OwnerAccounts.Queries.GetAnimalOwners;
 using Application.Features.OwnerAccounts.Queries.GetOwnerAccountDetails;
-using Application.OwnerAccounts.Commands.Delete;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Web.API.Controllers;
