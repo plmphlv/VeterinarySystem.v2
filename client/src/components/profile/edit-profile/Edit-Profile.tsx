@@ -7,6 +7,7 @@ import { useForm } from "../../../hooks/useForm";
 import { useEditProfile } from "../../../api/authAPI";
 import { Link, useNavigate } from "react-router";
 import styles from "./Edit-Profile.module.css";
+import Dialog from "../../dialog/Dialog";
 
 const initialValues: EditProfileRequest = {
     id: "",
@@ -103,11 +104,11 @@ const EditProfile: React.FC = () => {
         const errorMsg = validateField(fieldName, value ?? "", { ...values, [fieldName]: value });
         setErrors(prev => ({ ...prev, [fieldName]: errorMsg || undefined }));
     };
-    
+
     const inputClass = (field: keyof EditProfileRequest) => {
-        if (errors[field]) return `${styles["input"]} ${styles.error}`;
-        if (values[field] && !errors[field]) return `${styles["input"]} ${styles.success}`;
-        return styles["input"];
+        if (errors[field]) return styles.error;
+        if (values[field] && !errors[field]) return styles.success;
+        return "";
     };
 
     useEffect(() => cancelEditProfile, []);
@@ -139,7 +140,7 @@ const EditProfile: React.FC = () => {
                     <div className={styles["edit-profile-card"]}>
                         <form onSubmit={onSubmit} noValidate>
                             {([
-                                { name: "firstName", label: "First Name", type: "text", icon: "fa-pen", placeholder: "Enter your first name"},
+                                { name: "firstName", label: "First Name", type: "text", icon: "fa-pen", placeholder: "Enter your first name" },
                                 { name: "lastName", label: "Last Name", type: "text", icon: "fa-pen", placeholder: "Enter your last name" },
                                 { name: "phoneNumber", label: "Phone Number", type: "tel", icon: "fa-phone", placeholder: "Enter your phone number" },
                                 { name: "address", label: "Address (Optional)", type: "text", icon: "fa-map-marker-alt", placeholder: "Enter your address" },
@@ -168,7 +169,13 @@ const EditProfile: React.FC = () => {
                                 <Link to="/profile" className={styles["edit-profile-cancel-edit-btn"]}>Cancel</Link>
                             </div>
 
-                            {dialog && <div className={`dialog ${dialog.type}`}>{dialog.message}</div>}
+                            {dialog && (
+                                <Dialog
+                                    message={dialog.message}
+                                    type={dialog.type}
+                                    onClose={() => setDialog(null)}
+                                />
+                            )}
                         </form>
                     </div>
                 </div>

@@ -42,6 +42,8 @@ import StaffAppointmentsUpdateRequest from "./components/staff-area/staff-appoin
 import StaffAppointmentsDeleteRequest from "./components/staff-area/staff-appointments/staff-appointments-delete-request/Staff-Appointments-Delete-Request";
 import OwnerAccounts from "./components/staff-area/owner-accounts/Owner-Accounts";
 import OwnerAccountsItemDetails from "./components/staff-area/owner-accounts/owner-accounts-item-details/Owner-Accounts-Item-Details";
+import OwnerAccountsEdit from "./components/staff-area/owner-accounts/owner-accounts-edit/Owner-Accounts-Edit";
+import OwnerAccountDelete from "./components/staff-area/owner-accounts/owner-accounts-delete/Owner-Accounts-Delete";
 import Logout from "./components/logout/Logout";
 import Error from "./components/error/Error";
 import Footer from "./components/footer/Footer";
@@ -90,6 +92,8 @@ function App() {
             <Route path="/staff-area/appointments/:id/delete-request" element={<StaffAppointmentsDeleteRequest />}></Route>
             <Route path="/staff-area/owner-accounts/" element={<OwnerAccounts />}></Route>
             <Route path="/staff-area/owner-accounts/:id/details" element={<OwnerAccountsItemDetails />}></Route>
+            <Route path="/staff-area/owner-accounts/:id/edit" element={<OwnerAccountsEdit />}></Route>
+            <Route path="/staff-area/owner-accounts/:id/delete" element={<OwnerAccountDelete />}></Route> 
           </Route>
           <Route path="/logout" element={<Logout />}></Route>
         </Route>

@@ -351,7 +351,7 @@ export interface CreateOwnerAccountResponse {
 export interface EditOwnerAccountRequest {
     firstName: string,
     lastName: string,
-    address: string,
+    address?: string | null;
     phoneNumber: string,
     id: string
 }
@@ -382,6 +382,7 @@ export interface SearchOwnerAccountResponse {
 
 export type GetOwnerAccountDetailsRequestErrors = Partial<Record<keyof GetOwnerAccountDetailsRequest, string>>;
 export type SearchOwnerAccountRequestErrors = Partial<Record<keyof SearchOwnerAccountRequest, string>>;
+export type EditOwnerAccountFieldErrors = Partial<Record<keyof EditOwnerAccountRequest, string>>;
 
 // OwnerAccounts types end
 

@@ -16,7 +16,7 @@
     }
 }
 
-.edit-profile-h1 {
+.owner-accounts-edit-h1 {
     animation: fadeInOpacity 1s;
     margin-top: 3rem;
     background-color: #4EC5B4;
@@ -25,11 +25,11 @@
     border-radius: 1em;
 }
 
-.edit-profile-container {
+.owner-accounts-edit-container {
     padding: 60px 40px;
 }
 
-.edit-profile-card {
+.owner-accounts-edit-card {
     background-color: #fff;
     animation: fadeInOpacity 1s;
     max-width: 700px;
@@ -53,7 +53,7 @@
     margin: 0 auto 3rem;
 }
 
-.edit-profile-field {
+.owner-accounts-edit-field {
     display: flex;
     flex-direction: column;
     justify-content: space-between;
@@ -64,18 +64,18 @@
     text-align: left;
 }
 
-.edit-profile-field label {
+.owner-accounts-edit-field label {
     font-weight: 600;
     color: #4EC5B4;
 }
 
-.edit-profile-field span {
+.owner-accounts-edit-field span {
     color: #333;
     text-align: right;
     max-width: 65%;
 }
 
-.edit-profile-field input {
+.owner-accounts-edit-field input {
     border: none;
     border-bottom: 1px solid #e0e0e0;
     font-size: 1rem;
@@ -96,7 +96,7 @@
     margin-top: 5px;
 }
 
-.edit-profile-btns {
+.owner-accounts-edit-btns {
     margin-top: 1rem;
     display: flex;
     flex-wrap: wrap;
@@ -104,9 +104,8 @@
     justify-content: center;
 }
 
-.edit-profile-save-edit-btn,
-.edit-profile-cancel-edit-btn,
-.edit-profile-change-pass-btn {
+.owner-accounts-edit-save-btn,
+.owner-accounts-edit-cancel-btn {
     background-color: #4EC5B4;
     color: #fff;
     text-decoration: none;
@@ -119,7 +118,7 @@
     white-space: nowrap;
 }
 
-.edit-profile-no-user-data {
+.owner-accounts-edit-no-user-data {
     animation: fadeInOpacity 1s;
     margin-top: 150px;
     background-color: #4EC5B4;
@@ -128,30 +127,29 @@
     border-radius: 0.5em;
 }
 
-.edit-profile-form-group input.error {
+.owner-accounts-edit-form-group input.error {
     border: 3px solid #ff4d4d;
 }
 
-.edit-profile-form-group input.success {
+.owner-accounts-edit-form-group input.success {
     border: 3px solid #3cb371;
 }
 
 @media(min-width: 1025px) {
-    .edit-profile-save-edit-btn:hover,
-    .edit-profile-cancel-edit-btn:hover,
-    .edit-profile-change-pass-btn:hover {
+    .owner-accounts-edit-save-btn:hover,
+    .owner-accounts-edit-cancel-btn:hover {
         background-color: #2a796f;
         transition: 0.3s ease-in;
     }
 }
 
 @media (max-width: 480px) {
-    .edit-profile-field {
+    .owner-accounts-edit-field {
         flex-direction: column;
         align-items: flex-start;
     }
 
-    .edit-profile-field span {
+    .owner-accounts-edit-field span {
         margin-top: 0.3rem;
         max-width: 100%;
     }

@@ -91,14 +91,14 @@ const OwnerAccountsItemDetails: React.FC = () => {
                                     to={`/staff-area/owner-accounts/${ownerAccountDetails.id}/edit`}
                                     className={styles["edit-btn"]}
                                 >
-                                    Edit Profile
+                                    Edit
                                 </Link>
 
                                 <Link
                                     to={`/staff-area/owner-accounts/${ownerAccountDetails.id}/delete`}
                                     className={styles["delete-btn"]}
                                 >
-                                    Delete Profile
+                                    Delete
                                 </Link>
                             </div>
                         </div>
