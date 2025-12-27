@@ -1,0 +1,149 @@
+@mixin fade-in {
+    opacity: 1;
+    animation-name: fadeInOpacity;
+    animation-iteration-count: 1;
+    animation-timing-function: ease-in;
+    animation-duration: 2s;
+}
+
+@keyframes fadeInOpacity {
+    0% {
+        opacity: 0;
+    }
+
+    100% {
+        opacity: 1;
+    }
+}
+
+.staff-appointments-filter {
+    justify-content: center;
+    display: flex;
+    gap: 1rem;
+    align-items: center;
+    padding: 1rem 2rem;
+    background: #f9f9f9;
+    border-radius: 10px;
+    margin: 1rem auto;
+    max-width: 1200px;
+    flex-wrap: wrap;
+}
+
+.staff-appointments-filter input,
+.staff-appointments-filter select,
+.staff-appointments-filter button {
+    padding: 0.6rem 1rem;
+    border-radius: 8px;
+    border: 1px solid #ccc;
+    font-size: 0.95rem;
+}
+
+.staff-appointments-filter button {
+    background-color: #4EC5B4;
+    color: #fff;
+    cursor: pointer;
+    border: none;
+    transition: background 0.3s ease;
+}
+
+.staff-appointments-filter-item {
+    display: flex;
+    flex-direction: column;
+    gap: 0.4rem;
+}
+
+.staff-appointments-filter-item label {
+    font-size: 0.9rem;
+    font-weight: 500;
+    color: #333;
+}
+
+.staff-appointments-item {
+    animation: fadeInOpacity 1s;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 2rem;
+    padding: 2rem;
+    max-width: 500px;
+    width: 100%;
+}
+
+.staff-appointments-item-card {
+    background-color: #ffffff;
+    border-radius: 10px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+    overflow: hidden;
+    transition: transform 0.3s ease;
+}
+
+.staff-appointments-item-card img {
+    width: 100%;
+    height: 200px;
+    object-fit: cover;
+}
+
+.staff-appointments-item-card h2 {
+    color: #4EC5B4;
+    margin-bottom: 0.5rem;
+}
+
+.staff-appointments-item-card p {
+    font-size: 0.95rem;
+    margin-bottom: 0.5rem;
+}
+
+.staff-appointments-item-content {
+    padding: 1.5rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+}
+
+.staff-appointments-item-actions {
+    display: flex;
+    gap: 10px;
+    flex-direction: row;
+}
+
+.staff-appointments-item-more-details-btn {
+    margin-top: 0.5rem;
+    display: inline-block;
+    background-color: #4EC5B4;
+    color: #fff;
+    padding: 0.5rem 1rem;
+    border: none;
+    border-radius: 5px;
+    text-decoration: none;
+    transition: background-color 0.7s ease;
+}
+
+.staff-appointments-item-no-appointments {
+    margin-top: 100px;
+    margin-bottom: 100px;
+    animation: fadeInOpacity 1s;
+    background-color: #4EC5B4;
+    color: #fff;
+    text-align: center;
+    padding: 0.3em 1em;
+    border-radius: 0.5em;
+}
+
+@media (hover: none) and (pointer: coarse) {
+    .staff-appointments-filter {
+        flex-direction: column;
+        align-items: stretch;
+        text-align: center;
+    }
+
+    .staff-appointments-filter-actions {
+        justify-content: center;
+    }
+}
+
+@media (min-width: 1025px) {
+    .staff-appointments-item-more-details-btn:hover {
+        background-color: #2a796f;
+        transition: 0.3s ease-in;
+    }
+}

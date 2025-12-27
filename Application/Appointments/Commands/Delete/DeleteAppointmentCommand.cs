@@ -26,6 +26,8 @@ public class DeleteAppointmentCommandHandler : IRequestHandler<DeleteAppointment
             throw new NotFoundException(nameof(Appointment), id);
         }
 
+        // Add checks to make sure normal users cannot delete past or confirmed appointments
+
         context.Appointments.Remove(appointment);
 
         await context.SaveChangesAsync(cancellationToken);

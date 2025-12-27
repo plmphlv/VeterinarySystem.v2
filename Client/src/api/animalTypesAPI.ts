@@ -62,7 +62,7 @@ export const useEditAnimalType = () => {
         abortControllerRef.current?.abort();
         abortControllerRef.current = new AbortController();
 
-        return http.post<EditAnimalTypeRequest, EditAnimalTypeResponse>(
+        return http.put<EditAnimalTypeRequest, EditAnimalTypeResponse>(
             `${baseUrl}/${data.id}`,
             data,
             { signal: abortControllerRef.current.signal }
@@ -83,8 +83,8 @@ export const useDeleteAnimalType = () => {
 
     const deleteAnimalType = async (data: DeleteAnimalTypeRequest) => {
         abortControllerRef.current?.abort();
-        abortControllerRef.current = new AbortController();
-
+        abortControllerRef.current = new AbortController(); 
+        
         return http.delete<DeleteAnimalTypeRequest>(
             `${baseUrl}/${data.id}`,
             { signal: abortControllerRef.current.signal }

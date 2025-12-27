@@ -1,0 +1,81 @@
+@mixin fade-in {
+    opacity: 1;
+    animation-name: fadeInOpacity;
+    animation-iteration-count: 1;
+    animation-timing-function: ease-in;
+    animation-duration: 2s;
+}
+
+@keyframes fadeInOpacity {
+    0% {
+        opacity: 0;
+    }
+
+    100% {
+        opacity: 1;
+    }
+}
+
+.home-container {
+    animation: fadeInOpacity 1s;
+    padding: 60px 20px;
+    height: 100vh;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    text-align: center;
+    background: url('/images/veterinary-hospital.png') no-repeat center center / cover;
+    position: relative;
+}
+
+.home-container::after {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.7);
+    z-index: 0;
+}
+
+.home-content {
+    animation: fadeInOpacity 1s;
+    position: relative;
+    z-index: 1;
+    color: #ffffff;
+}
+
+.home-content h1 {
+    font-size: 3rem;
+    margin-bottom: 1.5rem;
+    color: #ffffff;
+}
+
+.home-content p {
+    font-size: 1.2rem;
+    max-width: 600px;
+    margin-bottom: 2rem;
+    color: #ffffff;
+    line-height: 1.6;
+}
+
+.home-content a {
+    display: inline-block;
+    padding: 0.75rem 2rem;
+    background: #4EC5B4;
+    color: #000;
+    font-weight: bold;
+    font-size: 1.2rem;
+    border-radius: 50px;
+    text-decoration: none;
+    transition: all 0.3s ease-in-out;
+}
+
+@media (min-width: 1025px) {
+    .home-content a:hover {
+        background: #2a796f;
+    }
+}

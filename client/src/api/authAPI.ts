@@ -1,9 +1,31 @@
 import { useContext, useRef, useEffect } from 'react';
-import type { ChangePasswordRequest, ChangePasswordResponse, EditProfileRequest, EditProfileResponse, LoginRequest, LoginResponse, RegisterRequest, RegisterResponse } from '../types';
+import type { ChangePasswordRequest, ChangePasswordResponse, EditProfileRequest, EditProfileResponse, GetUserAccountRequest, LoginRequest, LoginResponse, RegisterRequest, RegisterResponse, ResetPasswordRequest, ResetPasswordResponse } from '../types';
 import http from '../utils/request';
 import { UserContext } from '../contexts/UserContext';
 
 const baseUrl = `${import.meta.env.VITE_BASE_API_URL}/Users`;
+
+export const useGetUserAccount = () => {
+    const abortControllerRef = useRef<AbortController | null>(null);
+
+    useEffect(() => {
+        return () => {
+            abortControllerRef.current?.abort();
+        };
+    }, []);
+
+    const getUserAccount = async (data: GetUserAccountRequest) => {
+        abortControllerRef.current?.abort();
+        abortControllerRef.current = new AbortController();
+
+        return http.get<GetUserAccountRequest>(
+            `${baseUrl}/Account/${data.id}`,
+            { signal: abortControllerRef.current.signal }
+        );
+    };
+
+    return { getUserAccount, cancelGetUserAccount: () => abortControllerRef.current?.abort() };
+};
 
 export const useLogin = () => {
     const abortControllerRef = useRef<AbortController | null>(null);
@@ -87,6 +109,28 @@ export const useChangePassword = () => {
     return { changePassword, cancelChangePassword: () => abortControllerRef.current?.abort() };
 };
 
+export const useResetPassword = () => {
+    const abortControllerRef = useRef<AbortController | null>(null);
+
+    useEffect(() => {
+        return () => {
+            abortControllerRef.current?.abort();
+        };
+    }, []);
+
+    const resetPassword = async (data: ResetPasswordRequest) => {
+        abortControllerRef.current?.abort();
+        abortControllerRef.current = new AbortController();
+
+        return http.put<ResetPasswordRequest, ResetPasswordResponse>(
+            `${baseUrl}/ResetPassword`,
+            data,
+            { signal: abortControllerRef.current.signal }
+        );
+    };
+
+    return { resetPassword, cancelResetPassword: () => abortControllerRef.current?.abort() };
+};
 
 export const useEditProfile = () => {
     const abortControllerRef = useRef<AbortController | null>(null);

@@ -1,0 +1,100 @@
+@mixin fade-in {
+    opacity: 1;
+    animation-name: fadeInOpacity;
+    animation-iteration-count: 1;
+    animation-timing-function: ease-in;
+    animation-duration: 2s;
+}
+
+@keyframes fadeInOpacity {
+    0% {
+        opacity: 0;
+    }
+
+    100% {
+        opacity: 1;
+    }
+}
+
+.animal-types-item {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 1rem 1.25rem;
+    margin-bottom: 1rem;
+    background-color: #f9fefe;
+    border-left: 5px solid #4EC5B4;
+    border-radius: 12px;
+    font-size: 1.05rem;
+    font-weight: 500;
+    color: #000;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.animal-types-btns {
+    margin-left: 2.5rem;
+    display: flex;
+}
+
+.animal-types-edit-btn {
+    display: inline-block;
+    margin: 0.5rem 0.5rem 0 0;
+    padding: 0.75rem 1.6rem;
+    text-align: center;
+    background-color: rgb(225, 225, 0);
+    color: #fff;
+    text-decoration: none;
+    font-weight: 500;
+    border-radius: 999px;
+    border: none;
+    transition: background-color 0.2s ease, transform 0.2s ease;
+}
+
+.animal-types-delete-btn {
+    display: inline-block;
+    margin: 0.5rem 0.5rem 0 0;
+    padding: 0.75rem 1.6rem;
+    text-align: center;
+    background-color: #ff4d4d;
+    color: #fff;
+    text-decoration: none;
+    font-weight: 500;
+    border-radius: 999px;
+    border: none;
+    transition: background-color 0.2s ease, transform 0.2s ease;
+}
+
+.no-animal-types-h1 {
+    animation: fadeInOpacity 1s;
+    margin-top: 100px;
+    margin-bottom: 100px;
+    background-color: #4EC5B4;
+    color: #fff;
+    padding: 0.3em 1em;
+    border-radius: 0.5em;
+}
+
+@media (min-width: 1025px) {
+    .animal-types-item:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 6px 18px rgba(78, 197, 180, 0.25);
+    }
+
+    .animal-types-edit-btn:hover {
+        background-color: rgb(190, 190, 0);
+        transform: translateY(-1px);
+        transition: 0.3s ease-in;
+    }
+
+    .animal-types-delete-btn:hover {
+        background-color: #ba3838;
+        transform: translateY(-1px);
+        transition: 0.3s ease-in;
+    }
+}
+
+@media (hover: none) and (pointer: coarse) {
+    .animal-types-btns {
+        flex-direction: column;
+    }
+}

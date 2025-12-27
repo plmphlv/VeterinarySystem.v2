@@ -14,10 +14,7 @@
       "launchBrowser": false,
       "launchUrl": "swagger",
       "environmentVariables": {
-        "ASPNETCORE_ENVIRONMENT": "Development",
-        "JWT_SECURITY_KEY": "JpRFffMNblLSqbx3S5znpEpGLHtg8kOtmT2kQGVste8QtgfBCKUsBwjntpNfYotnV3YGJ6fDktc/Zj5DK5A46A==",
-        "JWT_ISSUER": "https://localhost:44348/",
-        "JWT_AUDIENCE": "https://localhost:44348/"
+        "ASPNETCORE_ENVIRONMENT": "Development"
       }
     },
     "Web.API": {
@@ -25,10 +22,7 @@
       "launchUrl": "swagger",
       "applicationUrl": "https://localhost:5000;http://localhost:5001",
       "environmentVariables": {
-        "ASPNETCORE_ENVIRONMENT": "Development",
-        "JWT_SECURITY_KEY": "JpRFffMNblLSqbx3S5znpEpGLHtg8kOtmT2kQGVste8QtgfBCKUsBwjntpNfYotnV3YGJ6fDktc/Zj5DK5A46A==",
-        "JWT_ISSUER": "https://localhost:5000/",
-        "JWT_AUDIENCE": "https://localhost:5000/"
+        "ASPNETCORE_ENVIRONMENT": "Development"
       }
     }
   }

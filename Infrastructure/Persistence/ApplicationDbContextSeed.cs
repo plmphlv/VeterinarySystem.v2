@@ -151,13 +151,7 @@ public static class ApplicationDbContextSeed
 
         if (staff is null)
         {
-            staff = new StaffAccount
-            {
-                Id = Guid.NewGuid().ToString(),
-                AccountId = staffAccount.Id,
-            };
-
-            context.StaffAccounts.Add(staff);
+            return;
         }
 
         int animalTypesCount = await context.AnimalTypes.CountAsync();
@@ -294,7 +288,7 @@ public static class ApplicationDbContextSeed
             Appointment appointment1 = new Appointment
             {
                 Date = DateTime.Parse("2025-02-12T14:20"),
-                Desctiption = "Leukemia vaccination for adult cat",
+                Description = "Leukemia vaccination for adult cat",
                 StaffId = staff.Id,
                 Status = AppointmentStatus.Pending_Review,
                 AnimalOwnerId = ownerAccount.Id
@@ -303,7 +297,7 @@ public static class ApplicationDbContextSeed
             Appointment appointment2 = new Appointment
             {
                 Date = DateTime.Parse("2025-02-21T11:00:00"),
-                Desctiption = "General checkup on dog",
+                Description = "General checkup on dog",
                 StaffId = staff.Id,
                 Status = AppointmentStatus.Confirmed,
                 AnimalOwnerId = ownerAccount.Id
@@ -394,7 +388,22 @@ public static class ApplicationDbContextSeed
                 IdentityResult addRoleResult = await userManager.AddToRoleAsync(user, role);
 
                 claims.Add(new Claim(ClaimTypes.Role, role));
-                claims.Add(new Claim(InfrastructureConstants.StaffId, role));
+
+                if (string.Equals(role, Role.StaffMember.ToString()))
+                {
+                    StaffAccount staff = new StaffAccount
+                    {
+                        Id = Guid.NewGuid().ToString(),
+                        AccountId = account.Id,
+                    };
+
+                    context.StaffAccounts.Add(staff);
+
+                    await context.SaveChangesAsync();
+
+                    claims.Add(new Claim(InfrastructureConstants.StaffId, staff.Id));
+                }
+
             }
 
             await userManager.AddClaimsAsync(user, claims);

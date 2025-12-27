@@ -167,7 +167,7 @@ namespace Infrastructure.Migrations
                     b.Property<DateTime?>("DeletionDate")
                         .HasColumnType("datetime2");
 
-                    b.Property<string>("Desctiption")
+                    b.Property<string>("Description")
                         .HasMaxLength(255)
                         .HasColumnType("nvarchar(255)");
 
@@ -178,7 +178,6 @@ namespace Infrastructure.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("StaffId")
-                        .IsRequired()
                         .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("Status")
@@ -729,8 +728,7 @@ namespace Infrastructure.Migrations
                     b.HasOne("Domain.Entities.StaffAccount", "StaffAccount")
                         .WithMany("StaffAppointments")
                         .HasForeignKey("StaffId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
+                        .OnDelete(DeleteBehavior.Restrict);
 
                     b.Navigation("Owner");
 

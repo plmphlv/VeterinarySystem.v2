@@ -1,5 +1,5 @@
 import { useEffect, useRef } from "react";
-import type { CreateOwnerAccountRequest, CreateOwnerAccountResponse, DeleteOwnerAccountRequest, EditOwnerAccountRequest, EditOwnerAccountResponse, GetOwnerAccountDetailsRequest } from "../types";
+import type { CreateOwnerAccountRequest, CreateOwnerAccountResponse, DeleteOwnerAccountRequest, EditOwnerAccountRequest, EditOwnerAccountResponse, GetOwnerAccountDetailsRequest, GetOwnerAccountDetailsResponse, SearchOwnerAccountRequest, SearchOwnerAccountResponse } from "../types";
 import http from "../utils/request";
 
 const baseUrl = `${import.meta.env.VITE_BASE_API_URL}/OwnerAccounts`;
@@ -17,7 +17,7 @@ export const useGetOwnerAccountDetails = () => {
         abortControllerRef.current?.abort();
         abortControllerRef.current = new AbortController();
 
-        return http.get<GetOwnerAccountDetailsRequest>(
+        return http.get<GetOwnerAccountDetailsResponse>(
             `${baseUrl}/${id}`,
             { signal: abortControllerRef.current.signal }
         );   
@@ -94,24 +94,41 @@ export const useDeleteOwnerAccount = () => {
     return { deleteOwnerAccount, cancelDeleteOwnerAccount: () => abortControllerRef.current?.abort() };
 };
 
-// export const useSearchOwnerAccount = () => {
-//     const abortControllerRef = useRef<AbortController | null>(null);
+export const useSearchOwnerAccount = () => {
+    const abortControllerRef = useRef<AbortController | null>(null);
 
-//     useEffect(() => {
-//         return () => {
-//             abortControllerRef.current?.abort();
-//         };
-//     }, []);
+    useEffect(() => {
+        return () => {
+            abortControllerRef.current?.abort();
+        };
+    }, []);
 
-//     const searchOwnerAccount = async (data: SearchOwnerAccountRequest) => {
-//         abortControllerRef.current?.abort();
-//         abortControllerRef.current = new AbortController();
+    const searchOwnerAccount = async (data: SearchOwnerAccountRequest) => {
+        abortControllerRef.current?.abort();
+        abortControllerRef.current = new AbortController();
 
-//         return http.delete<SearchOwnerAccountRequest>(
-//             `${baseUrl}?Name=${data.id}`,
-//             { signal: abortControllerRef.current.signal }
-//         );   
-//     };
+        const params = new URLSearchParams();
 
-//     return { searchOwnerAccount, cancelSearchOwnerAccount: () => abortControllerRef.current?.abort() };
-// };
+        if (data.name) {
+            params.append("Name", data.name);
+        }
+
+        if (data.email) {
+            params.append("Email", data.email);
+        }
+
+        if (data.phoneNumber) {
+            params.append("PhoneNumber", data.phoneNumber);
+        }
+
+        return http.get<SearchOwnerAccountResponse[]>(
+            `${baseUrl}/SearchOwners?${params.toString()}`,
+            { signal: abortControllerRef.current.signal }
+        );
+    };
+
+    return {
+        searchOwnerAccount,
+        cancelSearchOwnerAccount: () => abortControllerRef.current?.abort()
+    };
+};

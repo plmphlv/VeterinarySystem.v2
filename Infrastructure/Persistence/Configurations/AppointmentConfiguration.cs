@@ -23,7 +23,7 @@ namespace Infrastructure.Persistence.Configurations
                 .IsRequired()
                 .HasConversion<string>();
 
-            builder.Property(p => p.Desctiption)
+            builder.Property(p => p.Description)
                 .HasMaxLength(255)
                 .HasColumnType("nvarchar(255)")
                 .IsRequired(false);

@@ -10,10 +10,6 @@ public class RequestAppointmentCommandValidator : AbstractValidator<RequestAppoi
             .NotEmpty()
             .WithMessage("Appointment Date is required");
 
-        RuleFor(c => c.StaffId)
-            .NotEmpty()
-            .WithMessage("StaffMemberId is required.");
-
         RuleFor(c => c.Date)
             .NotNull()
             .WithMessage("Appointment date is required.")
@@ -23,6 +19,6 @@ public class RequestAppointmentCommandValidator : AbstractValidator<RequestAppoi
         RuleFor(c => c.Description)
           .MaximumLength(255)
           .When(c => !string.IsNullOrEmpty(c.Description))
-          .WithMessage("Desctiption cannot be longer than 255 characters.");
+          .WithMessage("Description cannot be longer than 255 characters.");
     }
 }

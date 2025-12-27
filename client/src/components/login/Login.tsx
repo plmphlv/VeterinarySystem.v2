@@ -6,6 +6,7 @@ import { useForm } from "../../hooks/useForm";
 import Dialog from "../dialog/Dialog";
 import Spinner from "../spinner/Spinner";
 import { UserContext } from "../../contexts/UserContext";
+import styles from "./Login.module.css";
 
 const initialValues: LoginRequest = {
     IdentifyingCredential: "",
@@ -56,19 +57,18 @@ const Login: React.FC = () => {
             setErrors({});
             const authData = await login(values);
 
-            if (!authData || !authData.hasOwnProperty('accessToken') || authData?.errorMessage || authData.isSuccessful === false) {
-                throw new Error(`${authData?.errorMessage}`) || new Error("Login failed.");
+            if (!authData || authData.errorMessage || authData.isSuccessful === false) {
+                throw new Error("Login failed.");
             }
-            
-            setDialog({ message: "Login successful!", type: "success" });
+
+            setDialog({ message: "Login is successful.", type: "success" });
             setTimeout(() => {
                 userLoginHandler(authData);
-                navigate('/');
+                navigate("/");
             }, 500);
-        } catch (err: any) {            
-            setDialog({ message: err.detail || "Login failed, please try again later.", type: "error" });
+        } catch {
+            setDialog({ message: "Invalid username or password.", type: "error" });
             changeValues({ ...values, password: "" });
-
         } finally {
             setIsLoading(false);
         }
@@ -85,20 +85,18 @@ const Login: React.FC = () => {
 
         setErrors(prev => ({
             ...prev,
-            [fieldName]: errorMsg || undefined
+            [fieldName]: errorMsg
         }));
     };
 
     const inputClass = (field: keyof LoginRequest) => {
-        if (errors[field]) return "input error";
-        if (values[field] && !errors[field]) return "input success";
-        return "input";
+        if (errors[field]) return `${styles.input} ${styles.error}`;
+        if (values[field] && !errors[field]) return `${styles.input} ${styles.success}`;
+        return styles.input;
     };
 
     useEffect(() => {
-        return () => {
-            cancelLogin();
-        };
+        return () => cancelLogin();
     }, []);
 
     return (
@@ -109,9 +107,10 @@ const Login: React.FC = () => {
                 </div>
             )}
 
-            <section className="login">
-                <div className="login-container">
+            <section className={styles.login}>
+                <div className={styles["login-container"]}>
                     <h2>Login</h2>
+
                     <form onSubmit={onSubmit} noValidate>
                         {([
                             {
@@ -129,10 +128,11 @@ const Login: React.FC = () => {
                                 placeholder: "Enter your password"
                             }
                         ] as const).map(({ name, label, type, icon, placeholder }) => (
-                            <div className="login-form-group" key={name}>
+                            <div className={styles["login-form-group"]} key={name}>
                                 <label htmlFor={name}>
                                     <i className={`fa-solid ${icon}`}></i> {label}:
                                 </label>
+
                                 <input
                                     type={type}
                                     id={name}
@@ -143,15 +143,21 @@ const Login: React.FC = () => {
                                     placeholder={placeholder}
                                     autoComplete="off"
                                 />
-                                {errors[name] && <p className="error-text">{errors[name]}</p>}
+
+                                {errors[name] && <p className={styles["error-text"]}>{errors[name]}</p>}
                             </div>
                         ))}
 
-                        <button type="submit" className="register-btn" disabled={isLoading}>
+                        <button
+                            type="submit"
+                            className={styles["login-btn"]}
+                            disabled={isLoading}
+                        >
                             Login
                         </button>
                     </form>
-                    <div className="login-bottom-text">
+
+                    <div className={styles["login-bottom-text"]}>
                         Don't have an account? <Link to="/register">Register</Link>
                     </div>
                 </div>

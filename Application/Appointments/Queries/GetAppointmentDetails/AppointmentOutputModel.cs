@@ -10,7 +10,9 @@ public class AppointmentOutputModel
 
     public string AnimalOwnerName { get; set; } = null!;
 
+    public string? StaffMemberId { get; set; }
+
     public string StaffMemberName { get; set; } = null!;
 
-    public string? Desctiption { get; set; }
+    public string? Description { get; set; }
 }

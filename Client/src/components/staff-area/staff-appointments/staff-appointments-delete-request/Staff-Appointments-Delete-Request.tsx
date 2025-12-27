@@ -1,0 +1,67 @@
+import { useEffect, useState } from "react";
+import { useNavigate, useParams } from "react-router";
+import { useDeleteAppointmentRequest } from "../../../../api/appointmentsAPI";
+import Spinner from "../../../spinner/Spinner";
+import Dialog from "../../../dialog/Dialog";
+
+const StaffAppointmentsDeleteRequest: React.FC = () => {
+    const { id } = useParams();
+    const navigate = useNavigate();
+    const { deleteAppointmentRequest, cancelDeleteAppointmentRequest } = useDeleteAppointmentRequest();
+    const [isLoading, setLoading] = useState(false);
+    const [dialog, setDialog] = useState<{ message: string; type: "success" | "error" } | null>(null);
+
+    useEffect(() => {
+        if (!id) {
+            navigate("/staff-area/appointments");
+            return;
+        }
+
+        const doDelete = async () => {
+            const confirmed = window.confirm("Are you sure you want to delete this appointment request?");
+            if (!confirmed) {
+                navigate(`/staff-area/appointments/${id}/details`);
+                return;
+            }
+
+            try {
+                setLoading(true);
+                await deleteAppointmentRequest({ id: Number(id) });
+            } catch (err) {
+                setDialog({ message: "Failed to delete appointment request.", type: "error" });
+            } finally {
+                setDialog({ message: "Appointment request deleted successfully.", type: "success" });
+                setTimeout(() => navigate(`/staff-area/appointments`), 1500);
+                setLoading(false);
+            }
+        };
+
+        doDelete();
+    }, []);
+
+    useEffect(() => {
+        return () => {
+            cancelDeleteAppointmentRequest();
+        };
+    }, []);
+
+    return (
+        <>
+            {isLoading && (
+                <div className="spinner-overlay">
+                    <Spinner />
+                </div>
+            )}
+
+            {dialog && (
+                <Dialog
+                    message={dialog.message}
+                    type={dialog.type}
+                    onClose={() => setDialog(null)}
+                />
+            )}
+        </>
+    );
+};
+
+export default StaffAppointmentsDeleteRequest;

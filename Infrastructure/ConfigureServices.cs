@@ -32,6 +32,7 @@ public static class ConfigureServices
         services.AddIdentityCore<User>(options =>
         {
             options.SignIn.RequireConfirmedAccount = true;
+            options.User.RequireUniqueEmail = true;
             options.Password.RequireDigit = true;
             options.Password.RequireLowercase = false;
             options.Password.RequireUppercase = false;
@@ -42,7 +43,7 @@ public static class ConfigureServices
             .AddEntityFrameworkStores<ApplicationDbContext>()
             .AddDefaultTokenProviders();
 
-        services.AddTokenBasedAuthentication();
+        services.AddTokenBasedAuthentication(configuration);
 
         services.Configure<EmailSettings>(configuration.GetSection("EmailSettings"));
 
@@ -60,7 +61,9 @@ public static class ConfigureServices
 
     private static void AddJwtSettings(this IServiceCollection services, IConfiguration configuration)
     {
-        services.Configure<JwtSettings>(configuration.GetSection("Authentication:Jwt"));
+        services.AddOptions<JwtSettings>()
+            .Bind(configuration.GetSection("Authentication:JwtSettings"))
+            .ValidateDataAnnotations();
     }
 
     private static void AddUrlService(this IServiceCollection services)
@@ -76,17 +79,33 @@ public static class ConfigureServices
 
     private static void AddDbContexts(this IServiceCollection services, IConfiguration configuration)
     {
+        string? connectionString = string.Empty;
+
+        /*
+         Different connection string for Windows and MacOS
+         will allow developers on different OS to work without constantrly changing the connection string.
+         Will be removed in production
+         */
+        if (OperatingSystem.IsWindows())
+        {
+            connectionString = configuration.GetConnectionString("DbConnection");
+        }
+        else if (OperatingSystem.IsMacOS())
+        {
+            connectionString = configuration.GetConnectionString("MacDbConnection");
+        }
+
         services.AddDbContext<ApplicationDbContext>(options =>
                     options.UseSqlServer(
-                        configuration.GetConnectionString("DbConnection"),
+                        connectionString,
                         b => b.MigrationsAssembly(typeof(ApplicationDbContext).Assembly.FullName)));
 
         services.AddScoped<IApplicationDbContext>(provider => provider.GetRequiredService<ApplicationDbContext>());
     }
 
-    private static void AddTokenBasedAuthentication(this IServiceCollection services)
+    private static void AddTokenBasedAuthentication(this IServiceCollection services, IConfiguration configuration)
     {
-        string? key = Environment.GetEnvironmentVariable("JWT_SECURITY_KEY");
+        JwtSettings settings = configuration.GetSection("Authentication:JwtSettings").Get<JwtSettings>()!;
 
         services.AddAuthentication(options =>
         {
@@ -98,13 +117,13 @@ public static class ConfigureServices
               options.TokenValidationParameters = new TokenValidationParameters
               {
                   ValidateIssuer = true,
-                  ValidIssuer = Environment.GetEnvironmentVariable("JWT_ISSUER"),
+                  ValidIssuer = settings.JwtIssuer,
 
                   ValidateAudience = true,
-                  ValidAudience = Environment.GetEnvironmentVariable("JWT_AUDIENCE"),
+                  ValidAudience = settings.JwtAudience,
 
                   ValidateIssuerSigningKey = true,
-                  IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(key)),
+                  IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(settings.JwtSecurityKey)),
 
                   ValidateLifetime = true,
                   RequireExpirationTime = true,

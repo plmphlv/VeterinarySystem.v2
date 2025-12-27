@@ -11,10 +11,6 @@ namespace Application.Appointments.Commands.UpdateAppointmentRequest
                 .GreaterThan(0)
                 .WithMessage("Invalid id");
 
-            RuleFor(c => c.StaffId)
-                .NotEmpty()
-                .WithMessage("StaffMemberId is required.");
-
             RuleFor(c => c.Date)
                 .NotNull()
                 .WithMessage("Appointment date is required.")
@@ -24,7 +20,7 @@ namespace Application.Appointments.Commands.UpdateAppointmentRequest
             RuleFor(c => c.Description)
               .MaximumLength(255)
               .When(c => !string.IsNullOrEmpty(c.Description))
-              .WithMessage("Desctiption cannot be longer than 255 characters.");
+              .WithMessage("Description cannot be longer than 255 characters.");
         }
     }
 }

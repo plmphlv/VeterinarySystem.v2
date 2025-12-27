@@ -262,7 +262,7 @@ namespace Infrastructure.Migrations
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Date = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    Desctiption = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Description = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     IsUpcoming = table.Column<bool>(type: "bit", nullable: false),
                     AnimalOwnerId = table.Column<string>(type: "nvarchar(450)", nullable: false),
                     StaffMemberId = table.Column<int>(type: "int", nullable: false),

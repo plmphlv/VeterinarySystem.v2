@@ -4,6 +4,7 @@ import type { ChangePasswordRequest } from "../../../types";
 import { useChangePassword } from "../../../api/authAPI";
 import { useForm } from "../../../hooks/useForm";
 import Spinner from "../../spinner/Spinner";
+import styles from "./Change-Password.module.css";
 
 const initialValues: ChangePasswordRequest = {
     currentPassword: "",
@@ -57,7 +58,6 @@ const ChangePassword: React.FC = () => {
         return fieldErrors;
     };
 
-
     const changePasswordHandler = async (values: ChangePasswordRequest) => {
         const validationErrors = validate(values);
         if (Object.keys(validationErrors).length > 0) {
@@ -70,14 +70,11 @@ const ChangePassword: React.FC = () => {
             setErrors({});
             await changePassword(values);
             setDialog({ message: "Password changed successfully!", type: "success" });
-
-            setTimeout(() => {
-                navigate("/profile");
-            }, 1000);
         } catch (err: any) {
             setDialog({ message: err?.message || "Password change failed.", type: "error" });
         } finally {
             setIsLoading(false);
+            setTimeout(() => navigate(`/profile`), 1500);
         }
     };
 
@@ -96,16 +93,12 @@ const ChangePassword: React.FC = () => {
     };
 
     const inputClass = (field: keyof ChangePasswordRequest) => {
-        if (errors[field]) return "input error";
-        if (values[field] && !errors[field]) return "input success";
-        return "input";
+        if (errors[field]) return `${styles["input"]} ${styles.error}`;
+        if (values[field] && !errors[field]) return `${styles["input"]} ${styles.success}`;
+        return styles["input"];
     };
 
-    useEffect(() => {
-        return () => {
-            cancelChangePassword();
-        };
-    }, []);
+    useEffect(() => cancelChangePassword, []);
 
     return (
         <>
@@ -115,41 +108,42 @@ const ChangePassword: React.FC = () => {
                 </div>
             )}
 
-            <h1 className="h1-profile">Change Password</h1>
+            <h1 className={styles["change-password-h1"]}>Change Password</h1>
 
-            <div className="profile-card">
-                <form onSubmit={onSubmit} noValidate>
-                    {([
-                        { name: "currentPassword", label: "Current Password", type: "password", icon: "fa-key", placeholder: "Enter your current password" },
-                        { name: "newPassword", label: "New Password", type: "password", icon: "fa-key", placeholder: "Create a new password" },
-                        { name: "confirmNewPassword", label: "Confirm New Password", type: "password", icon: "fa-key", placeholder: "Confirm your new password" },
-                    ] as const).map(({ name, label, type, icon, placeholder }) => (
-                        <div className="field-edit-profile" key={name}>
-                            <label htmlFor={name}>
-                                <i className={`fa-solid ${icon}`}></i> {label}:
-                            </label>
-                            <input
-                                type={type}
-                                id={name}
-                                name={name}
-                                value={values[name]}
-                                onChange={handleChange}
-                                className={inputClass(name)}
-                                placeholder={placeholder}
-                                autoComplete="off"
-                            />
-                            {errors[name] && <p className="error-text">{errors[name]}</p>}
+            <div className={styles["change-password-container"]}>
+                <div className={styles["change-password-card"]}>
+                    <form onSubmit={onSubmit} noValidate>
+                        {([
+                            { name: "currentPassword", label: "Current Password", type: "password", icon: "fa-key", placeholder: "Enter your current password" },
+                            { name: "newPassword", label: "New Password", type: "password", icon: "fa-key", placeholder: "Create a new password" },
+                            { name: "confirmNewPassword", label: "Confirm New Password", type: "password", icon: "fa-key", placeholder: "Confirm your new password" },
+                        ] as const).map(({ name, label, type, icon, placeholder }) => (
+                            <div className={styles["change-password-field"]} key={name}>
+                                <label htmlFor={name}>
+                                    <i className={`fa-solid ${icon}`}></i> {label}:
+                                </label>
+                                <input
+                                    type={type}
+                                    id={name}
+                                    name={name}
+                                    value={values[name]}
+                                    onChange={handleChange}
+                                    className={inputClass(name)}
+                                    placeholder={placeholder}
+                                    autoComplete="off"
+                                />
+                                {errors[name] && <p className={styles["error-text"]}>{errors[name]}</p>}
+                            </div>
+                        ))}
+
+                        <div className={styles["change-password-btns"]}>
+                            <button className={styles["change-password-save-btn"]} type="submit" disabled={isLoading}>Save</button>
+                            <Link to="/profile" className={styles["change-password-cancel-btn"]}>Cancel</Link>
                         </div>
-                    ))}
 
-                    <button className="edit-button" type="submit" disabled={isLoading}>
-                        Save
-                    </button>
-
-                    <Link to="/profile" className="edit-button">Cancel</Link>
-
-                    {dialog && <div className={`dialog ${dialog.type}`}>{dialog.message}</div>}
-                </form>
+                        {dialog && <div className={`dialog ${dialog.type}`}>{dialog.message}</div>}
+                    </form>
+                </div>
             </div>
         </>
     );

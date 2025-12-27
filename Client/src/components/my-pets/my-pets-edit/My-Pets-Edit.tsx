@@ -8,14 +8,15 @@ import { useGetUserData } from "../../../hooks/useGetUserData";
 import { useEditAnimal, useGetAnimalDetails } from "../../../api/animalsAPI";
 import Dialog from "../../dialog/Dialog";
 import Spinner from "../../spinner/Spinner";
+import styles from "./My-Pets-Edit.module.css";
 
 const initialValues: EditAnimalRequest = {
     id: 0,
     name: "",
-    age: 0,
-    weight: 0,
-    passportNumber: "",
-    chipNumber: "",
+    age: null,
+    weight: 1,
+    passportNumber: null,
+    chipNumber: null,
     animalTypeId: 0,
 };
 
@@ -30,19 +31,18 @@ const MyPetsEdit: React.FC = () => {
     const { userData, isLoading: userLoading } = useGetUserData();
     const { getAnimalDetails, cancelGetAnimalDetails } = useGetAnimalDetails();
     const { editAnimal, cancelEditAnimal } = useEditAnimal();
-    const { getAnimalTypes, cancelGetAnimalTypes } = useGetAnimalTypes()
+    const { getAnimalTypes, cancelGetAnimalTypes } = useGetAnimalTypes();
     const navigate = useNavigate();
 
     useEffect(() => {
         const fetchAnimalTypes = async () => {
             try {
-                const animalTypes = await getAnimalTypes();
-                setAnimalTypes(animalTypes || []);
+                const types = await getAnimalTypes();
+                setAnimalTypes(types || []);
             } catch {
                 setDialog({ message: "An error occurred while fetching animal types.", type: "error" });
             }
         };
-
         fetchAnimalTypes();
         return () => cancelGetAnimalTypes();
     }, []);
@@ -55,21 +55,24 @@ const MyPetsEdit: React.FC = () => {
         switch (field) {
             case "name":
                 if (!String(value).trim()) return "Name is required.";
-                if (String(value).length < 2) return "Name must be at least 2 characters.";
+                if (String(value).trim().length < 2) return "Name must be at least 2 characters.";
                 return undefined;
             case "age":
-                if (value === "" || value === null || value === undefined) return "Age is required.";
-                if (Number(value) < 0) return "Age cannot be negative.";
+                if (value !== "" && value !== null && value !== undefined) {
+                    const num = Number(value);
+                    if (isNaN(num)) return "Age must be a number.";
+                    if (num <= 0) return "Age must be greater than 0.";
+                }
                 return undefined;
             case "weight":
                 if (value === "" || value === null || value === undefined) return "Weight is required.";
                 if (Number(value) <= 0) return "Weight must be greater than 0.";
                 return undefined;
             case "passportNumber":
-                if (!String(value).trim()) return "Passport number is required.";
+                if (String(value).trim().length > 0 && String(value).trim().length < 2) return "Passport number must be at least 2 characters.";
                 return undefined;
             case "chipNumber":
-                if (!String(value).trim()) return "Chip number is required.";
+                if (String(value).trim().length > 0 && String(value).trim().length < 2) return "Chip number must be at least 2 characters.";
                 return undefined;
             case "animalTypeId":
                 if (Number(value) <= 0) return "Please select an animal type.";
@@ -82,7 +85,8 @@ const MyPetsEdit: React.FC = () => {
     const validate = (values: EditAnimalRequest): EditAnimalFieldErrors => {
         const fieldErrors: EditAnimalFieldErrors = {};
         (Object.keys(values) as (keyof EditAnimalRequest)[]).forEach(field => {
-            const error = validateField(field, values[field], values);
+            const fieldValue = values[field] ?? "";
+            const error = validateField(field, fieldValue, values);
             if (error) fieldErrors[field] = error;
         });
         return fieldErrors;
@@ -100,56 +104,48 @@ const MyPetsEdit: React.FC = () => {
             const payload: EditAnimalRequest = {
                 ...values,
                 id: Number(id),
+                age: values.age ?? null,
+                passportNumber: values.passportNumber?.trim() === "" ? null : values.passportNumber,
+                chipNumber: values.chipNumber?.trim() === "" ? null : values.chipNumber,
             };
-
             await editAnimal(payload);
-
-            setDialog({ message: "Pet updated successfully!", type: "success" });
-            setTimeout(() => navigate(`/my-pets/${id}/info`), 1000);
+            setDialog({ message: "Pet edited successfully!", type: "success" });
+            setTimeout(() => navigate(`/my-pets/${id}/details`), 1500);
         } catch {
-            setDialog({ message: "Updating pet failed.", type: "error" });
+            setDialog({ message: "Editing pet failed.", type: "error" });
         } finally {
             setFormLoading(false);
         }
     };
 
-    const { values, changeHandler, onSubmit, changeValues } = useForm(initialValues, editAnimalHandler);
+    const { values, changeValues, onSubmit } = useForm(initialValues, editAnimalHandler);
 
     const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
         const { name, value, type } = e.target;
-
-        let parsedValue: string | number = value;
-        if ((type === "number" || name === "animalTypeId") && value !== "") {
-            parsedValue = Number(value);
-        }
-
-        changeValues({ ...values, [name]: parsedValue });
-
         const fieldName = name as keyof EditAnimalRequest;
-        const errorMsg = validateField(fieldName, parsedValue, { ...values, [name]: parsedValue });
+        let parsedValue: string | number | null = value;
+        if (type === "number") parsedValue = value === "" ? null : Number(value);
+        else if (fieldName === "animalTypeId") parsedValue = value === "" ? 0 : Number(value);
 
-        setErrors(prev => ({
-            ...prev,
-            [fieldName]: errorMsg || undefined
-        }));
+        changeValues({ ...values, [fieldName]: parsedValue });
+        const errorMsg = validateField(fieldName, parsedValue ?? "", { ...values, [fieldName]: parsedValue });
+        setErrors(prev => ({ ...prev, [fieldName]: errorMsg || undefined }));
     };
 
     const inputClass = (field: keyof EditAnimalRequest) => {
-        if (errors[field]) return "input error";
-        if (values[field] && !errors[field]) return "input success";
-        return "input";
+        if (errors[field]) return `${styles["input"]} ${styles.error}`;
+        if (values[field] && !errors[field]) return `${styles["input"]} ${styles.success}`;
+        return styles["input"];
     };
 
     useEffect(() => cancelEditAnimal, []);
 
     useEffect(() => {
         if (!id) return;
-
-        const fetchAnimalDetails = async () => {
+        const fetchDetails = async () => {
             try {
                 setLoading(true);
                 const details = await getAnimalDetails(Number(id));
-
                 if (details) {
                     const mapped: EditAnimalRequest = {
                         id: Number(id),
@@ -158,157 +154,72 @@ const MyPetsEdit: React.FC = () => {
                         weight: details.weight,
                         passportNumber: details.passportNumber,
                         chipNumber: details.chipNumber,
-                        animalTypeId: findAnimalTypeId(details.animalType),
+                        animalTypeId: animalTypes.find(t => t.value === details.animalType)?.id ?? 0,
                     };
                     changeValues(mapped);
                 }
             } catch (err: any) {
+                console.log(err);
                 setDialog({ message: err.title || "An error occurred while fetching animal details.", type: "error" });
             } finally {
                 setLoading(false);
             }
         };
-
-        fetchAnimalDetails();
+        fetchDetails();
         return () => cancelGetAnimalDetails();
     }, [id, animalTypes]);
-
-
-    const findAnimalTypeId = (typeName: string): number => {
-        const found = animalTypes.find(t => t.value === typeName);
-        return found ? found.id : 0;
-    };
 
     return (
         <>
             {(formLoading || userLoading || isLoading) && (
-                <div className="spinner-overlay">
-                    <Spinner />
-                </div>
+                <div className="spinner-overlay"><Spinner /></div>
             )}
 
-            <section className="my-pets-add">
-                <div className="my-pets-add-container">
+            <section className={styles["my-pets-edit"]}>
+                <div className={styles["my-pets-edit-container"]}>
                     <h2>Edit Pet</h2>
                     <form onSubmit={onSubmit} noValidate>
-                        {/* Inputs */}
-                        <div className="my-pets-add-form-group">
-                            <label htmlFor="name">
-                                <i className="fa-solid fa-pen"></i> Name:
-                            </label>
-                            <input
-                                type="text"
-                                id="name"
-                                name="name"
-                                value={values.name}
-                                onChange={handleChange}
-                                className={inputClass("name")}
-                                placeholder="Enter pet's name"
-                                autoComplete="off"
-                            />
-                            {errors.name && <p className="error-text">{errors.name}</p>}
-                        </div>
+                        {["name", "age", "weight", "passportNumber", "chipNumber"].map(field => (
+                            <div className={styles["my-pets-edit-form-group"]} key={field}>
+                                <label htmlFor={field}>{field === "name" ? "Name:" : field.charAt(0).toUpperCase() + field.slice(1) + ":"}</label>
+                                <input
+                                    id={field}
+                                    name={field}
+                                    type={field === "age" || field === "weight" ? "number" : "text"}
+                                    value={values[field as keyof EditAnimalRequest] ?? ""}
+                                    onChange={handleChange}
+                                    className={inputClass(field as keyof EditAnimalRequest)}
+                                    placeholder={`Enter new pet's ${field}`}
+                                />
+                                {errors[field as keyof EditAnimalRequest] && <p className={styles["error-text"]}>{errors[field as keyof EditAnimalRequest]}</p>}
+                            </div>
+                        ))}
 
-                        <div className="my-pets-add-form-group">
-                            <label htmlFor="age">
-                                <i className="fa-solid fa-calendar"></i> Age:
-                            </label>
-                            <input
-                                type="number"
-                                id="age"
-                                name="age"
-                                value={values.age ?? ""}
-                                onChange={handleChange}
-                                className={inputClass("age")}
-                                placeholder="Enter pet's age"
-                            />
-                            {errors.age && <p className="error-text">{errors.age}</p>}
-                        </div>
-
-                        <div className="my-pets-add-form-group">
-                            <label htmlFor="weight">
-                                <i className="fa-solid fa-weight"></i> Weight:
-                            </label>
-                            <input
-                                type="number"
-                                id="weight"
-                                name="weight"
-                                value={values.weight ?? ""}
-                                onChange={handleChange}
-                                className={inputClass("weight")}
-                                placeholder="Enter pet's weight"
-                            />
-                            {errors.weight && <p className="error-text">{errors.weight}</p>}
-                        </div>
-
-                        <div className="my-pets-add-form-group">
-                            <label htmlFor="passportNumber">
-                                <i className="fa-solid fa-passport"></i> Passport Number:
-                            </label>
-                            <input
-                                type="text"
-                                id="passportNumber"
-                                name="passportNumber"
-                                value={values.passportNumber}
-                                onChange={handleChange}
-                                className={inputClass("passportNumber")}
-                                placeholder="Enter pet's passport number"
-                            />
-                            {errors.passportNumber && <p className="error-text">{errors.passportNumber}</p>}
-                        </div>
-
-                        <div className="my-pets-add-form-group">
-                            <label htmlFor="chipNumber">
-                                <i className="fa-solid fa-microchip"></i> Chip Number:
-                            </label>
-                            <input
-                                type="text"
-                                id="chipNumber"
-                                name="chipNumber"
-                                value={values.chipNumber}
-                                onChange={handleChange}
-                                className={inputClass("chipNumber")}
-                                placeholder="Enter pet's chip number"
-                            />
-                            {errors.chipNumber && <p className="error-text">{errors.chipNumber}</p>}
-                        </div>
-
-                        <div className="my-pets-add-form-group">
-                            <label htmlFor="animalTypeId">
-                                <i className="fa-solid fa-paw"></i> Animal Type:
-                            </label>
+                        <div className={styles["my-pets-edit-form-group"]}>
+                            <label htmlFor="animalTypeId">Animal Type:</label>
                             <select
                                 id="animalTypeId"
                                 name="animalTypeId"
                                 value={values.animalTypeId}
                                 onChange={handleChange}
                                 className={inputClass("animalTypeId")}
+                                required
                             >
-                                <option value={0}>-- Select animal type --</option>
+                                <option value={0}>-- Select new animal type --</option>
                                 {animalTypes.map(type => (
-                                    <option key={type.id} value={type.id}>
-                                        {type.value}
-                                    </option>
+                                    <option key={type.id} value={type.id}>{type.value}</option>
                                 ))}
                             </select>
-                            {errors.animalTypeId && <p className="error-text">{errors.animalTypeId}</p>}
+                            {errors.animalTypeId && <p className={styles["error-text"]}>{errors.animalTypeId}</p>}
                         </div>
 
-                        <button type="submit" className="add-pet-btn" disabled={formLoading}>
-                            Save
-                        </button>
-                        <Link to={`/my-pets/${id}/info`} className="cancel-btn">Cancel</Link>
+                        <button type="submit" className={styles["my-pets-edit-pet-btn"]} disabled={formLoading}>Save</button>
+                        <Link to={`/my-pets/${id}/details`} className={styles["my-pets-edit-cancel-btn"]}>Cancel</Link>
                     </form>
                 </div>
-
-                {dialog && (
-                    <Dialog
-                        message={dialog.message}
-                        type={dialog.type}
-                        onClose={() => setDialog(null)}
-                    />
-                )}
             </section>
+
+            {dialog && <Dialog message={dialog.message} type={dialog.type} onClose={() => setDialog(null)} />}
         </>
     );
 };

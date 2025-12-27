@@ -17,9 +17,8 @@ export const useGetUserData = () => {
         const fetchUserData = async () => {
             setLoading(true);
             setError(null);
-            try {                
+            try {
                 const response = await http.get<UserDataFromId>(`${baseUrl}/${decodedData.AccountId}`);
-
                 setUserData(response || null);
             } catch (err) {
                 setError("Failed to load user data, please try again later.");

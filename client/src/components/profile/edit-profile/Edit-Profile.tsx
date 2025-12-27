@@ -6,12 +6,14 @@ import type { EditProfileRequest } from "../../../types";
 import { useForm } from "../../../hooks/useForm";
 import { useEditProfile } from "../../../api/authAPI";
 import { Link, useNavigate } from "react-router";
+import styles from "./Edit-Profile.module.css";
+import Dialog from "../../dialog/Dialog";
 
 const initialValues: EditProfileRequest = {
     id: "",
     firstName: "",
     lastName: "",
-    address: "",
+    address: null,
     phoneNumber: "",
 };
 
@@ -21,9 +23,7 @@ const EditProfile: React.FC = () => {
     const [dialog, setDialog] = useState<{ message: string; type: "success" | "error" } | null>(null);
 
     const { userData, isLoading: isUserLoading, error } = useGetUserData();
-
     const { editProfile, cancelEditProfile } = useEditProfile();
-
     const navigate = useNavigate();
 
     const validateField = (
@@ -56,14 +56,11 @@ const EditProfile: React.FC = () => {
 
     const validate = (values: EditProfileRequest): Partial<Record<keyof EditProfileRequest, string>> => {
         const fieldErrors: Partial<Record<keyof EditProfileRequest, string>> = {};
-
         (Object.keys(values) as (keyof EditProfileRequest)[]).forEach(field => {
-            if (field === 'address') return;
-
-            const error = validateField(field, values[field], values);
+            const fieldValue = values[field] ?? "";
+            const error = validateField(field, fieldValue, values);
             if (error) fieldErrors[field] = error;
         });
-
         return fieldErrors;
     };
 
@@ -80,116 +77,113 @@ const EditProfile: React.FC = () => {
             if (!userData) {
                 return setDialog({ message: "No user data found.", type: "error" });
             }
-            if (values.address === null) {
-                values.address = "";
-            }
 
-            await editProfile({ ...values, id: userData.id });
+            const payload: EditProfileRequest = {
+                ...values,
+                id: userData.id,
+                address: values.address?.trim() === "" ? null : values.address
+            };
 
-            setDialog({ message: "Edit is successful!", type: "success" });
-            setTimeout(() => {
-                navigate('/profile');
-            }, 500);
+            await editProfile(payload);
+            setDialog({ message: "Profile edit is successful!", type: "success" });
         } catch (err: any) {
             setDialog({ message: err.detail || "Edit failed.", type: "error" });
         } finally {
             setIsLoading(false);
+            setTimeout(() => navigate(`/profile`), 1500);
         }
     };
 
-    const { values, changeHandler, onSubmit, changeValues } = useForm(initialValues, editProfileHandler);
+    const { values, changeValues, onSubmit } = useForm(initialValues, editProfileHandler);
 
     const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         const { name, value } = e.target;
-        changeHandler(e);
-
         const fieldName = name as keyof EditProfileRequest;
-        const errorMsg = validateField(fieldName, value, { ...values, [name]: value });
+        changeValues({ ...values, [fieldName]: value });
 
-        setErrors(prev => ({
-            ...prev,
-            [fieldName]: errorMsg || undefined
-        }));
+        const errorMsg = validateField(fieldName, value ?? "", { ...values, [fieldName]: value });
+        setErrors(prev => ({ ...prev, [fieldName]: errorMsg || undefined }));
     };
 
     const inputClass = (field: keyof EditProfileRequest) => {
-        if (errors[field]) return "input error";
-        if (values[field] && !errors[field]) return "input success";
-        return "input";
+        if (errors[field]) return styles.error;
+        if (values[field] && !errors[field]) return styles.success;
+        return "";
     };
 
-    useEffect(() => {
-        return () => {
-            cancelEditProfile();
-        };
-    }, []);
+    useEffect(() => cancelEditProfile, []);
 
     useEffect(() => {
         if (userData) {
-            const safeValues: EditProfileRequest = {
+            changeValues({
                 id: userData.id,
                 firstName: userData.firstName || "",
                 lastName: userData.lastName || "",
                 phoneNumber: userData.phoneNumber || "",
-                address: userData.address || ""
-            };
-            changeValues(safeValues);
+                address: userData.address || "",
+            });
         }
     }, [userData]);
 
     return (
         <>
-            {isLoading || isUserLoading && (
+            {(isLoading || isUserLoading) && (
                 <div className="spinner-overlay">
                     <Spinner />
                 </div>
             )}
 
-            <h1 className="h1-profile">Edit Profile</h1>
-            
+            <h1 className={styles["edit-profile-h1"]}>Edit Profile</h1>
+
             {userData ? (
+                <div className={styles["edit-profile-container"]}>
+                    <div className={styles["edit-profile-card"]}>
+                        <form onSubmit={onSubmit} noValidate>
+                            {([
+                                { name: "firstName", label: "First Name", type: "text", icon: "fa-pen", placeholder: "Enter your first name" },
+                                { name: "lastName", label: "Last Name", type: "text", icon: "fa-pen", placeholder: "Enter your last name" },
+                                { name: "phoneNumber", label: "Phone Number", type: "tel", icon: "fa-phone", placeholder: "Enter your phone number" },
+                                { name: "address", label: "Address (Optional)", type: "text", icon: "fa-map-marker-alt", placeholder: "Enter your address" },
+                            ] as const).map(({ name, label, type, icon, placeholder }) => (
+                                <div className={styles["edit-profile-field"]} key={name}>
+                                    <label htmlFor={name}>
+                                        <i className={`fa-solid ${icon}`}></i> {label}:
+                                    </label>
+                                    <input
+                                        type={type}
+                                        id={name}
+                                        name={name}
+                                        value={values[name] ?? ""}
+                                        onChange={handleChange}
+                                        className={inputClass(name)}
+                                        placeholder={placeholder}
+                                        autoComplete="off"
+                                        required={name !== "address"}
+                                    />
+                                    {errors[name] && <p className={styles["error-text"]}>{errors[name]}</p>}
+                                </div>
+                            ))}
 
-                <div className="profile-card">
-                    <form onSubmit={onSubmit} noValidate>
-                        {([
-                            { name: "firstName", label: "First Name", type: "text", icon: "fa-pen", placeholder: "Enter your first name" },
-                            { name: "lastName", label: "Last Name", type: "text", icon: "fa-pen", placeholder: "Enter your last name" },
-                            { name: "phoneNumber", label: "Phone Number", type: "tel", icon: "fa-phone", placeholder: "+359 88 812 3456 / 0888123456" },
-                            { name: "address", label: "Address", type: "text", icon: "fa-solid fa-map-marker-alt", placeholder: "Enter your address (optional)" },
-                        ] as const).map(({ name, label, type, icon, placeholder }) => (
-                            <div className="field-edit-profile" key={name}>
-                                <label htmlFor={name}>
-                                    <i className={`fa-solid ${icon}`}></i> {label}:
-                                </label>
-                                <input
-                                    type={type}
-                                    id={name}
-                                    name={name}
-                                    value={values[name] ?? ""}
-                                    onChange={handleChange}
-                                    className={inputClass(name)}
-                                    placeholder={placeholder}
-                                    autoComplete="off"
-                                    required={name !== "address"}
-                                />
-                                {errors[name] && <p className="error-text">{errors[name]}</p>}
+                            <div className={styles["edit-profile-btns"]}>
+                                <button className={styles["edit-profile-save-edit-btn"]} type="submit" disabled={isLoading}>Save</button>
+                                <Link to="/profile" className={styles["edit-profile-cancel-edit-btn"]}>Cancel</Link>
                             </div>
-                        ))}
 
-                        <button className="edit-button" type="submit" disabled={isLoading}>
-                            Save
-                        </button>
-
-                        <Link to="/profile" className="edit-button">Cancel</Link>
-
-                        {dialog && <div className={`dialog ${dialog.type}`}>{dialog.message}</div>}
-                    </form>
+                            {dialog && (
+                                <Dialog
+                                    message={dialog.message}
+                                    type={dialog.type}
+                                    onClose={() => setDialog(null)}
+                                />
+                            )}
+                        </form>
+                    </div>
                 </div>
             ) : !isLoading && !error ? (
-                <p>No user data found.</p>
+                <p className={styles["edit-profile-no-user-data"]}>No user data found.</p>
             ) : null}
         </>
-    )
-}
+    );
+};
 
 export default EditProfile;

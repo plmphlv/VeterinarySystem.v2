@@ -1,0 +1,146 @@
+@mixin fade-in {
+    opacity: 1;
+    animation-name: fadeInOpacity;
+    animation-iteration-count: 1;
+    animation-timing-function: ease-in;
+    animation-duration: 2s;
+}
+
+@keyframes fadeInOpacity {
+    0% {
+        opacity: 0;
+    }
+
+    100% {
+        opacity: 1;
+    }
+}
+
+.my-pets-edit {
+    min-height: 100vh;
+    padding: 60px 20px;
+    width: 100%;
+    background-image: url('/images/veterinary-hospital.png');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    padding: 2rem 1rem;
+    box-sizing: border-box;
+}
+
+.my-pets-edit::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.7);
+    z-index: 1;
+    pointer-events: none;
+}
+
+.my-pets-edit-container {
+    z-index: 2;
+    text-align: start;
+    background-color: rgb(78, 197, 180, 0.8);
+    padding: 40px;
+    border-radius: 16px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+    max-width: 400px;
+    animation: fadeInOpacity 1s;
+    width: 90%;
+}
+
+.my-pets-edit-container h2 {
+    text-align: center;
+    color: #fff;
+    margin-bottom: 30px;
+}
+
+.my-pets-edit-form-group {
+    margin-bottom: 20px;
+}
+
+.my-pets-edit-form-group select {
+    padding: 0.7rem;
+    border-radius: 0.5rem;
+}
+
+.my-pets-edit-form-group label {
+    display: block;
+    margin-bottom: 6px;
+    font-weight: bold;
+    color: #fff;
+}
+
+.my-pets-edit-form-group input {
+    width: 100%;
+    padding: 12px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    outline: none;
+    transition: 0.3s;
+}
+
+.my-pets-edit-form-group input:focus {
+    border-color: #000;
+}
+
+.error-text {
+    color: #ff4d4d;
+    font-weight: bold;
+    font-size: 13px;
+    margin-top: 5px;
+}
+
+.my-pets-edit-pet-btn {
+    width: 100%;
+    padding: 12px;
+    background-color: #48d889;
+    color: #000;
+    border: none;
+    margin-bottom: 0.5rem;
+    border-radius: 8px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.my-pets-edit-cancel-btn {
+    width: 100%;
+    padding: 12px;
+    font-size: 14px;
+    display: inline-block;
+    text-align: center;
+    text-decoration: none;
+    background-color: #fff;
+    color: #000;
+    border: none;
+    border-radius: 8px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.my-pets-edit-form-group input.error {
+    border: 3px solid #ff4d4d;
+}
+
+.my-pets-edit-form-group input.success {
+    border: 3px solid #3cb371;
+}
+
+@media(min-width: 1025px) {
+    .my-pets-edit-pet-btn:hover {
+        background-color: #2f8a58;
+        transition: 0.3s ease-in;
+    }
+
+    .my-pets-edit-cancel-btn:hover {
+        background-color: #a8a8a8;
+        transition: 0.3s ease-in;
+    }
+}

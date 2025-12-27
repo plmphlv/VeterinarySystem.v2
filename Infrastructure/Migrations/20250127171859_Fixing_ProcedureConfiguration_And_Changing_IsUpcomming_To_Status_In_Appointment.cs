@@ -34,7 +34,7 @@ namespace Infrastructure.Migrations
                 oldType: "nvarchar(max)");
 
             migrationBuilder.AlterColumn<string>(
-                name: "Desctiption",
+                name: "Description",
                 table: "Appointments",
                 type: "nvarchar(255)",
                 maxLength: 255,
@@ -87,7 +87,7 @@ namespace Infrastructure.Migrations
                 oldMaxLength: 1000);
 
             migrationBuilder.AlterColumn<string>(
-                name: "Desctiption",
+                name: "Description",
                 table: "Appointments",
                 type: "nvarchar(max)",
                 nullable: true,

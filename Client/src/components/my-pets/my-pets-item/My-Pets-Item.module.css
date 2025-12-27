@@ -1,0 +1,82 @@
+@mixin fade-in {
+    opacity: 1;
+    animation-name: fadeInOpacity;
+    animation-iteration-count: 1;
+    animation-timing-function: ease-in;
+    animation-duration: 2s;
+}
+
+@keyframes fadeInOpacity {
+    0% {
+        opacity: 0;
+    }
+
+    100% {
+        opacity: 1;
+    }
+}
+
+.my-pets-item-card {
+    background-color: #ffffff;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+    transition: transform 0.3s ease;
+}
+
+.my-pets-item-card img {
+    width: 100%;
+    height: 200px;
+    object-fit: cover;
+}
+
+.my-pets-item-card h2 {
+    color: #4EC5B4;
+    margin-bottom: 1rem;
+}
+
+.my-pets-item-card p {
+    font-size: 0.95rem;
+    margin-bottom: 0.5rem;
+}
+
+.my-pets-item-card-content {
+    padding: 1rem 3rem 1rem 3rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+}
+
+.my-pets-item-more-info-btn {
+    margin-top: 0.5rem;
+    display: inline-block;
+    background-color: #4EC5B4;
+    color: #fff;
+    padding: 0.5rem 1rem;
+    border: none;
+    border-radius: 5px;
+    text-decoration: none;
+    transition: background-color 0.7s ease;
+}
+
+.my-pets-no-pets-h1 {
+    animation: fadeInOpacity 1s;
+    margin-top: 100px;
+    margin-bottom: 100px;
+    background-color: #4EC5B4;
+    color: #fff;
+    padding: 0.3em 1em;
+    border-radius: 0.5em;
+}
+
+@media(min-width: 1025px) {
+    .my-pets-item-card:hover {
+        transform: translateY(-5px);
+    }
+
+    .my-pets-item-more-info-btn:hover {
+        background-color: #2a796f;
+        transition: 0.3s ease-in;
+    }
+}

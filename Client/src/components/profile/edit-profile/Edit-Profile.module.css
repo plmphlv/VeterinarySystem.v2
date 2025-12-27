@@ -1,0 +1,158 @@
+@mixin fade-in {
+    opacity: 1;
+    animation-name: fadeInOpacity;
+    animation-iteration-count: 1;
+    animation-timing-function: ease-in;
+    animation-duration: 2s;
+}
+
+@keyframes fadeInOpacity {
+    0% {
+        opacity: 0;
+    }
+
+    100% {
+        opacity: 1;
+    }
+}
+
+.edit-profile-h1 {
+    animation: fadeInOpacity 1s;
+    margin-top: 3rem;
+    background-color: #4EC5B4;
+    color: #fff;
+    padding: 0.3em 1em;
+    border-radius: 1em;
+}
+
+.edit-profile-container {
+    padding: 60px 40px;
+}
+
+.edit-profile-card {
+    background-color: #fff;
+    animation: fadeInOpacity 1s;
+    max-width: 700px;
+    border-radius: 15px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+    padding: 40px 60px;
+    text-align: center;
+    position: relative;
+}
+
+.avatar {
+    width: 100px;
+    height: 100px;
+    background-color: #4EC5B4;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 2.5rem;
+    color: white;
+    margin: 0 auto 3rem;
+}
+
+.edit-profile-field {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    margin: 1rem 0;
+    padding-bottom: 0.5rem;
+    font-size: 1rem;
+    margin-bottom: 2rem;
+    text-align: left;
+}
+
+.edit-profile-field label {
+    font-weight: 600;
+    color: #4EC5B4;
+}
+
+.edit-profile-field span {
+    color: #333;
+    text-align: right;
+    max-width: 65%;
+}
+
+.edit-profile-field input {
+    border: none;
+    border-bottom: 1px solid #e0e0e0;
+    font-size: 1rem;
+    color: #333;
+    max-width: 100%;
+    text-align: left;
+    padding: 0.3rem 0;
+    background: transparent;
+    outline: none;
+    font-family: inherit;
+    transition: border-color 0.3s ease;
+}
+
+.error-text {
+    color: #ff4d4d;
+    font-weight: bold;
+    font-size: 13px;
+    margin-top: 5px;
+}
+
+.edit-profile-btns {
+    margin-top: 1rem;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+    justify-content: center;
+}
+
+.edit-profile-save-edit-btn,
+.edit-profile-cancel-edit-btn,
+.edit-profile-change-pass-btn {
+    background-color: #4EC5B4;
+    color: #fff;
+    text-decoration: none;
+    border: none;
+    padding: 0.8rem 2rem;
+    border-radius: 25px;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: background 0.3s ease;
+    white-space: nowrap;
+}
+
+.edit-profile-no-user-data {
+    animation: fadeInOpacity 1s;
+    margin-top: 150px;
+    background-color: #4EC5B4;
+    color: #fff;
+    padding: 0.3em 1em;
+    border-radius: 0.5em;
+}
+
+.edit-profile-form-group input.error {
+    border: 3px solid #ff4d4d;
+}
+
+.edit-profile-form-group input.success {
+    border: 3px solid #3cb371;
+}
+
+@media(min-width: 1025px) {
+    .edit-profile-save-edit-btn:hover,
+    .edit-profile-cancel-edit-btn:hover,
+    .edit-profile-change-pass-btn:hover {
+        background-color: #2a796f;
+        transition: 0.3s ease-in;
+    }
+}
+
+@media (max-width: 480px) {
+    .edit-profile-field {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .edit-profile-field span {
+        margin-top: 0.3rem;
+        max-width: 100%;
+    }
+}

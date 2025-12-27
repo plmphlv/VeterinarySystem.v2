@@ -1,6 +1,6 @@
 ﻿namespace Application.StaffProfiles.Queries.GetStaffMembers;
 
-public class GetStaffMembersQuery : IRequest<List<StaffMemberDto>>
+public class SearchStaffMembersQuery : IRequest<List<StaffMemberDto>>
 {
     public string? Name { get; set; }
 
@@ -9,7 +9,7 @@ public class GetStaffMembersQuery : IRequest<List<StaffMemberDto>>
     public string? Email { get; set; }
 }
 
-public class GetStaffMembersQueryHandler : IRequestHandler<GetStaffMembersQuery, List<StaffMemberDto>>
+public class GetStaffMembersQueryHandler : IRequestHandler<SearchStaffMembersQuery, List<StaffMemberDto>>
 {
     private readonly IApplicationDbContext context;
 
@@ -18,7 +18,7 @@ public class GetStaffMembersQueryHandler : IRequestHandler<GetStaffMembersQuery,
         this.context = context;
     }
 
-    public async Task<List<StaffMemberDto>> Handle(GetStaffMembersQuery request, CancellationToken cancellationToken)
+    public async Task<List<StaffMemberDto>> Handle(SearchStaffMembersQuery request, CancellationToken cancellationToken)
     {
         IQueryable<StaffAccount> staffQuery = context.StaffAccounts;
 

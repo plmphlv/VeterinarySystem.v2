@@ -73,7 +73,7 @@ async function ensureValidAccessToken(): Promise<string | null> {
     const now = Math.floor(Date.now() / 1000);
     const timeLeft = decodedData.exp - now;
 
-    if (timeLeft >= 0 && timeLeft <= 300) {
+    if (timeLeft >= 0 && timeLeft <= 60) {
         return await refreshAccessToken();
     }
 
@@ -90,7 +90,7 @@ async function request<TData = unknown, TResult = unknown>({
         ...(options.headers || {}),
     };
 
-    let accessToken = await ensureValidAccessToken();
+    const accessToken = await ensureValidAccessToken();
     if (accessToken) {
         headers["Authorization"] = `Bearer ${accessToken}`;
     }
@@ -112,10 +112,29 @@ async function request<TData = unknown, TResult = unknown>({
     if (response.status === 401) {
         localStorage.removeItem("auth");
         window.location.href = "/login";
+        return;
     }
 
-    if (response.status === 500) {
-        throw new Error("Internal server error, please try again later!");
+    if (!response.ok) {
+        const errorObject = await response.json();
+
+        if (response.status === 400 || response.status === 404 || response.status === 500) {
+            throw errorObject;
+        }
+
+
+        // if (response.status === 500) {
+        //     throw "Internal server error, please try again later!";
+        // }
+
+        // let message: string;
+        // try {
+        //     const errorBody = await response.json();
+        //     message = errorBody?.message || JSON.stringify(errorBody);
+        // } catch {
+        //     message = response.statusText || "Unknown error";
+        // }
+        // throw new Error(message || `HTTP error: ${response.status}`);
     }
 
     const contentType = response.headers.get("Content-Type");
