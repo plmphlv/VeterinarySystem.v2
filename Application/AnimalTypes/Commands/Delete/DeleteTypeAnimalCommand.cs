@@ -1,20 +1,20 @@
 ﻿namespace Application.AnimalTypes.Commands.Delete;
 
-public class DeleteAnimalCommand : IRequest
+public class DeleteTypeAnimalCommand : IRequest
 {
     public int Id { get; set; }
 }
 
-public class DeleteAnimalCommandHandler : IRequestHandler<DeleteAnimalCommand>
+public class DeleteTypeAnimalCommandHandler : IRequestHandler<DeleteTypeAnimalCommand>
 {
     private readonly IApplicationDbContext context;
 
-    public DeleteAnimalCommandHandler(IApplicationDbContext context)
+    public DeleteTypeAnimalCommandHandler(IApplicationDbContext context)
     {
         this.context = context;
     }
 
-    public async Task Handle(DeleteAnimalCommand request, CancellationToken cancellationToken)
+    public async Task Handle(DeleteTypeAnimalCommand request, CancellationToken cancellationToken)
     {
         int id = request.Id;
 
