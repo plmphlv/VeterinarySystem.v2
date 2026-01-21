@@ -25,7 +25,7 @@ const AnimalsTypeDelete: React.FC = () => {
 
       try {
         setLoading(true);
-        
+
         await deleteAnimalType({ id: Number(id) });
         setDialog({ message: "Animal type deleted successfully.", type: "success" });
       } catch (err) {

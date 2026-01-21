@@ -23,9 +23,13 @@ const OwnerAccountsItemDetails: React.FC = () => {
         const fetchDetails = async () => {
             try {
                 setLoading(true);
+                
                 const result = await getOwnerAccountDetails(id);
                 if (!result) return;
                 setOwnerAccountDetails(result);
+
+                console.log(result);
+                
             } catch {
                 setError("Failed to load owner account details.");
             } finally {

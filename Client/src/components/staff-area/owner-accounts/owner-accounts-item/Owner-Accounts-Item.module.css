@@ -16,6 +16,39 @@
     }
 }
 
+.filters {
+    animation: fadeInOpacity 0.8s;
+    display: flex;
+    flex-direction: column;
+    gap: 0.8rem;
+    padding: 1.5rem;
+    margin: 1.5rem auto 0;
+    max-width: 500px;
+    width: 100%;
+    background-color: #ffffff;
+    border-radius: 10px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+}
+
+.filters input {
+    width: 100%;
+    padding: 0.6rem 0.8rem;
+    border: 1px solid #dcdcdc;
+    border-radius: 6px;
+    font-size: 0.95rem;
+    transition: border-color 0.3s ease, box-shadow 0.3s ease;
+    outline: none;
+}
+
+.filters input::placeholder {
+    color: #9ca3af;
+}
+
+.filters input:focus {
+    border-color: #4EC5B4;
+    box-shadow: 0 0 0 2px rgba(78, 197, 180, 0.2);
+}
+
 .owner-accounts {
     animation: fadeInOpacity 1s;
     display: grid;
@@ -81,6 +114,16 @@
     border-radius: 0.5em;
 }
 
+@media (min-width: 768px) {
+    .filters {
+        flex-direction: row;
+    }
+
+    .filters input {
+        flex: 1;
+    }
+}
+
 @media (min-width: 1025px) {
     .owner-accounts-item-card:hover {
         transform: translateY(-5px);
@@ -92,3 +135,4 @@
         transition: 0.3s ease-in;
     }
 }
+

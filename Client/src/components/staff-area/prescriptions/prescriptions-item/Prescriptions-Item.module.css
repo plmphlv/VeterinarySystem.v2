@@ -1,0 +1,211 @@
+@mixin fade-in {
+    opacity: 1;
+    animation-name: fadeInOpacity;
+    animation-iteration-count: 1;
+    animation-timing-function: ease-in;
+    animation-duration: 2s;
+}
+
+@keyframes fadeInOpacity {
+    0% {
+        opacity: 0;
+    }
+
+    100% {
+        opacity: 1;
+    }
+}
+
+.filters {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 16px;
+    margin-bottom: 32px;
+    padding: 20px;
+    background-color: #f8f9fa;
+    border-radius: 12px;
+    justify-content: center;
+}
+
+.filters input {
+    padding: 12px 16px;
+    border: 1px solid #e0e0e0;
+    border-radius: 8px;
+    font-size: 14px;
+    outline: none;
+    transition: all 0.3s ease;
+    color: #333;
+    background: #fff;
+    flex: 1;
+    min-width: 200px;
+}
+
+.filters input:focus {
+    border-color: #4EC5B4;
+    box-shadow: 0 0 0 3px rgba(78, 197, 180, 0.2);
+}
+
+.prescriptions {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
+    gap: 24px;
+    padding: 10px;
+}
+
+.prescription-card {
+    background-color: #FFF;
+    border-radius: 4px;
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.08), 0 2px 6px rgba(0, 0, 0, 0.04);
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    position: relative;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+    border: 1px solid #f0f0f0;
+}
+
+.prescription-card::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 8px;
+    background-color: #4EC5B4;
+}
+
+.card-header {
+    padding: 24px 24px 10px 24px;
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    border-bottom: 2px dashed #e0e0e0;
+}
+
+.rx-symbol {
+    font-family: 'Georgia', serif;
+    font-size: 42px;
+    font-weight: bold;
+    color: #4EC5B4;
+    line-height: 1;
+    opacity: 0.8;
+}
+
+.header-info {
+    text-align: right;
+}
+
+.header-title {
+    display: block;
+    font-size: 10px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    color: #888;
+    margin-bottom: 4px;
+}
+
+.prescription-number {
+    font-family: 'Courier New', monospace;
+    font-weight: bold;
+    font-size: 16px;
+    color: #333;
+}
+
+.card-body {
+    padding: 20px 24px;
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.field-group {
+    display: flex;
+    flex-direction: column;
+}
+
+.label {
+    font-size: 11px;
+    text-transform: uppercase;
+    color: #999;
+    font-weight: 600;
+    margin-bottom: 2px;
+}
+
+.value {
+    font-size: 15px;
+    color: #2c3e50;
+    font-weight: 500;
+}
+
+.card-footer {
+    padding: 16px 24px 24px 24px;
+    margin-top: auto;
+    background-image: radial-gradient(#e0e0e0 1px, transparent 1px);
+    background-size: 10px 10px;
+    background-color: #fafafa;
+    display: flex;
+    flex-direction: column;
+}
+
+.actions {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 16px;
+}
+
+.details-btn {
+    text-decoration: none;
+    background-color: #4EC5B4;
+    color: white;
+    font-size: 12px;
+    font-weight: 600;
+    padding: 8px 16px;
+    border-radius: 20px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    transition: background-color 0.2s ease, transform 0.2s ease;
+    display: inline-block;
+}
+
+.signature-line {
+    border-top: 1px solid #aaa;
+    padding-top: 8px;
+    margin-top: 0;
+    display: flex;
+    flex-direction: column;
+}
+
+.signature-label {
+    font-size: 10px;
+    color: #888;
+    font-style: italic;
+}
+
+.staff-name {
+    font-family: 'Cursive', sans-serif;
+    font-size: 16px;
+    color: #4EC5B4;
+    font-weight: bold;
+}
+
+.no-prescriptions {
+    width: 100%;
+    text-align: center;
+    color: #888;
+    font-weight: 400;
+    margin-top: 40px;
+}
+
+@media (min-width: 1025px) {
+    .prescription-card:hover {
+        transform: translateY(-4px);
+        box-shadow: 0 14px 28px rgba(0, 0, 0, 0.1), 0 4px 10px rgba(0, 0, 0, 0.06);
+    }
+
+    .details-btn:hover {
+        background-color: #3aa898;
+        transform: translateY(-1px);
+        box-shadow: 0 4px 6px rgba(78, 197, 180, 0.2);
+    }
+}

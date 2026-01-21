@@ -1,0 +1,233 @@
+@mixin fade-in {
+    opacity: 1;
+    animation-name: fadeInOpacity;
+    animation-iteration-count: 1;
+    animation-timing-function: ease-in;
+    animation-duration: 2s;
+}
+
+@keyframes fadeInOpacity {
+    0% {
+        opacity: 0;
+    }
+
+    100% {
+        opacity: 1;
+    }
+}
+
+.prescription-item-details-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 40px 20px;
+    background-color: #f8f9fa;
+    min-height: 80vh;
+}
+
+.prescription-item-details-card {
+    background-color: #FFF;
+    width: 100%;
+    max-width: 700px;
+    border-radius: 4px;
+    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.1), 0 5px 15px rgba(0, 0, 0, 0.05);
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    position: relative;
+    border: 1px solid #f0f0f0;
+    margin-bottom: 24px;
+}
+
+.prescription-card::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 10px;
+    background-color: #4EC5B4;
+}
+
+.card-header {
+    padding: 40px 40px 20px 40px;
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    border-bottom: 2px dashed #e0e0e0;
+}
+
+.rx-symbol {
+    font-family: 'Georgia', serif;
+    font-size: 64px;
+    font-weight: bold;
+    color: #4EC5B4;
+    line-height: 1;
+    opacity: 0.8;
+}
+
+.header-info {
+    text-align: right;
+}
+
+.header-title {
+    display: block;
+    font-size: 12px;
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+    color: #888;
+    margin-bottom: 8px;
+}
+
+.prescription-number {
+    font-family: 'Courier New', monospace;
+    font-weight: bold;
+    font-size: 24px;
+    color: #333;
+}
+
+.card-body {
+    padding: 30px 40px;
+    flex-grow: 1;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 24px;
+}
+
+.full-width {
+    grid-column: 1 / -1;
+}
+
+.field-group {
+    display: flex;
+    flex-direction: column;
+}
+
+.label {
+    font-size: 11px;
+    text-transform: uppercase;
+    color: #999;
+    font-weight: 600;
+    margin-bottom: 4px;
+    letter-spacing: 0.5px;
+}
+
+.value {
+    font-size: 16px;
+    color: #2c3e50;
+    font-weight: 500;
+    line-height: 1.5;
+}
+
+.card-footer {
+    padding: 30px 40px 40px 40px;
+    background-image: radial-gradient(#e0e0e0 1px, transparent 1px);
+    background-size: 12px 12px;
+    background-color: #fafafa;
+    display: flex;
+    flex-direction: column;
+}
+
+.external-actions {
+    display: flex;
+    justify-content: center;
+    gap: 16px;
+    width: 100%;
+    max-width: 700px;
+}
+
+.action-btn {
+    text-decoration: none;
+    font-size: 13px;
+    font-weight: 600;
+    padding: 12px 32px;
+    border-radius: 4px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    transition: all 0.2s ease;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid transparent;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+}
+
+.edit-btn {
+    background-color: #fff;
+    color: #FFC107;
+    border-color: #FFC107;
+}
+
+.delete-btn {
+    background-color: #fff;
+    color: #e74c3c;
+    border-color: #e74c3c;
+}
+
+.signature-line {
+    align-self: flex-end;
+    border-top: 1px solid #aaa;
+    padding-top: 12px;
+    margin-top: 10px;
+    display: flex;
+    flex-direction: column;
+    min-width: 200px;
+    text-align: center;
+}
+
+.signature-label {
+    font-size: 11px;
+    color: #888;
+    font-style: italic;
+}
+
+.staff-name {
+    font-family: 'Cursive', sans-serif;
+    font-size: 20px;
+    color: #4EC5B4;
+    font-weight: bold;
+    margin-bottom: 4px;
+}
+
+.error-message {
+    text-align: center;
+    color: #e74c3c;
+    margin-top: 50px;
+    font-size: 18px;
+}
+
+@media (max-width: 600px) {
+    .card-body {
+        grid-template-columns: 1fr;
+    }
+
+    .card-header {
+        flex-direction: column;
+        gap: 20px;
+    }
+
+    .header-info {
+        text-align: left;
+    }
+
+    .signature-line {
+        align-self: center;
+        width: 100%;
+    }
+}
+
+@media (min-width: 1025px) {
+    .edit-btn:hover {
+        background-color: #FFC107;
+        color: white;
+        transform: translateY(-2px);
+        box-shadow: 0 4px 8px rgba(255, 193, 7, 0.3);
+    }
+
+    .delete-btn:hover {
+        background-color: #e74c3c;
+        color: white;
+        transform: translateY(-2px);
+        box-shadow: 0 4px 8px rgba(231, 76, 60, 0.2);
+    }
+}

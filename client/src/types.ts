@@ -333,14 +333,7 @@ export interface GetOwnerAccountDetailsResponse {
 export interface CreateOwnerAccountRequest {
     firstName: string,
     lastName: string,
-    address: string,
-    phoneNumber: string,
-}
-
-export interface CreateOwnerAccountRequest {
-    firstName: string,
-    lastName: string,
-    address: string,
+    address?: string | null;
     phoneNumber: string,
 }
 
@@ -382,9 +375,79 @@ export interface SearchOwnerAccountResponse {
 
 export type GetOwnerAccountDetailsRequestErrors = Partial<Record<keyof GetOwnerAccountDetailsRequest, string>>;
 export type SearchOwnerAccountRequestErrors = Partial<Record<keyof SearchOwnerAccountRequest, string>>;
+export type CreateOwnerAccountDetailsRequestErrors = Partial<Record<keyof CreateOwnerAccountRequest, string>>;
 export type EditOwnerAccountFieldErrors = Partial<Record<keyof EditOwnerAccountRequest, string>>;
 
 // OwnerAccounts types end
+
+// Prescriptions types start:
+
+export interface Prescription {
+    id: number;
+    number: string;
+    issueDate: string;
+    staffName: string;
+}
+
+export interface GetAllPrescriptionsRequest {
+    AnimalId?: number;
+    StaffId?: string;
+    StartDate?: string;
+    EndDate?: string;
+    PrescriptionNumber?: string;
+}
+
+export interface GetAllPrescriptionsResponse {
+    id: number;
+    number: string;
+    issueDate: string;
+    staffName: string;
+}
+
+export interface GetPrescriptionDetailsRequest {
+    id: number;
+}
+
+export interface GetPrescriptionDetailsResponse {
+    id: number;
+    number: string;
+    issueDate: string;
+    staffName: string;
+    description: string;
+    animalId: number;
+    animalName: string;
+    ownerName: string;
+}
+
+export interface CreatePrescriptionRequest {
+    animalId: number;
+    description: string;
+}
+
+export interface CreatePrescriptionResponse {
+    number: number;
+}
+
+export interface EditPrescriptionRequest {
+    id: number;
+    description: string;
+}
+
+export interface EditPrescriptionResponse {
+    message: string;
+}
+
+export interface DeletePrescriptionRequest {
+    id: number;
+}
+
+export interface DeletePrescriptionResponse {
+    message: string;
+}
+
+export type GetAllPrescriptionsErrors = Partial<Record<keyof GetAllPrescriptionsRequest, string>>;
+
+// Prescriptions types end
 
 // User Appointments types start:
 
