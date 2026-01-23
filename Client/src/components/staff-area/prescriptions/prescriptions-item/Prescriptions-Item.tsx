@@ -70,6 +70,14 @@ const PrescriptionsItem: React.FC = () => {
         }
     };
 
+    const clearFilters = () => {
+        setAnimalId("");
+        setStaffId("");
+        setStartDate("");
+        setEndDate("");
+        setPrescriptionNumber("");
+    };
+
     useEffect(() => {
         fetchAllPrescriptions();
     }, [animalId, staffId, startDate, endDate, prescriptionNumber]);
@@ -129,6 +137,13 @@ const PrescriptionsItem: React.FC = () => {
                     value={prescriptionNumber}
                     onChange={(e) => setPrescriptionNumber(e.target.value)}
                 />
+
+                <button 
+                    className={styles["clear-filters-btn"]}
+                    onClick={clearFilters}
+                >
+                    Clear Filters
+                </button>
             </section>
 
             <section className={styles["prescriptions"]}>

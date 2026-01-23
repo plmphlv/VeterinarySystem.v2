@@ -420,7 +420,7 @@ export interface GetPrescriptionDetailsResponse {
 }
 
 export interface CreatePrescriptionRequest {
-    animalId: number;
+    animalId: number | null;
     description: string;
 }
 
@@ -429,7 +429,7 @@ export interface CreatePrescriptionResponse {
 }
 
 export interface EditPrescriptionRequest {
-    id: number;
+    id: number | null;
     description: string;
 }
 
@@ -446,6 +446,8 @@ export interface DeletePrescriptionResponse {
 }
 
 export type GetAllPrescriptionsErrors = Partial<Record<keyof GetAllPrescriptionsRequest, string>>;
+export type CreatePrescriptionErrors = Partial<Record<keyof CreatePrescriptionRequest, string>>;
+export type EditPrescriptionErrors = Partial<Record<keyof EditPrescriptionRequest, string>>;
 
 // Prescriptions types end
 

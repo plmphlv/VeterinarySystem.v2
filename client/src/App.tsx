@@ -47,6 +47,8 @@ import OwnerAccountsEdit from "./components/staff-area/owner-accounts/owner-acco
 import OwnerAccountDelete from "./components/staff-area/owner-accounts/owner-accounts-delete/Owner-Accounts-Delete";
 import Prescriptions from "./components/staff-area/prescriptions/Prescriptions";
 import PrescriptionsItemDetails from "./components/staff-area/prescriptions/prescriptions-item-details/Prescriptions-Item-Details";
+import PrescriptionsCreate from "./components/staff-area/prescriptions/prescriptions-create/Prescriptions-Create";
+import PrescriptionsEdit from "./components/staff-area/prescriptions/prescriptions-edit/Prescriptions-Edit";
 import Logout from "./components/logout/Logout";
 import Error from "./components/error/Error";
 import Footer from "./components/footer/Footer";
@@ -100,6 +102,8 @@ function App() {
             <Route path="/staff-area/owner-accounts/:id/delete" element={<OwnerAccountDelete />}></Route>
             <Route path="/staff-area/prescriptions" element={<Prescriptions />}></Route>
             <Route path="/staff-area/prescriptions/:id/details" element={<PrescriptionsItemDetails />}></Route>
+            <Route path="/staff-area/prescriptions/create-prescription" element={<PrescriptionsCreate />}></Route>
+            <Route path="/staff-area/prescriptions/:id/edit" element={<PrescriptionsEdit />}></Route>
           </Route>
           <Route path="/logout" element={<Logout />}></Route>
         </Route>

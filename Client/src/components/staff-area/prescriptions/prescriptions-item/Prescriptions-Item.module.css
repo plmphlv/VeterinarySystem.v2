@@ -25,6 +25,7 @@
     background-color: #f8f9fa;
     border-radius: 12px;
     justify-content: center;
+    align-items: center;
 }
 
 .filters input {
@@ -43,6 +44,26 @@
 .filters input:focus {
     border-color: #4EC5B4;
     box-shadow: 0 0 0 3px rgba(78, 197, 180, 0.2);
+}
+
+.clear-filters-btn {
+    padding: 12px 24px;
+    border: 1px solid #4EC5B4;
+    background-color: transparent;
+    color: #4EC5B4;
+    border-radius: 8px;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    outline: none;
+    flex: 0 0 auto;
+}
+
+.clear-filters-btn:hover {
+    background-color: #4EC5B4;
+    color: #fff;
+    box-shadow: 0 4px 6px rgba(78, 197, 180, 0.2);
 }
 
 .prescriptions {
