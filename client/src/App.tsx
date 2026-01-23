@@ -49,6 +49,7 @@ import Prescriptions from "./components/staff-area/prescriptions/Prescriptions";
 import PrescriptionsItemDetails from "./components/staff-area/prescriptions/prescriptions-item-details/Prescriptions-Item-Details";
 import PrescriptionsCreate from "./components/staff-area/prescriptions/prescriptions-create/Prescriptions-Create";
 import PrescriptionsEdit from "./components/staff-area/prescriptions/prescriptions-edit/Prescriptions-Edit";
+// import PrescriptionsDelete from "./components/staff-area/prescriptions/prescriptions-delete/Prescriptions-Delete";
 import Logout from "./components/logout/Logout";
 import Error from "./components/error/Error";
 import Footer from "./components/footer/Footer";
@@ -104,6 +105,7 @@ function App() {
             <Route path="/staff-area/prescriptions/:id/details" element={<PrescriptionsItemDetails />}></Route>
             <Route path="/staff-area/prescriptions/create-prescription" element={<PrescriptionsCreate />}></Route>
             <Route path="/staff-area/prescriptions/:id/edit" element={<PrescriptionsEdit />}></Route>
+            {/* <Route path="/staff-area/prescriptions/:id/delete" element={<PrescriptionsDelete />}></Route> */}
           </Route>
           <Route path="/logout" element={<Logout />}></Route>
         </Route>

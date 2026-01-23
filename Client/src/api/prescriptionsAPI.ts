@@ -132,7 +132,7 @@ export const useDeletePrescription = () => {
         };
     }, []);
 
-    const deleteAppointment = async (data: DeletePrescriptionRequest) => {
+    const deletePrescription = async (data: DeletePrescriptionRequest) => {
         abortControllerRef.current?.abort();
         abortControllerRef.current = new AbortController();
 
@@ -142,5 +142,5 @@ export const useDeletePrescription = () => {
         );
     };
 
-    return { deleteAppointment, cancelDeleteAppointment: () => abortControllerRef.current?.abort() };
+    return { deletePrescription, cancelDeletePrescription: () => abortControllerRef.current?.abort() };
 };
