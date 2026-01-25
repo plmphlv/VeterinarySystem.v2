@@ -16,7 +16,7 @@
     }
 }
 
-.appointments-create-request {
+.procedures-edit {
     min-height: 100vh;
     padding: 60px 20px;
     width: 100%;
@@ -32,7 +32,7 @@
     box-sizing: border-box;
 }
 
-.appointments-create-request::before {
+.procedures-edit::before {
     content: '';
     position: absolute;
     inset: 0;
@@ -41,7 +41,7 @@
     pointer-events: none;
 }
 
-.appointments-create-request-container {
+.procedures-edit-container {
     z-index: 2;
     text-align: start;
     background-color: rgba(78, 197, 180, 0.8);
@@ -53,32 +53,32 @@
     width: 90%;
 }
 
-.appointments-create-request-container h2 {
+.procedures-edit-container h2 {
     text-align: center;
     color: #fff;
     margin-bottom: 30px;
 }
 
-.appointments-create-request-form-group {
-    margin-bottom: 10px;
+.procedures-edit-form-group {
+    margin-bottom: 20px;
 }
 
-.appointments-create-request-form-group select,
-.appointments-create-request-form-group input {
+.procedures-edit-form-group select,
+.procedures-edit-form-group input {
     padding: 0.7rem;
     border-radius: 0.5rem;
     width: 100%;
     box-sizing: border-box;
 }
 
-.appointments-create-request-form-group label {
+.procedures-edit-form-group label {
     display: block;
     margin-bottom: 6px;
     font-weight: bold;
     color: #fff;
 }
 
-.appointments-create-request-form-group input {
+.procedures-edit-form-group input {
     padding: 12px;
     border: 1px solid #ddd;
     border-radius: 8px;
@@ -86,7 +86,7 @@
     transition: 0.3s;
 }
 
-.appointments-create-request-form-group input:focus {
+.procedures-edit-form-group input:focus {
     border-color: #000;
 }
 
@@ -94,13 +94,14 @@
     color: #ff4d4d;
     font-weight: bold;
     font-size: 13px;
+    margin-top: 5px;
 }
 
-.appointments-create-request-btn {
+.procedures-edit-btn-small {
     width: 100%;
     padding: 12px;
     background-color: #48d889;
-    color: 4EC5B4;
+    color: #000;
     border: none;
     margin-bottom: 0.5rem;
     border-radius: 8px;
@@ -109,7 +110,7 @@
     transition: background-color 0.3s;
 }
 
-.appointments-create-request-cancel-btn {
+.procedures-cancel-btn {
     width: 100%;
     padding: 12px;
     font-size: 14px;
@@ -125,55 +126,22 @@
     transition: background-color 0.3s;
 }
 
-.appointments-create-request-bottom-text {
-    text-align: center;
-    margin-top: 20px;
-    font-size: 14px;
-    color: #333;
-}
-
-.appointments-create-request-bottom-text a {
-    color: #fff;
-    position: relative;
-    text-decoration: none;
-    font-weight: bold;
-}
-
-.appointments-create-request-bottom-text a::before {
-    content: '';
-    position: absolute;
-    width: 100%;
-    height: 3px;
-    border-radius: 4px;
-    background-color: #fff;
-    bottom: -2px;
-    left: 0;
-    transform-origin: left;
-    transform: scaleX(0);
-    transition: transform .3s ease-in-out;
-}
-
-.appointments-create-request-form-group input.error {
+.procedures-edit-form-group input.error {
     border: 3px solid #ff4d4d;
 }
 
-.appointments-create-request-form-group input.success {
+.procedures-edit-form-group input.success {
     border: 3px solid #3cb371;
 }
 
 @media(min-width: 1025px) {
-    .appointments-create-request-btn:hover {
+    .procedures-edit-btn-small:hover {
         background-color: #2f8a58;
         transition: 0.3s ease-in;
     }
 
-    .appointments-create-request-cancel-btn:hover {
+    .procedures-cancel-btn:hover {
         background-color: #a8a8a8;
         transition: 0.3s ease-in;
-    }
-
-    .appointments-create-request-bottom-text a:hover::before {
-        transform-origin: left;
-        transform: scaleX(1);
     }
 }

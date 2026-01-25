@@ -1,18 +1,27 @@
 import React, { useEffect, useState } from "react";
-import { Link, useParams } from "react-router";
+import { Link, useNavigate, useParams } from "react-router";
 
 import Spinner from "../../../spinner/Spinner";
 import Dialog from "../../../dialog/Dialog";
 
-import { useGetOwnerAccountDetails } from "../../../../api/ownerAccountsAPI";
+import { useDeleteOwnerAccount, useGetOwnerAccountDetails } from "../../../../api/ownerAccountsAPI";
 import type { GetOwnerAccountDetailsResponse } from "../../../../types";
 import styles from "./Owner-Accounts-Item-Details.module.css";
 
 const OwnerAccountsItemDetails: React.FC = () => {
     const { id } = useParams<{ id: string }>();
     const { getOwnerAccountDetails, cancelGetOwnerAccountDetails } = useGetOwnerAccountDetails();
-
     const [ownerAccountDetails, setOwnerAccountDetails] = useState<GetOwnerAccountDetailsResponse | null>(null);
+
+    const navigate = useNavigate();
+    const { deleteOwnerAccount, cancelDeleteOwnerAccount } = useDeleteOwnerAccount();
+    const [deleting, setDeleting] = useState(false);
+
+    const [dialog, setDialog] = useState<{
+        message: string;
+        type: "success" | "error";
+    } | null>(null);
+
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState<string | null>(null);
     const [showError, setShowError] = useState(true);
@@ -23,13 +32,13 @@ const OwnerAccountsItemDetails: React.FC = () => {
         const fetchDetails = async () => {
             try {
                 setLoading(true);
-                
+
                 const result = await getOwnerAccountDetails(id);
                 if (!result) return;
                 setOwnerAccountDetails(result);
 
                 console.log(result);
-                
+
             } catch {
                 setError("Failed to load owner account details.");
             } finally {
@@ -40,6 +49,44 @@ const OwnerAccountsItemDetails: React.FC = () => {
         fetchDetails();
         return () => cancelGetOwnerAccountDetails();
     }, [id]);
+
+    const handleDelete = async () => {
+        if (!id) return;
+
+        const confirmed = window.confirm(
+            "Are you sure you want to delete this prescription?"
+        );
+
+        if (!confirmed) return;
+
+        try {
+            setDeleting(true);
+
+            await deleteOwnerAccount({ id });
+
+            setDialog({
+                message: "Owner account deleted successfully.",
+                type: "success",
+            });
+
+            setTimeout(() => {
+                navigate("/staff-area/owner-accounts");
+            }, 1500);
+        } catch {
+            setDialog({
+                message: "Failed to delete owner account.",
+                type: "error",
+            });
+        } finally {
+            setDeleting(false);
+        }
+    };
+
+    useEffect(() => {
+        return () => {
+            cancelDeleteOwnerAccount();
+        };
+    }, []);
 
     if (loading) return <Spinner />;
 
@@ -97,13 +144,12 @@ const OwnerAccountsItemDetails: React.FC = () => {
                                 >
                                     Edit
                                 </Link>
-
-                                <Link
-                                    to={`/staff-area/owner-accounts/${ownerAccountDetails.id}/delete`}
-                                    className={styles["delete-btn"]}
+                                <button
+                                    onClick={handleDelete}
+                                    className={`${styles["action-btn"]} ${styles["delete-btn"]}`}
                                 >
                                     Delete
-                                </Link>
+                                </button>
                             </div>
                         </div>
                     </div>

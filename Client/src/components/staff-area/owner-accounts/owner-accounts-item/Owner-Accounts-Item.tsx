@@ -47,6 +47,12 @@ const OwnerAccountsItem: React.FC = () => {
         }
     };
 
+    const clearFilters = () => {
+        setName("");
+        setEmail("");
+        setPhoneNumber("");
+    };
+
     useEffect(() => {
         fetchOwnerAccounts();
     }, [name, email, phoneNumber]);
@@ -94,6 +100,13 @@ const OwnerAccountsItem: React.FC = () => {
                     value={phoneNumber}
                     onChange={(e) => setPhoneNumber(e.target.value)}
                 />
+
+                <button 
+                    className={styles["clear-filters-btn"]}
+                    onClick={clearFilters}
+                >
+                    Clear Filters
+                </button>
             </section>
 
             <section className={styles["owner-accounts"]}>

@@ -44,12 +44,16 @@ import OwnerAccounts from "./components/staff-area/owner-accounts/Owner-Accounts
 import OwnerAccountsItemDetails from "./components/staff-area/owner-accounts/owner-accounts-item-details/Owner-Accounts-Item-Details";
 import OwnerAccountsCreate from "./components/staff-area/owner-accounts/owner-accounts-create/Owner-Accounts-Create";
 import OwnerAccountsEdit from "./components/staff-area/owner-accounts/owner-accounts-edit/Owner-Accounts-Edit";
-import OwnerAccountDelete from "./components/staff-area/owner-accounts/owner-accounts-delete/Owner-Accounts-Delete";
+// import OwnerAccountDelete from "./components/staff-area/owner-accounts/owner-accounts-delete/Owner-Accounts-Delete";
 import Prescriptions from "./components/staff-area/prescriptions/Prescriptions";
 import PrescriptionsItemDetails from "./components/staff-area/prescriptions/prescriptions-item-details/Prescriptions-Item-Details";
 import PrescriptionsCreate from "./components/staff-area/prescriptions/prescriptions-create/Prescriptions-Create";
 import PrescriptionsEdit from "./components/staff-area/prescriptions/prescriptions-edit/Prescriptions-Edit";
 // import PrescriptionsDelete from "./components/staff-area/prescriptions/prescriptions-delete/Prescriptions-Delete";
+import Procedures from "./components/staff-area/procedures/Procedures";
+import ProceduresItemDetails from "./components/staff-area/procedures/procedures-item-details/Procedures-Item-Details";
+import ProceduresCreate from "./components/staff-area/procedures/procedures-create/Procedures-Create";
+import ProceduresEdit from "./components/staff-area/procedures/procedures-edit/Procedures-Edit";
 import Logout from "./components/logout/Logout";
 import Error from "./components/error/Error";
 import Footer from "./components/footer/Footer";
@@ -98,14 +102,18 @@ function App() {
             <Route path="/staff-area/appointments/:id/delete-request" element={<StaffAppointmentsDeleteRequest />}></Route>
             <Route path="/staff-area/owner-accounts/" element={<OwnerAccounts />}></Route>
             <Route path="/staff-area/owner-accounts/:id/details" element={<OwnerAccountsItemDetails />}></Route>
-            <Route path="/staff-area/owner-accounts/create-owner-account" element={<OwnerAccountsCreate />}></Route>
+            <Route path="/staff-area/owner-accounts/create" element={<OwnerAccountsCreate />}></Route>
             <Route path="/staff-area/owner-accounts/:id/edit" element={<OwnerAccountsEdit />}></Route>
-            <Route path="/staff-area/owner-accounts/:id/delete" element={<OwnerAccountDelete />}></Route>
+            {/* <Route path="/staff-area/owner-accounts/:id/delete" element={<OwnerAccountDelete />}></Route> */}
             <Route path="/staff-area/prescriptions" element={<Prescriptions />}></Route>
             <Route path="/staff-area/prescriptions/:id/details" element={<PrescriptionsItemDetails />}></Route>
-            <Route path="/staff-area/prescriptions/create-prescription" element={<PrescriptionsCreate />}></Route>
+            <Route path="/staff-area/prescriptions/create" element={<PrescriptionsCreate />}></Route>
             <Route path="/staff-area/prescriptions/:id/edit" element={<PrescriptionsEdit />}></Route>
             {/* <Route path="/staff-area/prescriptions/:id/delete" element={<PrescriptionsDelete />}></Route> */}
+            <Route path="/staff-area/procedures/" element={<Procedures />}></Route>
+            <Route path="/staff-area/procedures/:id/details" element={<ProceduresItemDetails />}></Route>
+            <Route path="/staff-area/procedures/create" element={<ProceduresCreate />}></Route>
+            <Route path="/staff-area/procedures/:id/edit" element={<ProceduresEdit />}></Route>
           </Route>
           <Route path="/logout" element={<Logout />}></Route>
         </Route>

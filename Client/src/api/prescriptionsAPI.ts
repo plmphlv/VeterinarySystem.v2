@@ -45,7 +45,6 @@ export const useGetAllPrescriptions = () => {
         });
     };
 
-
     return {
         getAllPrescriptions,
         cancelGetAllPrescriptions: () => abortControllerRef.current?.abort(),

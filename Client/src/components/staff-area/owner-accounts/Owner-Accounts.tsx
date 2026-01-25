@@ -12,7 +12,7 @@ const OwnerAccounts: React.FC = () => {
             </div>
 
             <Link 
-                to="/staff-area/owner-accounts/create-owner-account" 
+                to="/staff-area/owner-accounts/create" 
                 className={styles["owner-accounts-create-btn"]}
             >
                 <i className="fa-solid fa-plus"></i> Create Owner Account

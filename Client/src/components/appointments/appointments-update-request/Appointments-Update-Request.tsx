@@ -8,6 +8,7 @@ import Dialog from "../../dialog/Dialog";
 import Spinner from "../../spinner/Spinner";
 import { useGetAppointmentDetails, useUpdateAppointmentRequest } from "../../../api/appointmentsAPI";
 import styles from "./Appointments-Update-Request.module.css";
+import { isoToDatetimeLocal } from "../../../utils/formatDetails";
 
 const initialValues: UpdateAppointmentRequest = {
     date: "",
@@ -65,7 +66,7 @@ const AppointmentsUpdateRequest: React.FC = () => {
         try {
             const payload: UpdateAppointmentRequest = {
                 ...values,
-                date: new Date(values.date).toISOString(),
+                date: values.date,
             };
 
             await updateAppointmentRequest(payload);
@@ -107,7 +108,7 @@ const AppointmentsUpdateRequest: React.FC = () => {
                 if (details) {
                     changeValues({
                         description: details.description,
-                        date: new Date(details.date).toISOString().slice(0, 16),
+                        date: isoToDatetimeLocal(details.date),
                         id: Number(id),
                     });
                 }

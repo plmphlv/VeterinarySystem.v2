@@ -451,6 +451,83 @@ export type EditPrescriptionErrors = Partial<Record<keyof EditPrescriptionReques
 
 // Prescriptions types end
 
+// Procedures types start:
+
+export interface Procedure {
+    id: number;
+    name: string;
+    date: string;
+}
+
+export interface GetAllProceduresRequest {
+    StaffId?: string;
+    AnimalId?: number;
+    ProcedureName?: string;
+    Description?: string;
+    StartDate?: string;
+    EndDate?: string;
+}
+
+export interface GetAllProceduresResponse {
+    id: number;
+    name: string;
+    date: string;
+}
+
+export interface GetProcedureDetailsRequest {
+    id: number;
+}
+
+export interface GetProcedureDetailsResponse {
+    name: string;
+    description: string;
+    date: string;
+    id: number;
+    animalId: number;
+    animalName: string;
+    staffProfileId: number;
+    staffMemberName: string;
+}
+
+export interface CreateProcedureRequest {
+    name: string;
+    description: string;
+    date: string;
+    animalId: number | null;
+    staffId: string;
+}
+
+export interface CreateProcedureResponse{
+    number: number;
+}
+
+export interface EditProcedureRequest {
+    name: string;
+    description: string;
+    date: string;
+    id: number;
+}
+
+export interface EditProcedureResponse {
+    message: string;
+}
+
+export interface DeleteProcedureRequest {
+    id: number;
+}
+
+export interface DeleteProcedureResponse {
+    message: string;
+}
+
+export type GetAllProceduresErrors = Partial<Record<keyof GetAllProceduresRequest, string>>;
+export type GetProcedureDetailsErrors = Partial<Record<keyof GetProcedureDetailsRequest, string>>;
+export type CreateProcedureErrors = Partial<Record<keyof CreateProcedureRequest, string>>;
+export type EditProcedureErrors = Partial<Record<keyof EditProcedureRequest, string>>;
+
+// Procedures types end
+
+
 // User Appointments types start:
 
 export interface GetAppointmentDetailsRequest {

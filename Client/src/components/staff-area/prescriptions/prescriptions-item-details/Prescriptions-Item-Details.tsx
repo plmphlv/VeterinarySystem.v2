@@ -7,23 +7,15 @@ import Dialog from "../../../dialog/Dialog";
 import type { GetPrescriptionDetailsResponse } from "../../../../types";
 import styles from "./Prescriptions-Item-Details.module.css";
 
-import {
-    useGetPrescriptionDetails,
-    useDeletePrescription,
-} from "../../../../api/prescriptionsAPI";
+import { useGetPrescriptionDetails, useDeletePrescription } from "../../../../api/prescriptionsAPI";
 
 const PrescriptionItemDetails: React.FC = () => {
     const { id } = useParams<{ id: string }>();
     const navigate = useNavigate();
+    const { getPrescriptionDetails, cancelGetPrescriptionDetails } = useGetPrescriptionDetails();
+    const { deletePrescription, cancelDeletePrescription } = useDeletePrescription();
 
-    const { getPrescriptionDetails, cancelGetPrescriptionDetails } =
-        useGetPrescriptionDetails();
-
-    const { deletePrescription, cancelDeletePrescription } =
-        useDeletePrescription();
-
-    const [prescriptionDetails, setPrescriptionDetails] =
-        useState<GetPrescriptionDetailsResponse | null>(null);
+    const [prescriptionDetails, setPrescriptionDetails] = useState<GetPrescriptionDetailsResponse | null>(null);
 
     const [loading, setLoading] = useState(true);
     const [deleting, setDeleting] = useState(false);

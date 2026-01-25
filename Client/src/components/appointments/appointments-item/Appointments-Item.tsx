@@ -5,7 +5,7 @@ import type { Appointment, AppointmentStatus, GetAllAppointmentsErrors } from ".
 import Spinner from "../../spinner/Spinner";
 import Dialog from "../../dialog/Dialog";
 import { useGetUserData } from "../../../hooks/useGetUserData";
-import { formatDate, formatStatus, formatTime } from "../../../utils/formatAppointmentDetails";
+import { formatDate, formatStatus, formatTime } from "../../../utils/formatDetails";
 import styles from "./Appointments-Item.module.css";
 
 const AppointmentsItem: React.FC = () => {

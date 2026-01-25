@@ -23,7 +23,7 @@
     gap: 0.8rem;
     padding: 1.5rem;
     margin: 1.5rem auto 0;
-    max-width: 500px;
+    max-width: 800px; /* Increased max-width slightly to accommodate the button better on desktop */
     width: 100%;
     background-color: #ffffff;
     border-radius: 10px;
@@ -49,14 +49,35 @@
     box-shadow: 0 0 0 2px rgba(78, 197, 180, 0.2);
 }
 
+.clear-filters-btn {
+    padding: 0.6rem 1rem;
+    border: 1px solid #4EC5B4;
+    background-color: transparent;
+    color: #4EC5B4;
+    border-radius: 6px;
+    font-size: 0.95rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    outline: none;
+    white-space: nowrap;
+}
+
+.clear-filters-btn:hover {
+    background-color: #4EC5B4;
+    color: #fff;
+    box-shadow: 0 4px 6px rgba(78, 197, 180, 0.2);
+}
+
 .owner-accounts {
     animation: fadeInOpacity 1s;
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
     gap: 2rem;
     padding: 2rem;
-    max-width: 500px;
+    max-width: 800px; /* Increased to match filters */
     width: 100%;
+    margin: 0 auto;
 }
 
 .owner-accounts-item-card {
@@ -112,15 +133,21 @@
     text-align: center;
     padding: 0.3em 1em;
     border-radius: 0.5em;
+    grid-column: 1 / -1;
 }
 
 @media (min-width: 768px) {
     .filters {
         flex-direction: row;
+        align-items: center;
     }
 
     .filters input {
         flex: 1;
+    }
+
+    .clear-filters-btn {
+        flex: 0 0 auto;
     }
 }
 
@@ -135,4 +162,3 @@
         transition: 0.3s ease-in;
     }
 }
-

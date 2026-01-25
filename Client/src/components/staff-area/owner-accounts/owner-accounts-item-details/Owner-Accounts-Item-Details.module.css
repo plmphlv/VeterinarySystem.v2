@@ -118,6 +118,7 @@
     .owner-accounts-item-details-btns .delete-btn:hover {
         background-color: #ba3838;
         transition: 0.3s ease-in;
+        cursor: pointer;
     }
 }
 

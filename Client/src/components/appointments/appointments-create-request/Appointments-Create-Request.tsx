@@ -68,7 +68,7 @@ const AppointmentsCreateRequest: React.FC = () => {
 
             const payload: CreateAppointmentRequest = {
                 ...values,
-                date: new Date(values.date).toISOString(),
+                date: values.date,
             };
 
             const response = await createRequestAppointment(payload);
@@ -96,9 +96,9 @@ const AppointmentsCreateRequest: React.FC = () => {
     };
 
     const inputClass = (field: keyof CreateAppointmentRequest) => {
-        if (errors[field]) return "error";
-        if (values[field] && !errors[field]) return "success";
-        return "";
+        if (errors[field]) return `${styles.input} ${styles.error}`;
+        if (values[field] && !errors[field]) return `${styles.input} ${styles.success}`;
+        return styles.input;
     };
 
     useEffect(() => {

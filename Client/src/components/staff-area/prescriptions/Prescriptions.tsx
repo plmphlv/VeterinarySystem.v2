@@ -13,7 +13,7 @@ const Prescriptions: React.FC = () => {
             </div>
 
             <Link 
-                to="/staff-area/prescriptions/create-prescription" 
+                to="/staff-area/prescriptions/create" 
                 className={styles["prescriptions-create-btn"]}
             >
                 <i className="fa-solid fa-plus"></i> Create Prescription
