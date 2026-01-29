@@ -1,10 +1,10 @@
-import { Link, useParams } from "react-router";
+import { Link, useNavigate, useParams } from "react-router";
 import { useEffect, useState } from "react";
 import Spinner from "../../../spinner/Spinner";
 import Dialog from "../../../dialog/Dialog";
 import { formatDate, formatStatus, formatTime } from "../../../../utils/formatDetails";
 import styles from "./Procedures-Item-Details.module.css";
-import { useGetProcedureDetails } from "../../../../api/proceduresAPI";
+import { useDeleteProcedure, useGetProcedureDetails } from "../../../../api/proceduresAPI";
 import type { GetProcedureDetailsErrors, GetProcedureDetailsResponse } from "../../../../types";
 
 const ProceduresItemDetails: React.FC = () => {
@@ -14,6 +14,10 @@ const ProceduresItemDetails: React.FC = () => {
     const [dialog, setDialog] = useState<{ message: string; type: "success" | "error" } | null>(null);
     const [procedureDetails, setProcedureDetails] = useState<GetProcedureDetailsResponse>();
     const [isLoading, setLoading] = useState(true);
+
+    const navigate = useNavigate();
+    const { deleteProcedure, cancelDeleteProcedure } = useDeleteProcedure();
+    const [deleting, setDeleting] = useState(false);
 
     useEffect(() => {
         if (!id) return;
@@ -39,6 +43,44 @@ const ProceduresItemDetails: React.FC = () => {
 
     useEffect(() => {
         return () => cancelGetProcedureDetails();
+    }, []);
+
+    const handleDelete = async () => {
+        if (!id) return;
+
+        const confirmed = window.confirm(
+            "Are you sure you want to delete this procedure?"
+        );
+
+        if (!confirmed) return;
+
+        try {
+            setDeleting(true);
+
+            await deleteProcedure({ id: Number(id) });
+
+            setDialog({
+                message: "Procedure deleted successfully.",
+                type: "success",
+            });
+
+            setTimeout(() => {
+                navigate("/staff-area/procedures");
+            }, 1500);
+        } catch {
+            setDialog({
+                message: "Failed to delete procedure.",
+                type: "error",
+            });
+        } finally {
+            setDeleting(false);
+        }
+    };
+
+    useEffect(() => {
+        return () => {
+            cancelDeleteProcedure();
+        };
     }, []);
 
     return (
@@ -70,7 +112,7 @@ const ProceduresItemDetails: React.FC = () => {
 
                                 <div className={styles["procedures-item-details-actions"]}>
                                     <Link to={`/staff-area/procedures/${id}/edit`} className={styles["procedures-item-details-edit-btn"]}>Edit</Link>
-                                    <Link to={`/staff-area/procedures/${id}/delete`} className={styles["procedures-item-details-delete-btn"]}>Delete</Link>
+                                    <button onClick={handleDelete} className={`${styles["procedures-item-details-delete-btn"]}`}>Delete</button>
                                 </div>
                                 <Link to="/staff-area/procedures" className={styles["procedures-item-details-back-link"]}>← Back to All Procedures</Link>
                             </div>

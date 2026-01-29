@@ -16,7 +16,7 @@
     }
 }
 
-.procedures-create {
+.staff-profiles-add{
     min-height: 100vh;
     padding: 60px 20px;
     width: 100%;
@@ -29,10 +29,11 @@
     align-items: center;
     justify-content: center;
     color: white;
+    padding: 2rem 1rem;
     box-sizing: border-box;
 }
 
-.procedures-create::before {
+.staff-profiles-add::before {
     content: '';
     position: absolute;
     inset: 0;
@@ -41,10 +42,10 @@
     pointer-events: none;
 }
 
-.procedures-create-container {
+.staff-profiles-add-container {
     z-index: 2;
     text-align: start;
-    background-color: rgba(78, 197, 180, 0.8);
+    background-color: rgb(78, 197, 180, 0.8);
     padding: 40px;
     border-radius: 16px;
     box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
@@ -53,32 +54,30 @@
     width: 90%;
 }
 
-.procedures-create-container h2 {
+.staff-profiles-add-container h2 {
     text-align: center;
     color: #fff;
     margin-bottom: 30px;
 }
 
-.procedures-create-form-group {
-    margin-bottom: 15px;
+.staff-profiles-add-form-group {
+    margin-bottom: 20px;
 }
 
-.procedures-create-form-group select,
-.procedures-create-form-group input {
+.staff-profiles-add-form-group select {
     padding: 0.7rem;
     border-radius: 0.5rem;
-    width: 100%;
-    box-sizing: border-box;
 }
 
-.procedures-create-form-group label {
+.staff-profiles-add-form-group label {
     display: block;
     margin-bottom: 6px;
     font-weight: bold;
     color: #fff;
 }
 
-.procedures-create-form-group input {
+.staff-profiles-add-form-group input {
+    width: 100%;
     padding: 12px;
     border: 1px solid #ddd;
     border-radius: 8px;
@@ -86,7 +85,7 @@
     transition: 0.3s;
 }
 
-.procedures-create-form-group input:focus {
+.staff-profiles-add-form-group input:focus {
     border-color: #000;
 }
 
@@ -94,9 +93,10 @@
     color: #ff4d4d;
     font-weight: bold;
     font-size: 13px;
+    margin-top: 5px;
 }
 
-.procedures-create-btn-small {
+.staff-profiles-add-btn-small {
     width: 100%;
     padding: 12px;
     background-color: #48d889;
@@ -109,7 +109,7 @@
     transition: background-color 0.3s;
 }
 
-.procedures-cancel-btn {
+.staff-profiles-add-cancel-btn {
     width: 100%;
     padding: 12px;
     font-size: 14px;
@@ -125,21 +125,21 @@
     transition: background-color 0.3s;
 }
 
-.procedures-create-form-group input.error {
+.staff-profiles-add-form-group input.error {
     border: 3px solid #ff4d4d;
 }
 
-.procedures-create-form-group input.success {
+.staff-profiles-add-form-group input.success {
     border: 3px solid #3cb371;
 }
 
 @media(min-width: 1025px) {
-    .procedures-create-btn-small:hover {
+    .staff-profiles-add-btn-small:hover {
         background-color: #2f8a58;
         transition: 0.3s ease-in;
     }
 
-    .procedures-cancel-btn:hover {
+    .staff-profiles-add-cancel-btn:hover {
         background-color: #a8a8a8;
         transition: 0.3s ease-in;
     }

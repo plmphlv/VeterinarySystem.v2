@@ -8,6 +8,7 @@ import Dialog from "../../../dialog/Dialog";
 import type { CreateProcedureRequest, CreateProcedureErrors } from "../../../../types";
 import styles from "./Procedures-Create.module.css";
 import { useCreateProcedure } from "../../../../api/proceduresAPI";
+import { getTomorrowDatetimeLocal } from "../../../../utils/formatDetails";
 
 const initialValues: CreateProcedureRequest = {
     name: "",
@@ -195,9 +196,10 @@ const ProceduresCreate: React.FC = () => {
                                 name="date"
                                 value={values.date ?? ""}
                                 onChange={handleChange}
-                                className={`${styles["appointments-create-form-group"]} ${inputClass("date")}`}
+                                className={`${styles["procedures-create-form-group"]} ${inputClass("date")}`}
                                 placeholder="Select date"
                                 autoComplete="off"
+                                min={getTomorrowDatetimeLocal()}
                                 required
                             />
                             {errors.date && <p className={styles["error-text"]}>{errors.date}</p>}

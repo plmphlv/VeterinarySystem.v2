@@ -117,6 +117,7 @@
     .my-pets-item-details-delete-btn:hover {
         background-color: #ba3838;
         transition: 0.3s ease-in;
+        cursor: pointer;
     }
 
     .my-pets-item-details-edit-btn:hover {

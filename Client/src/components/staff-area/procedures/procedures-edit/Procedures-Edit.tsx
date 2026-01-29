@@ -8,7 +8,7 @@ import type { EditProcedureErrors, EditProcedureRequest } from "../../../../type
 import { useEditProcedure, useGetProcedureDetails } from "../../../../api/proceduresAPI";
 import styles from "./Procedures-Edit.module.css";
 import { useGetUserData } from "../../../../hooks/useGetUserData";
-import { isoToDatetimeLocal } from "../../../../utils/formatDetails";
+import { getTomorrowDatetimeLocal, isoToDatetimeLocal } from "../../../../utils/formatDetails";
 
 const initialValues: EditProcedureRequest = {
     name: "",
@@ -221,6 +221,7 @@ const ProceduresEdit: React.FC = () => {
                                 className={`${styles["appointments-edit-form-group"]} ${inputClass("date")}`}
                                 placeholder="Select new date"
                                 autoComplete="off"
+                                min={getTomorrowDatetimeLocal()}
                                 required
                             />
                             {errors.date && <p className={styles["error-text"]}>{errors.date}</p>}

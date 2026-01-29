@@ -20,12 +20,11 @@ import Appointments from "./components/appointments/Appointments";
 import AppointmentsItemDetails from "./components/appointments/appointments-item-details/Appointments-Item-Details";
 import AppointmentsCreateRequest from "./components/appointments/appointments-create-request/Appointments-Create-Request";
 import AppointmentsUpdateRequest from "./components/appointments/appointments-update-request/Appointments-Update-Request";
-import AppointmentsDeleteRequest from "./components/appointments/appointments-delete-request/Appointments-Delete-Request";
+// import AppointmentsDeleteRequest from "./components/appointments/appointments-delete-request/Appointments-Delete-Request";
 import MyPets from "./components/my-pets/My-Pets";
 import MyPetsItemDetails from "./components/my-pets/my-pets-item-details/My-Pets-Item-Details";
 import MyPetsAdd from "./components/my-pets/my-pets-add/My-Pets-Add";
 import MyPetsEdit from "./components/my-pets/my-pets-edit/My-Pets-Edit";
-import MyPetsDelete from "./components/my-pets/my-pets-delete/My-Pets-Delete";
 import Profile from "./components/profile/Profile";
 import EditProfile from "./components/profile/edit-profile/Edit-Profile";
 import ChangePassword from "./components/profile/change-password/Change-Password";
@@ -35,25 +34,27 @@ import StaffArea from "./components/staff-area/Staff-Area";
 import AnimalTypes from "./components/staff-area/animal-types/Animal-Types";
 import AnimalTypesAdd from "./components/staff-area/animal-types/animal-types-add/Animal-Types-Add";
 import AnimalTypesEdit from "./components/staff-area/animal-types/animal-types-edit/Animal-Types-Edit";
-import AnimalTypesDelete from "./components/staff-area/animal-types/animal-types-delete/Animal-Types-Delete";
 import StaffAppointments from "./components/staff-area/staff-appointments/Staff-Appointments";
 import StaffAppointmentsItemDetails from "./components/staff-area/staff-appointments/staff-appointments-item-details/Staff-Appointments-Item-Details";
+import StaffAppointmentsCreate from "./components/staff-area/staff-appointments/staff-appointments-create/Staff-Appointments-Create";
 import StaffAppointmentsUpdateRequest from "./components/staff-area/staff-appointments/staff-appointments-update-request/Staff-Appointments-Update-Request";
+import StaffAppointmentsEdit from "./components/staff-area/staff-appointments/staff-appointments-edit/Staff-Appointments-Edit";
 import StaffAppointmentsDeleteRequest from "./components/staff-area/staff-appointments/staff-appointments-delete-request/Staff-Appointments-Delete-Request";
 import OwnerAccounts from "./components/staff-area/owner-accounts/Owner-Accounts";
 import OwnerAccountsItemDetails from "./components/staff-area/owner-accounts/owner-accounts-item-details/Owner-Accounts-Item-Details";
 import OwnerAccountsCreate from "./components/staff-area/owner-accounts/owner-accounts-create/Owner-Accounts-Create";
 import OwnerAccountsEdit from "./components/staff-area/owner-accounts/owner-accounts-edit/Owner-Accounts-Edit";
-// import OwnerAccountDelete from "./components/staff-area/owner-accounts/owner-accounts-delete/Owner-Accounts-Delete";
 import Prescriptions from "./components/staff-area/prescriptions/Prescriptions";
 import PrescriptionsItemDetails from "./components/staff-area/prescriptions/prescriptions-item-details/Prescriptions-Item-Details";
 import PrescriptionsCreate from "./components/staff-area/prescriptions/prescriptions-create/Prescriptions-Create";
 import PrescriptionsEdit from "./components/staff-area/prescriptions/prescriptions-edit/Prescriptions-Edit";
-// import PrescriptionsDelete from "./components/staff-area/prescriptions/prescriptions-delete/Prescriptions-Delete";
 import Procedures from "./components/staff-area/procedures/Procedures";
 import ProceduresItemDetails from "./components/staff-area/procedures/procedures-item-details/Procedures-Item-Details";
 import ProceduresCreate from "./components/staff-area/procedures/procedures-create/Procedures-Create";
 import ProceduresEdit from "./components/staff-area/procedures/procedures-edit/Procedures-Edit";
+import StaffProfiles from "./components/staff-area/staff-profiles/Staff-Profiles";
+import StaffProfilesItemDetails from "./components/staff-area/staff-profiles/staff-profiles-item-details/Staff-Profiles-Item-Details";
+import StaffProfilesAdd from "./components/staff-area/staff-profiles/staff-profiles-create/Staff-Profiles-Add";
 import Logout from "./components/logout/Logout";
 import Error from "./components/error/Error";
 import Footer from "./components/footer/Footer";
@@ -80,11 +81,10 @@ function App() {
           <Route path="/appointments/:id/details" element={<AppointmentsItemDetails />}></Route>
           <Route path="/appointments/request-appointment" element={<AppointmentsCreateRequest />}></Route>
           <Route path="/appointments/:id/update-request" element={<AppointmentsUpdateRequest />}></Route>
-          <Route path="/appointments/:id/delete-request" element={<AppointmentsDeleteRequest />}></Route>
+          {/* <Route path="/appointments/:id/delete-request" element={<AppointmentsDeleteRequest />}></Route> */}
           <Route path="/my-pets" element={<MyPets />}></Route>
           <Route path="/my-pets/:id/details" element={<MyPetsItemDetails />}></Route>
           <Route path="/my-pets/add" element={<MyPetsAdd />}></Route>
-          <Route path="/my-pets/:id/delete" element={<MyPetsDelete />}></Route>
           <Route path="/my-pets/:id/edit" element={<MyPetsEdit />}></Route>
           <Route path="/profile" element={<Profile />}></Route>
           <Route path="/profile/edit" element={<EditProfile />}></Route>
@@ -95,25 +95,27 @@ function App() {
             <Route path="/staff-area/animal-types" element={<AnimalTypes />}></Route>
             <Route path="/staff-area/animal-types/add" element={<AnimalTypesAdd />}></Route>
             <Route path="/staff-area/animal-types/:id/edit" element={<AnimalTypesEdit />}></Route>
-            <Route path="/staff-area/animal-types/:id/delete" element={<AnimalTypesDelete />}></Route>
             <Route path="/staff-area/appointments" element={<StaffAppointments />}></Route>
             <Route path="/staff-area/appointments/:id/details" element={<StaffAppointmentsItemDetails />}></Route>
+            <Route path="/staff-area/appointments/create-appointment" element={<StaffAppointmentsCreate />}></Route>
+            <Route path="/staff-area/appointments/:id/edit" element={<StaffAppointmentsEdit />}></Route>
             <Route path="/staff-area/appointments/:id/update-request" element={<StaffAppointmentsUpdateRequest />}></Route>
-            <Route path="/staff-area/appointments/:id/delete-request" element={<StaffAppointmentsDeleteRequest />}></Route>
+            {/* <Route path="/staff-area/appointments/:id/delete-request" element={<StaffAppointmentsDeleteRequest />}></Route> */}
             <Route path="/staff-area/owner-accounts/" element={<OwnerAccounts />}></Route>
             <Route path="/staff-area/owner-accounts/:id/details" element={<OwnerAccountsItemDetails />}></Route>
             <Route path="/staff-area/owner-accounts/create" element={<OwnerAccountsCreate />}></Route>
             <Route path="/staff-area/owner-accounts/:id/edit" element={<OwnerAccountsEdit />}></Route>
-            {/* <Route path="/staff-area/owner-accounts/:id/delete" element={<OwnerAccountDelete />}></Route> */}
             <Route path="/staff-area/prescriptions" element={<Prescriptions />}></Route>
             <Route path="/staff-area/prescriptions/:id/details" element={<PrescriptionsItemDetails />}></Route>
             <Route path="/staff-area/prescriptions/create" element={<PrescriptionsCreate />}></Route>
             <Route path="/staff-area/prescriptions/:id/edit" element={<PrescriptionsEdit />}></Route>
-            {/* <Route path="/staff-area/prescriptions/:id/delete" element={<PrescriptionsDelete />}></Route> */}
             <Route path="/staff-area/procedures/" element={<Procedures />}></Route>
             <Route path="/staff-area/procedures/:id/details" element={<ProceduresItemDetails />}></Route>
             <Route path="/staff-area/procedures/create" element={<ProceduresCreate />}></Route>
             <Route path="/staff-area/procedures/:id/edit" element={<ProceduresEdit />}></Route>
+            <Route path="/staff-area/staff-profiles" element={<StaffProfiles />}></Route>
+            <Route path="/staff-area/staff-profiles/:id/details" element={<StaffProfilesItemDetails />}></Route>
+            <Route path="/staff-area/staff-profiles/add" element={<StaffProfilesAdd />}></Route>
           </Route>
           <Route path="/logout" element={<Logout />}></Route>
         </Route>

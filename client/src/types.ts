@@ -497,7 +497,7 @@ export interface CreateProcedureRequest {
     staffId: string;
 }
 
-export interface CreateProcedureResponse{
+export interface CreateProcedureResponse {
     number: number;
 }
 
@@ -569,17 +569,12 @@ export interface GetAllAppointmentsRequest {
     EndDate?: string; // or Date
 }
 
-export type GetAllAppointmentsErrors = Partial<Record<keyof GetAllAppointmentsRequest, string>>;
-export type GetAppointmentDetailsErrors = Partial<Record<keyof GetAppointmentDetailsRequest, string>>;
-export type CreateAppointmentRequestError = Partial<Record<keyof CreateAppointmentRequest, string>>;
-export type UpdateAppointmentRequestFieldErrors = Partial<Record<keyof UpdateAppointmentRequest, string>>;
-
-export interface CreateRequestAppointment {
+export interface CreateAppointmentRequest {
     date: string, // or Date
     description: string,
 }
 
-export interface CreateRequestAppointmentResponse {
+export interface CreateAppointmentRequestResponse {
     message: number;
 }
 
@@ -601,20 +596,27 @@ export interface DeleteAppointmentResponse {
     message: number;
 }
 
+export type GetAllAppointmentsErrors = Partial<Record<keyof GetAllAppointmentsRequest, string>>;
+export type GetAppointmentDetailsErrors = Partial<Record<keyof GetAppointmentDetailsRequest, string>>;
+export type CreateAppointmentRequestError = Partial<Record<keyof CreateAppointmentRequest, string>>;
+export type UpdateAppointmentRequestErrors = Partial<Record<keyof UpdateAppointmentRequest, string>>;
+
 // User Appointments types end
 
 // Staff Appointments types start:
 
-export interface CreateAppointmentRequest {
+export interface StaffCreateAppointmentRequest {
     date: string;
     description: string;
+    staffId: string;
+    ownerId: string;
 }
 
-export interface CreateAppointmentResponse {
+export interface StaffCreateAppointmentResponse {
     message: number;
 }
 
-export interface EditAppointmentRequest {
+export interface StaffEditAppointmentRequest {
     date: string;
     description: string;
     staffId: string;
@@ -622,26 +624,74 @@ export interface EditAppointmentRequest {
     status: "Pending_Review" | "Confirmed" | "Completed" | "Cancelled" | "Missed";
 }
 
-export interface EditAppointmentResponse {
+export interface StaffEditAppointmentResponse {
     message: number;
 }
 
+// export interface StaffDeleteAppointmentRequest {
+//     id: number;
+// }
 
-export interface CompleteAppointmentRequest {
-    id: number;
-}
+// export interface StaffDeleteAppointmentResponse {
+//     message: number;
+// }
 
-export interface CompleteAppointmentResponse {
-    message: number;
-}
-
-export interface DeleteAppointmentRequest {
-    id: number;
-}
-
-export interface DeleteAppointmentResponse {
-    message: number;
-}
-
+export type StaffCreateAppointmentRequestFieldErrors = Partial<Record<keyof StaffCreateAppointmentRequest, string>>;
+export type StaffEditAppointmentRequestFieldErrors = Partial<Record<keyof StaffEditAppointmentRequest, string>>;
 
 // Staff Appointments types end
+
+// StaffProfiles types start:
+
+export interface StaffProfile {
+    id: string;
+    name: string;
+}
+
+export interface GetAllStaffProfilesRequest {
+    name?: string;
+    phoneNumber?: string;
+    email?: string;
+}
+
+export interface GetAllStaffProfilesResponse {
+    id: string;
+    name: string;
+}
+
+export interface GetStaffProfileDetailsRequest {
+    id: string;
+}
+
+export interface GetStaffProfileDetailsResponse {
+    id: string;
+    name: string;
+    phoneNumber: string;
+}
+
+export interface AddStaffProfileRequest {
+    userId: string;
+}
+
+export interface AddStaffProfileResponse {
+    message: string;
+}
+
+// export interface DeleteStaffProfileRequest {
+//     id: string;
+// }
+
+export interface DeleteStaffProfileResponse {
+    message: string;
+}
+
+export interface GetStaffMembersResponse {
+    id: string;
+    value: string;
+}
+
+export type GetAllStaffProfilesRequestFieldErrors = Partial<Record<keyof GetAllStaffProfilesRequest, string>>;
+export type GetStaffProfilesDetailsRequestFieldErrors = Partial<Record<keyof GetStaffProfileDetailsRequest, string>>;
+export type AddStaffProfilesRequestFieldErrors = Partial<Record<keyof AddStaffProfileRequest, string>>;
+
+// StaffProfiles types end

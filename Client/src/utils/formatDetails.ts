@@ -59,3 +59,10 @@ export const isoToDatetimeLocal = (isoString: string): string => {
 export const datetimeLocalToIso = (localDate: string): string => {
     return new Date(localDate).toISOString();
 };
+
+export const getTomorrowDatetimeLocal = () => {
+    const d = new Date();
+    d.setDate(d.getDate() + 1);
+    d.setSeconds(0, 0);
+    return d.toISOString().slice(0, 16);
+};

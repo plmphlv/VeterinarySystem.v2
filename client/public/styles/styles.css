@@ -46,7 +46,9 @@
 
 .navbar a,
 .navbar-success a,
+.navbar-success-manager a,
 .navbar-success-staffMember a,
+.navbar-success-administrator a,
 .navbar-success-superAdministrator a {
     color: #fff;
     position: relative;
@@ -58,7 +60,9 @@
 
 .navbar a::before,
 .navbar-success a::before,
+.navbar-success-manager a::before,
 .navbar-success-staffMember a::before,
+.navbar-success-administrator a::before,
 .navbar-success-superAdministrator a::before {
     content: '';
     position: absolute;
@@ -135,7 +139,9 @@
 
     .navbar,
     .navbar-success,
+    .navbar-success-manager,
     .navbar-success-staffMember,
+    .navbar-success-administrator,
     .navbar-success-superAdministrator {
         position: absolute;
         top: 100%;
@@ -160,18 +166,22 @@
     }
 
     /* For logged in staff members: */
+    #check:checked~.navbar-success-manager,
     #check:checked~.navbar-success-staffMember {
         height: 32rem;
     }
 
     /* For logged in super administrators: */
+    #check:checked~.navbar-success-administrator,
     #check:checked~.navbar-success-superAdministrator {
         height: 34rem;
     }
 
     .navbar a,
     .navbar-success a,
+    .navbar-success-manager a,
     .navbar-success-staffMember a,
+    .navbar-success-administrator a,
     .navbar-success-superAdministrator a {
         display: block;
         font-size: 1.1rem;
@@ -184,7 +194,9 @@
 
     #check:checked~.navbar a,
     #check:checked~.navbar-success a,
+    #check:checked~.navbar-success-manager a,
     #check:checked~.navbar-success-staffMember a,
+    #check:checked~.navbar-success-administrator a,
     #check:checked~.navbar-success-superAdministrator a {
         transform: translateY(0);
         opacity: 1;
@@ -193,7 +205,9 @@
 
     .navbar a.active,
     .navbar-success a.active,
+    .navbar-success-manager a.active,
     .navbar-success-staffMember a.active,
+    .navbar-success-administrator a.active,
     .navbar-success-superAdministrator a.active {
         text-decoration: underline;
         text-underline-offset: 8px;

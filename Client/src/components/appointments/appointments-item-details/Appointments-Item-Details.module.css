@@ -72,7 +72,7 @@
     margin-top: 1rem;
 }
 
-.edit-request {
+.update-request-btn{
     display: inline-block;
     background-color: rgb(225, 225, 0);
     color: white;
@@ -83,7 +83,7 @@
     transition: background-color 0.7s ease;
 }
 
-.delete-request {
+.delete-request-btn {
     display: inline-block;
     background-color: #ff4d4d;
     color: white;
@@ -105,14 +105,15 @@
 }
 
 @media(min-width: 1025px) {
-    .edit-request:hover {
+    .update-request-btn:hover {
         background-color: rgb(190, 190, 0);
         transition: 0.3s ease-in;
     }
 
-    .delete-request:hover {
+    .delete-request-btn:hover {
         background-color: #ba3838;
         transition: 0.3s ease-in;
+        cursor: pointer;
     }
 
     .appointments-item-details-back-link:hover {

@@ -1,6 +1,6 @@
-import { Link, useParams } from "react-router";
+import { Link, useNavigate, useParams } from "react-router";
 import { useEffect, useState } from "react";
-import { useGetAnimalDetails } from "../../../api/animalsAPI";
+import { useDeleteAnimal, useGetAnimalDetails } from "../../../api/animalsAPI";
 import type { GetAnimalDetailsErrors, GetAnimalDetailsResponse } from "../../../types";
 import Spinner from "../../spinner/Spinner";
 import Dialog from "../../dialog/Dialog";
@@ -13,6 +13,10 @@ const MyPetsItemDetails: React.FC = () => {
     const [dialog, setDialog] = useState<{ message: string; type: "success" | "error" } | null>(null);
     const [animalDetails, setAnimalDetails] = useState<GetAnimalDetailsResponse>();
     const [isLoading, setLoading] = useState(true);
+
+    const navigate = useNavigate();
+    const { deleteAnimal, cancelDeleteAnimal } = useDeleteAnimal();
+    const [deleting, setDeleting] = useState(false);
 
     useEffect(() => {
         if (!id) return;
@@ -36,6 +40,44 @@ const MyPetsItemDetails: React.FC = () => {
     }, [id]);
 
     useEffect(() => () => cancelGetAnimalDetails(), []);
+
+    const handleDelete = async () => {
+        if (!id) return;
+
+        const confirmed = window.confirm(
+            "Are you sure you want to remove this pet?"
+        );
+
+        if (!confirmed) return;
+
+        try {
+            setDeleting(true);
+
+            await deleteAnimal({ id: Number(id) });
+
+            setDialog({
+                message: "Pet removed successfully.",
+                type: "success",
+            });
+
+            setTimeout(() => {
+                navigate("/my-pets");
+            }, 1500);
+        } catch {
+            setDialog({
+                message: "Failed to remove pet.",
+                type: "error",
+            });
+        } finally {
+            setDeleting(false);
+        }
+    };
+
+    useEffect(() => {
+        return () => {
+            cancelDeleteAnimal();
+        };
+    }, []);
 
     return (
         <>
@@ -61,11 +103,11 @@ const MyPetsItemDetails: React.FC = () => {
 
                     <div className={styles["my-pets-item-details-action-btns"]}>
                         <Link to={`/my-pets/${id}/edit`} className={styles["my-pets-item-details-edit-btn"]}>Edit</Link>
-                        <Link to={`/my-pets/${id}/delete`} className={styles["my-pets-item-details-delete-btn"]}>Delete</Link>
+                        <button onClick={handleDelete} className={`${styles["my-pets-item-details-delete-btn"]}`}>Delete</button>
                     </div>
                     <Link to="/my-pets" className={styles["my-pets-item-details-back-link"]}>← Back to My Pets</Link>
                 </div>
-            </div>
+            </div >
 
             {dialog && (
                 <Dialog
@@ -73,7 +115,8 @@ const MyPetsItemDetails: React.FC = () => {
                     type={dialog.type}
                     onClose={() => setDialog(null)}
                 />
-            )}
+            )
+            }
         </>
     );
 };

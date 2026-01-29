@@ -46,6 +46,14 @@ const StaffArea: React.FC = () => {
                         <Link to="/staff-area/procedures" className={styles["staff-area-make-changes-btn"]}>Make Changes</Link>
                     </div>
                 </div>
+
+                <div className={styles["staff-area-card"]}>
+                    <img src="/images/staff-profiles.png" alt="Staff Profiles" />
+                    <div className={styles.content}>
+                        <h2>Staff Profiles</h2>
+                        <Link to="/staff-area/staff-profiles" className={styles["staff-area-make-changes-btn"]}>Make Changes</Link>
+                    </div>
+                </div>
             </section>
         </>
     );

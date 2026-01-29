@@ -37,8 +37,6 @@ const OwnerAccountsItemDetails: React.FC = () => {
                 if (!result) return;
                 setOwnerAccountDetails(result);
 
-                console.log(result);
-
             } catch {
                 setError("Failed to load owner account details.");
             } finally {

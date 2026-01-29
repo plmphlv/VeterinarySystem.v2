@@ -16,7 +16,7 @@
     }
 }
 
-.procedures-create {
+.appointments-edit {
     min-height: 100vh;
     padding: 60px 20px;
     width: 100%;
@@ -32,7 +32,7 @@
     box-sizing: border-box;
 }
 
-.procedures-create::before {
+.appointments-edit::before {
     content: '';
     position: absolute;
     inset: 0;
@@ -41,7 +41,7 @@
     pointer-events: none;
 }
 
-.procedures-create-container {
+.appointments-edit-container {
     z-index: 2;
     text-align: start;
     background-color: rgba(78, 197, 180, 0.8);
@@ -53,32 +53,32 @@
     width: 90%;
 }
 
-.procedures-create-container h2 {
+.appointments-edit-container h2 {
     text-align: center;
     color: #fff;
     margin-bottom: 30px;
 }
 
-.procedures-create-form-group {
-    margin-bottom: 15px;
+.appointments-edit-form-group {
+    margin-bottom: 20px;
 }
 
-.procedures-create-form-group select,
-.procedures-create-form-group input {
+.appointments-edit-form-group select,
+.appointments-edit-form-group input {
     padding: 0.7rem;
     border-radius: 0.5rem;
     width: 100%;
     box-sizing: border-box;
 }
 
-.procedures-create-form-group label {
+.appointments-edit-form-group label {
     display: block;
     margin-bottom: 6px;
     font-weight: bold;
     color: #fff;
 }
 
-.procedures-create-form-group input {
+.appointments-edit-form-group input {
     padding: 12px;
     border: 1px solid #ddd;
     border-radius: 8px;
@@ -86,7 +86,7 @@
     transition: 0.3s;
 }
 
-.procedures-create-form-group input:focus {
+.appointments-edit-form-group input:focus {
     border-color: #000;
 }
 
@@ -94,9 +94,10 @@
     color: #ff4d4d;
     font-weight: bold;
     font-size: 13px;
+    margin-top: 5px;
 }
 
-.procedures-create-btn-small {
+.appointments-edit-btn-small {
     width: 100%;
     padding: 12px;
     background-color: #48d889;
@@ -109,7 +110,7 @@
     transition: background-color 0.3s;
 }
 
-.procedures-cancel-btn {
+.appointments-cancel-btn {
     width: 100%;
     padding: 12px;
     font-size: 14px;
@@ -125,21 +126,21 @@
     transition: background-color 0.3s;
 }
 
-.procedures-create-form-group input.error {
+.appointments-edit-form-group input.error {
     border: 3px solid #ff4d4d;
 }
 
-.procedures-create-form-group input.success {
+.appointments-edit-form-group input.success {
     border: 3px solid #3cb371;
 }
 
 @media(min-width: 1025px) {
-    .procedures-create-btn-small:hover {
+    .appointments-edit-btn-small:hover {
         background-color: #2f8a58;
         transition: 0.3s ease-in;
     }
 
-    .procedures-cancel-btn:hover {
+    .appointments-cancel-btn:hover {
         background-color: #a8a8a8;
         transition: 0.3s ease-in;
     }

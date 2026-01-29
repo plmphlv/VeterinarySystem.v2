@@ -1,10 +1,10 @@
-import { Link } from "react-router";
+import { Link, useNavigate } from "react-router";
 import { useEffect, useState } from "react";
 import { useGetUserData } from "../../../../hooks/useGetUserData";
 import Spinner from "../../../spinner/Spinner";
 import Dialog from "../../../dialog/Dialog";
 import type { AnimalType, GetAllAnimalsErrors } from "../../../../types";
-import { useGetAnimalTypes } from "../../../../api/animalTypesAPI";
+import { useDeleteAnimalType, useGetAnimalTypes } from "../../../../api/animalTypesAPI";
 import styles from "./Animal-Type-Item.module.css";
 
 const AnimalTypeItem: React.FC = () => {
@@ -16,6 +16,11 @@ const AnimalTypeItem: React.FC = () => {
     const [dialog, setDialog] = useState<{ message: string; type: "success" | "error" } | null>(null);
     const [animalTypes, setAnimalTypes] = useState<AnimalType[]>([]);
     const [loading, setLoading] = useState(true);
+
+
+    const navigate = useNavigate();
+    const { deleteAnimalType, cancelDeleteAnimalType } = useDeleteAnimalType();
+    const [deleting, setDeleting] = useState(false);
 
     useEffect(() => {
         if (!userData?.id) return;
@@ -50,6 +55,45 @@ const AnimalTypeItem: React.FC = () => {
         };
     }, []);
 
+    const handleDelete = async (id: number) => {
+
+        if (!id) return;
+
+        const confirmed = window.confirm(
+            "Are you sure you want to delete this animal type?"
+        );
+
+        if (!confirmed) return;
+
+        try {
+            setDeleting(true);
+
+            await deleteAnimalType({ id: Number(id) });
+
+            setDialog({
+                message: "Animal type deleted successfully.",
+                type: "success",
+            });
+
+            setTimeout(() => {
+                navigate("/staff-area/animal-types");
+            }, 1500);
+        } catch {
+            setDialog({
+                message: "Failed to delete animal type.",
+                type: "error",
+            });
+        } finally {
+            setDeleting(false);
+        }
+    };
+
+    useEffect(() => {
+        return () => {
+            cancelDeleteAnimalType();
+        };
+    }, []);
+
     return (
         <>
             {loading && (
@@ -58,11 +102,11 @@ const AnimalTypeItem: React.FC = () => {
                 </div>
             )}
 
-            {error && showError && (
+            {dialog && (
                 <Dialog
-                    message={error}
-                    type="error"
-                    onClose={() => setShowError(false)}
+                    message={dialog.message}
+                    type={dialog.type}
+                    onClose={() => setDialog(null)}
                 />
             )}
 
@@ -72,18 +116,13 @@ const AnimalTypeItem: React.FC = () => {
                         <li key={animalType.id} className={styles["animal-types-item"]}>
                             {animalType.value}
                             <div className={styles["animal-types-btns"]}>
-                                <Link 
-                                    to={`/staff-area/animal-types/${animalType.id}/edit`} 
+                                <Link
+                                    to={`/staff-area/animal-types/${animalType.id}/edit`}
                                     className={styles["animal-types-edit-btn"]}
                                 >
                                     Edit
                                 </Link>
-                                <Link 
-                                    to={`/staff-area/animal-types/${animalType.id}/delete`} 
-                                    className={styles["animal-types-delete-btn"]}
-                                >
-                                    Delete
-                                </Link>
+                                <button onClick={() => handleDelete(animalType.id)} className={`${styles["animal-types-delete-btn"]}`}>Delete</button>
                             </div>
                         </li>
                     ))}

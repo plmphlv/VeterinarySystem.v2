@@ -8,6 +8,7 @@ import { useForm } from "../../../hooks/useForm";
 import { useCreateRequestAppointment } from "../../../api/appointmentsAPI";
 import { getJwtDecodedData } from "../../../utils/getJwtDecodedData";
 import styles from "./Appointments-Create-Request.module.css";
+import { getTomorrowDatetimeLocal } from "../../../utils/formatDetails";
 
 const initialValues: CreateAppointmentRequest = {
     date: "",
@@ -126,6 +127,7 @@ const AppointmentsCreateRequest: React.FC = () => {
                                 value={values.date ?? ""}
                                 onChange={handleChange}
                                 className={`${styles["appointments-create-request-form-group"]} ${inputClass("date")}`}
+                                min={getTomorrowDatetimeLocal()}
                                 required
                             />
                             {errors.date && <p className={styles["error-text"]}>{errors.date}</p>}

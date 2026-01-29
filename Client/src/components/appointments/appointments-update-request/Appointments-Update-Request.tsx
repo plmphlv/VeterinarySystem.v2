@@ -1,14 +1,14 @@
 import type React from "react";
 import { Link, useNavigate, useParams } from "react-router";
 import { useEffect, useState } from "react";
-import type { UpdateAppointmentRequest, UpdateAppointmentRequestFieldErrors } from "../../../types";
+import type { UpdateAppointmentRequest, UpdateAppointmentRequestErrors, } from "../../../types";
 import { useForm } from "../../../hooks/useForm";
 import { useGetUserData } from "../../../hooks/useGetUserData";
 import Dialog from "../../dialog/Dialog";
 import Spinner from "../../spinner/Spinner";
 import { useGetAppointmentDetails, useUpdateAppointmentRequest } from "../../../api/appointmentsAPI";
 import styles from "./Appointments-Update-Request.module.css";
-import { isoToDatetimeLocal } from "../../../utils/formatDetails";
+import { getTomorrowDatetimeLocal, isoToDatetimeLocal } from "../../../utils/formatDetails";
 
 const initialValues: UpdateAppointmentRequest = {
     date: "",
@@ -18,7 +18,7 @@ const initialValues: UpdateAppointmentRequest = {
 
 const AppointmentsUpdateRequest: React.FC = () => {
     const { id } = useParams();
-    const [errors, setErrors] = useState<UpdateAppointmentRequestFieldErrors>({});
+    const [errors, setErrors] = useState<UpdateAppointmentRequestErrors>({});
     const [formLoading, setFormLoading] = useState(false);
     const [isLoading, setLoading] = useState(false);
     const [dialog, setDialog] = useState<{ message: string; type: "success" | "error" } | null>(null);
@@ -46,8 +46,8 @@ const AppointmentsUpdateRequest: React.FC = () => {
         }
     };
 
-    const validate = (values: UpdateAppointmentRequest): UpdateAppointmentRequestFieldErrors => {
-        const fieldErrors: UpdateAppointmentRequestFieldErrors = {};
+    const validate = (values: UpdateAppointmentRequest): UpdateAppointmentRequestErrors => {
+        const fieldErrors: UpdateAppointmentRequestErrors = {};
         (Object.keys(values) as (keyof UpdateAppointmentRequest)[]).forEach(field => {
             const error = validateField(field, String(values[field] ?? ""), values);
             if (error) fieldErrors[field] = error;
@@ -144,6 +144,7 @@ const AppointmentsUpdateRequest: React.FC = () => {
                                 value={values.date ?? ""}
                                 onChange={handleChange}
                                 className={inputClass("date")}
+                                min={getTomorrowDatetimeLocal()}
                                 required
                             />
                             {errors.date && <p className={styles["error-text"]}>{errors.date}</p>}

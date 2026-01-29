@@ -75,7 +75,18 @@
     margin-top: 1rem;
 }
 
-.update-request {
+.complete-btn {
+    display: inline-block;
+    background-color: #4EC5B4;
+    color: #fff;
+    padding: 0.5rem 1rem;
+    border: none;
+    border-radius: 5px;
+    text-decoration: none;
+    transition: background-color 0.7s ease;
+}
+
+.edit-btn {
     display: inline-block;
     background-color: rgb(225, 225, 0);
     color: white;
@@ -85,13 +96,14 @@
     transition: background-color 0.7s ease;
 }
 
-.delete-request {
+.delete-btn {
     display: inline-block;
     background-color: #ff4d4d;
     color: white;
     padding: 0.5rem 1rem;
     border-radius: 5px;
     text-decoration: none;
+    
     transition: background-color 0.7s ease;
 }
 
@@ -108,14 +120,21 @@
 }
 
 @media(min-width: 1025px) {
-    .update-request:hover {
+    .complete-btn:hover {
+        background-color: #2a796f;
+        transition: 0.3s ease-in;
+        cursor: pointer;
+    }
+
+    .edit-btn:hover {
         background-color: rgb(190, 190, 0);
         transition: 0.3s ease-in;
     }
 
-    .delete-request:hover {
+    .delete-btn:hover {
         background-color: #ba3838;
         transition: 0.3s ease-in;
+        cursor: pointer;
     }
 
     .staff-appointments-item-details-back-link:hover {

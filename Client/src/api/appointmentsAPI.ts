@@ -2,10 +2,10 @@ import { useEffect, useRef } from "react";
 import http from "../utils/request";
 
 // Import for user appointments:
-import type { Appointment, CreateRequestAppointment, CreateRequestAppointmentResponse, DeleteAppointmentRequest, DeleteAppointmentResponse, GetAllAppointmentsRequest, GetAppointmentDetailsRequest, GetAppointmentDetailsResponse, GetOwnerAppointmentsRequest, UpdateAppointmentRequest, UpdateAppointmentResponse } from "../types";
+import type { Appointment, CreateAppointmentRequest, CreateAppointmentRequestResponse, DeleteAppointmentRequest, DeleteAppointmentResponse, GetAllAppointmentsRequest, GetAppointmentDetailsRequest, GetAppointmentDetailsResponse, GetOwnerAppointmentsRequest, UpdateAppointmentRequest, UpdateAppointmentResponse } from "../types";
 
 // Import for staff appointments:
-import type { CompleteAppointmentRequest, CreateAppointmentRequest, CreateAppointmentResponse, EditAppointmentRequest, EditAppointmentResponse } from "../types";
+import type { StaffCreateAppointmentRequest, StaffCreateAppointmentResponse, StaffEditAppointmentRequest, StaffEditAppointmentResponse, } from "../types";
 
 const baseUrl = `${import.meta.env.VITE_BASE_API_URL}/Appointments`;
 
@@ -74,11 +74,11 @@ export const useCreateRequestAppointment = () => {
         };
     }, []);
 
-    const createRequestAppointment = async (data: CreateRequestAppointment) => {
+    const createRequestAppointment = async (data: CreateAppointmentRequest) => {
         abortControllerRef.current?.abort();
         abortControllerRef.current = new AbortController();
 
-        return http.post<CreateRequestAppointment, CreateRequestAppointmentResponse>(
+        return http.post<CreateAppointmentRequest, CreateAppointmentRequestResponse>(
             `${baseUrl}/RequestAppointment`,
             data,
             { signal: abortControllerRef.current.signal }
@@ -176,11 +176,11 @@ export const useCreateAppointment = () => {
         };
     }, []);
 
-    const createAppointment = async (data: CreateAppointmentRequest) => {
+    const createAppointment = async (data: StaffCreateAppointmentRequest) => {
         abortControllerRef.current?.abort();
         abortControllerRef.current = new AbortController();
 
-        return http.post<CreateAppointmentRequest, CreateAppointmentResponse>(
+        return http.post<StaffCreateAppointmentRequest, StaffCreateAppointmentResponse>(
             `${baseUrl}`,
             data,
             { signal: abortControllerRef.current.signal }
@@ -199,11 +199,11 @@ export const useEditAppointment = () => {
         };
     }, []);
 
-    const editAppointment = async (data: EditAppointmentRequest) => {
+    const editAppointment = async (data: StaffEditAppointmentRequest) => {
         abortControllerRef.current?.abort();
         abortControllerRef.current = new AbortController();
 
-        return http.put<EditAppointmentRequest, EditAppointmentResponse>(
+        return http.put<StaffEditAppointmentRequest, StaffEditAppointmentResponse>(
             `${baseUrl}/${data.id}`,
             data,
             { signal: abortControllerRef.current.signal }
@@ -222,7 +222,7 @@ export const useCompleteAppointment = () => {
         };
     }, []);
 
-    const completeAppointment = async (id: CompleteAppointmentRequest) => {
+    const completeAppointment = async (id: number) => {
         abortControllerRef.current?.abort();
         abortControllerRef.current = new AbortController();
 

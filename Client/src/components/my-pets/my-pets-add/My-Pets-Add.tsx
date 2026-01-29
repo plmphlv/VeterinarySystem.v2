@@ -169,7 +169,6 @@ const MyPetsAdd: React.FC = () => {
                             {errors.name && <p className={styles["error-text"]}>{errors.name}</p>}
                         </div>
 
-                        {/* Останалите input полета се повтарят със същия pattern */}
                         <div className={styles["my-pets-add-form-group"]}>
                             <label htmlFor="age"><i className="fa-solid fa-calendar"></i> Age:</label>
                             <input type="number" id="age" name="age" value={values.age ?? ""} onChange={handleChange} className={inputClass("age")} placeholder="Enter pet's age (optional)" />

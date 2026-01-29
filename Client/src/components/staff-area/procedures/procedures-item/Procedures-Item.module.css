@@ -38,7 +38,7 @@
     font-size: 0.95rem;
 }
 
-.procedures-filter button {
+.procedures-clear-filters-btn {
     background-color: #4EC5B4;
     color: #fff;
     cursor: pointer;
@@ -144,6 +144,11 @@
 @media (min-width: 1025px) {
     .procedures-item-more-details-btn:hover {
         background-color: #2a796f;
+        transition: 0.3s ease-in;
+    }
+
+    .procedures-clear-filters-btn:hover {
+        background-color: #3aa89a;
         transition: 0.3s ease-in;
     }
 }

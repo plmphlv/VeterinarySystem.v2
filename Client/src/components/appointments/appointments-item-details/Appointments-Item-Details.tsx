@@ -1,9 +1,9 @@
-import { Link, useParams } from "react-router";
+import { Link, useNavigate, useParams } from "react-router";
 import { useEffect, useState } from "react";
 import type { GetAppointmentDetailsErrors, GetAppointmentDetailsResponse } from "../../../types";
 import Spinner from "../../spinner/Spinner";
 import Dialog from "../../dialog/Dialog";
-import { useGetAppointmentDetails } from "../../../api/appointmentsAPI";
+import { useDeleteAppointmentRequest, useGetAppointmentDetails } from "../../../api/appointmentsAPI";
 import { formatDate, formatStatus, formatTime } from "../../../utils/formatDetails";
 import styles from "./Appointments-Item-Details.module.css";
 
@@ -14,6 +14,10 @@ const AppointmentsItemDetails: React.FC = () => {
     const [dialog, setDialog] = useState<{ message: string; type: "success" | "error" } | null>(null);
     const [appointmentDetails, setAppointmentDetails] = useState<GetAppointmentDetailsResponse>();
     const [isLoading, setLoading] = useState(true);
+
+    const navigate = useNavigate();
+    const { deleteAppointmentRequest, cancelDeleteAppointmentRequest } = useDeleteAppointmentRequest();
+    const [deleting, setDeleting] = useState(false);
 
     useEffect(() => {
         if (!id) return;
@@ -38,6 +42,45 @@ const AppointmentsItemDetails: React.FC = () => {
 
     useEffect(() => {
         return () => cancelGetAppointmentDetails();
+    }, []);
+
+
+    const handleDelete = async () => {
+        if (!id) return;
+
+        const confirmed = window.confirm(
+            "Are you sure you want to delete this appointment?"
+        );
+
+        if (!confirmed) return;
+
+        try {
+            setDeleting(true);
+
+            await deleteAppointmentRequest({ id: Number(id) });
+
+            setDialog({
+                message: "Appointment deleted successfully.",
+                type: "success",
+            });
+
+            setTimeout(() => {
+                navigate("/appointments");
+            }, 1500);
+        } catch {
+            setDialog({
+                message: "Failed to delete appointment.",
+                type: "error",
+            });
+        } finally {
+            setDeleting(false);
+        }
+    };
+
+    useEffect(() => {
+        return () => {
+            cancelDeleteAppointmentRequest();
+        };
     }, []);
 
     return (
@@ -69,10 +112,9 @@ const AppointmentsItemDetails: React.FC = () => {
                                 <p><i className="fa-solid fa-user"></i> Animal Owner: {appointmentDetails.animalOwnerName}</p>
                                 <p><i className="fa-solid fa-comment"></i> Description: {appointmentDetails.description}</p>
 
-                                <div className={styles["appointments-details-actions"]}>
-                                    <Link to={`/appointments/${id}/update-request`} className={styles["edit-request"]}>Update</Link>
-                                    <Link to={`/appointments/${id}/delete-request`} className={styles["delete-request"]}>Delete</Link>
-                                </div>
+                                <div className={styles["appointments-item-details-actions"]}>
+                                    <Link to={`/appointments/${id}/update-request`} className={styles["update-request-btn"]}>Update</Link>
+                                    <button onClick={handleDelete} className={`${styles["delete-request-btn"]}`}>Delete</button>                                </div>
 
                                 <Link to="/appointments" className={styles["appointments-item-details-back-link"]}>← Back to Appointments</Link>
                             </div>

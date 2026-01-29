@@ -93,7 +93,7 @@ const ProceduresItem: React.FC = () => {
                         </div>
 
                         <div className={styles["procedures-filter-actions"]}>
-                            <button onClick={() => { setStaffId(""); setAnimalId(""); setProcedureName(""); setDescription(""); setStartDate(""); setEndDate(""); }}>
+                            <button className={styles["procedures-clear-filters-btn"]} onClick={() => { setStaffId(""); setAnimalId(""); setProcedureName(""); setDescription(""); setStartDate(""); setEndDate(""); }}>
                                 Clear Filters
                             </button>
                         </div>

@@ -90,6 +90,7 @@
         background-color: #ba3838;
         transform: translateY(-1px);
         transition: 0.3s ease-in;
+        cursor: pointer;
     }
 }
 
