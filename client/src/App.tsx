@@ -39,7 +39,6 @@ import StaffAppointmentsItemDetails from "./components/staff-area/staff-appointm
 import StaffAppointmentsCreate from "./components/staff-area/staff-appointments/staff-appointments-create/Staff-Appointments-Create";
 import StaffAppointmentsUpdateRequest from "./components/staff-area/staff-appointments/staff-appointments-update-request/Staff-Appointments-Update-Request";
 import StaffAppointmentsEdit from "./components/staff-area/staff-appointments/staff-appointments-edit/Staff-Appointments-Edit";
-import StaffAppointmentsDeleteRequest from "./components/staff-area/staff-appointments/staff-appointments-delete-request/Staff-Appointments-Delete-Request";
 import OwnerAccounts from "./components/staff-area/owner-accounts/Owner-Accounts";
 import OwnerAccountsItemDetails from "./components/staff-area/owner-accounts/owner-accounts-item-details/Owner-Accounts-Item-Details";
 import OwnerAccountsCreate from "./components/staff-area/owner-accounts/owner-accounts-create/Owner-Accounts-Create";
@@ -100,7 +99,6 @@ function App() {
             <Route path="/staff-area/appointments/create-appointment" element={<StaffAppointmentsCreate />}></Route>
             <Route path="/staff-area/appointments/:id/edit" element={<StaffAppointmentsEdit />}></Route>
             <Route path="/staff-area/appointments/:id/update-request" element={<StaffAppointmentsUpdateRequest />}></Route>
-            {/* <Route path="/staff-area/appointments/:id/delete-request" element={<StaffAppointmentsDeleteRequest />}></Route> */}
             <Route path="/staff-area/owner-accounts/" element={<OwnerAccounts />}></Route>
             <Route path="/staff-area/owner-accounts/:id/details" element={<OwnerAccountsItemDetails />}></Route>
             <Route path="/staff-area/owner-accounts/create" element={<OwnerAccountsCreate />}></Route>
