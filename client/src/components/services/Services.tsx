@@ -1,126 +1,98 @@
+import React from "react";
 import { Link } from "react-router";
 import styles from "./Services.module.css";
 
+interface ServiceItem {
+  id: string;
+  title: string;
+  description: string;
+  image: string;
+  link: string;
+}
+
+const servicesData: ServiceItem[] = [
+  {
+    id: "general",
+    title: "General Check-up",
+    description: "Comprehensive physical examination to monitor your pet’s health and detect any early signs of illness.",
+    image: "/images/general-check-up.png",
+    link: "/services/general-check-up",
+  },
+  {
+    id: "vaccines",
+    title: "Vaccinations",
+    description: "Essential immunizations to protect your pet from dangerous diseases and promote long-term wellness.",
+    image: "/images/vaccinations.png",
+    link: "/services/vaccinations",
+  },
+  {
+    id: "surgery",
+    title: "Surgery",
+    description: "Modern surgical procedures including spaying/neutering and emergency interventions with expert care.",
+    image: "/images/surgery.png",
+    link: "/services/surgery",
+  },
+  {
+    id: "dental",
+    title: "Dental Care",
+    description: "Professional cleaning, tooth extraction, and oral care to keep your pet’s teeth and gums healthy.",
+    image: "/images/dental-care.png",
+    link: "/services/dental-care",
+  },
+  {
+    id: "emergency",
+    title: "Emergency Services",
+    description: "24/7 urgent care for accidents, injuries, or sudden illness to ensure timely treatment and recovery.",
+    image: "/images/emergency-services.png",
+    link: "/services/emergency-services",
+  },
+  {
+    id: "nutrition",
+    title: "Pet Nutrition Counseling",
+    description: "Tailored dietary advice to help your pet maintain optimal weight and receive proper nutrition.",
+    image: "/images/pet-nutrition-counseling.png",
+    link: "/services/pet-nutrition-counseling",
+  },
+];
+
 const Services: React.FC = () => {
-    return (
-        <>
-            <h1 className={styles["services-h1"]}>Our Services:</h1>
+  return (
+    <section className={styles.container}>
+      <header className={styles.header}>
+        <h1 className={styles.title}>Our Services</h1>
+        <p className={styles.subtitle}>
+          Providing top-tier veterinary care with passion and expertise.
+        </p>
+      </header>
 
-            <section className={styles["services"]}>
-                <div className={styles["services-item-card"]}>
-                    <img src="/images/general-check-up.png" alt="General Check-up" />
-                    <div className={styles["content"]}>
-                        <h2>General Check-up</h2>
-                        <p>
-                            Comprehensive physical examination to monitor your pet’s health
-                            and detect any early signs of illness.
-                        </p>
-                        <Link
-                            to="/services/general-check-up"
-                            className={styles["services-learn-more-btn"]}
-                        >
-                            → Learn More
-                        </Link>
-                    </div>
-                </div>
+      <div className={styles.grid}>
+        {servicesData.map((service, index) => (
+          <article
+            key={service.id}
+            className={styles.card}
+            style={{ animationDelay: `${index * 0.1}s` }}
+          >
+            <div className={styles.imageWrapper}>
+              <img src={service.image} alt={service.title} loading="lazy" />
+            </div>
+            <div className={styles.content}>
+              <h2>{service.title}</h2>
+              <p>{service.description}</p>
+              <Link to={service.link} className={styles.learnMoreBtn}>
+                Learn More
+              </Link>
+            </div>
+          </article>
+        ))}
+      </div>
 
-                <div className={styles["services-item-card"]}>
-                    <img src="/images/vaccinations.png" alt="Vaccinations" />
-                    <div className={styles["content"]}>
-                        <h2>Vaccinations</h2>
-                        <p>
-                            Essential immunizations to protect your pet from dangerous diseases
-                            and promote long-term wellness.
-                        </p>
-                        <Link
-                            to="/services/vaccinations"
-                            className={styles["services-learn-more-btn"]}
-                        >
-                            → Learn More
-                        </Link>
-                    </div>
-                </div>
-
-                <div className={styles["services-item-card"]}>
-                    <img src="/images/surgery.png" alt="Surgery" />
-                    <div className={styles["content"]}>
-                        <h2>Surgery</h2>
-                        <p>
-                            Modern surgical procedures including spaying/neutering and emergency
-                            interventions with expert care.
-                        </p>
-                        <Link
-                            to="/services/surgery"
-                            className={styles["services-learn-more-btn"]}
-                        >
-                            → Learn More
-                        </Link>
-                    </div>
-                </div>
-
-                <div className={styles["services-item-card"]}>
-                    <img src="/images/dental-care.png" alt="Dental Care" />
-                    <div className={styles["content"]}>
-                        <h2>Dental Care</h2>
-                        <p>
-                            Professional cleaning, tooth extraction, and oral care to keep your
-                            pet’s teeth and gums healthy.
-                        </p>
-                        <Link
-                            to="/services/dental-care"
-                            className={styles["services-learn-more-btn"]}
-                        >
-                            → Learn More
-                        </Link>
-                    </div>
-                </div>
-
-                <div className={styles["services-item-card"]}>
-                    <img src="/images/emergency-services.png" alt="Emergency Services" />
-                    <div className={styles["content"]}>
-                        <h2>Emergency Services</h2>
-                        <p>
-                            24/7 urgent care for accidents, injuries, or sudden illness to ensure
-                            timely treatment and recovery.
-                        </p>
-                        <Link
-                            to="/services/emergency-services"
-                            className={styles["services-learn-more-btn"]}
-                        >
-                            → Learn More
-                        </Link>
-                    </div>
-                </div>
-
-                <div className={styles["services-item-card"]}>
-                    <img
-                        src="/images/pet-nutrition-counseling.png"
-                        alt="Pet Nutrition Counseling"
-                    />
-                    <div className={styles["content"]}>
-                        <h2>Pet Nutrition Counseling</h2>
-                        <p>
-                            Tailored dietary advice to help your pet maintain optimal weight and
-                            receive proper nutrition.
-                        </p>
-                        <Link
-                            to="/services/pet-nutrition-counseling"
-                            className={styles["services-learn-more-btn"]}
-                        >
-                            → Learn More
-                        </Link>
-                    </div>
-                </div>
-            </section>
-
-            <Link
-                to="/appointments/request-appointment"
-                className={styles["services-request-appointment-btn"]}
-            >
-                Request New Appointment
-            </Link>
-        </>
-    );
+      <div className={styles.ctaWrapper}>
+        <Link to="/appointments/request-appointment" className={styles.primaryBtn}>
+          Request New Appointment
+        </Link>
+      </div>
+    </section>
+  );
 };
 
 export default Services;

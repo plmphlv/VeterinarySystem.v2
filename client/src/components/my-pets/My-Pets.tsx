@@ -5,13 +5,18 @@ import { useGetUserData } from "../../hooks/useGetUserData";
 import Dialog from "../dialog/Dialog";
 import { useState } from "react";
 import styles from "./My-Pets.module.css";
+import Spinner from "../spinner/Spinner";
 
 const MyPets: React.FC = () => {
-    const { userData, isLoading, error } = useGetUserData();
+    const { isLoading, error } = useGetUserData();
     const [showError, setShowError] = useState(true);
 
+    if (isLoading) {
+        return <Spinner />;
+    }
+
     return (
-        <>
+        <section className={styles.container}>
             {error && showError ? (
                 <Dialog
                     message={error}
@@ -20,16 +25,23 @@ const MyPets: React.FC = () => {
                 />
             ) : (
                 <>
-                    <h1 className={styles["my-pets-h1"]}>My Pets:</h1>
-                    <div className={styles["my-pets"]}>
+                    <header className={styles.header}>
+                        <h1 className={styles.title}>My Pets</h1>
+                        <p className={styles.subtitle}>Manage your furry friends' profiles.</p>
+                    </header>
+
+                    <div className={styles.contentWrapper}>
                         <MyPetItem />
                     </div>
-                    <Link to="/my-pets/add" className={styles["my-pets-add-pet-btn"]}>
-                        <i className="fa-solid fa-plus"></i> Add New Pet
-                    </Link>
+
+                    <div className={styles.ctaWrapper}>
+                        <Link to="/my-pets/add" className={styles.primaryBtn}>
+                            <i className="fa-solid fa-plus"></i> Add New Pet
+                        </Link>
+                    </div>
                 </>
             )}
-        </>
+        </section>
     );
 };
 

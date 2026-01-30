@@ -55,9 +55,9 @@ const MyPetsItem: React.FC = () => {
     useEffect(() => () => cancelGetOwnerAccountDetails(), []);
 
     return (
-        <>
+        <div className={styles.wrapper}>
             {loading && (
-                <div className="spinner-overlay">
+                <div className={styles.spinnerOverlay}>
                     <Spinner />
                 </div>
             )}
@@ -69,30 +69,53 @@ const MyPetsItem: React.FC = () => {
                     onClose={() => setShowError(false)}
                 />
             )}
+            
+            {dialog && (
+                <Dialog
+                    message={dialog.message}
+                    type={dialog.type}
+                    onClose={() => setDialog(null)}
+                />
+            )}
 
             {animals.length > 0 ? (
-                <section className="my-pets-item">
-                    {animals.map((animal) => (
-                        <div key={animal.id} className={styles["my-pets-item-card"]}>
-                            <div className={styles["my-pets-item-card-content"]}>
+                <section className={styles.grid}>
+                    {animals.map((animal, index) => (
+                        <article 
+                            key={animal.id} 
+                            className={styles.card}
+                            style={{ animationDelay: `${index * 0.1}s` }}
+                        >
+                            <div className={styles.cardHeader}>
+                                <div className={styles.iconWrapper}>
+                                    <i className="fa-solid fa-paw"></i>
+                                </div>
+                            </div>
+                            <div className={styles.cardContent}>
                                 <h2>{animal.name}</h2>
-                                <p>
-                                    <i className="fa-solid fa-paw"></i> Animal type: {animal.animalType}
+                                <p className={styles.type}>
+                                    {animal.animalType}
                                 </p>
                                 <Link
                                     to={`/my-pets/${animal.id}/details`}
-                                    className={styles["my-pets-item-more-info-btn"]}
+                                    className={styles.detailsBtn}
                                 >
-                                    → More Details
+                                    More Details
                                 </Link>
                             </div>
-                        </div>
+                        </article>
                     ))}
                 </section>
             ) : (
-                <h1 className={styles["my-pets-no-pets-h1"]}>No Animals Found.</h1>
+                <div className={styles.emptyState}>
+                    <div className={styles.emptyIcon}>
+                        <i className="fa-solid fa-dog"></i>
+                    </div>
+                    <h2>No Animals Found</h2>
+                    <p>You haven't added any pets to your profile yet.</p>
+                </div>
             )}
-        </>
+        </div>
     );
 };
 
