@@ -113,9 +113,9 @@ const AnimalTypesAdd: React.FC = () => {
     };
 
     const inputClass = (field: keyof AddAnimalTypeRequest) => {
-        if (errors[field]) return `${styles.input} ${styles.error}`;
-        if (values[field] && !errors[field]) return `${styles.input} ${styles.success}`;
-        return styles.input;
+        if (errors[field]) return styles.errorInput;
+        if (values[field] && !errors[field]) return styles.successInput;
+        return "";
     };
 
     useEffect(() => {
@@ -127,66 +127,68 @@ const AnimalTypesAdd: React.FC = () => {
     }, []);
 
     return (
-        <>
+        <div className={styles.container}>
             {(formLoading || userLoading) && (
-                <div className="spinner-overlay">
+                <div className={styles.spinnerOverlay}>
                     <Spinner />
                 </div>
             )}
 
-            <section className={styles["animal-types-add"]}>
-                <div className={styles["animal-types-add-container"]}>
-                    <h2>Add Animal Type</h2>
+            {dialog && (
+                <Dialog
+                    message={dialog.message}
+                    type={dialog.type}
+                    onClose={() => setDialog(null)}
+                />
+            )}
 
-                    <form onSubmit={onSubmit} noValidate>
-                        <div className={styles["animal-types-add-form-group"]}>
-                            <label htmlFor="typeName">
-                                <i className="fa-solid fa-pen"></i> Type Name:
-                            </label>
+            <article className={styles.card}>
+                <header className={styles.cardHeader}>
+                    <div className={styles.iconCircle}>
+                        <i className="fa-solid fa-paw"></i>
+                    </div>
+                    <h1 className={styles.title}>Add Animal Type</h1>
+                    <p className={styles.subtitle}>Create a new animal category</p>
+                </header>
 
-                            <input
-                                type="text"
-                                id="typeName"
-                                name="typeName"
-                                value={values.typeName ?? ""}
-                                onChange={handleChange}
-                                className={inputClass("typeName")}
-                                placeholder="Enter animal type name"
-                                autoComplete="off"
-                                required
-                            />
+                <form onSubmit={onSubmit} noValidate className={styles.form}>
+                    <div className={styles.formGroup}>
+                        <label htmlFor="typeName">
+                            <i className="fa-solid fa-file-signature"></i> Type Name
+                        </label>
+                        <input
+                            type="text"
+                            id="typeName"
+                            name="typeName"
+                            value={values.typeName ?? ""}
+                            onChange={handleChange}
+                            className={`${styles.input} ${inputClass("typeName")}`}
+                            placeholder="Enter animal type name"
+                            autoComplete="off"
+                            required
+                        />
+                        {errors.typeName && <span className={styles.errorMsg}>{errors.typeName}</span>}
+                    </div>
 
-                            {errors.typeName && (
-                                <p className={styles["error-text"]}>{errors.typeName}</p>
-                            )}
-                        </div>
-
+                    <div className={styles.actionGroup}>
                         <button
                             type="submit"
-                            className={styles["animal-types-add-btn-small"]}
+                            className={styles.addBtn}
                             disabled={formLoading}
                         >
-                            Add
+                            <i className="fa-solid fa-plus"></i> Add
                         </button>
 
                         <Link
                             to="/staff-area/animal-types"
-                            className={styles["animal-types-add-cancel-btn"]}
+                            className={styles.cancelBtn}
                         >
-                            Cancel
+                            <i className="fa-solid fa-xmark"></i> Cancel
                         </Link>
-                    </form>
-                </div>
-
-                {dialog && (
-                    <Dialog
-                        message={dialog.message}
-                        type={dialog.type}
-                        onClose={() => setDialog(null)}
-                    />
-                )}
-            </section>
-        </>
+                    </div>
+                </form>
+            </article>
+        </div>
     );
 };
 

@@ -76,7 +76,10 @@ const AnimalTypeItem: React.FC = () => {
             });
 
             setTimeout(() => {
-                navigate("/staff-area/animal-types");
+                // Refresh or redirect (here we just refetch or navigate)
+                // For simplicity, navigating to same page or parent triggers re-render if handled
+                window.location.reload(); 
+                // Or better: update local state instead of reload/navigate
             }, 1500);
         } catch {
             setDialog({
@@ -97,7 +100,7 @@ const AnimalTypeItem: React.FC = () => {
     return (
         <>
             {loading && (
-                <div className="spinner-overlay">
+                <div className={styles.spinnerOverlay}>
                     <Spinner />
                 </div>
             )}
@@ -113,22 +116,28 @@ const AnimalTypeItem: React.FC = () => {
             {animalTypes.length > 0 ? (
                 <>
                     {animalTypes.map((animalType) => (
-                        <li key={animalType.id} className={styles["animal-types-item"]}>
-                            {animalType.value}
-                            <div className={styles["animal-types-btns"]}>
+                        <li key={animalType.id} className={styles.item}>
+                            <span className={styles.typeName}>{animalType.value}</span>
+                            <div className={styles.actions}>
                                 <Link
                                     to={`/staff-area/animal-types/${animalType.id}/edit`}
-                                    className={styles["animal-types-edit-btn"]}
+                                    className={styles.editBtn}
                                 >
-                                    Edit
+                                    <i className="fa-solid fa-pen"></i> Edit
                                 </Link>
-                                <button onClick={() => handleDelete(animalType.id)} className={`${styles["animal-types-delete-btn"]}`}>Delete</button>
+                                <button onClick={() => handleDelete(animalType.id)} className={styles.deleteBtn}>
+                                    <i className="fa-solid fa-trash"></i> Delete
+                                </button>
                             </div>
                         </li>
                     ))}
                 </>
             ) : (
-                <h1 className={styles["no-animal-types-h1"]}>No Animal Types Found.</h1>
+                <div className={styles.emptyState}>
+                    <i className="fa-solid fa-paw"></i>
+                    <h2>No Animal Types Found</h2>
+                    <p>Start by adding a new one above.</p>
+                </div>
             )}
         </>
     );

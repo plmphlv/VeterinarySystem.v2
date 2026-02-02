@@ -1,179 +1,213 @@
-@mixin fade-in {
-    opacity: 1;
-    animation-name: fadeInOpacity;
-    animation-iteration-count: 1;
-    animation-timing-function: ease-in;
-    animation-duration: 2s;
-}
-
-@keyframes fadeInOpacity {
-    0% {
-        opacity: 0;
-    }
-
-    100% {
-        opacity: 1;
-    }
-}
-
-.animal-types-add {
-    min-height: 100vh;
-    padding: 60px 20px;
+.container {
     width: 100%;
-    background-image: url('/images/veterinary-hospital.png');
-    background-size: cover;
-    background-position: center;
-    background-repeat: no-repeat;
+    max-width: 500px;
+    margin: 0 auto;
+    padding: 10rem 1.5rem 3rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    min-height: 80vh;
     position: relative;
+}
+
+.spinnerOverlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(255, 255, 255, 0.8);
+    backdrop-filter: blur(4px);
+    z-index: 50;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 16px;
+}
+
+.card {
+    background: #FFF;
+    border-radius: 20px;
+    overflow: hidden;
+    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.05);
+    border: 1px solid rgba(78, 197, 180, 0.1);
+    width: 100%;
+    opacity: 0;
+    animation: fadeUp 0.8s ease-out forwards;
+    display: flex;
+    flex-direction: column;
+}
+
+.cardHeader {
+    background-color: #f8fcfb;
+    padding: 2.5rem;
+    border-bottom: 1px solid #f0f0f0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+}
+
+.iconCircle {
+    width: 70px;
+    height: 70px;
+    background-color: #eaf8f6;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 1.8rem;
+    color: #4EC5B4;
+    margin-bottom: 1.5rem;
+}
+
+.title {
+    font-size: 1.8rem;
+    color: #333;
+    font-weight: 800;
+    margin-bottom: 0.5rem;
+}
+
+.subtitle {
+    font-size: 1rem;
+    color: #666;
+}
+
+.form {
+    padding: 2.5rem;
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+}
+
+.formGroup {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+.formGroup label {
+    font-size: 0.95rem;
+    font-weight: 700;
+    color: #4EC5B4;
     display: flex;
     align-items: center;
-    justify-content: center;
-    color: white;
-    padding: 2rem 1rem;
-    box-sizing: border-box;
+    gap: 0.5rem;
 }
 
-.animal-types-add::before {
-    content: '';
-    position: absolute;
-    inset: 0;
-    background: rgba(0, 0, 0, 0.7);
-    z-index: 1;
-    pointer-events: none;
-}
-
-.animal-types-add-container {
-    z-index: 2;
-    text-align: start;
-    background-color: rgb(78, 197, 180, 0.8);
-    padding: 40px;
-    border-radius: 16px;
-    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
-    max-width: 400px;
-    animation: fadeInOpacity 1s;
-    width: 90%;
-}
-
-.animal-types-add-container h2 {
-    text-align: center;
-    color: #fff;
-    margin-bottom: 30px;
-}
-
-.animal-types-add-form-group {
-    margin-bottom: 20px;
-}
-
-.animal-types-add-form-group select {
-    padding: 0.7rem;
-    border-radius: 0.5rem;
-}
-
-.animal-types-add-form-group label {
-    display: block;
-    margin-bottom: 6px;
-    font-weight: bold;
-    color: #fff;
-}
-
-.animal-types-add-form-group input {
+.input {
     width: 100%;
-    padding: 12px;
-    border: 1px solid #ddd;
-    border-radius: 8px;
-    outline: none;
-    transition: 0.3s;
-}
-
-.animal-types-add-form-group input:focus {
-    border-color: #000;
-}
-
-.error-text {
-    color: #ff4d4d;
-    font-weight: bold;
-    font-size: 13px;
-    margin-top: 5px;
-}
-
-.animal-types-add-btn-small {
-    width: 100%;
-    padding: 12px;
-    background-color: #48d889;
-    color: #000;
-    border: none;
-    margin-bottom: 0.5rem;
-    border-radius: 8px;
-    font-weight: bold;
-    cursor: pointer;
-    transition: background-color 0.3s;
-}
-
-.animal-types-add-cancel-btn {
-    width: 100%;
-    padding: 12px;
-    font-size: 14px;
-    display: inline-block;
-    text-align: center;
-    text-decoration: none;
-    background-color: #fff;
-    color: #000;
-    border: none;
-    border-radius: 8px;
-    font-weight: bold;
-    cursor: pointer;
-    transition: background-color 0.3s;
-}
-
-.animal-types-add-bottom-text {
-    text-align: center;
-    margin-top: 20px;
-    font-size: 14px;
+    padding: 0.8rem 1rem;
+    border-radius: 12px;
+    border: 2px solid #eee;
+    background-color: #fafafa;
+    font-size: 1rem;
     color: #333;
+    outline: none;
+    transition: all 0.3s ease;
 }
 
-.animal-types-add-bottom-text a {
-    color: #fff;
-    position: relative;
-    text-decoration: none;
-    font-weight: bold;
-}
-
-.animal-types-add-bottom-text a::before {
-    content: '';
-    position: absolute;
-    width: 100%;
-    height: 3px;
-    border-radius: 4px;
+.input:focus {
+    border-color: #4EC5B4;
     background-color: #fff;
-    bottom: -2px;
-    left: 0;
-    transform-origin: left;
-    transform: scaleX(0);
-    transition: transform .3s ease-in-out;
+    box-shadow: 0 4px 12px rgba(78, 197, 180, 0.1);
 }
 
-.animal-types-add-form-group input.error {
-    border: 3px solid #ff4d4d;
+.errorInput {
+    border-color: #ff6b6b;
+    background-color: #fff5f5;
 }
 
-.animal-types-add-form-group input.success {
-    border: 3px solid #3cb371;
+.successInput {
+    border-color: #48d889;
 }
 
-@media(min-width: 1025px) {
-    .animal-types-add-bottom-text a:hover::before {
-        transform-origin: left;
-        transform: scaleX(1);
+.errorMsg {
+    color: #ff6b6b;
+    font-size: 0.85rem;
+    font-weight: 600;
+    margin-left: 0.5rem;
+    animation: fadeIn 0.3s ease-in;
+}
+
+.actionGroup {
+    display: flex;
+    gap: 1rem;
+    margin-top: 1rem;
+}
+
+.addBtn,
+.cancelBtn {
+    padding: 0.8rem 0;
+    border-radius: 50px;
+    font-weight: 700;
+    font-size: 1rem;
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    border: none;
+    outline: none;
+    flex: 1;
+}
+
+.addBtn {
+    background-color: #fff;
+    border: 2px solid #3aa698;
+    color: #3aa698;
+}
+
+.cancelBtn {
+    background-color: #fff;
+    border: 2px solid #95a5a6;
+    color: #95a5a6;
+}
+
+@media (min-width: 1025px) {
+    .addBtn:hover {
+        background-color: #3aa698;
+        color: #fff;
+        box-shadow: 0 6px 20px rgba(78, 197, 180, 0.5);
+        transform: translateY(-2px);
     }
 
-    .animal-types-add-btn-small:hover {
-        background-color: #2f8a58;
-        transition: 0.3s ease-in;
+    .cancelBtn:hover {
+        background-color: #95a5a6;
+        color: #fff;
+        box-shadow: 0 4px 15px rgba(149, 165, 166, 0.4);
+        transform: translateY(-2px);
+    }
+}
+
+@media (max-width: 768px) {
+    .container {
+        padding: 9rem 1rem 2rem;
     }
 
-    .animal-types-add-cancel-btn:hover {
-        background-color: #a8a8a8;
-        transition: 0.3s ease-in;
+    .actionGroup {
+        flex-direction: column;
     }
+
+    .addBtn, .cancelBtn {
+        width: 100%;
+    }
+}
+
+@keyframes fadeUp {
+    from {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
 }

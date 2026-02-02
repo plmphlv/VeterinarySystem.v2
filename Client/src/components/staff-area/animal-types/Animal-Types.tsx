@@ -10,7 +10,7 @@ const AnimalTypes: React.FC = () => {
     const [showError, setShowError] = useState(true);
 
     return (
-        <>
+        <section className={styles.container}>
             {error && showError ? (
                 <Dialog
                     message={error}
@@ -19,25 +19,28 @@ const AnimalTypes: React.FC = () => {
                 />
             ) : (
                 <>
-                    <h1 className={styles["animal-types-h1"]}>Animal Types:</h1>
+                    <header className={styles.header}>
+                        <h1 className={styles.title}>Animal Types</h1>
+                        <p className={styles.subtitle}>Manage the list of animal types available in the system</p>
+                    </header>
 
-                    <section className={styles["animal-types"]}>
-                        <ul>
+                    <div className={styles.contentWrapper}>
+                        <ul className={styles.list}>
                             <AnimalTypeItem />
                         </ul>
-                    </section>
+                    </div>
 
-                    <div className={styles["animal-types-add-btn-container"]}>
+                    <div className={styles.ctaWrapper}>
                         <Link 
                             to="/staff-area/animal-types/add" 
-                            className={styles["animal-types-add-btn"]}
+                            className={styles.primaryBtn}
                         >
-                            <i className="fa-solid fa-plus"></i> Add New Animal Type
+                            <i className="fa-solid fa-plus"></i> Add a New Animal Type
                         </Link>
                     </div>
                 </>
             )}
-        </>
+        </section>
     );
 }
 

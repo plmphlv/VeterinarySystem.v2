@@ -85,7 +85,7 @@ const AppointmentsItem: React.FC = () => {
             <section className={styles.filterSection}>
                 <div className={styles.filterGroup}>
                     <div className={styles.filterItem}>
-                        <label htmlFor="status">Status</label>
+                        <label htmlFor="status"><i className="fa-solid fa-check"></i> Status</label>
                         <select id="status" value={status} onChange={(e) => setStatus(e.target.value)}>
                             <option value="">All Statuses</option>
                             <option value="Pending_Review">Pending Review</option>
@@ -97,12 +97,12 @@ const AppointmentsItem: React.FC = () => {
                     </div>
 
                     <div className={styles.filterItem}>
-                        <label htmlFor="startDate">From</label>
+                        <label htmlFor="startDate"><i className="fa-solid fa-calendar"></i> From</label>
                         <input id="startDate" type="date" value={startDate} onChange={(e) => setStartDate(e.target.value)} />
                     </div>
 
                     <div className={styles.filterItem}>
-                        <label htmlFor="endDate">To</label>
+                        <label htmlFor="endDate"><i className="fa-solid fa-calendar"></i> To</label>
                         <input id="endDate" type="date" value={endDate} onChange={(e) => setEndDate(e.target.value)} />
                     </div>
                 </div>

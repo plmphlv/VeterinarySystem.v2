@@ -15,7 +15,7 @@ const StaffAppointments: React.FC = () => {
     }
 
     return (
-        <>
+        <section className={styles.container}>
             {error && showError ? (
                 <Dialog
                     message={error}
@@ -24,21 +24,27 @@ const StaffAppointments: React.FC = () => {
                 />
             ) : (
                 <>
-                    <h1 className={styles["staff-appointments-h1"]}>All Appointments Requests:</h1>
-                    <div className={styles["staff-appointments-div"]}>
+                    <header className={styles.header}>
+                        <h1 className={styles.title}>All Appointment Requests</h1>
+                        <p className={styles.subtitle}>Manage incoming requests from pet owners</p>
+                    </header>
+
+                    <div className={styles.contentWrapper}>
                         <StaffAppointmentsItem />
                     </div>
 
-                    <Link
-                        to="/staff-area/appointments/create-appointment"
-                        className={styles["staff-appointments-create-appointment-btn"]}
-                    >
-                        <i className="fa-solid fa-plus"></i> Create New Appointment
-                    </Link>
+                    <div className={styles.ctaWrapper}>
+                        <Link
+                            to="/staff-area/appointments/create-appointment"
+                            className={styles.primaryBtn}
+                        >
+                            <i className="fa-solid fa-plus"></i> Create New Appointment
+                        </Link>
+                    </div>
                 </>
             )}
-        </>
-    )
+        </section>
+    );
 }
 
 export default StaffAppointments;

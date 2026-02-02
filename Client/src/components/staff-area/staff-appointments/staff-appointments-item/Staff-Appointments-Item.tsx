@@ -52,115 +52,118 @@ const StaffAppointmentsItem: React.FC = () => {
 
     useEffect(() => cancelGetAllAppointments, []);
 
+    const hasActiveFilters = ownerId || staffId || status || startDate || endDate;
+
     return (
-        <>
-            {appointments.length > 0 && (!errors || Object.keys(errors).length === 0) ? (
-                <>
-                    {loading && <div className="spinner-overlay"><Spinner /></div>}
-                    {dialog && <Dialog message={dialog.message} type={dialog.type} onClose={() => setDialog(null)} />}
-
-                    <section className={styles["staff-appointments-filter"]}>
-                        <div className={styles["staff-appointments-filter-item"]}>
-                            <label htmlFor="ownerId">Owner Account ID:</label>
-                            <input id="ownerId" type="text" value={ownerId} onChange={(e) => setOwnerId(e.target.value)} />
-                        </div>
-
-                        <div className={styles["staff-appointments-filter-item"]}>
-                            <label htmlFor="status">Select Status:</label>
-                            <select id="status" value={status} onChange={(e) => setStatus(e.target.value)}>
-                                <option value="">--</option>
-                                <option value="Pending_Review">Pending Review</option>
-                                <option value="Confirmed">Confirmed</option>
-                                <option value="Completed">Completed</option>
-                                <option value="Canceled">Canceled</option>
-                                <option value="Missed">Missed</option>
-                            </select>
-                        </div>
-
-                        <div className={styles["staff-appointments-filter-item"]}>
-                            <label htmlFor="startDate">Start Date:</label>
-                            <input id="startDate" type="date" value={startDate} onChange={(e) => setStartDate(e.target.value)} />
-                        </div>
-
-                        <div className={styles["staff-appointments-filter-item"]}>
-                            <label htmlFor="endDate">End Date:</label>
-                            <input id="endDate" type="date" value={endDate} onChange={(e) => setEndDate(e.target.value)} />
-                        </div>
-
-                        <div className={styles["staff-appointments-filter-actions"]}>
-                            <button onClick={() => { setStaffId(""); setStatus(""); setStartDate(""); setEndDate(""); }}>
-                                Clear Filters
-                            </button>
-                        </div>
-                    </section>
-
-                    <section className={styles["staff-appointments-item"]}>
-                        {appointments.map((appointment) => (
-                            <div className={styles["staff-appointments-item-card"]} key={appointment.id}>
-                                <div className={styles["staff-appointments-item-content"]}>
-                                    <h2><i className="fa-solid fa-calendar-days"></i> {formatDate(appointment.date)}</h2>
-                                    <p><i className="fa-solid fa-clock"></i> Hour: {formatTime(appointment.date)}</p>
-                                    <p><i className="fa-solid fa-pen"></i> Status: {formatStatus(appointment.status)}</p>
-                                    <div className={styles["staff-appointments-item-actions"]}>
-                                        <Link to={`/staff-area/appointments/${appointment.id}/details`} className={styles["staff-appointments-item-more-details-btn"]}>
-                                            → More Details
-                                        </Link>
-                                    </div>
-                                </div>
-                            </div>
-                        ))}
-                    </section>
-                </>
-            ) : (
-                <>
-                    {loading && <div className="spinner-overlay"><Spinner /></div>}
-                    {dialog && <Dialog message={dialog.message} type={dialog.type} onClose={() => setDialog(null)} />}
-
-                    <section className={styles["staff-appointments-filter"]}>
-                        <div className={styles["staff-appointments-filter-item"]}>
-                            <label htmlFor="ownerId">Owner Account ID:</label>
-                            <input id="ownerId" type="text" value={ownerId} onChange={(e) => setOwnerId(e.target.value)} />
-                        </div>
-
-                        <div className={styles["staff-appointments-filter-item"]}>
-                            <label htmlFor="status">Select Status:</label>
-                            <select id="status" value={status} onChange={(e) => setStatus(e.target.value)}>
-                                <option value="">--</option>
-                                <option value="Pending_Review">Pending Review</option>
-                                <option value="Confirmed">Confirmed</option>
-                                <option value="Completed">Completed</option>
-                                <option value="Canceled">Canceled</option>
-                                <option value="Missed">Missed</option>
-                            </select>
-                        </div>
-
-                        <div className={styles["staff-appointments-filter-item"]}>
-                            <label htmlFor="startDate">Start Date:</label>
-                            <input id="startDate" type="date" value={startDate} onChange={(e) => setStartDate(e.target.value)} />
-                        </div>
-
-                        <div className={styles["staff-appointments-filter-item"]}>
-                            <label htmlFor="endDate">End Date:</label>
-                            <input id="endDate" type="date" value={endDate} onChange={(e) => setEndDate(e.target.value)} />
-                        </div>
-
-                        <div className={styles["staff-appointments-filter-actions"]}>
-                            <button onClick={() => { setStaffId(""); setStatus(""); setStartDate(""); setEndDate(""); }}>
-                                Clear Filters
-                            </button>
-                        </div>
-                    </section>
-
-                    <h1 className={styles["staff-appointments-item-no-appointments"]}>
-                        {ownerId || staffId || status || startDate || endDate
-                            ? "No appointments found for the current filter."
-                            : "No appointments found."}
-                    </h1>
-                </>
+        <div className={styles.wrapper}>
+            {loading && (
+                <div className={styles.spinnerOverlay}>
+                    <Spinner />
+                </div>
             )}
 
-            {error && showError && <Dialog message={error} type="error" onClose={() => setShowError(false)} />}
-        </>
+            {dialog && (
+                <Dialog
+                    message={dialog.message}
+                    type={dialog.type}
+                    onClose={() => setDialog(null)}
+                />
+            )}
+
+            <section className={styles.filterSection}>
+                <div className={styles.filterGroup}>
+                    <div className={styles.filterItem}>
+                        <label htmlFor="ownerId"><i className="fa-solid fa-id-badge"></i> Owner ID</label>
+                        <input id="ownerId" type="text" value={ownerId} onChange={(e) => setOwnerId(e.target.value)} placeholder="Search by ID" />
+                    </div>
+
+                    <div className={styles.filterItem}>
+                        <label htmlFor="status"><i className="fa-solid fa-check"></i> Status</label>
+                        <select id="status" value={status} onChange={(e) => setStatus(e.target.value)}>
+                            <option value="">All Statuses</option>
+                            <option value="Pending_Review">Pending Review</option>
+                            <option value="Confirmed">Confirmed</option>
+                            <option value="Completed">Completed</option>
+                            <option value="Canceled">Canceled</option>
+                            <option value="Missed">Missed</option>
+                        </select>
+                    </div>
+
+                    <div className={styles.filterItem}>
+                        <label htmlFor="startDate"><i className="fa-solid fa-calendar"></i> From</label>
+                        <input id="startDate" type="date" value={startDate} onChange={(e) => setStartDate(e.target.value)} />
+                    </div>
+
+                    <div className={styles.filterItem}>
+                        <label htmlFor="endDate"><i className="fa-solid fa-calendar"></i> To</label>
+                        <input id="endDate" type="date" value={endDate} onChange={(e) => setEndDate(e.target.value)} />
+                    </div>
+                </div>
+
+                <div className={styles.filterActions}>
+                    <button
+                        onClick={() => { setStaffId(""); setStatus(""); setStartDate(""); setEndDate(""); setOwnerId(""); }}
+                        className={styles.clearBtn}
+                        disabled={!hasActiveFilters}
+                    >
+                        Clear Filters
+                    </button>
+                </div>
+            </section>
+
+            {appointments.length > 0 && (!errors || Object.keys(errors).length === 0) ? (
+                <section className={styles.grid}>
+                    {appointments.map((appointment, index) => (
+                        <article
+                            className={styles.card}
+                            key={appointment.id}
+                            style={{ animationDelay: `${index * 0.1}s` }}
+                        >
+                            <div className={styles.cardHeader}>
+                                <div className={styles.statusBadge}>
+                                    {formatStatus(appointment.status)}
+                                </div>
+                            </div>
+                            <div className={styles.cardBody}>
+                                <div className={styles.infoRow}>
+                                    <i className="fa-solid fa-calendar-days"></i>
+                                    <span>{formatDate(appointment.date)}</span>
+                                </div>
+                                <div className={styles.infoRow}>
+                                    <i className="fa-solid fa-clock"></i>
+                                    <span>{formatTime(appointment.date)}</span>
+                                </div>
+                            </div>
+                            <div className={styles.cardFooter}>
+                                <Link to={`/staff-area/appointments/${appointment.id}/details`} className={styles.detailsBtn}>
+                                    More Details
+                                </Link>
+                            </div>
+                        </article>
+                    ))}
+                </section>
+            ) : (
+                <div className={styles.emptyState}>
+                    <div className={styles.emptyIcon}>
+                        <i className="fa-regular fa-calendar-xmark"></i>
+                    </div>
+                    <h2>No appointments found</h2>
+                    <p>
+                        {hasActiveFilters
+                            ? "Try adjusting your filters to see more results."
+                            : "There are no appointment requests at the moment."}
+                    </p>
+                </div>
+            )}
+
+            {error && showError && (
+                <Dialog
+                    message={error}
+                    type="error"
+                    onClose={() => setShowError(false)}
+                />
+            )}
+        </div>
     );
 };
 

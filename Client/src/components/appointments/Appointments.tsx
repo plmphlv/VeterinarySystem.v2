@@ -38,7 +38,7 @@ const Appointments: React.FC = () => {
                             to="/appointments/request-appointment"
                             className={styles.primaryBtn}
                         >
-                            Request New Appointment
+                            Request an Appointment
                         </Link>
                     </div>
                 </>

@@ -86,11 +86,11 @@ const EditProfile: React.FC = () => {
 
             await editProfile(payload);
             setDialog({ message: "Profile edit is successful!", type: "success" });
+            setTimeout(() => navigate(`/profile`), 1500);
         } catch (err: any) {
             setDialog({ message: err.detail || "Edit failed.", type: "error" });
         } finally {
             setIsLoading(false);
-            setTimeout(() => navigate(`/profile`), 1500);
         }
     };
 
@@ -106,8 +106,8 @@ const EditProfile: React.FC = () => {
     };
 
     const inputClass = (field: keyof EditProfileRequest) => {
-        if (errors[field]) return styles.error;
-        if (values[field] && !errors[field]) return styles.success;
+        if (errors[field]) return styles.errorInput;
+        if (values[field] && !errors[field]) return styles.successInput;
         return "";
     };
 
@@ -126,63 +126,76 @@ const EditProfile: React.FC = () => {
     }, [userData]);
 
     return (
-        <>
+        <div className={styles.container}>
             {(isLoading || isUserLoading) && (
-                <div className="spinner-overlay">
+                <div className={styles.spinnerOverlay}>
                     <Spinner />
                 </div>
             )}
 
-            <h1 className={styles["edit-profile-h1"]}>Edit Profile</h1>
-
             {userData ? (
-                <div className={styles["edit-profile-container"]}>
-                    <div className={styles["edit-profile-card"]}>
-                        <form onSubmit={onSubmit} noValidate>
-                            {([
+                <article className={styles.card}>
+                    <header className={styles.cardHeader}>
+                        <div className={styles.avatar}>
+                            {userData.firstName[0]}{userData.lastName[0]}
+                        </div>
+                        <h1 className={styles.title}>Edit Profile</h1>
+                        <p className={styles.subtitle}>Update your personal information</p>
+                    </header>
+
+                    <form onSubmit={onSubmit} noValidate className={styles.form}>
+                        <div className={styles.contentBody}>
+                            {[
                                 { name: "firstName", label: "First Name", type: "text", icon: "fa-pen", placeholder: "Enter your first name" },
                                 { name: "lastName", label: "Last Name", type: "text", icon: "fa-pen", placeholder: "Enter your last name" },
                                 { name: "phoneNumber", label: "Phone Number", type: "tel", icon: "fa-phone", placeholder: "Enter your phone number" },
                                 { name: "address", label: "Address (Optional)", type: "text", icon: "fa-map-marker-alt", placeholder: "Enter your address" },
-                            ] as const).map(({ name, label, type, icon, placeholder }) => (
-                                <div className={styles["edit-profile-field"]} key={name}>
-                                    <label htmlFor={name}>
-                                        <i className={`fa-solid ${icon}`}></i> {label}:
-                                    </label>
-                                    <input
-                                        type={type}
-                                        id={name}
-                                        name={name}
-                                        value={values[name] ?? ""}
-                                        onChange={handleChange}
-                                        className={inputClass(name)}
-                                        placeholder={placeholder}
-                                        autoComplete="off"
-                                        required={name !== "address"}
-                                    />
-                                    {errors[name] && <p className={styles["error-text"]}>{errors[name]}</p>}
-                                </div>
-                            ))}
+                            ].map(({ name, label, type, icon, placeholder }) => {
+                                const fieldName = name as keyof EditProfileRequest;
+                                return (
+                                    <div className={styles.formGroup} key={name}>
+                                        <label htmlFor={name}>
+                                            <i className={`fa-solid ${icon}`}></i> {label}
+                                        </label>
+                                        <input
+                                            type={type}
+                                            id={name}
+                                            name={name}
+                                            value={values[fieldName] ?? ""}
+                                            onChange={handleChange}
+                                            className={`${styles.input} ${inputClass(fieldName)}`}
+                                            placeholder={placeholder}
+                                            autoComplete="off"
+                                            required={name !== "address"}
+                                        />
+                                        {errors[fieldName] && <span className={styles.errorMsg}>{errors[fieldName]}</span>}
+                                    </div>
+                                );
+                            })}
+                        </div>
 
-                            <div className={styles["edit-profile-btns"]}>
-                                <button className={styles["edit-profile-save-edit-btn"]} type="submit" disabled={isLoading}>Save</button>
-                                <Link to="/profile" className={styles["edit-profile-cancel-edit-btn"]}>Cancel</Link>
-                            </div>
+                        <div className={styles.actionGroup}>
+                            <button className={styles.saveBtn} type="submit" disabled={isLoading}>
+                                <i className="fa-solid fa-check"></i> Save
+                            </button>
+                            <Link to="/profile" className={styles.cancelBtn}>
+                                <i className="fa-solid fa-xmark"></i> Cancel
+                            </Link>
+                        </div>
 
-                            {dialog && (
-                                <Dialog
-                                    message={dialog.message}
-                                    type={dialog.type}
-                                    onClose={() => setDialog(null)}
-                                />
-                            )}
-                        </form>
-                    </div>
-                </div>
+                        {dialog && (
+                            <Dialog
+                                message={dialog.message}
+                                type={dialog.type}
+                                onClose={() => setDialog(null)}
+                            />
+                        )}
+                    </form>
+                </article>
             ) : !isLoading && !error ? (
-                <p className={styles["edit-profile-no-user-data"]}>No user data found.</p>
+                <p className={styles.noData}>No user data found.</p>
             ) : null}
-        </>
+        </div>
     );
 };
 

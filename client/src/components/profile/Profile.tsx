@@ -12,7 +12,7 @@ const Profile: React.FC = () => {
     if (isLoading) return <Spinner />;
 
     return (
-        <>
+        <section className={styles.container}>
             {error && showError && (
                 <Dialog
                     message={error}
@@ -21,54 +21,66 @@ const Profile: React.FC = () => {
                 />
             )}
 
-            {userData ? (
-                <>
-                    <h1 className={styles["profile-h1"]}>{userData.firstName}'s Profile</h1>
-                    <div className={styles["profile-container"]}>
-                        <div className={styles["profile-item-card"]}>
-                            <div className={styles.avatar}>
-                                {userData.firstName[0]}{userData.lastName[0]}
-                            </div>
-
-                            <div className={styles.field}>
-                                <label><i className="fa-solid fa-envelope"></i> Email:</label>
-                                <span>{userData.email}</span>
-                            </div>
-
-                            <div className={styles.field}>
-                                <label><i className="fa-solid fa-pen"></i> First Name:</label>
-                                <span>{userData.firstName}</span>
-                            </div>
-
-                            <div className={styles.field}>
-                                <label><i className="fa-solid fa-pen"></i> Last Name:</label>
-                                <span>{userData.lastName}</span>
-                            </div>
-
-                            <div className={styles.field}>
-                                <label><i className="fa-solid fa-phone"></i> Phone Number:</label>
-                                <span>{userData.phoneNumber}</span>
-                            </div>
-
-                            {userData.address && (
-                                <div className={styles.field}>
-                                    <label><i className="fa-solid fa-map-marker-alt"></i> Address:</label>
-                                    <span>{userData.address}</span>
-                                </div>
-                            )}
-
-                            <div className={styles["profile-btns"]}>
-                                <Link to="/profile/edit" className={styles["profile-edit-btn"]}>Edit Profile</Link>
-                                <Link to="/profile/change-password" className={styles["profile-change-pass-btn"]}>Change Password</Link>
-                            </div>
+            {userData && (
+                <article className={styles.card}>
+                    <header className={styles.cardHeader}>
+                        <div className={styles.avatar}>
+                            {userData.firstName[0]}{userData.lastName[0]}
                         </div>
+                        <h1 className={styles.title}>{userData.firstName}'s Profile</h1>
+                        <p className={styles.subtitle}>Manage your account settings</p>
+                    </header>
+
+                    <div className={styles.contentBody}>
+                        <div className={styles.infoRow}>
+                            <div className={styles.label}>
+                                <i className="fa-solid fa-envelope"></i> Email
+                            </div>
+                            <div className={styles.value}>{userData.email}</div>
+                        </div>
+
+                        <div className={styles.infoRow}>
+                            <div className={styles.label}>
+                                <i className="fa-solid fa-file-signature"></i> First Name
+                            </div>
+                            <div className={styles.value}>{userData.firstName}</div>
+                        </div>
+
+                        <div className={styles.infoRow}>
+                            <div className={styles.label}>
+                                <i className="fa-solid fa-file-signature"></i> Last Name
+                            </div>
+                            <div className={styles.value}>{userData.lastName}</div>
+                        </div>
+
+                        <div className={styles.infoRow}>
+                            <div className={styles.label}>
+                                <i className="fa-solid fa-phone"></i> Phone Number
+                            </div>
+                            <div className={styles.value}>{userData.phoneNumber}</div>
+                        </div>
+
+                        {userData.address && (
+                            <div className={styles.infoRow}>
+                                <div className={styles.label}>
+                                    <i className="fa-solid fa-map-marker-alt"></i> Address
+                                </div>
+                                <div className={styles.value}>{userData.address}</div>
+                            </div>
+                        )}
                     </div>
-                </>
-            ) : (
-                // <h1 className={styles["profile-no-user-data"]}>No user data found, please try again later.</h1>
-                null
+
+                    <footer className={styles.cardFooter}>
+                        <Link to="/profile/edit" className={styles.editBtn}>
+                            <i className="fa-solid fa-pen-to-square"></i> Edit Profile
+                        </Link>
+                        <Link to="/profile/change-password" className={styles.passwordBtn}>
+                            <i className="fa-solid fa-key"></i> Change Password
+                        </Link>
+                    </footer>
+                </article>
             )}
-        </>
+        </section>
     );
 };
 

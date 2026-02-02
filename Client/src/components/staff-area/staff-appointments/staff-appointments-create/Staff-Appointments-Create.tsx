@@ -133,7 +133,7 @@ const StaffAppointmentsCreate: React.FC = () => {
                     <form onSubmit={onSubmit} noValidate>
                         <div className={styles["staff-appointments-create-form-group"]}>
                             <label htmlFor="date">
-                                <i className="fa-solid fa-pen"></i> Date of appointment:
+                                <i className="fa-solid fa-calendar"></i> Date of appointment:
                             </label>
 
                             <input
@@ -175,7 +175,7 @@ const StaffAppointmentsCreate: React.FC = () => {
 
                         <div className={styles["staff-appointments-create-form-group"]}>
                             <label htmlFor="staffId">
-                                <i className="fa-solid fa-pen"></i> Staff ID:
+                                <i className="fa-solid fa-id-badge"></i> Staff ID:
                             </label>
 
                             <input
@@ -197,7 +197,7 @@ const StaffAppointmentsCreate: React.FC = () => {
 
                         <div className={styles["staff-appointments-create-form-group"]}>
                             <label htmlFor="ownerId">
-                                <i className="fa-solid fa-pen"></i> Owner ID:
+                                <i className="fa-solid fa-id-badge"></i> Owner ID:
                             </label>
 
                             <input

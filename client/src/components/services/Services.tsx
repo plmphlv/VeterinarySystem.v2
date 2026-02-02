@@ -88,7 +88,7 @@ const Services: React.FC = () => {
 
       <div className={styles.ctaWrapper}>
         <Link to="/appointments/request-appointment" className={styles.primaryBtn}>
-          Request New Appointment
+          Request an Appointment
         </Link>
       </div>
     </section>

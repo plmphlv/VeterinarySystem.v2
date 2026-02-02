@@ -141,6 +141,11 @@
     box-shadow: 0 4px 15px rgba(78, 197, 180, 0.4);
     transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
     border: 2px solid transparent;
+    animation: invitePulse 2s infinite ease-in-out;
+}
+
+.primaryBtn:hover {
+    animation: none;
 }
 
 @media (min-width: 1025px) {
@@ -186,6 +191,21 @@
     .primaryBtn {
         width: 100%;
         text-align: center;
+    }
+}
+
+@keyframes invitePulse {
+    0% {
+        transform: scale(1);
+        box-shadow: 0 4px 15px rgba(78, 197, 180, 0.4);
+    }
+    50% {
+        transform: scale(1.05);
+        box-shadow: 0 10px 25px rgba(78, 197, 180, 0.6);
+    }
+    100% {
+        transform: scale(1);
+        box-shadow: 0 4px 15px rgba(78, 197, 180, 0.4);
     }
 }
 

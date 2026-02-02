@@ -107,7 +107,7 @@ const MyPetsItemDetails: React.FC = () => {
 
                         <div className={styles.detailRow}>
                             <div className={styles.iconBox}>
-                                <i className="fa-solid fa-weight-hanging"></i>
+                                <i className="fa-solid fa-weight-scale"></i>
                             </div>
                             <div className={styles.detailText}>
                                 <span className={styles.label}>Weight</span>
@@ -144,7 +144,7 @@ const MyPetsItemDetails: React.FC = () => {
 
                     <footer className={styles.cardFooter}>
                         <Link to={`/my-pets/${id}/edit`} className={styles.editBtn}>
-                            <i className="fa-solid fa-pen-to-square"></i> Edit Profile
+                            <i className="fa-solid fa-pen-to-square"></i> Edit Pet
                         </Link>
                         <button onClick={handleDelete} className={styles.deleteBtn} disabled={deleting}>
                             <i className="fa-solid fa-trash"></i> {deleting ? "Removing..." : "Remove Pet"}
