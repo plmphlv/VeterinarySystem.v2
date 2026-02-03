@@ -83,11 +83,11 @@ const OwnerAccountsCreate: React.FC = () => {
             await createOwnerAccount(payload);
 
             setDialog({ message: "Owner account created successfully!", type: "success" });
+            setTimeout(() => navigate(`/staff-area/owner-accounts`), 1500);
         } catch {
             setDialog({ message: "Failed creating owner account.", type: "error" });
         } finally {
             setFormLoading(false);
-            setTimeout(() => navigate(`/staff-area/owner-accounts`), 1500);
         }
     };
 
@@ -111,9 +111,9 @@ const OwnerAccountsCreate: React.FC = () => {
     };
 
     const inputClass = (field: keyof CreateOwnerAccountRequest) => {
-        if (errors[field]) return `${styles.input} ${styles.error}`;
-        if (values[field] && !errors[field]) return `${styles.input} ${styles.success}`;
-        return styles.input;
+        if (errors[field]) return styles.errorInput;
+        if (values[field] && !errors[field]) return styles.successInput;
+        return "";
     };
 
 
@@ -122,132 +122,121 @@ const OwnerAccountsCreate: React.FC = () => {
     }, []);
 
     return (
-        <>
+        <div className={styles.container}>
             {(formLoading || userLoading) && (
-                <div className="spinner-overlay">
+                <div className={styles.spinnerOverlay}>
                     <Spinner />
                 </div>
             )}
 
-            <section className={styles["owner-accounts-create"]}>
-                <div className={styles["owner-accounts-create-container"]}>
-                    <h2>Create Owner Account</h2>
+            {dialog && (
+                <Dialog
+                    message={dialog.message}
+                    type={dialog.type}
+                    onClose={() => setDialog(null)}
+                />
+            )}
 
-                    <form onSubmit={onSubmit} noValidate>
-                        <div className={styles["owner-accounts-create-form-group"]}>
-                            <label htmlFor="firstName">
-                                <i className="fa-solid fa-pen"></i> First Name:
-                            </label>
+            <article className={styles.card}>
+                <header className={styles.cardHeader}>
+                    <div className={styles.iconCircle}>
+                        <i className="fa-solid fa-user-plus"></i>
+                    </div>
+                    <h1 className={styles.title}>Create an Owner Account</h1>
+                    <p className={styles.subtitle}>Register a new pet owner in the system</p>
+                </header>
 
-                            <input
-                                type="text"
-                                id="firstName"
-                                name="firstName"
-                                value={values.firstName ?? ""}
-                                onChange={handleChange}
-                                className={inputClass("firstName")}
-                                placeholder="Enter first name"
-                                autoComplete="off"
-                                required
-                            />
+                <form onSubmit={onSubmit} noValidate className={styles.form}>
+                    <div className={styles.formGroup}>
+                        <label htmlFor="firstName">
+                            <i className="fa-solid fa-file-signature"></i> First Name
+                        </label>
+                        <input
+                            type="text"
+                            id="firstName"
+                            name="firstName"
+                            value={values.firstName ?? ""}
+                            onChange={handleChange}
+                            className={`${styles.input} ${inputClass("firstName")}`}
+                            placeholder="Enter first name"
+                            autoComplete="off"
+                            required
+                        />
+                        {errors.firstName && <span className={styles.errorMsg}>{errors.firstName}</span>}
+                    </div>
 
-                            {errors.firstName && (
-                                <p className={styles["error-text"]}>{errors.firstName}</p>
-                            )}
-                        </div>
+                    <div className={styles.formGroup}>
+                        <label htmlFor="lastName">
+                            <i className="fa-solid fa-file-signature"></i> Last Name
+                        </label>
+                        <input
+                            type="text"
+                            id="lastName"
+                            name="lastName"
+                            value={values.lastName ?? ""}
+                            onChange={handleChange}
+                            className={`${styles.input} ${inputClass("lastName")}`}
+                            placeholder="Enter last name"
+                            autoComplete="off"
+                            required
+                        />
+                        {errors.lastName && <span className={styles.errorMsg}>{errors.lastName}</span>}
+                    </div>
 
-                        <div className={styles["owner-accounts-create-form-group"]}>
-                            <label htmlFor="lastName">
-                                <i className="fa-solid fa-pen"></i> Last Name:
-                            </label>
+                    <div className={styles.formGroup}>
+                        <label htmlFor="phoneNumber">
+                            <i className="fa-solid fa-phone"></i> Phone Number
+                        </label>
+                        <input
+                            type="text"
+                            id="phoneNumber"
+                            name="phoneNumber"
+                            value={values.phoneNumber ?? ""}
+                            onChange={handleChange}
+                            className={`${styles.input} ${inputClass("phoneNumber")}`}
+                            placeholder="Enter phone number"
+                            autoComplete="off"
+                            required
+                        />
+                        {errors.phoneNumber && <span className={styles.errorMsg}>{errors.phoneNumber}</span>}
+                    </div>
 
-                            <input
-                                type="text"
-                                id="lastName"
-                                name="lastName"
-                                value={values.lastName ?? ""}
-                                onChange={handleChange}
-                                className={inputClass("lastName")}
-                                placeholder="Enter last name"
-                                autoComplete="off"
-                                required
-                            />
+                    <div className={styles.formGroup}>
+                        <label htmlFor="address">
+                            <i className="fa-solid fa-map-marker-alt"></i> Address (Optional)
+                        </label>
+                        <input
+                            type="text"
+                            id="address"
+                            name="address"
+                            value={values.address ?? ""}
+                            onChange={handleChange}
+                            className={`${styles.input} ${inputClass("address")}`}
+                            placeholder="Enter address"
+                            autoComplete="off"
+                        />
+                        {errors.address && <span className={styles.errorMsg}>{errors.address}</span>}
+                    </div>
 
-                            {errors.lastName && (
-                                <p className={styles["error-text"]}>{errors.lastName}</p>
-                            )}
-                        </div>
-
-                        <div className={styles["owner-accounts-create-form-group"]}>
-                            <label htmlFor="phoneNumber">
-                                <i className="fa-solid fa-pen"></i> Phone Number:
-                            </label>
-
-                            <input
-                                type="text"
-                                id="phoneNumber"
-                                name="phoneNumber"
-                                value={values.phoneNumber ?? ""}
-                                onChange={handleChange}
-                                className={inputClass("phoneNumber")}
-                                placeholder="Enter phone number"
-                                autoComplete="off"
-                                required
-                            />
-
-                            {errors.phoneNumber && (
-                                <p className={styles["error-text"]}>{errors.phoneNumber}</p>
-                            )}
-                        </div>
-
-                        <div className={styles["owner-accounts-create-form-group"]}>
-                            <label htmlFor="address">
-                                <i className="fa-solid fa-pen"></i> Address (Optional):
-                            </label>
-
-                            <input
-                                type="text"
-                                id="address"
-                                name="address"
-                                value={values.address ?? ""}
-                                onChange={handleChange}
-                                className={inputClass("address")}
-                                placeholder="Enter address"
-                                autoComplete="off"
-                                required
-                            />
-
-                            {errors.address && (
-                                <p className={styles["error-text"]}>{errors.address}</p>
-                            )}
-                        </div>
-
+                    <div className={styles.actionGroup}>
                         <button
                             type="submit"
-                            className={styles["owner-accounts-create-btn-small"]}
+                            className={styles.submitBtn}
                             disabled={formLoading}
                         >
-                            Create
+                            <i className="fa-solid fa-plus"></i> Create
                         </button>
 
                         <Link
                             to="/staff-area/owner-accounts"
-                            className={styles["owner-accounts-cancel-btn"]}
+                            className={styles.cancelBtn}
                         >
-                            Cancel
+                            <i className="fa-solid fa-xmark"></i> Cancel
                         </Link>
-                    </form>
-                </div>
-
-                {dialog && (
-                    <Dialog
-                        message={dialog.message}
-                        type={dialog.type}
-                        onClose={() => setDialog(null)}
-                    />
-                )}
-            </section>
-        </>
+                    </div>
+                </form>
+            </article>
+        </div>
     );
 };
 

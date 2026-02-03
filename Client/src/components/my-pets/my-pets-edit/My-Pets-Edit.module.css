@@ -159,10 +159,9 @@
 }
 
 .submitBtn {
-    background-color: #4EC5B4;
-    border: none;
-    color: #fff;
-    box-shadow: 0 4px 15px rgba(78, 197, 180, 0.3);
+    background-color: #fff;
+    border: 2px solid #3aa698;
+    color: #3aa698;
 }
 
 .cancelBtn {
@@ -174,8 +173,9 @@
 @media (min-width: 1025px) {
     .submitBtn:hover {
         background-color: #3aa698;
-        transform: translateY(-2px);
+        color: #fff;
         box-shadow: 0 6px 20px rgba(78, 197, 180, 0.5);
+        transform: translateY(-2px);
     }
 
     .cancelBtn:hover {

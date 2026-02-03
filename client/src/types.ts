@@ -695,3 +695,97 @@ export type GetStaffProfilesDetailsRequestFieldErrors = Partial<Record<keyof Get
 export type AddStaffProfilesRequestFieldErrors = Partial<Record<keyof AddStaffProfileRequest, string>>;
 
 // StaffProfiles types end
+
+// Templates types start:
+
+export interface Template {
+    name: string;
+    type: string;
+    isActive: boolean;
+    id: number;
+    createdAt: string;
+    lastModifiedDate: string;
+    createdBy: string;
+    lastModifiedBy: string;
+}
+
+export interface GetAllTemplatesRequest {
+    Type?: string;
+    Name?: string;
+    IsActive?: boolean;
+}
+
+export interface GetAllTemplatesResponse {
+    name: string;
+    type: string;
+    isActive: boolean;
+    id: number;
+    createdAt: string;
+    lastModifiedDate: string;
+    createdBy: string;
+    lastModifiedBy: string;
+}
+
+export interface GetAllTemplatesResponse {
+    name: string;
+    type: string;
+    isActive: boolean;
+    id: number;
+    createdAt: string;
+    lastModifiedDate: string;
+    createdBy: string;
+    lastModifiedBy: string;
+}
+
+export interface GetTemplateDetailsRequest {
+    id: number;
+}
+
+export interface GetTemplateDetailsResponse {
+    name: string;
+    type: string;
+    isActive: boolean;
+    id: number;
+    content: string;
+}
+
+export interface GetTemplateDetailsResponse {
+    name: string;
+    type: string;
+    isActive: boolean;
+    id: number;
+    content: string;
+}
+
+export interface CreateTemplateRequest {
+    name: string;
+    type: string;
+    isActive: boolean;
+    content: string;
+}
+
+export interface CreateTemplateResponse {
+    value: number;
+}
+
+export interface EditTemplateRequest {
+    name: string;
+    type: string;
+    isActive: boolean;
+    id: number;
+    content: string;
+}
+
+export interface EditTemplateResponse {
+    message: string;
+}
+
+export interface DeleteTemplateRequest {
+    id: number;
+}
+
+export interface DeleteTemplateResponse {
+    message: string;
+}
+
+// Templates types end

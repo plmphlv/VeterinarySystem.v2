@@ -97,9 +97,9 @@ const PrescriptionsEdit: React.FC = () => {
     };
 
     const inputClass = (field: keyof EditPrescriptionRequest) => {
-        if (errors[field]) return `${styles.input} ${styles.error}`;
-        if (values[field] && !errors[field]) return `${styles.input} ${styles.success}`;
-        return styles.input;
+        if (errors[field]) return styles.errorInput;
+        if (values[field] && !errors[field]) return styles.successInput;
+        return "";
     };
 
     useEffect(() => {
@@ -133,118 +133,90 @@ const PrescriptionsEdit: React.FC = () => {
         fetchPrescriptionDetails();
         return () => cancelGetPrescriptionDetails();
     }, [id]);
+
     return (
-        <>
-            {(isLoading) && (
-                <div className="spinner-overlay">
+        <div className={styles.container}>
+            {(isLoading || formLoading) && (
+                <div className={styles.spinnerOverlay}>
                     <Spinner />
                 </div>
             )}
 
-            <h1 className={styles["prescriptions-edit-h1"]}>
-                Edit Prescription
-            </h1>
+            {dialog && (
+                <Dialog
+                    message={dialog.message}
+                    type={dialog.type}
+                    onClose={() => setDialog(null)}
+                />
+            )}
 
             {id ? (
-                <div className={styles["prescriptions-edit-container"]}>
-                    <div className={styles["prescriptions-edit-card"]}>
-                        <form onSubmit={onSubmit} noValidate>
-                            {([
-                                {
-                                    name: "id",
-                                    label: "Prescription ID",
-                                    type: "text",
-                                    icon: "fa-pen",
-                                    placeholder: "Enter the prescription ID",
-                                },
-                                {
-                                    name: "description",
-                                    label: "Description",
-                                    type: "text",
-                                    icon: "fa-pen",
-                                    placeholder: "Enter the new description",
-                                }
-                            ] as const).map(
-                                ({
-                                    name,
-                                    label,
-                                    type,
-                                    icon,
-                                    placeholder,
-                                }) => (
-                                    <div
-                                        className={
-                                            styles[
-                                            "prescriptions-edit-field"
-                                            ]
-                                        }
-                                        key={name}
-                                    >
-                                        <label htmlFor={name}>
-                                            <i
-                                                className={`fa-solid ${icon}`}
-                                            ></i>{" "}
-                                            {label}:
-                                        </label>
+                <article className={styles.card}>
+                    <header className={styles.cardHeader}>
+                        <div className={styles.iconCircle}>
+                            <i className="fa-solid fa-file-pen"></i>
+                        </div>
+                        <h1 className={styles.title}>Edit Prescription</h1>
+                        <p className={styles.subtitle}>Update medication details</p>
+                    </header>
 
-                                        <input
-                                            type={type}
-                                            id={name}
-                                            name={name}
-                                            value={values[name] ?? ""}
-                                            onChange={handleChange}
-                                            className={inputClass(name)}
-                                            placeholder={placeholder}
-                                            autoComplete="off"
-                                        />
-
-                                        {errors[name] && (
-                                            <p
-                                                className={
-                                                    styles["error-text"]
-                                                }
-                                            >
-                                                {errors[name]}
-                                            </p>
-                                        )}
-                                    </div>
-                                )
-                            )}
-
-                            <div
-                                className={
-                                    styles["prescriptions-edit-btns"]
-                                }
-                            >
-                                <button
-                                    className={
-                                        styles[
-                                        "prescriptions-edit-save-btn"
-                                        ]
-                                    }
-                                    type="submit"
-                                    disabled={isLoading}
-                                >
-                                    Save
-                                </button>
-
-                                <Link to={`/staff-area/prescriptions/${id}/details`} className={styles["prescriptions-cancel-btn"]}>Cancel</Link>
-                            </div>
-
-                            {dialog && (
-                                <Dialog
-                                    message={dialog.message}
-                                    type={dialog.type}
-                                    onClose={() => setDialog(null)}
+                    <form onSubmit={onSubmit} noValidate className={styles.form}>
+                        {([
+                            {
+                                name: "id",
+                                label: "Prescription ID",
+                                type: "number",
+                                icon: "fa-hashtag",
+                                placeholder: "Enter the prescription ID",
+                            },
+                            {
+                                name: "description",
+                                label: "Description",
+                                type: "text",
+                                icon: "fa-comment-medical",
+                                placeholder: "Enter the new description",
+                            }
+                        ] as const).map(({ name, label, type, icon, placeholder }) => (
+                            <div className={styles.formGroup} key={name}>
+                                <label htmlFor={name}>
+                                    <i className={`fa-solid ${icon}`}></i> {label}
+                                </label>
+                                <input
+                                    type={type}
+                                    id={name}
+                                    name={name}
+                                    value={values[name] ?? ""}
+                                    onChange={handleChange}
+                                    className={`${styles.input} ${inputClass(name)}`}
+                                    placeholder={placeholder}
+                                    autoComplete="off"
                                 />
-                            )}
-                        </form>
-                    </div>
-                </div>
+                                {errors[name] && <span className={styles.errorMsg}>{errors[name]}</span>}
+                            </div>
+                        ))}
+
+                        <div className={styles.actionGroup}>
+                            <button
+                                className={styles.saveBtn}
+                                type="submit"
+                                disabled={isLoading || formLoading}
+                            >
+                                <i className="fa-solid fa-check"></i> Save
+                            </button>
+
+                            <Link 
+                                to={`/staff-area/prescriptions/${id}/details`} 
+                                className={styles.cancelBtn}
+                            >
+                                <i className="fa-solid fa-xmark"></i> Cancel
+                            </Link>
+                        </div>
+                    </form>
+                </article>
             ) : !isLoading && !id ? (
-                <p className={styles["prescriptions-edit-no-user-data"]}>No user data found.</p>
+                <p className={styles.noData}>No user data found.</p>
             ) : null}
-        </>
+        </div>
     );
 };
 

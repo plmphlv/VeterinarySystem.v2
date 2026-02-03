@@ -16,64 +16,125 @@
     }
 }
 
-.filters {
+.wrapper {
+    width: 100%;
     display: flex;
-    flex-wrap: wrap;
-    gap: 16px;
-    margin-bottom: 32px;
-    padding: 20px;
-    background-color: #f8f9fa;
-    border-radius: 12px;
+    flex-direction: column;
+    gap: 2rem;
+    position: relative;
+}
+
+.spinnerOverlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(255, 255, 255, 0.7);
+    backdrop-filter: blur(2px);
+    z-index: 10;
+    display: flex;
     justify-content: center;
     align-items: center;
+    border-radius: 16px;
 }
 
-.filters input {
-    padding: 12px 16px;
-    border: 1px solid #e0e0e0;
-    border-radius: 8px;
-    font-size: 14px;
-    outline: none;
-    transition: all 0.3s ease;
-    color: #333;
-    background: #fff;
+.filterSection {
+    background: #FFF;
+    padding: 1.5rem;
+    border-radius: 16px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+    display: flex;
+    justify-content: center;
+    align-items: flex-end;
+    gap: 1.5rem;
+    border: 1px solid rgba(78, 197, 180, 0.1);
+    animation: fadeUp 0.8s ease-out forwards;
+    flex-wrap: wrap;
+    max-width: 1100px;
+    margin: 0 auto;
+}
+
+.filterGroup {
+    display: flex;
+    gap: 1rem;
+    flex-wrap: wrap;
+    justify-content: center;
     flex: 1;
-    min-width: 200px;
 }
 
-.filters input:focus {
-    border-color: #4EC5B4;
-    box-shadow: 0 0 0 3px rgba(78, 197, 180, 0.2);
+.filterItem {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    min-width: 150px;
+    flex: 1;
 }
 
-.clear-filters-btn {
-    padding: 12px 24px;
-    border: 1px solid #4EC5B4;
-    background-color: transparent;
-    color: #4EC5B4;
-    border-radius: 8px;
-    font-size: 14px;
-    font-weight: 600;
-    cursor: pointer;
-    transition: all 0.3s ease;
+.filterItem label {
+    font-size: 0.9rem;
+    font-weight: 700;
+    color: #555;
+    margin-left: 0.5rem;
+}
+
+.filterItem input {
+    padding: 0.8rem 1rem;
+    border-radius: 12px;
+    border: 2px solid #eee;
+    font-size: 0.95rem;
+    background-color: #fafafa;
+    color: #333;
+    transition: border-color 0.3s ease, background-color 0.3s ease;
+    width: 100%;
     outline: none;
-    flex: 0 0 auto;
 }
 
-.clear-filters-btn:hover {
-    background-color: #4EC5B4;
-    color: #fff;
-    box-shadow: 0 4px 6px rgba(78, 197, 180, 0.2);
+.filterItem input:focus {
+    border-color: #4EC5B4;
+    background-color: #FFF;
 }
 
-.prescriptions {
+.filterActions {
+    display: flex;
+    padding-bottom: 2px;
+}
+
+.clearBtn {
+    background-color: transparent;
+    color: #888;
+    border: 2px solid #ddd;
+    padding: 0.8rem 1.5rem;
+    border-radius: 12px;
+    cursor: pointer;
+    font-weight: 600;
+    transition: all 0.3s ease;
+    white-space: nowrap;
+    height: 100%;
+}
+
+.clearBtn:hover:not(:disabled) {
+    border-color: #ff6b6b;
+    color: #ff6b6b;
+    background-color: #fff0f0;
+}
+
+.clearBtn:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
+.grid {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
-    gap: 24px;
+    /* Changed from auto-fill to auto-fit and added justify-content: center */
+    grid-template-columns: repeat(auto-fit, minmax(340px, 380px));
+    justify-content: center;
+    gap: 2rem;
     padding: 10px;
+    width: 100%;
 }
 
-.prescription-card {
+.prescriptionCard {
     background-color: #FFF;
     border-radius: 4px;
     box-shadow: 0 10px 20px rgba(0, 0, 0, 0.08), 0 2px 6px rgba(0, 0, 0, 0.04);
@@ -81,29 +142,35 @@
     flex-direction: column;
     overflow: hidden;
     position: relative;
-    transition: transform 0.2s ease, box-shadow 0.2s ease;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
     border: 1px solid #f0f0f0;
+    opacity: 0;
+    animation: fadeUp 0.6s ease-out forwards;
+    max-width: 400px;
+    /* Optional: limit width if it stretches too much */
+    width: 100%;
 }
 
-.prescription-card::before {
+.prescriptionCard::before {
     content: "";
     position: absolute;
     top: 0;
     left: 0;
     right: 0;
-    height: 8px;
+    height: 6px;
     background-color: #4EC5B4;
 }
 
-.card-header {
-    padding: 24px 24px 10px 24px;
+.cardHeader {
+    padding: 20px 24px 10px 24px;
     display: flex;
     justify-content: space-between;
     align-items: flex-start;
     border-bottom: 2px dashed #e0e0e0;
+    margin-top: 6px;
 }
 
-.rx-symbol {
+.rxSymbol {
     font-family: 'Georgia', serif;
     font-size: 42px;
     font-weight: bold;
@@ -112,11 +179,11 @@
     opacity: 0.8;
 }
 
-.header-info {
+.headerInfo {
     text-align: right;
 }
 
-.header-title {
+.headerTitle {
     display: block;
     font-size: 10px;
     text-transform: uppercase;
@@ -125,14 +192,14 @@
     margin-bottom: 4px;
 }
 
-.prescription-number {
+.prescriptionNumber {
     font-family: 'Courier New', monospace;
     font-weight: bold;
     font-size: 16px;
     color: #333;
 }
 
-.card-body {
+.cardBody {
     padding: 20px 24px;
     flex-grow: 1;
     display: flex;
@@ -140,7 +207,7 @@
     gap: 12px;
 }
 
-.field-group {
+.fieldGroup {
     display: flex;
     flex-direction: column;
 }
@@ -159,7 +226,7 @@
     font-weight: 500;
 }
 
-.card-footer {
+.cardFooter {
     padding: 16px 24px 24px 24px;
     margin-top: auto;
     background-image: radial-gradient(#e0e0e0 1px, transparent 1px);
@@ -175,58 +242,131 @@
     margin-bottom: 16px;
 }
 
-.details-btn {
-    text-decoration: none;
-    background-color: #4EC5B4;
-    color: white;
-    font-size: 12px;
+/* Updated Button Style to match Owner-Accounts-Item but kept sizing */
+.detailsBtn {
+    position: relative;
+    color: #4EC5B4;
+    padding: 10px 20px;
+    font-size: 14px;
     font-weight: 600;
-    padding: 8px 16px;
-    border-radius: 20px;
-    text-transform: uppercase;
-    letter-spacing: 0.5px;
-    transition: background-color 0.2s ease, transform 0.2s ease;
-    display: inline-block;
+    text-decoration: none;
+    padding: 0.6rem 1.5rem;
+    border: 2px solid #4EC5B4;
+    border-radius: 50px;
+    transition: all 0.3s ease;
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+    gap: 0.5rem;
+    overflow: hidden;
+    z-index: 1;
 }
 
-.signature-line {
+.detailsBtn::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 0%;
+    height: 100%;
+    background-color: #4EC5B4;
+    transition: width 0.3s ease;
+    z-index: -1;
+}
+
+.signatureLine {
     border-top: 1px solid #aaa;
     padding-top: 8px;
     margin-top: 0;
     display: flex;
     flex-direction: column;
+    align-items: flex-end;
 }
 
-.signature-label {
+.signatureLabel {
     font-size: 10px;
     color: #888;
     font-style: italic;
 }
 
-.staff-name {
+.staffName {
     font-family: 'Cursive', sans-serif;
     font-size: 16px;
     color: #4EC5B4;
     font-weight: bold;
 }
 
-.no-prescriptions {
-    width: 100%;
+.emptyState {
     text-align: center;
-    color: #888;
-    font-weight: 400;
-    margin-top: 40px;
+    padding: 4rem 2rem;
+    background: #FFF;
+    border-radius: 16px;
+    border: 1px dashed #ccc;
+    animation: fadeUp 0.6s ease-out forwards;
+    max-width: 600px;
+    margin: 0 auto;
+}
+
+.emptyIcon {
+    font-size: 4rem;
+    color: #ddd;
+    margin-bottom: 1.5rem;
+}
+
+.emptyState h2 {
+    color: #333;
+    margin-bottom: 0.5rem;
+}
+
+.emptyState p {
+    color: #777;
 }
 
 @media (min-width: 1025px) {
-    .prescription-card:hover {
-        transform: translateY(-4px);
-        box-shadow: 0 14px 28px rgba(0, 0, 0, 0.1), 0 4px 10px rgba(0, 0, 0, 0.06);
+    .prescriptionCard:hover {
+        transform: translateY(-8px);
+        box-shadow: 0 20px 40px rgba(78, 197, 180, 0.15);
     }
 
-    .details-btn:hover {
-        background-color: #3aa898;
-        transform: translateY(-1px);
-        box-shadow: 0 4px 6px rgba(78, 197, 180, 0.2);
+    .detailsBtn:hover {
+        color: #FFF;
+    }
+
+    .detailsBtn:hover::before {
+        width: 100%;
+    }
+}
+
+@media (max-width: 768px) {
+    .filterSection {
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    .filterGroup {
+        flex-direction: column;
+        gap: 1rem;
+    }
+
+    .filterActions {
+        width: 100%;
+        margin-top: 0.5rem;
+    }
+
+    .clearBtn {
+        width: 100%;
+        text-align: center;
+    }
+}
+
+@keyframes fadeUp {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
     }
 }

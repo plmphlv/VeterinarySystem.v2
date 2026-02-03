@@ -11,7 +11,10 @@ const StaffArea: React.FC = () => {
             </header>
 
             <div className={styles.grid}>
-                <article className={styles.card}>
+                <article 
+                    className={styles.card} 
+                    style={{ animationDelay: '0s' }}
+                >
                     <div className={styles.imageWrapper}>
                         <img src="/images/animal-types.png" alt="Animal Types" />
                     </div>
@@ -23,7 +26,10 @@ const StaffArea: React.FC = () => {
                     </div>
                 </article>
 
-                <article className={styles.card}>
+                <article 
+                    className={styles.card}
+                    style={{ animationDelay: '0.1s' }}
+                >
                     <div className={styles.imageWrapper}>
                         <img src="/images/appointments.png" alt="Appointments" />
                     </div>
@@ -35,7 +41,10 @@ const StaffArea: React.FC = () => {
                     </div>
                 </article>
 
-                <article className={styles.card}>
+                <article 
+                    className={styles.card}
+                    style={{ animationDelay: '0.2s' }}
+                >
                     <div className={styles.imageWrapper}>
                         <img src="/images/owner-accounts.png" alt="Owner Accounts" />
                     </div>
@@ -47,7 +56,10 @@ const StaffArea: React.FC = () => {
                     </div>
                 </article>
 
-                <article className={styles.card}>
+                <article 
+                    className={styles.card}
+                    style={{ animationDelay: '0.3s' }}
+                >
                     <div className={styles.imageWrapper}>
                         <img src="/images/prescriptions.png" alt="Prescriptions" />
                     </div>
@@ -59,7 +71,10 @@ const StaffArea: React.FC = () => {
                     </div>
                 </article>
 
-                <article className={styles.card}>
+                <article 
+                    className={styles.card}
+                    style={{ animationDelay: '0.4s' }}
+                >
                     <div className={styles.imageWrapper}>
                         <img src="/images/procedures.png" alt="Procedures" />
                     </div>
@@ -71,7 +86,10 @@ const StaffArea: React.FC = () => {
                     </div>
                 </article>
 
-                <article className={styles.card}>
+                <article 
+                    className={styles.card}
+                    style={{ animationDelay: '0.5s' }}
+                >
                     <div className={styles.imageWrapper}>
                         <img src="/images/staff-profiles.png" alt="Staff Profiles" />
                     </div>

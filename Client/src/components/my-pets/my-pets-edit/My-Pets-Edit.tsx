@@ -192,7 +192,7 @@ const MyPetsEdit: React.FC = () => {
                     <div className={styles.formGroup}>
                         <label htmlFor="name">Name</label>
                         <div className={styles.inputWrapper}>
-                            <i className={`fa-solid fa-pen ${styles.inputIcon}`}></i>
+                            <i className={`fa-solid fa-file-signature ${styles.inputIcon}`}></i>
                             <input
                                 id="name"
                                 name="name"
@@ -212,7 +212,7 @@ const MyPetsEdit: React.FC = () => {
                         <div className={styles.formGroup}>
                             <label htmlFor="age">Age</label>
                             <div className={styles.inputWrapper}>
-                                <i className={`fa-solid fa-calendar ${styles.inputIcon}`}></i>
+                                <i className={`fa-solid fa-calendar-days ${styles.inputIcon}`}></i>
                                 <input
                                     id="age"
                                     name="age"
@@ -248,7 +248,7 @@ const MyPetsEdit: React.FC = () => {
                     <div className={styles.formGroup}>
                         <label htmlFor="animalTypeId">Animal Type</label>
                         <div className={styles.inputWrapper}>
-                            <i className={`fa-solid fa-paw ${styles.inputIcon}`}></i>
+                            <i className={`fa-solid fa-tag ${styles.inputIcon}`}></i>
                             <select
                                 id="animalTypeId"
                                 name="animalTypeId"

@@ -34,7 +34,7 @@ const Profile: React.FC = () => {
                     <div className={styles.contentBody}>
                         <div className={styles.infoRow}>
                             <div className={styles.label}>
-                                <i className="fa-solid fa-envelope"></i> Email
+                                <i className="fa-solid fa-at"></i> Email
                             </div>
                             <div className={styles.value}>{userData.email}</div>
                         </div>

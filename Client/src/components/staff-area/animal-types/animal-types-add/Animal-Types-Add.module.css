@@ -155,9 +155,9 @@
 }
 
 .addBtn {
-    background-color: #fff;
-    border: 2px solid #3aa698;
-    color: #3aa698;
+    background-color: #4EC5B4;
+    color: #fff;
+    box-shadow: 0 4px 15px rgba(78, 197, 180, 0.3);
 }
 
 .cancelBtn {
@@ -169,9 +169,8 @@
 @media (min-width: 1025px) {
     .addBtn:hover {
         background-color: #3aa698;
-        color: #fff;
-        box-shadow: 0 6px 20px rgba(78, 197, 180, 0.5);
         transform: translateY(-2px);
+        box-shadow: 0 6px 20px rgba(78, 197, 180, 0.5);
     }
 
     .cancelBtn:hover {

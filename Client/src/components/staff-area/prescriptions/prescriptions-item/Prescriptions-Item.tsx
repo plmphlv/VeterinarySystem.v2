@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Link } from "react-router";
 import Spinner from "../../../spinner/Spinner";
 import Dialog from "../../../dialog/Dialog";
@@ -88,10 +88,12 @@ const PrescriptionsItem: React.FC = () => {
         };
     }, []);
 
+    const hasActiveFilters = animalId || staffId || startDate || endDate || prescriptionNumber;
+
     return (
-        <>
+        <div className={styles.wrapper}>
             {loading && (
-                <div className="spinner-overlay">
+                <div className={styles.spinnerOverlay}>
                     <Spinner />
                 </div>
             )}
@@ -104,97 +106,134 @@ const PrescriptionsItem: React.FC = () => {
                 />
             )}
 
-            <section className={styles["filters"]}>
-                <input
-                    type="number"
-                    placeholder="Animal ID"
-                    value={animalId}
-                    onChange={(e) => setAnimalId(e.target.value)}
-                />
+            <section className={styles.filterSection}>
+                <div className={styles.filterGroup}>
+                    <div className={styles.filterItem}>
+                        <label htmlFor="prescriptionNumber"><i className="fa-solid fa-arrow-down-1-9"></i> Prescription #</label>
+                        <input
+                            type="text"
+                            id="prescriptionNumber"
+                            placeholder="Search by number"
+                            value={prescriptionNumber}
+                            onChange={(e) => setPrescriptionNumber(e.target.value)}
+                        />
+                    </div>
 
-                <input
-                    type="text"
-                    placeholder="Staff ID"
-                    value={staffId}
-                    onChange={(e) => setStaffId(e.target.value)}
-                />
+                    <div className={styles.filterItem}>
+                        <label htmlFor="animalId"><i className="fa-solid fa-id-badge"></i> Animal ID</label>
+                        <input
+                            type="number"
+                            id="animalId"
+                            placeholder="Search by Animal ID"
+                            value={animalId}
+                            onChange={(e) => setAnimalId(e.target.value)}
+                        />
+                    </div>
 
-                <input
-                    type="date"
-                    value={startDate}
-                    onChange={(e) => setStartDate(e.target.value)}
-                />
+                    <div className={styles.filterItem}>
+                        <label htmlFor="staffId"><i className="fa-solid fa-user-doctor"></i> Staff ID</label>
+                        <input
+                            type="text"
+                            id="staffId"
+                            placeholder="Search by Staff ID"
+                            value={staffId}
+                            onChange={(e) => setStaffId(e.target.value)}
+                        />
+                    </div>
 
-                <input
-                    type="date"
-                    value={endDate}
-                    onChange={(e) => setEndDate(e.target.value)}
-                />
+                    <div className={styles.filterItem}>
+                        <label htmlFor="startDate"><i className="fa-solid fa-calendar-days"></i> From</label>
+                        <input
+                            type="date"
+                            id="startDate"
+                            value={startDate}
+                            onChange={(e) => setStartDate(e.target.value)}
+                        />
+                    </div>
 
-                <input
-                    type="text"
-                    placeholder="Prescription Number"
-                    value={prescriptionNumber}
-                    onChange={(e) => setPrescriptionNumber(e.target.value)}
-                />
+                    <div className={styles.filterItem}>
+                        <label htmlFor="endDate"><i className="fa-solid fa-calendar-days"></i> To</label>
+                        <input
+                            type="date"
+                            id="endDate"
+                            value={endDate}
+                            onChange={(e) => setEndDate(e.target.value)}
+                        />
+                    </div>
+                </div>
 
-                <button 
-                    className={styles["clear-filters-btn"]}
-                    onClick={clearFilters}
-                >
-                    Clear Filters
-                </button>
+                <div className={styles.filterActions}>
+                    <button 
+                        className={styles.clearBtn}
+                        onClick={clearFilters}
+                        disabled={!hasActiveFilters}
+                    >
+                        Clear Filters
+                    </button>
+                </div>
             </section>
 
-            <section className={styles["prescriptions"]}>
-                {!loading && prescriptions.length > 0 ? (
-                    prescriptions.map((p) => (
-                        <div key={p.id} className={styles["prescription-card"]}>
-                            <div className={styles["card-header"]}>
-                                <span className={styles["rx-symbol"]}>Rx</span>
-                                <div className={styles["header-info"]}>
-                                    <span className={styles["header-title"]}>Prescription No.</span>
-                                    <span className={styles["prescription-number"]}>#{p.number}</span>
+            {!loading && prescriptions.length > 0 ? (
+                <section className={styles.grid}>
+                    {prescriptions.map((p, index) => (
+                        <div 
+                            key={p.id} 
+                            className={styles.prescriptionCard}
+                            style={{ animationDelay: `${index * 0.1}s` } as React.CSSProperties}
+                        >
+                            <div className={styles.cardHeader}>
+                                <span className={styles.rxSymbol}>Rx</span>
+                                <div className={styles.headerInfo}>
+                                    <span className={styles.headerTitle}>Prescription No.</span>
+                                    <span className={styles.prescriptionNumber}>#{p.number}</span>
                                 </div>
                             </div>
                             
-                            <div className={styles["card-body"]}>
-                                <div className={styles["field-group"]}>
-                                    <span className={styles["label"]}>Internal ID</span>
-                                    <span className={styles["value"]}>{p.id}</span>
+                            <div className={styles.cardBody}>
+                                <div className={styles.fieldGroup}>
+                                    <span className={styles.label}>Internal ID</span>
+                                    <span className={styles.value}>{p.id}</span>
                                 </div>
                                 
-                                <div className={styles["field-group"]}>
-                                    <span className={styles["label"]}>Date Issued</span>
-                                    <span className={styles["value"]}>{p.issueDate}</span>
+                                <div className={styles.fieldGroup}>
+                                    <span className={styles.label}>Date Issued</span>
+                                    <span className={styles.value}>{p.issueDate}</span>
                                 </div>
                             </div>
 
-                            <div className={styles["card-footer"]}>
-                                <div className={styles["actions"]}>
+                            <div className={styles.cardFooter}>
+                                <div className={styles.actions}>
                                     <Link 
                                         to={`/staff-area/prescriptions/${p.id}/details`}
-                                        className={styles["details-btn"]}
+                                        className={styles.detailsBtn}
                                     >
                                         More Details
                                     </Link>
                                 </div>
-                                <div className={styles["signature-line"]}>
-                                    <span className={styles["staff-name"]}>{p.staffName}</span>
-                                    <span className={styles["signature-label"]}>Veterinarian Signature</span>
+                                <div className={styles.signatureLine}>
+                                    <span className={styles.staffName}>{p.staffName}</span>
+                                    <span className={styles.signatureLabel}>Veterinarian Signature</span>
                                 </div>
                             </div>
                         </div>
-                    ))
-                ) : (
-                    !loading && (
-                        <h2 className={styles["no-prescriptions"]}>
-                            No prescriptions found.
-                        </h2>
-                    )
-                )}
-            </section>
-        </>
+                    ))}
+                </section>
+            ) : (
+                !loading && (
+                    <div className={styles.emptyState}>
+                        <div className={styles.emptyIcon}>
+                            <i className="fa-solid fa-file-prescription"></i>
+                        </div>
+                        <h2>No prescriptions found</h2>
+                        <p>
+                            {hasActiveFilters
+                                ? "Try adjusting your search filters."
+                                : "There are no prescriptions issued yet."}
+                        </p>
+                    </div>
+                )
+            )}
+        </div>
     );
 };
 

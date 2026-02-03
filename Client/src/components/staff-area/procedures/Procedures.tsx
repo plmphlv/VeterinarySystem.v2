@@ -15,7 +15,7 @@ const Procedures: React.FC = () => {
     }
 
     return (
-        <>
+        <section className={styles.container}>
             {error && showError ? (
                 <Dialog
                     message={error}
@@ -24,21 +24,27 @@ const Procedures: React.FC = () => {
                 />
             ) : (
                 <>
-                    <h1 className={styles["procedures-h1"]}>All Procedures:</h1>
-                    <div className={styles["procedures-div"]}>
+                    <header className={styles.header}>
+                        <h1 className={styles.title}>All Procedures</h1>
+                        <p className={styles.subtitle}>List of medical procedures performed</p>
+                    </header>
+
+                    <div className={styles.contentWrapper}>
                         <ProceduresItem />
                     </div>
 
-                    <Link
-                        to="/staff-area/procedures/create"
-                        className={styles["procedures-create-procedure-btn"]}
-                    >
-                        <i className="fa-solid fa-plus"></i> Create New Procedure
-                    </Link>
+                    <div className={styles.ctaWrapper}>
+                        <Link
+                            to="/staff-area/procedures/create"
+                            className={styles.primaryBtn}
+                        >
+                            <i className="fa-solid fa-plus"></i> Create New Procedure
+                        </Link>
+                    </div>
                 </>
             )}
-        </>
-    )
+        </section>
+    );
 }
 
 export default Procedures;

@@ -63,10 +63,12 @@ const OwnerAccountsItem: React.FC = () => {
         };
     }, []);
 
+    const hasActiveFilters = name || email || phoneNumber;
+
     return (
-        <>
+        <div className={styles.wrapper}>
             {loading && (
-                <div className="spinner-overlay">
+                <div className={styles.spinnerOverlay}>
                     <Spinner />
                 </div>
             )}
@@ -79,74 +81,106 @@ const OwnerAccountsItem: React.FC = () => {
                 />
             )}
 
-            <section className={styles["filters"]}>
-                <input
-                    type="text"
-                    placeholder="Search by name"
-                    value={name}
-                    onChange={(e) => setName(e.target.value)}
-                />
+            <section className={styles.filterSection}>
+                <div className={styles.filterGroup}>
+                    <div className={styles.filterItem}>
+                        <label htmlFor="name"><i className="fa-solid fa-file-signature"></i> Name</label>
+                        <input
+                            type="text"
+                            id="name"
+                            placeholder="Search by name"
+                            value={name}
+                            onChange={(e) => setName(e.target.value)}
+                        />
+                    </div>
 
-                <input
-                    type="email"
-                    placeholder="Search by email"
-                    value={email}
-                    onChange={(e) => setEmail(e.target.value)}
-                />
+                    <div className={styles.filterItem}>
+                        <label htmlFor="email"><i className="fa-solid fa-at"></i> Email</label>
+                        <input
+                            type="email"
+                            id="email"
+                            placeholder="Search by email"
+                            value={email}
+                            onChange={(e) => setEmail(e.target.value)}
+                        />
+                    </div>
 
-                <input
-                    type="text"
-                    placeholder="Search by phone number"
-                    value={phoneNumber}
-                    onChange={(e) => setPhoneNumber(e.target.value)}
-                />
+                    <div className={styles.filterItem}>
+                        <label htmlFor="phone"><i className="fa-solid fa-phone"></i> Phone</label>
+                        <input
+                            type="text"
+                            id="phone"
+                            placeholder="Search by phone"
+                            value={phoneNumber}
+                            onChange={(e) => setPhoneNumber(e.target.value)}
+                        />
+                    </div>
+                </div>
 
-                <button 
-                    className={styles["clear-filters-btn"]}
-                    onClick={clearFilters}
-                >
-                    Clear Filters
-                </button>
+                <div className={styles.filterActions}>
+                    <button 
+                        className={styles.clearBtn}
+                        onClick={clearFilters}
+                        disabled={!hasActiveFilters}
+                    >
+                        Clear Filters
+                    </button>
+                </div>
             </section>
 
-            <section className={styles["owner-accounts"]}>
-                {!loading && ownerAccounts.length > 0 ? (
-                    ownerAccounts.map((owner) => (
-                        <div
-                            className={styles["owner-accounts-item-card"]}
+            {!loading && ownerAccounts.length > 0 ? (
+                <section className={styles.grid}>
+                    {ownerAccounts.map((owner, index) => (
+                        <article 
+                            className={styles.card} 
                             key={owner.id}
+                            style={{ animationDelay: `${index * 0.1}s` }}
                         >
-                            <div className={styles["content"]}>
-                                <p>
-                                    <i className="fa-solid fa-id-badge"></i> ID: {owner.id}
-                                </p>
-                                <p>
-                                    <i className="fa-solid fa-user"></i> Name: {owner.fullName}
-                                </p>
-                                <p>
-                                    <i className="fa-solid fa-phone"></i> Phone Number: {owner.phoneNumber}
-                                </p>
-
-                                <div className={styles["actions"]}>
-                                    <Link
-                                        to={`/staff-area/owner-accounts/${owner.id}/details`}
-                                        className={styles["owner-accounts-more-details-btn"]}
-                                    >
-                                        → More Details
-                                    </Link>
+                            <div className={styles.cardHeader}>
+                                <div className={styles.iconCircle}>
+                                    <i className="fa-solid fa-user"></i>
+                                </div>
+                                <h2>{owner.fullName}</h2>
+                            </div>
+                            
+                            <div className={styles.cardBody}>
+                                <div className={styles.infoRow}>
+                                    <i className="fa-solid fa-id-badge"></i> 
+                                    <span>ID: {owner.id}</span>
+                                </div>
+                                <div className={styles.infoRow}>
+                                    <i className="fa-solid fa-phone"></i>
+                                    <span>{owner.phoneNumber}</span>
                                 </div>
                             </div>
+
+                            <div className={styles.cardFooter}>
+                                <Link
+                                    to={`/staff-area/owner-accounts/${owner.id}/details`}
+                                    className={styles.detailsBtn}
+                                >
+                                    More Details
+                                </Link>
+                            </div>
+                        </article>
+                    ))}
+                </section>
+            ) : (
+                !loading && (
+                    <div className={styles.emptyState}>
+                        <div className={styles.emptyIcon}>
+                            <i className="fa-solid fa-users-slash"></i>
                         </div>
-                    ))
-                ) : (
-                    !loading && (
-                        <h1 className={styles["no-owner-accounts"]}>
-                            No owner accounts found.
-                        </h1>
-                    )
-                )}
-            </section>
-        </>
+                        <h2>No owner accounts found</h2>
+                        <p>
+                            {hasActiveFilters
+                                ? "Try adjusting your search criteria."
+                                : "There are no owner accounts yet."}
+                        </p>
+                    </div>
+                )
+            )}
+        </div>
     );
 };
 

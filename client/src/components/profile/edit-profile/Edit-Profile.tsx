@@ -145,9 +145,10 @@ const EditProfile: React.FC = () => {
 
                     <form onSubmit={onSubmit} noValidate className={styles.form}>
                         <div className={styles.contentBody}>
+
                             {[
-                                { name: "firstName", label: "First Name", type: "text", icon: "fa-pen", placeholder: "Enter your first name" },
-                                { name: "lastName", label: "Last Name", type: "text", icon: "fa-pen", placeholder: "Enter your last name" },
+                                { name: "firstName", label: "First Name", type: "text", icon: "fa-file-signature", placeholder: "Enter your first name" },
+                                { name: "lastName", label: "Last Name", type: "text", icon: "fa-file-signature", placeholder: "Enter your last name" },
                                 { name: "phoneNumber", label: "Phone Number", type: "tel", icon: "fa-phone", placeholder: "Enter your phone number" },
                                 { name: "address", label: "Address (Optional)", type: "text", icon: "fa-map-marker-alt", placeholder: "Enter your address" },
                             ].map(({ name, label, type, icon, placeholder }) => {

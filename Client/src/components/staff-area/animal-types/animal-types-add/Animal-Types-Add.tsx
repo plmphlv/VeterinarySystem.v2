@@ -147,14 +147,14 @@ const AnimalTypesAdd: React.FC = () => {
                     <div className={styles.iconCircle}>
                         <i className="fa-solid fa-paw"></i>
                     </div>
-                    <h1 className={styles.title}>Add Animal Type</h1>
+                    <h1 className={styles.title}>Add a New Animal Type</h1>
                     <p className={styles.subtitle}>Create a new animal category</p>
                 </header>
 
                 <form onSubmit={onSubmit} noValidate className={styles.form}>
                     <div className={styles.formGroup}>
                         <label htmlFor="typeName">
-                            <i className="fa-solid fa-file-signature"></i> Type Name
+                            <i className="fa-solid fa-tag"></i> Type Name
                         </label>
                         <input
                             type="text"

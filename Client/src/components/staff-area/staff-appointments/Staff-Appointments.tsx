@@ -38,7 +38,7 @@ const StaffAppointments: React.FC = () => {
                             to="/staff-area/appointments/create-appointment"
                             className={styles.primaryBtn}
                         >
-                            <i className="fa-solid fa-plus"></i> Create New Appointment
+                            <i className="fa-solid fa-plus"></i> Create a New Appointment
                         </Link>
                     </div>
                 </>

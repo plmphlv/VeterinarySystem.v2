@@ -109,9 +109,9 @@ const StaffAppointmentsCreate: React.FC = () => {
     };
 
     const inputClass = (field: keyof StaffCreateAppointmentRequest) => {
-        if (errors[field]) return `${styles.input} ${styles.error}`;
-        if (values[field] && !errors[field]) return `${styles.input} ${styles.success}`;
-        return styles.input;
+        if (errors[field]) return styles.errorInput;
+        if (values[field] && !errors[field]) return styles.successInput;
+        return "";
     };
 
     useEffect(() => {
@@ -119,130 +119,121 @@ const StaffAppointmentsCreate: React.FC = () => {
     }, []);
 
     return (
-        <>
+        <div className={styles.container}>
             {(formLoading || userLoading) && (
-                <div className="spinner-overlay">
+                <div className={styles.spinnerOverlay}>
                     <Spinner />
                 </div>
             )}
 
-            <section className={styles["staff-appointments-create"]}>
-                <div className={styles["staff-appointments-create-container"]}>
-                    <h2>Create Appointment</h2>
+            {dialog && (
+                <Dialog
+                    message={dialog.message}
+                    type={dialog.type}
+                    onClose={() => setDialog(null)}
+                />
+            )}
 
-                    <form onSubmit={onSubmit} noValidate>
-                        <div className={styles["staff-appointments-create-form-group"]}>
-                            <label htmlFor="date">
-                                <i className="fa-solid fa-calendar"></i> Date of appointment:
-                            </label>
+            <article className={styles.card}>
+                <header className={styles.cardHeader}>
+                    <div className={styles.iconCircle}>
+                        <i className="fa-solid fa-calendar-check"></i>
+                    </div>
+                    <h1 className={styles.title}>Create Appointment</h1>
+                    <p className={styles.subtitle}>Schedule a new appointment for a client</p>
+                </header>
 
-                            <input
-                                type="datetime-local"
-                                id="date"
-                                name="date"
-                                value={values.date ?? ""}
-                                onChange={handleChange}
-                                className={`${styles["staff-appointments-create-form-group"]} ${inputClass("date")}`}
-                                placeholder="Select date"
-                                autoComplete="off"
-                                min={getTomorrowDatetimeLocal()}
-                                required
-                            />
-                            {errors.date && <p className={styles["error-text"]}>{errors.date}</p>}
-                        </div>
+                <form onSubmit={onSubmit} noValidate className={styles.form}>
+                    <div className={styles.formGroup}>
+                        <label htmlFor="date">
+                            <i className="fa-solid fa-calendar"></i> Date & Time
+                        </label>
+                        <input
+                            type="datetime-local"
+                            id="date"
+                            name="date"
+                            value={values.date ?? ""}
+                            onChange={handleChange}
+                            className={`${styles.input} ${inputClass("date")}`}
+                            min={getTomorrowDatetimeLocal()}
+                            required
+                        />
+                        {errors.date && <span className={styles.errorMsg}>{errors.date}</span>}
+                    </div>
 
-                        <div className={styles["staff-appointments-create-form-group"]}>
-                            <label htmlFor="description">
-                                <i className="fa-solid fa-pen"></i> Description:
-                            </label>
+                    <div className={styles.formGroup}>
+                        <label htmlFor="description">
+                            <i className="fa-solid fa-pen"></i> Description
+                        </label>
+                        <input
+                            type="text"
+                            id="description"
+                            name="description"
+                            value={values.description ?? ""}
+                            onChange={handleChange}
+                            className={`${styles.input} ${inputClass("description")}`}
+                            placeholder="Enter appointment description"
+                            autoComplete="off"
+                            required
+                        />
+                        {errors.description && <span className={styles.errorMsg}>{errors.description}</span>}
+                    </div>
 
-                            <input
-                                type="text"
-                                id="description"
-                                name="description"
-                                value={values.description ?? ""}
-                                onChange={handleChange}
-                                className={inputClass("description")}
-                                placeholder="Enter description"
-                                autoComplete="off"
-                                required
-                            />
+                    <div className={styles.formGroup}>
+                        <label htmlFor="staffId">
+                            <i className="fa-solid fa-user-doctor"></i>Staff ID
+                        </label>
+                        <input
+                            type="text"
+                            id="staffId"
+                            name="staffId"
+                            value={values.staffId ?? ""}
+                            onChange={handleChange}
+                            className={`${styles.input} ${inputClass("staffId")}`}
+                            placeholder="Enter staff ID"
+                            autoComplete="off"
+                            required
+                        />
+                        {errors.staffId && <span className={styles.errorMsg}>{errors.staffId}</span>}
+                    </div>
 
-                            {errors.description && (
-                                <p className={styles["error-text"]}>{errors.description}</p>
-                            )}
-                        </div>
+                    <div className={styles.formGroup}>
+                        <label htmlFor="ownerId">
+                            <i className="fa-solid fa-id-badge"></i> Owner ID
+                        </label>
+                        <input
+                            type="text"
+                            id="ownerId"
+                            name="ownerId"
+                            value={values.ownerId ?? ""}
+                            onChange={handleChange}
+                            className={`${styles.input} ${inputClass("ownerId")}`}
+                            placeholder="Enter owner ID"
+                            autoComplete="off"
+                            required
+                        />
+                        {errors.ownerId && <span className={styles.errorMsg}>{errors.ownerId}</span>}
+                    </div>
 
-                        <div className={styles["staff-appointments-create-form-group"]}>
-                            <label htmlFor="staffId">
-                                <i className="fa-solid fa-id-badge"></i> Staff ID:
-                            </label>
-
-                            <input
-                                type="text"
-                                id="staffId"
-                                name="staffId"
-                                value={values.staffId ?? ""}
-                                onChange={handleChange}
-                                className={inputClass("staffId")}
-                                placeholder="Enter staff ID"
-                                autoComplete="off"
-                                required
-                            />
-
-                            {errors.staffId && (
-                                <p className={styles["error-text"]}>{errors.staffId}</p>
-                            )}
-                        </div>
-
-                        <div className={styles["staff-appointments-create-form-group"]}>
-                            <label htmlFor="ownerId">
-                                <i className="fa-solid fa-id-badge"></i> Owner ID:
-                            </label>
-
-                            <input
-                                type="text"
-                                id="ownerId"
-                                name="ownerId"
-                                value={values.ownerId ?? ""}
-                                onChange={handleChange}
-                                className={inputClass("ownerId")}
-                                placeholder="Enter owner ID"
-                                autoComplete="off"
-                                required
-                            />
-
-                            {errors.ownerId && (
-                                <p className={styles["error-text"]}>{errors.ownerId}</p>
-                            )}
-                        </div>
-
+                    <div className={styles.actionGroup}>
                         <button
                             type="submit"
-                            className={styles["staff-appointments-create-btn-small"]}
+                            className={styles.submitBtn}
                             disabled={formLoading}
                         >
-                            Create
+                            <i className="fa-solid fa-plus"></i> Create
                         </button>
 
                         <Link
                             to="/staff-area/appointments"
-                            className={styles["staff-appointments-cancel-btn"]}
+                            className={styles.cancelBtn}
                         >
-                            Cancel
+                            <i className="fa-solid fa-xmark"></i> Cancel
                         </Link>
-                    </form>
-                </div>
-
-                {dialog && (
-                    <Dialog
-                        message={dialog.message}
-                        type={dialog.type}
-                        onClose={() => setDialog(null)}
-                    />
-                )}
-            </section>
-        </>
+                    </div>
+                </form>
+            </article>
+        </div>
     );
 };
 

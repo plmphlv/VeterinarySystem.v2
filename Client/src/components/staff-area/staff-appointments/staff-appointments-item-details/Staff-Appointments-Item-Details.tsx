@@ -132,9 +132,9 @@ const StaffAppointmentsItemDetails: React.FC = () => {
     }, []);
 
     return (
-        <>
+        <div className={styles.container}>
             {isLoading && (
-                <div className="spinner-overlay">
+                <div className={styles.spinnerOverlay}>
                     <Spinner />
                 </div>
             )}
@@ -147,113 +147,94 @@ const StaffAppointmentsItemDetails: React.FC = () => {
                 />
             )}
 
+            <div className={styles.navWrapper}>
+                <Link to="/staff-area/appointments" className={styles.backLink}>
+                    &larr; Back to All Appointments
+                </Link>
+            </div>
+
             {appointmentDetails && (
-                <>
-                    <h1
-                        className={
-                            styles["staff-appointments-item-details-h1"]
-                        }
-                    >
-                        Appointment Request Details:
-                    </h1>
+                <article className={styles.card}>
+                    <header className={styles.cardHeader}>
+                        <div className={styles.statusBadge}>
+                            {formatStatus(appointmentDetails.appointmentStatus)}
+                        </div>
+                        <h1 className={styles.cardTitle}>Request Details</h1>
+                    </header>
 
-                    <section
-                        className={styles["staff-appointments-item-details"]}
-                    >
-                        <div
-                            className={
-                                styles["staff-appointments-item-details-card"]
-                            }
-                            key={appointmentDetails.id}
-                        >
-                            <div
-                                className={
-                                    styles[
-                                    "staff-appointments-item-details-content"
-                                    ]
-                                }
-                            >
-                                <h2>
-                                    <i className="fa-solid fa-calendar-days"></i>{" "}
-                                    {formatDate(appointmentDetails.date)}
-                                </h2>
-
-                                <p>
-                                    <i className="fa-solid fa-clock"></i> Hour:{" "}
-                                    {formatTime(appointmentDetails.date)}
-                                </p>
-
-                                <p>
-                                    <i className="fa-solid fa-pen"></i> Status:{" "}
-                                    {formatStatus(
-                                        appointmentDetails.appointmentStatus
-                                    )}
-                                </p>
-
-                                <p>
-                                    <i className="fa-solid fa-user"></i> Animal
-                                    Owner:{" "}
-                                    {appointmentDetails.animalOwnerName}
-                                </p>
-
-                                <p>
-                                    <i className="fa-solid fa-comment"></i>{" "}
-                                    Description:{" "}
-                                    {appointmentDetails.description}
-                                </p>
-
-                                <div
-                                    className={
-                                        styles[
-                                        "staff-appointments-item-details-actions"
-                                        ]
-                                    }
-                                >
-                                    {appointmentDetails.appointmentStatus ===
-                                        "Confirmed" && (
-                                            <button
-                                                onClick={handleComplete}
-                                                className={styles["complete-btn"]}
-                                                disabled={completing}
-                                            >
-                                                Complete
-                                            </button>
-                                        )}
-
-                                    {appointmentDetails.appointmentStatus !== "Completed" && (
-                                        <Link
-                                            to={`/staff-area/appointments/${id}/edit`}
-                                            className={styles["edit-btn"]}
-                                        >
-                                            Edit
-                                        </Link>
-                                    )}
-
-                                    <button
-                                        onClick={handleDelete}
-                                        className={`${styles["action-btn"]} ${styles["delete-btn"]}`}
-                                    >
-                                        Delete
-                                    </button>
-
-                                </div>
-
-                                <Link
-                                    to="/staff-area/appointments"
-                                    className={
-                                        styles[
-                                        "staff-appointments-item-details-back-link"
-                                        ]
-                                    }
-                                >
-                                    ← Back to All Appointments
-                                </Link>
+                    <div className={styles.cardBody}>
+                        <div className={styles.detailRow}>
+                            <div className={styles.iconBox}>
+                                <i className="fa-solid fa-calendar-days"></i>
+                            </div>
+                            <div className={styles.detailText}>
+                                <span className={styles.label}>Date</span>
+                                <span className={styles.value}>{formatDate(appointmentDetails.date)}</span>
                             </div>
                         </div>
-                    </section>
-                </>
+
+                        <div className={styles.detailRow}>
+                            <div className={styles.iconBox}>
+                                <i className="fa-solid fa-clock"></i>
+                            </div>
+                            <div className={styles.detailText}>
+                                <span className={styles.label}>Time</span>
+                                <span className={styles.value}>{formatTime(appointmentDetails.date)}</span>
+                            </div>
+                        </div>
+
+                        <div className={styles.detailRow}>
+                            <div className={styles.iconBox}>
+                                <i className="fa-solid fa-user"></i>
+                            </div>
+                            <div className={styles.detailText}>
+                                <span className={styles.label}>Animal Owner</span>
+                                <span className={styles.value}>{appointmentDetails.animalOwnerName}</span>
+                            </div>
+                        </div>
+
+                        <div className={`${styles.detailRow} ${styles.descriptionRow}`}>
+                            <div className={styles.iconBox}>
+                                <i className="fa-solid fa-comment"></i>
+                            </div>
+                            <div className={styles.detailText}>
+                                <span className={styles.label}>Description</span>
+                                <p className={styles.description}>{appointmentDetails.description}</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <footer className={styles.cardFooter}>
+                        {appointmentDetails.appointmentStatus === "Confirmed" && (
+                            <button
+                                onClick={handleComplete}
+                                className={styles.completeBtn}
+                                disabled={completing}
+                            >
+                                <i className="fa-solid fa-check"></i> Complete
+                            </button>
+                        )}
+
+                        {appointmentDetails.appointmentStatus !== "Completed" && (
+                            <Link
+                                to={`/staff-area/appointments/${id}/edit`}
+                                className={styles.editBtn}
+                            >
+                                <i className="fa-solid fa-pen-to-square"></i> Edit
+                            </Link>
+                        )}
+
+                        <button
+                            onClick={handleDelete}
+                            className={styles.deleteBtn}
+                            disabled={deleting}
+                        >
+                            <i className="fa-solid fa-trash"></i> {deleting ? "Deleting..." : "Delete"}
+                        </button>
+                    </footer>
+                </article>
             )}
-        </>
+        </div>
     );
 };
 

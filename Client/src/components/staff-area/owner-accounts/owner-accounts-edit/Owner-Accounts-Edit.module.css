@@ -1,156 +1,219 @@
-@mixin fade-in {
-    opacity: 1;
-    animation-name: fadeInOpacity;
-    animation-iteration-count: 1;
-    animation-timing-function: ease-in;
-    animation-duration: 2s;
-}
-
-@keyframes fadeInOpacity {
-    0% {
-        opacity: 0;
-    }
-
-    100% {
-        opacity: 1;
-    }
-}
-
-.owner-accounts-edit-h1 {
-    animation: fadeInOpacity 1s;
-    margin-top: 3rem;
-    background-color: #4EC5B4;
-    color: #fff;
-    padding: 0.3em 1em;
-    border-radius: 1em;
-}
-
-.owner-accounts-edit-container {
-    padding: 60px 40px;
-}
-
-.owner-accounts-edit-card {
-    background-color: #fff;
-    animation: fadeInOpacity 1s;
-    max-width: 700px;
-    border-radius: 15px;
-    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
-    padding: 40px 60px;
-    text-align: center;
+.container {
+    width: 100%;
+    max-width: 500px;
+    margin: 0 auto;
+    padding: 10rem 1.5rem 3rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    min-height: 80vh;
     position: relative;
 }
 
-.avatar {
-    width: 100px;
-    height: 100px;
-    background-color: #4EC5B4;
+.spinnerOverlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(255, 255, 255, 0.8);
+    backdrop-filter: blur(4px);
+    z-index: 50;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 16px;
+}
+
+.card {
+    background: #FFF;
+    border-radius: 20px;
+    overflow: hidden;
+    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.05);
+    border: 1px solid rgba(78, 197, 180, 0.1);
+    width: 100%;
+    opacity: 0;
+    animation: fadeUp 0.8s ease-out forwards;
+    display: flex;
+    flex-direction: column;
+}
+
+.cardHeader {
+    background-color: #f8fcfb;
+    padding: 2.5rem;
+    border-bottom: 1px solid #f0f0f0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+}
+
+.iconCircle {
+    width: 70px;
+    height: 70px;
+    background-color: #eaf8f6;
     border-radius: 50%;
     display: flex;
     justify-content: center;
     align-items: center;
-    font-size: 2.5rem;
-    color: white;
-    margin: 0 auto 3rem;
+    font-size: 1.8rem;
+    color: #4EC5B4;
+    margin-bottom: 1.5rem;
 }
 
-.owner-accounts-edit-field {
+.title {
+    font-size: 1.8rem;
+    color: #333;
+    font-weight: 800;
+    margin-bottom: 0.5rem;
+}
+
+.subtitle {
+    font-size: 1rem;
+    color: #666;
+}
+
+.form {
+    padding: 2.5rem;
     display: flex;
     flex-direction: column;
-    justify-content: space-between;
-    margin: 1rem 0;
-    padding-bottom: 0.5rem;
-    font-size: 1rem;
-    margin-bottom: 2rem;
-    text-align: left;
+    gap: 1.5rem;
 }
 
-.owner-accounts-edit-field label {
-    font-weight: 600;
-    color: #4EC5B4;
-}
-
-.owner-accounts-edit-field span {
-    color: #333;
-    text-align: right;
-    max-width: 65%;
-}
-
-.owner-accounts-edit-field input {
-    border: none;
-    border-bottom: 1px solid #e0e0e0;
-    font-size: 1rem;
-    color: #333;
-    max-width: 100%;
-    text-align: left;
-    padding: 0.3rem 0;
-    background: transparent;
-    outline: none;
-    font-family: inherit;
-    transition: border-color 0.3s ease;
-}
-
-.error-text {
-    color: #ff4d4d;
-    font-weight: bold;
-    font-size: 13px;
-    margin-top: 5px;
-}
-
-.owner-accounts-edit-btns {
-    margin-top: 1rem;
+.formGroup {
     display: flex;
-    flex-wrap: wrap;
-    gap: 1rem;
-    justify-content: center;
+    flex-direction: column;
+    gap: 0.5rem;
 }
 
-.owner-accounts-edit-save-btn,
-.owner-accounts-edit-cancel-btn {
-    background-color: #4EC5B4;
-    color: #fff;
-    text-decoration: none;
-    border: none;
-    padding: 0.8rem 2rem;
-    border-radius: 25px;
+.formGroup label {
+    font-size: 0.95rem;
+    font-weight: 700;
+    color: #4EC5B4;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.input {
+    width: 100%;
+    padding: 0.8rem 1rem;
+    border-radius: 12px;
+    border: 2px solid #eee;
+    background-color: #fafafa;
     font-size: 1rem;
+    color: #333;
+    outline: none;
+    transition: all 0.3s ease;
+}
+
+.input:focus {
+    border-color: #4EC5B4;
+    background-color: #fff;
+    box-shadow: 0 4px 12px rgba(78, 197, 180, 0.1);
+}
+
+.errorInput {
+    border-color: #ff6b6b;
+    background-color: #fff5f5;
+}
+
+.successInput {
+    border-color: #48d889;
+}
+
+.errorMsg {
+    color: #ff6b6b;
+    font-size: 0.85rem;
+    font-weight: 600;
+    margin-left: 0.5rem;
+    animation: fadeIn 0.3s ease-in;
+}
+
+.actionGroup {
+    display: flex;
+    gap: 1rem;
+    margin-top: 1rem;
+}
+
+.saveBtn,
+.cancelBtn {
+    padding: 0.8rem 0;
+    border-radius: 50px;
+    font-weight: 700;
+    font-size: 1rem;
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
     cursor: pointer;
-    transition: background 0.3s ease;
-    white-space: nowrap;
+    transition: all 0.3s ease;
+    border: none;
+    outline: none;
+    flex: 1;
 }
 
-.owner-accounts-edit-no-user-data {
-    animation: fadeInOpacity 1s;
-    margin-top: 150px;
-    background-color: #4EC5B4;
-    color: #fff;
-    padding: 0.3em 1em;
-    border-radius: 0.5em;
+.saveBtn {
+    background-color: #fff;
+    border: 2px solid #3aa698;
+    color: #3aa698;
 }
 
-.owner-accounts-edit-form-group input.error {
-    border: 3px solid #ff4d4d;
+.cancelBtn {
+    background-color: #fff;
+    border: 2px solid #95a5a6;
+    color: #95a5a6;
 }
 
-.owner-accounts-edit-form-group input.success {
-    border: 3px solid #3cb371;
+.noData {
+    margin-top: 2rem;
+    color: #666;
+    font-size: 1.2rem;
 }
 
-@media(min-width: 1025px) {
-    .owner-accounts-edit-save-btn:hover,
-    .owner-accounts-edit-cancel-btn:hover {
-        background-color: #2a796f;
-        transition: 0.3s ease-in;
+@media (min-width: 1025px) {
+    .saveBtn:hover {
+        background-color: #3aa698;
+        color: #fff;
+        box-shadow: 0 6px 20px rgba(78, 197, 180, 0.5);
+        transform: translateY(-2px);
+    }
+
+    .cancelBtn:hover {
+        background-color: #95a5a6;
+        color: #fff;
+        box-shadow: 0 4px 15px rgba(149, 165, 166, 0.4);
+        transform: translateY(-2px);
     }
 }
 
-@media (max-width: 480px) {
-    .owner-accounts-edit-field {
+@media (max-width: 768px) {
+    .container {
+        padding: 9rem 1rem 2rem;
+    }
+
+    .actionGroup {
         flex-direction: column;
-        align-items: flex-start;
     }
 
-    .owner-accounts-edit-field span {
-        margin-top: 0.3rem;
-        max-width: 100%;
+    .saveBtn, .cancelBtn {
+        width: 100%;
     }
+}
+
+@keyframes fadeUp {
+    from {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
 }

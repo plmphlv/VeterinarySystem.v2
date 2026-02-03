@@ -100,9 +100,9 @@ const PrescriptionsCreate: React.FC = () => {
         };
 
     const inputClass = (field: keyof CreatePrescriptionRequest) => {
-        if (errors[field]) return `${styles.input} ${styles.error}`;
-        if (values[field] && !errors[field]) return `${styles.input} ${styles.success}`;
-        return styles.input;
+        if (errors[field]) return styles.errorInput;
+        if (values[field] && !errors[field]) return styles.successInput;
+        return "";
     };
 
     useEffect(() => {
@@ -110,88 +110,86 @@ const PrescriptionsCreate: React.FC = () => {
     }, []);
 
     return (
-        <>
+        <div className={styles.container}>
             {(formLoading || userLoading) && (
-                <div className="spinner-overlay">
+                <div className={styles.spinnerOverlay}>
                     <Spinner />
                 </div>
             )}
 
-            <section className={styles["prescriptions-create"]}>
-                <div className={styles["prescriptions-create-container"]}>
-                    <h2>Create Prescription</h2>
+            {dialog && (
+                <Dialog
+                    message={dialog.message}
+                    type={dialog.type}
+                    onClose={() => setDialog(null)}
+                />
+            )}
 
-                    <form onSubmit={onSubmit} noValidate>
-                        <div className={styles["prescriptions-create-form-group"]}>
-                            <label htmlFor="animalId">
-                                <i className="fa-solid fa-pen"></i> Animal ID:
-                            </label>
+            <article className={styles.card}>
+                <header className={styles.cardHeader}>
+                    <div className={styles.iconCircle}>
+                        <i className="fa-solid fa-file-medical"></i>
+                    </div>
+                    <h1 className={styles.title}>Create Prescription</h1>
+                    <p className={styles.subtitle}>Issue a new prescription for an animal</p>
+                </header>
 
-                            <input
-                                type="number"
-                                id="animalId"
-                                name="animalId"
-                                value={values.animalId ?? ""}
-                                onChange={handleChange}
-                                className={inputClass("animalId")}
-                                placeholder="Enter animal ID"
-                                autoComplete="off"
-                                required
-                            />
+                <form onSubmit={onSubmit} noValidate className={styles.form}>
+                    <div className={styles.formGroup}>
+                        <label htmlFor="animalId">
+                            <i className="fa-solid fa-paw"></i> Animal ID
+                        </label>
+                        <input
+                            type="number"
+                            id="animalId"
+                            name="animalId"
+                            value={values.animalId ?? ""}
+                            onChange={handleChange}
+                            className={`${styles.input} ${inputClass("animalId")}`}
+                            placeholder="Enter animal ID"
+                            autoComplete="off"
+                            required
+                        />
+                        {errors.animalId && <span className={styles.errorMsg}>{errors.animalId}</span>}
+                    </div>
 
-                            {errors.animalId && (
-                                <p className={styles["error-text"]}>{errors.animalId}</p>
-                            )}
-                        </div>
+                    <div className={styles.formGroup}>
+                        <label htmlFor="description">
+                            <i className="fa-solid fa-pen"></i> Description
+                        </label>
+                        <input
+                            type="text"
+                            id="description"
+                            name="description"
+                            value={values.description ?? ""}
+                            onChange={handleChange}
+                            className={`${styles.input} ${inputClass("description")}`}
+                            placeholder="Enter prescription details"
+                            autoComplete="off"
+                            required
+                        />
+                        {errors.description && <span className={styles.errorMsg}>{errors.description}</span>}
+                    </div>
 
-                        <div className={styles["prescriptions-create-form-group"]}>
-                            <label htmlFor="description">
-                                <i className="fa-solid fa-pen"></i> Description:
-                            </label>
-
-                            <input
-                                type="text"
-                                id="description"
-                                name="description"
-                                value={values.description ?? ""}
-                                onChange={handleChange}
-                                className={inputClass("description")}
-                                placeholder="Enter description"
-                                autoComplete="off"
-                                required
-                            />
-
-                            {errors.description && (
-                                <p className={styles["error-text"]}>{errors.description}</p>
-                            )}
-                        </div>
-
+                    <div className={styles.actionGroup}>
                         <button
                             type="submit"
-                            className={styles["prescriptions-create-btn-small"]}
+                            className={styles.submitBtn}
                             disabled={formLoading}
                         >
-                            Create
+                            <i className="fa-solid fa-plus"></i> Create
                         </button>
 
                         <Link
                             to="/staff-area/prescriptions"
-                            className={styles["prescriptions-cancel-btn"]}
+                            className={styles.cancelBtn}
                         >
-                            Cancel
+                            <i className="fa-solid fa-xmark"></i> Cancel
                         </Link>
-                    </form>
-                </div>
-
-                {dialog && (
-                    <Dialog
-                        message={dialog.message}
-                        type={dialog.type}
-                        onClose={() => setDialog(null)}
-                    />
-                )}
-            </section>
-        </>
+                    </div>
+                </form>
+            </article>
+        </div>
     );
 };
 

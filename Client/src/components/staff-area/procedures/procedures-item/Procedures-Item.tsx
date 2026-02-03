@@ -54,121 +54,160 @@ const ProceduresItem: React.FC = () => {
 
     useEffect(() => cancelGetAllProcedures, []);
 
+    const hasActiveFilters = staffId || animalId || procedureName || description || startDate || endDate;
+
     return (
-        <>
-            {procedures.length > 0 && (!errors || Object.keys(errors).length === 0) ? (
-                <>
-                    {loading && <div className="spinner-overlay"><Spinner /></div>}
-                    {dialog && <Dialog message={dialog.message} type={dialog.type} onClose={() => setDialog(null)} />}
-
-                    <section className={styles["procedures-filter"]}>
-                        <div className={styles["procedures-filter-item"]}>
-                            <label htmlFor="staffId">Staff ID:</label>
-                            <input id="staffId" type="text" value={staffId} onChange={(e) => setStaffId(e.target.value)} />
-                        </div>
-
-                        <div className={styles["procedures-filter-item"]}>
-                            <label htmlFor="animalId">Animal ID:</label>
-                            <input id="animalId" type="text" value={animalId} onChange={(e) => setAnimalId(e.target.value)} />
-                        </div>
-
-                        <div className={styles["procedures-filter-item"]}>
-                            <label htmlFor="procedureName">Procedure Name:</label>
-                            <input id="procedureName" type="text" value={procedureName} onChange={(e) => setProcedureName(e.target.value)} />
-                        </div>
-
-                        <div className={styles["procedures-filter-item"]}>
-                            <label htmlFor="description">Description:</label>
-                            <input id="description" type="text" value={description} onChange={(e) => setDescription(e.target.value)} />
-                        </div>
-
-                        <div className={styles["procedures-filter-item"]}>
-                            <label htmlFor="startDate">Start Date:</label>
-                            <input id="startDate" type="date" value={startDate} onChange={(e) => setStartDate(e.target.value)} />
-                        </div>
-
-                        <div className={styles["procedures-filter-item"]}>
-                            <label htmlFor="endDate">End Date:</label>
-                            <input id="endDate" type="date" value={endDate} onChange={(e) => setEndDate(e.target.value)} />
-                        </div>
-
-                        <div className={styles["procedures-filter-actions"]}>
-                            <button className={styles["procedures-clear-filters-btn"]} onClick={() => { setStaffId(""); setAnimalId(""); setProcedureName(""); setDescription(""); setStartDate(""); setEndDate(""); }}>
-                                Clear Filters
-                            </button>
-                        </div>
-                    </section>
-
-                    <section className={styles["procedures-filter-item"]}>
-                        {procedures.map((procedure) => (
-                            <div className={styles["procedures-item-card"]} key={procedure.id}>
-                                <div className={styles["procedures-item-content"]}>
-                                    <h2><i className="fa-solid fa-calendar-days"></i> {formatDate(procedure.date)}</h2>
-                                    <p><i className="fa-solid fa-pen"></i> Name: {procedure.name}</p>
-                                    <p><i className="fa-solid fa-clock"></i> Hour: {formatTime(procedure.date)}</p>
-                                    <div className={styles["procedures-item-actions"]}>
-                                        <Link to={`/staff-area/procedures/${procedure.id}/details`} className={styles["procedures-item-more-details-btn"]}>
-                                            → More Details
-                                        </Link>
-                                    </div>
-                                </div>
-                            </div>
-                        ))}
-                    </section>
-                </>
-            ) : (
-                <>
-                    {loading && <div className="spinner-overlay"><Spinner /></div>}
-                    {dialog && <Dialog message={dialog.message} type={dialog.type} onClose={() => setDialog(null)} />}
-
-                    <section className={styles["procedures-filter"]}>
-                        <div className={styles["procedures-filter-item"]}>
-                            <label htmlFor="staffId">Staff ID:</label>
-                            <input id="staffId" type="text" value={staffId} onChange={(e) => setStaffId(e.target.value)} />
-                        </div>
-
-                        <div className={styles["procedures-filter-item"]}>
-                            <label htmlFor="animalId">Animal ID:</label>
-                            <input id="animalId" type="text" value={animalId} onChange={(e) => setAnimalId(e.target.value)} />
-                        </div>
-
-                        <div className={styles["procedures-filter-item"]}>
-                            <label htmlFor="procedureName">Procedure Name:</label>
-                            <input id="procedureName" type="text" value={procedureName} onChange={(e) => setProcedureName(e.target.value)} />
-                        </div>
-
-                        <div className={styles["procedures-filter-item"]}>
-                            <label htmlFor="description">Description:</label>
-                            <input id="description" type="text" value={description} onChange={(e) => setDescription(e.target.value)} />
-                        </div>
-
-                        <div className={styles["procedures-filter-item"]}>
-                            <label htmlFor="startDate">Start Date:</label>
-                            <input id="startDate" type="date" value={startDate} onChange={(e) => setStartDate(e.target.value)} />
-                        </div>
-
-                        <div className={styles["procedures-filter-item"]}>
-                            <label htmlFor="endDate">End Date:</label>
-                            <input id="endDate" type="date" value={endDate} onChange={(e) => setEndDate(e.target.value)} />
-                        </div>
-
-                        <div className={styles["procedures-filter-actions"]}>
-                            <button onClick={() => { setStaffId(""); setAnimalId(""); setProcedureName(""); setDescription(""); setStartDate(""); setEndDate(""); }}>
-                                Clear Filters
-                            </button>
-                        </div>
-                    </section>
-
-                    <h1 className={styles["procedures-item-no-procedures"]}>
-                        {staffId || animalId || procedureName || description || startDate || endDate
-                            ? "No procedures found for the current filter."
-                            : "No procedures found."}
-                    </h1>
-                </>
+        <div className={styles.wrapper}>
+            {loading && (
+                <div className={styles.spinnerOverlay}>
+                    <Spinner />
+                </div>
             )}
 
-            {error && showError && <Dialog message={error} type="error" onClose={() => setShowError(false)} />}
-        </>
+            {dialog && (
+                <Dialog
+                    message={dialog.message}
+                    type={dialog.type}
+                    onClose={() => setDialog(null)}
+                />
+            )}
+
+            <section className={styles.filterSection}>
+                <div className={styles.filterGroup}>
+                    <div className={styles.filterItem}>
+                        <label htmlFor="procedureName"><i className="fa-solid fa-file-signature"></i> Procedure</label>
+                        <input
+                            type="text"
+                            id="procedureName"
+                            placeholder="Search by Name"
+                            value={procedureName}
+                            onChange={(e) => setProcedureName(e.target.value)}
+                        />
+                    </div>
+
+                    <div className={styles.filterItem}>
+                        <label htmlFor="staffId"><i className="fa-solid fa-user-doctor"></i> Staff ID</label>
+                        <input
+                            type="text"
+                            id="staffId"
+                            placeholder="Search by ID"
+                            value={staffId}
+                            onChange={(e) => setStaffId(e.target.value)}
+                        />
+                    </div>
+
+                    <div className={styles.filterItem}>
+                        <label htmlFor="animalId"><i className="fa-solid fa-paw"></i> Animal ID</label>
+                        <input
+                            type="text"
+                            id="animalId"
+                            placeholder="Search by ID"
+                            value={animalId}
+                            onChange={(e) => setAnimalId(e.target.value)}
+                        />
+                    </div>
+
+                    <div className={styles.filterItem}>
+                        <label htmlFor="description"><i className="fa-solid fa-pen"></i> Description</label>
+                        <input
+                            type="text"
+                            id="description"
+                            placeholder="Search description"
+                            value={description}
+                            onChange={(e) => setDescription(e.target.value)}
+                        />
+                    </div>
+
+                    <div className={styles.filterItem}>
+                        <label htmlFor="startDate"><i className="fa-solid fa-calendar-days"></i> Start Date</label>
+                        <input
+                            type="date"
+                            id="startDate"
+                            value={startDate}
+                            onChange={(e) => setStartDate(e.target.value)}
+                        />
+                    </div>
+
+                    <div className={styles.filterItem}>
+                        <label htmlFor="endDate"><i className="fa-solid fa-calendar-days"></i> End Date</label>
+                        <input
+                            type="date"
+                            id="endDate"
+                            value={endDate}
+                            onChange={(e) => setEndDate(e.target.value)}
+                        />
+                    </div>
+                </div>
+
+                <div className={styles.filterActions}>
+                    <button
+                        className={styles.clearBtn}
+                        onClick={() => { setStaffId(""); setAnimalId(""); setProcedureName(""); setDescription(""); setStartDate(""); setEndDate(""); }}
+                        disabled={!hasActiveFilters}
+                    >
+                        Clear Filters
+                    </button>
+                </div>
+            </section>
+
+            {procedures.length > 0 && (!errors || Object.keys(errors).length === 0) ? (
+                <section className={styles.grid}>
+                    {procedures.map((procedure, index) => (
+                        <article
+                            className={styles.card}
+                            key={procedure.id}
+                            style={{ animationDelay: `${index * 0.1}s` }}
+                        >
+                            <div className={styles.cardHeader}>
+                                <div className={styles.iconCircle}>
+                                    <i className="fa-solid fa-stethoscope"></i>
+                                </div>
+                                <h2>{procedure.name}</h2>
+                            </div>
+
+                            <div className={styles.cardBody}>
+                                <div className={styles.infoRow}>
+                                    <i className="fa-solid fa-calendar-days"></i>
+                                    <span>{formatDate(procedure.date)}</span>
+                                </div>
+                                <div className={styles.infoRow}>
+                                    <i className="fa-solid fa-clock"></i>
+                                    <span>{formatTime(procedure.date)}</span>
+                                </div>
+                            </div>
+
+                            <div className={styles.cardFooter}>
+                                <Link to={`/staff-area/procedures/${procedure.id}/details`} className={styles.detailsBtn}>
+                                    More Details
+                                </Link>
+                            </div>
+                        </article>
+                    ))}
+                </section>
+            ) : (
+                !loading && (
+                    <div className={styles.emptyState}>
+                        <div className={styles.emptyIcon}>
+                            <i className="fa-solid fa-file-medical-alt"></i>
+                        </div>
+                        <h2>No procedures found</h2>
+                        <p>
+                            {hasActiveFilters
+                                ? "Try adjusting your filters to see more results."
+                                : "There are no procedures recorded yet."}
+                        </p>
+                    </div>
+                )
+            )}
+
+            {error && showError && (
+                <Dialog
+                    message={error}
+                    type="error"
+                    onClose={() => setShowError(false)}
+                />
+            )}
+        </div>
     );
 };
 

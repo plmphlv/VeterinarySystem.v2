@@ -105,21 +105,18 @@ const PrescriptionItemDetails: React.FC = () => {
         };
     }, []);
 
-    /* =======================
-       Loading state
-    ======================== */
     if (loading) {
         return (
-            <div className="spinner-overlay">
+            <div className={styles.spinnerOverlay}>
                 <Spinner />
             </div>
         );
     }
 
     return (
-        <>
+        <div className={styles.container}>
             {(loading || deleting) && (
-                <div className="spinner-overlay">
+                <div className={styles.spinnerOverlay}>
                     <Spinner />
                 </div>
             )}
@@ -132,121 +129,118 @@ const PrescriptionItemDetails: React.FC = () => {
                 />
             )}
 
-            <section className={styles["prescription-item-details-container"]}>
-                {prescriptionDetails ? (
-                    <>
-                        <div className={styles["prescription-item-details-card"]}>
-                            <div className={styles["card-header"]}>
-                                <span className={styles["rx-symbol"]}>Rx</span>
-                                <div className={styles["header-info"]}>
-                                    <span className={styles["header-title"]}>
-                                        Prescription No.
-                                    </span>
-                                    <span
-                                        className={styles["prescription-number"]}
-                                    >
-                                        #{prescriptionDetails.number}
-                                    </span>
-                                </div>
-                            </div>
+            <div className={styles.navWrapper}>
+                <Link to="/staff-area/prescriptions" className={styles.backLink}>
+                    &larr; Back to Prescriptions
+                </Link>
+            </div>
 
-                            <div className={styles["card-body"]}>
-                                <div className={styles["field-group"]}>
-                                    <span className={styles["label"]}>
-                                        Internal ID
-                                    </span>
-                                    <span className={styles["value"]}>
-                                        {prescriptionDetails.id}
-                                    </span>
-                                </div>
-
-                                <div className={styles["field-group"]}>
-                                    <span className={styles["label"]}>
-                                        Date Issued
-                                    </span>
-                                    <span className={styles["value"]}>
-                                        {prescriptionDetails.issueDate}
-                                    </span>
-                                </div>
-
-                                <div
-                                    className={`${styles["field-group"]} ${styles["full-width"]}`}
-                                >
-                                    <span className={styles["label"]}>
-                                        Description / Medication
-                                    </span>
-                                    <span className={styles["value"]}>
-                                        {prescriptionDetails.description}
-                                    </span>
-                                </div>
-
-                                <div className={styles["field-group"]}>
-                                    <span className={styles["label"]}>
-                                        Animal ID
-                                    </span>
-                                    <span className={styles["value"]}>
-                                        {prescriptionDetails.animalId}
-                                    </span>
-                                </div>
-
-                                <div className={styles["field-group"]}>
-                                    <span className={styles["label"]}>
-                                        Animal Name
-                                    </span>
-                                    <span className={styles["value"]}>
-                                        {prescriptionDetails.animalName}
-                                    </span>
-                                </div>
-
-                                <div
-                                    className={`${styles["field-group"]} ${styles["full-width"]}`}
-                                >
-                                    <span className={styles["label"]}>
-                                        Owner Name
-                                    </span>
-                                    <span className={styles["value"]}>
-                                        {prescriptionDetails.ownerName}
-                                    </span>
-                                </div>
-                            </div>
-
-                            <div className={styles["card-footer"]}>
-                                <div className={styles["signature-line"]}>
-                                    <span className={styles["staff-name"]}>
-                                        {prescriptionDetails.staffName}
-                                    </span>
-                                    <span
-                                        className={styles["signature-label"]}
-                                    >
-                                        Veterinarian Signature
-                                    </span>
-                                </div>
+            {prescriptionDetails ? (
+                <>
+                    <article className={styles.prescriptionCard}>
+                        <div className={styles.cardHeader}>
+                            <span className={styles.rxSymbol}>Rx</span>
+                            <div className={styles.headerInfo}>
+                                <span className={styles.headerTitle}>
+                                    Prescription No.
+                                </span>
+                                <span className={styles.prescriptionNumber}>
+                                    #{prescriptionDetails.number}
+                                </span>
                             </div>
                         </div>
 
-                        <div className={styles["external-actions"]}>
-                            <Link
-                                to={`/staff-area/prescriptions/${prescriptionDetails.id}/edit`}
-                                className={`${styles["action-btn"]} ${styles["edit-btn"]}`}
-                            >
-                                Edit Prescription
-                            </Link>
+                        <div className={styles.cardBody}>
+                            <div className={styles.fieldGroup}>
+                                <span className={styles.label}>
+                                    Internal ID
+                                </span>
+                                <span className={styles.value}>
+                                    {prescriptionDetails.id}
+                                </span>
+                            </div>
 
-                            <button
-                                onClick={handleDelete}
-                                className={`${styles["action-btn"]} ${styles["delete-btn"]}`}
-                            >
-                                Delete
-                            </button>
+                            <div className={styles.fieldGroup}>
+                                <span className={styles.label}>
+                                    Date Issued
+                                </span>
+                                <span className={styles.value}>
+                                    {prescriptionDetails.issueDate}
+                                </span>
+                            </div>
+
+                            <div className={`${styles.fieldGroup} ${styles.fullWidth}`}>
+                                <span className={styles.label}>
+                                    Description / Medication
+                                </span>
+                                <span className={styles.value}>
+                                    {prescriptionDetails.description}
+                                </span>
+                            </div>
+
+                            <div className={styles.fieldGroup}>
+                                <span className={styles.label}>
+                                    Animal ID
+                                </span>
+                                <span className={styles.value}>
+                                    {prescriptionDetails.animalId}
+                                </span>
+                            </div>
+
+                            <div className={styles.fieldGroup}>
+                                <span className={styles.label}>
+                                    Animal Name
+                                </span>
+                                <span className={styles.value}>
+                                    {prescriptionDetails.animalName}
+                                </span>
+                            </div>
+
+                            <div className={`${styles.fieldGroup} ${styles.fullWidth}`}>
+                                <span className={styles.label}>
+                                    Owner Name
+                                </span>
+                                <span className={styles.value}>
+                                    {prescriptionDetails.ownerName}
+                                </span>
+                            </div>
                         </div>
-                    </>
-                ) : (
-                    <h2 className={styles["error-message"]}>
-                        Prescription not found.
-                    </h2>
-                )}
-            </section>
-        </>
+
+                        <div className={styles.cardFooter}>
+                            <div className={styles.signatureLine}>
+                                <span className={styles.staffName}>
+                                    {prescriptionDetails.staffName}
+                                </span>
+                                <span className={styles.signatureLabel}>
+                                    Veterinarian Signature
+                                </span>
+                            </div>
+                        </div>
+                    </article>
+
+                    <div className={styles.actions}>
+                        <Link
+                            to={`/staff-area/prescriptions/${prescriptionDetails.id}/edit`}
+                            className={styles.editBtn}
+                        >
+                            <i className="fa-solid fa-pen-to-square"></i> Edit Prescription
+                        </Link>
+
+                        <button
+                            onClick={handleDelete}
+                            className={styles.deleteBtn}
+                            disabled={deleting}
+                        >
+                            <i className="fa-solid fa-trash"></i> {deleting ? "Deleting..." : "Delete"}
+                        </button>
+                    </div>
+                </>
+            ) : (
+                <h2 className={styles.errorMessage}>
+                    Prescription not found.
+                </h2>
+            )}
+        </div>
     );
 };
 

@@ -129,25 +129,26 @@
 
 .submitBtn,
 .cancelBtn {
-    padding: 0.8rem 2rem;
+    padding: 0.8rem 0;
     border-radius: 50px;
-    font-size: 1rem;
     font-weight: 700;
-    cursor: pointer;
-    transition: all 0.3s ease;
+    font-size: 1rem;
+    text-decoration: none;
     display: inline-flex;
     align-items: center;
     justify-content: center;
     gap: 0.5rem;
-    text-decoration: none;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    border: none;
     outline: none;
     flex: 1;
 }
 
 .submitBtn {
-    background-color: #fff;
-    border: 2px solid #3aa698;
-    color: #3aa698;
+    background-color: #4EC5B4;
+    color: #fff;
+    box-shadow: 0 4px 15px rgba(78, 197, 180, 0.3);
 }
 
 .cancelBtn {
@@ -159,9 +160,8 @@
 @media (min-width: 1025px) {
     .submitBtn:hover {
         background-color: #3aa698;
-        color: #fff;
-        box-shadow: 0 6px 20px rgba(78, 197, 180, 0.5);
         transform: translateY(-2px);
+        box-shadow: 0 6px 20px rgba(78, 197, 180, 0.5);
     }
 
     .cancelBtn:hover {

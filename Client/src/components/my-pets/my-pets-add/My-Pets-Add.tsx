@@ -167,7 +167,7 @@ const MyPetsAdd: React.FC = () => {
                     <div className={styles.formGroup}>
                         <label htmlFor="name">Name</label>
                         <div className={styles.inputWrapper}>
-                            <i className={`fa-solid fa-pen ${styles.inputIcon}`}></i>
+                            <i className={`fa-solid fa-file-signature ${styles.inputIcon}`}></i>
                             <input
                                 type="text"
                                 id="name"
@@ -204,7 +204,7 @@ const MyPetsAdd: React.FC = () => {
                         <div className={styles.formGroup}>
                             <label htmlFor="weight">Weight (kg)</label>
                             <div className={styles.inputWrapper}>
-                                <i className={`fa-solid fa-weight-hanging ${styles.inputIcon}`}></i>
+                                <i className={`fa-solid fa-weight-scale ${styles.inputIcon}`}></i>
                                 <input
                                     type="number"
                                     id="weight"
