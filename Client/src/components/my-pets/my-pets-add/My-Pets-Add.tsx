@@ -223,7 +223,7 @@ const MyPetsAdd: React.FC = () => {
                     <div className={styles.formGroup}>
                         <label htmlFor="animalTypeId">Animal Type</label>
                         <div className={styles.inputWrapper}>
-                            <i className={`fa-solid fa-paw ${styles.inputIcon}`}></i>
+                            <i className={`fa-solid fa-tag ${styles.inputIcon}`}></i>
                             <select
                                 id="animalTypeId"
                                 name="animalTypeId"

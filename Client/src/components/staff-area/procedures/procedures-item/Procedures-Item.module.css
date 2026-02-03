@@ -1,3 +1,21 @@
+@mixin fade-in {
+    opacity: 1;
+    animation-name: fadeInOpacity;
+    animation-iteration-count: 1;
+    animation-timing-function: ease-in;
+    animation-duration: 2s;
+}
+
+@keyframes fadeInOpacity {
+    0% {
+        opacity: 0;
+    }
+
+    100% {
+        opacity: 1;
+    }
+}
+
 .wrapper {
     width: 100%;
     display: flex;
@@ -108,6 +126,7 @@
 
 .grid {
     display: grid;
+    /* justify-content: center will align items centrally if they don't fill the row */
     grid-template-columns: repeat(auto-fit, minmax(300px, 350px));
     justify-content: center;
     gap: 2rem;
@@ -156,6 +175,7 @@
     color: #333;
     font-weight: 700;
     margin: 0;
+    transition: color 0.3s ease;
 }
 
 .cardBody {
@@ -187,15 +207,32 @@
 }
 
 .detailsBtn {
-    margin-top: 0.5rem;
-    display: inline-block;
-    background-color: #4EC5B4;
-    color: #fff;
-    padding: 0.5rem 1rem;
-    border: none;
-    border-radius: 5px;
+    position: relative;
+    color: #4EC5B4;
+    font-weight: 700;
     text-decoration: none;
-    transition: background-color 0.7s ease;
+    padding: 0.6rem 1.5rem;
+    border: 2px solid #4EC5B4;
+    border-radius: 50px;
+    transition: all 0.3s ease;
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+    gap: 0.5rem;
+    overflow: hidden;
+    z-index: 1;
+}
+
+.detailsBtn::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 0%;
+    height: 100%;
+    background-color: #4EC5B4;
+    transition: width 0.3s ease;
+    z-index: -1;
 }
 
 .emptyState {
@@ -230,9 +267,16 @@
         box-shadow: 0 20px 40px rgba(78, 197, 180, 0.15);
     }
 
+    .card:hover h2 {
+        color: #4EC5B4;
+    }
+
     .detailsBtn:hover {
-        background-color: #2a796f;
-        transition: 0.3s ease-in;
+        color: #FFF;
+    }
+
+    .detailsBtn:hover::before {
+        width: 100%;
     }
 }
 
@@ -263,6 +307,7 @@
         opacity: 0;
         transform: translateY(20px);
     }
+
     to {
         opacity: 1;
         transform: translateY(0);

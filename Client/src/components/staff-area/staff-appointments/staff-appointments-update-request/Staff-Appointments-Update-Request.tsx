@@ -161,7 +161,7 @@ const StaffAppointmentsUpdateRequest: React.FC = () => {
                         </div>
 
                         <div className={styles["staff-appointments-update-request-form-group"]}>
-                            <label htmlFor="description"><i className="fa-solid fa-comment"></i> Description:</label>
+                            <label htmlFor="description"><i className="fa-solid fa-pen"></i> Description:</label>
                             <input
                                 type="text"
                                 id="description"

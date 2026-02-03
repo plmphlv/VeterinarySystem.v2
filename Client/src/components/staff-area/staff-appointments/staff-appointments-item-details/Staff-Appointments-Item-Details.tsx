@@ -195,7 +195,7 @@ const StaffAppointmentsItemDetails: React.FC = () => {
 
                         <div className={`${styles.detailRow} ${styles.descriptionRow}`}>
                             <div className={styles.iconBox}>
-                                <i className="fa-solid fa-comment"></i>
+                                <i className="fa-solid fa-pen"></i>
                             </div>
                             <div className={styles.detailText}>
                                 <span className={styles.label}>Description</span>

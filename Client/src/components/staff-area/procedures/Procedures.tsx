@@ -26,7 +26,7 @@ const Procedures: React.FC = () => {
                 <>
                     <header className={styles.header}>
                         <h1 className={styles.title}>All Procedures</h1>
-                        <p className={styles.subtitle}>List of medical procedures performed</p>
+                        <p className={styles.subtitle}>Manage medical procedures and records</p>
                     </header>
 
                     <div className={styles.contentWrapper}>

@@ -113,9 +113,9 @@ const ProceduresEdit: React.FC = () => {
     };
 
     const inputClass = (field: keyof EditProcedureRequest) => {
-        if (errors[field]) return `${styles.input} ${styles.error}`;
-        if (values[field] && !errors[field]) return `${styles.input} ${styles.success}`;
-        return styles.input;
+        if (errors[field]) return styles.errorInput;
+        if (values[field] && !errors[field]) return styles.successInput;
+        return "";
     };
 
     useEffect(() => {
@@ -151,130 +151,126 @@ const ProceduresEdit: React.FC = () => {
     }, [id]);
 
     return (
-        <>
+        <div className={styles.pageContainer}>
             {(formLoading || userLoading) && (
-                <div className="spinner-overlay">
+                <div className={styles.spinnerOverlay}>
                     <Spinner />
                 </div>
             )}
 
-            <section className={styles["procedures-edit"]}>
-                <div className={styles["procedures-edit-container"]}>
-                    <h2>Edit Procedure</h2>
+            {dialog && (
+                <Dialog
+                    message={dialog.message}
+                    type={dialog.type}
+                    onClose={() => setDialog(null)}
+                />
+            )}
 
-                    <form onSubmit={onSubmit} noValidate>
-                        <div className={styles["procedures-edit-form-group"]}>
-                            <label htmlFor="name">
-                                <i className="fa-solid fa-pen"></i> Name:
-                            </label>
+            <section className={styles.card}>
+                <header className={styles.cardHeader}>
+                    <div className={styles.iconCircle}>
+                        <i className="fa-solid fa-file-pen"></i>
+                    </div>
+                    <h1 className={styles.title}>Edit Procedure</h1>
+                    <p className={styles.subtitle}>Update medical procedure details</p>
+                </header>
 
+                <form onSubmit={onSubmit} noValidate className={styles.form}>
+                    <div className={styles.formGroup}>
+                        <label htmlFor="name">Procedure Name</label>
+                        <div className={styles.inputWrapper}>
+                            <i className={`fa-solid fa-file-signature ${styles.inputIcon}`}></i>
                             <input
                                 type="text"
                                 id="name"
                                 name="name"
                                 value={values.name ?? ""}
                                 onChange={handleChange}
-                                className={inputClass("name")}
+                                className={`${styles.input} ${inputClass("name")}`}
                                 placeholder="Enter new name"
                                 autoComplete="off"
                                 required
                             />
-
-                            {errors.name && (
-                                <p className={styles["error-text"]}>{errors.name}</p>
-                            )}
                         </div>
+                        {errors.name && <span className={styles.errorMsg}>{errors.name}</span>}
+                    </div>
 
-                        <div className={styles["procedures-edit-form-group"]}>
-                            <label htmlFor="description">
-                                <i className="fa-solid fa-comment"></i> Description:
-                            </label>
-
+                    <div className={styles.formGroup}>
+                        <label htmlFor="description">Description</label>
+                        <div className={styles.inputWrapper}>
+                            <i className={`fa-solid fa-align-left ${styles.inputIcon}`}></i>
                             <input
                                 type="text"
                                 id="description"
                                 name="description"
                                 value={values.description ?? ""}
                                 onChange={handleChange}
-                                className={inputClass("description")}
+                                className={`${styles.input} ${inputClass("description")}`}
                                 placeholder="Enter new description"
                                 autoComplete="off"
                                 required
                             />
-
-                            {errors.description && (
-                                <p className={styles["error-text"]}>{errors.description}</p>
-                            )}
                         </div>
+                        {errors.description && <span className={styles.errorMsg}>{errors.description}</span>}
+                    </div>
 
-                        <div className={styles["procedures-edit-form-group"]}>
-                            <label htmlFor="date">
-                                <i className="fa-solid fa-calendar-days"></i> Date of procedure:
-                            </label>
-
+                    <div className={styles.formGroup}>
+                        <label htmlFor="date">Date</label>
+                        <div className={styles.inputWrapper}>
+                            <i className={`fa-solid fa-calendar-days ${styles.inputIcon}`}></i>
                             <input
                                 type="datetime-local"
                                 id="date"
                                 name="date"
                                 value={values.date ?? ""}
                                 onChange={handleChange}
-                                className={`${styles["appointments-edit-form-group"]} ${inputClass("date")}`}
-                                placeholder="Select new date"
-                                autoComplete="off"
+                                className={`${styles.input} ${inputClass("date")}`}
                                 min={getTomorrowDatetimeLocal()}
                                 required
                             />
-                            {errors.date && <p className={styles["error-text"]}>{errors.date}</p>}
                         </div>
+                        {errors.date && <span className={styles.errorMsg}>{errors.date}</span>}
+                    </div>
 
-                        <div className={styles["procedures-edit-form-group"]}>
-                            <label htmlFor="id">
-                                <i className="fa-solid fa-pen"></i> ID:
-                            </label>
-
+                    <div className={styles.formGroup}>
+                        <label htmlFor="id">ID</label>
+                        <div className={styles.inputWrapper}>
+                            <i className={`fa-solid fa-hashtag ${styles.inputIcon}`}></i>
                             <input
                                 type="number"
                                 id="id"
                                 name="id"
                                 value={values.id ?? ""}
                                 onChange={handleChange}
-                                className={inputClass("id")}
+                                className={`${styles.input} ${inputClass("id")}`}
                                 placeholder="Enter ID"
                                 autoComplete="off"
+                                readOnly
                                 required
                             />
-
-                            {errors.id && (
-                                <p className={styles["error-text"]}>{errors.id}</p>
-                            )}
                         </div>
+                        {errors.id && <span className={styles.errorMsg}>{errors.id}</span>}
+                    </div>
 
+                    <div className={styles.actionGroup}>
                         <button
                             type="submit"
-                            className={styles["procedures-edit-btn-small"]}
+                            className={styles.saveBtn}
                             disabled={formLoading}
                         >
-                            Save
+                            <i className="fa-solid fa-check"></i> Save
                         </button>
 
                         <Link
-                            to="/staff-area/procedures"
-                            className={styles["procedures-cancel-btn"]}
+                            to={`/staff-area/procedures/${id}/details`}
+                            className={styles.cancelBtn}
                         >
-                            Cancel
+                            <i className="fa-solid fa-xmark"></i> Cancel
                         </Link>
-                    </form>
-                </div>
-
-                {dialog && (
-                    <Dialog
-                        message={dialog.message}
-                        type={dialog.type}
-                        onClose={() => setDialog(null)}
-                    />
-                )}
+                    </div>
+                </form>
             </section>
-        </>
+        </div>
     );
 };
 

@@ -59,10 +59,12 @@ const StaffProfilesItem: React.FC = () => {
         };
     }, []);
 
+    const hasActiveFilters = name || email || phoneNumber;
+
     return (
-        <>
+        <div className={styles.wrapper}>
             {loading && (
-                <div className="spinner-overlay">
+                <div className={styles.spinnerOverlay}>
                     <Spinner />
                 </div>
             )}
@@ -75,71 +77,102 @@ const StaffProfilesItem: React.FC = () => {
                 />
             )}
 
-            <section className={styles["filters"]}>
-                <input
-                    type="text"
-                    placeholder="Search by name"
-                    value={name}
-                    onChange={(e) => setName(e.target.value)}
-                />
+            <section className={styles.filterSection}>
+                <div className={styles.filterGroup}>
+                    <div className={styles.filterItem}>
+                        <label htmlFor="name"><i className="fa-solid fa-file-signature"></i> Name</label>
+                        <input
+                            id="name"
+                            type="text"
+                            placeholder="Search by name"
+                            value={name}
+                            onChange={(e) => setName(e.target.value)}
+                        />
+                    </div>
 
-                <input
-                    type="text"
-                    placeholder="Search by phone number"
-                    value={phoneNumber}
-                    onChange={(e) => setPhoneNumber(e.target.value)}
-                />
+                    <div className={styles.filterItem}>
+                        <label htmlFor="email"><i className="fa-solid fa-at"></i> Email</label>
+                        <input
+                            id="email"
+                            type="email"
+                            placeholder="Search by email"
+                            value={email}
+                            onChange={(e) => setEmail(e.target.value)}
+                        />
+                    </div>
 
-                <input
-                    type="email"
-                    placeholder="Search by email"
-                    value={email}
-                    onChange={(e) => setEmail(e.target.value)}
-                />
+                    <div className={styles.filterItem}>
+                        <label htmlFor="phoneNumber"><i className="fa-solid fa-phone"></i> Phone</label>
+                        <input
+                            id="phoneNumber"
+                            type="text"
+                            placeholder="Search by phone"
+                            value={phoneNumber}
+                            onChange={(e) => setPhoneNumber(e.target.value)}
+                        />
+                    </div>
+                </div>
 
-                <button
-                    className={styles["clear-filters-btn"]}
-                    onClick={clearFilters}
-                >
-                    Clear Filters
-                </button>
+                <div className={styles.filterActions}>
+                    <button
+                        className={styles.clearBtn}
+                        onClick={clearFilters}
+                        disabled={!hasActiveFilters}
+                    >
+                        Clear Filters
+                    </button>
+                </div>
             </section>
 
-            <section className={styles["staff-profiles"]}>
-                {!loading && staffProfiles.length > 0 ? (
-                    staffProfiles.map((staffProfile) => (
-                        <div
-                            className={styles["staff-profiles-item-card"]}
+            {staffProfiles.length > 0 ? (
+                <section className={styles.grid}>
+                    {staffProfiles.map((staffProfile, index) => (
+                        <article
+                            className={styles.card}
                             key={staffProfile.id}
+                            style={{ animationDelay: `${index * 0.1}s` }}
                         >
-                            <div className={styles["content"]}>
-                                <p>
-                                    <i className="fa-solid fa-id-badge"></i> ID: {staffProfile.id}
-                                </p>
-                                <p>
-                                    <i className="fa-solid fa-user"></i> Name: {staffProfile.name}
-                                </p>
+                            <div className={styles.cardHeader}>
+                                <div className={styles.iconCircle}>
+                                    <i className="fa-solid fa-user-doctor"></i>
+                                </div>
+                                <h2 className={styles.cardTitle}>{staffProfile.name}</h2>
+                            </div>
 
-                                <div className={styles["actions"]}>
-                                    <Link
-                                        to={`/staff-area/staff-profiles/${staffProfile.id}/details`}
-                                        className={styles["staff-profiles-more-details-btn"]}
-                                    >
-                                        → More Details
-                                    </Link>
+                            <div className={styles.cardBody}>
+                                <div className={styles.infoRow}>
+                                    <i className="fa-solid fa-id-badge"></i>
+                                    <span>ID: {staffProfile.id}</span>
                                 </div>
                             </div>
+
+                            <div className={styles.cardFooter}>
+                                <Link
+                                    to={`/staff-area/staff-profiles/${staffProfile.id}/details`}
+                                    className={styles.detailsBtn}
+                                >
+                                    More Details
+                                </Link>
+                            </div>
+                        </article>
+                    ))}
+                </section>
+            ) : (
+                !loading && (
+                    <div className={styles.emptyState}>
+                        <div className={styles.emptyIcon}>
+                            <i className="fa-solid fa-users-slash"></i>
                         </div>
-                    ))
-                ) : (
-                    !loading && (
-                        <h1 className={styles["no-staff-profiles"]}>
-                            No staff profiles found.
-                        </h1>
-                    )
-                )}
-            </section>
-        </>
+                        <h2>No staff profiles found</h2>
+                        <p>
+                            {hasActiveFilters
+                                ? "Try adjusting your filters to see more results."
+                                : "There are no registered staff members."}
+                        </p>
+                    </div>
+                )
+            )}
+        </div>
     );
 };
 

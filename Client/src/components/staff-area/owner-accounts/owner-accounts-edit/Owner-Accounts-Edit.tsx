@@ -144,7 +144,7 @@ const OwnerAccountsEdit: React.FC = () => {
     }, [id]);
 
     return (
-        <div className={styles.container}>
+        <div className={styles.pageContainer}>
             {(isLoading || formLoading) && (
                 <div className={styles.spinnerOverlay}>
                     <Spinner />
@@ -171,73 +171,77 @@ const OwnerAccountsEdit: React.FC = () => {
 
                     <form onSubmit={onSubmit} noValidate className={styles.form}>
                         <div className={styles.formGroup}>
-                            <label htmlFor="firstName">
-                                <i className="fa-solid fa-pen"></i> First Name
-                            </label>
-                            <input
-                                type="text"
-                                id="firstName"
-                                name="firstName"
-                                value={values.firstName ?? ""}
-                                onChange={handleChange}
-                                className={`${styles.input} ${inputClass("firstName")}`}
-                                placeholder="Enter first name"
-                                autoComplete="off"
-                                required
-                            />
+                            <label htmlFor="firstName">First Name</label>
+                            <div className={styles.inputWrapper}>
+                                <i className={`fa-solid fa-file-signature ${styles.inputIcon}`}></i>
+                                <input
+                                    type="text"
+                                    id="firstName"
+                                    name="firstName"
+                                    value={values.firstName ?? ""}
+                                    onChange={handleChange}
+                                    className={`${styles.input} ${inputClass("firstName")}`}
+                                    placeholder="Enter first name"
+                                    autoComplete="off"
+                                    required
+                                />
+                            </div>
                             {errors.firstName && <span className={styles.errorMsg}>{errors.firstName}</span>}
                         </div>
 
                         <div className={styles.formGroup}>
-                            <label htmlFor="lastName">
-                                <i className="fa-solid fa-pen"></i> Last Name
-                            </label>
-                            <input
-                                type="text"
-                                id="lastName"
-                                name="lastName"
-                                value={values.lastName ?? ""}
-                                onChange={handleChange}
-                                className={`${styles.input} ${inputClass("lastName")}`}
-                                placeholder="Enter last name"
-                                autoComplete="off"
-                                required
-                            />
+                            <label htmlFor="lastName">Last Name</label>
+                            <div className={styles.inputWrapper}>
+                                <i className={`fa-solid fa-file-signature ${styles.inputIcon}`}></i>
+                                <input
+                                    type="text"
+                                    id="lastName"
+                                    name="lastName"
+                                    value={values.lastName ?? ""}
+                                    onChange={handleChange}
+                                    className={`${styles.input} ${inputClass("lastName")}`}
+                                    placeholder="Enter last name"
+                                    autoComplete="off"
+                                    required
+                                />
+                            </div>
                             {errors.lastName && <span className={styles.errorMsg}>{errors.lastName}</span>}
                         </div>
 
                         <div className={styles.formGroup}>
-                            <label htmlFor="phoneNumber">
-                                <i className="fa-solid fa-phone"></i> Phone Number
-                            </label>
-                            <input
-                                type="tel"
-                                id="phoneNumber"
-                                name="phoneNumber"
-                                value={values.phoneNumber ?? ""}
-                                onChange={handleChange}
-                                className={`${styles.input} ${inputClass("phoneNumber")}`}
-                                placeholder="Enter phone number"
-                                autoComplete="off"
-                                required
-                            />
+                            <label htmlFor="phoneNumber">Phone Number</label>
+                            <div className={styles.inputWrapper}>
+                                <i className={`fa-solid fa-phone ${styles.inputIcon}`}></i>
+                                <input
+                                    type="tel"
+                                    id="phoneNumber"
+                                    name="phoneNumber"
+                                    value={values.phoneNumber ?? ""}
+                                    onChange={handleChange}
+                                    className={`${styles.input} ${inputClass("phoneNumber")}`}
+                                    placeholder="Enter phone number"
+                                    autoComplete="off"
+                                    required
+                                />
+                            </div>
                             {errors.phoneNumber && <span className={styles.errorMsg}>{errors.phoneNumber}</span>}
                         </div>
 
                         <div className={styles.formGroup}>
-                            <label htmlFor="address">
-                                <i className="fa-solid fa-map-marker-alt"></i> Address (Optional)
-                            </label>
-                            <input
-                                type="text"
-                                id="address"
-                                name="address"
-                                value={values.address ?? ""}
-                                onChange={handleChange}
-                                className={`${styles.input} ${inputClass("address")}`}
-                                placeholder="Enter address"
-                                autoComplete="off"
-                            />
+                            <label htmlFor="address">Address (Optional)</label>
+                            <div className={styles.inputWrapper}>
+                                <i className={`fa-solid fa-map-marker-alt ${styles.inputIcon}`}></i>
+                                <input
+                                    type="text"
+                                    id="address"
+                                    name="address"
+                                    value={values.address ?? ""}
+                                    onChange={handleChange}
+                                    className={`${styles.input} ${inputClass("address")}`}
+                                    placeholder="Enter address"
+                                    autoComplete="off"
+                                />
+                            </div>
                             {errors.address && <span className={styles.errorMsg}>{errors.address}</span>}
                         </div>
 

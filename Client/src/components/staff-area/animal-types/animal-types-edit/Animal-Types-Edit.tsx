@@ -1,7 +1,7 @@
 import type React from "react";
 import { Link, useNavigate, useParams } from "react-router";
 import { useEffect, useState } from "react";
-import type { AnimalType, EditAnimalTypeRequest, EditAnimalTypeRequestFieldErrors } from "../../../../types";
+import type { EditAnimalTypeRequest, EditAnimalTypeRequestFieldErrors } from "../../../../types";
 import { useEditAnimalType, useGetAnimalTypes } from "../../../../api/animalTypesAPI";
 import { useForm } from "../../../../hooks/useForm";
 import { useGetUserData } from "../../../../hooks/useGetUserData";
@@ -71,6 +71,7 @@ const AnimalTypesEdit: React.FC = () => {
             }
         };
         fetchAnimalTypes();
+        return () => cancelGetAnimalTypes();
     }, [id]);
 
     const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -96,7 +97,7 @@ const AnimalTypesEdit: React.FC = () => {
     useEffect(() => cancelEditAnimalType, []);
 
     return (
-        <div className={styles.container}>
+        <div className={styles.pageContainer}>
             {(formLoading || userLoading || isLoading) && (
                 <div className={styles.spinnerOverlay}>
                     <Spinner />
@@ -111,38 +112,36 @@ const AnimalTypesEdit: React.FC = () => {
                 />
             )}
 
-            <article className={styles.card}>
+            <section className={styles.card}>
                 <header className={styles.cardHeader}>
-                    <div className={styles.iconCircle}>
-                        <i className="fa-solid fa-pen-to-square"></i>
-                    </div>
-                    <h1 className={styles.title}>Edit Animal Type</h1>
-                    <p className={styles.subtitle}>Update the animal category name</p>
+                    <h1>Edit Animal Type</h1>
+                    <p>Update the animal category name</p>
                 </header>
 
                 <form onSubmit={onSubmit} noValidate className={styles.form}>
                     <div className={styles.formGroup}>
-                        <label htmlFor="typeName">
-                            <i className="fa-solid fa-tag"></i> Type Name
-                        </label>
-                        <input
-                            type="text"
-                            id="typeName"
-                            name="typeName"
-                            value={values.typeName ?? ""}
-                            onChange={handleChange}
-                            className={`${styles.input} ${inputClass("typeName")}`}
-                            placeholder="Edit type name"
-                            autoComplete="off"
-                            required
-                        />
+                        <label htmlFor="typeName">Type Name</label>
+                        <div className={styles.inputWrapper}>
+                            <i className={`fa-solid fa-tag ${styles.inputIcon}`}></i>
+                            <input
+                                type="text"
+                                id="typeName"
+                                name="typeName"
+                                value={values.typeName ?? ""}
+                                onChange={handleChange}
+                                className={`${styles.input} ${inputClass("typeName")}`}
+                                placeholder="Edit type name"
+                                autoComplete="off"
+                                required
+                            />
+                        </div>
                         {errors.typeName && <span className={styles.errorMsg}>{errors.typeName}</span>}
                     </div>
 
                     <div className={styles.actionGroup}>
                         <button
                             type="submit"
-                            className={styles.saveBtn}
+                            className={styles.submitBtn}
                             disabled={formLoading}
                         >
                             <i className="fa-solid fa-check"></i> Save
@@ -155,7 +154,7 @@ const AnimalTypesEdit: React.FC = () => {
                         </Link>
                     </div>
                 </form>
-            </article>
+            </section>
         </div>
     );
 };

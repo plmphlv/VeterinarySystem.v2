@@ -2,7 +2,7 @@ import { Link, useNavigate, useParams } from "react-router";
 import { useEffect, useState } from "react";
 import Spinner from "../../../spinner/Spinner";
 import Dialog from "../../../dialog/Dialog";
-import { formatDate, formatStatus, formatTime } from "../../../../utils/formatDetails";
+import { formatDate, formatTime } from "../../../../utils/formatDetails";
 import styles from "./Procedures-Item-Details.module.css";
 import { useDeleteProcedure, useGetProcedureDetails } from "../../../../api/proceduresAPI";
 import type { GetProcedureDetailsErrors, GetProcedureDetailsResponse } from "../../../../types";
@@ -84,43 +84,107 @@ const ProceduresItemDetails: React.FC = () => {
     }, []);
 
     return (
-        <>
-            {isLoading && (
-                <div className="spinner-overlay">
+        <div className={styles.container}>
+            {(isLoading || deleting) && (
+                <div className={styles.spinnerOverlay}>
                     <Spinner />
                 </div>
             )}
 
-            {dialog && <Dialog message={dialog.message} type={dialog.type} onClose={() => setDialog(null)} />}
+            {dialog && (
+                <Dialog
+                    message={dialog.message}
+                    type={dialog.type}
+                    onClose={() => setDialog(null)}
+                />
+            )}
+
+            <div className={styles.navWrapper}>
+                <Link to="/staff-area/procedures" className={styles.backLink}>
+                    &larr; Back to All Procedures
+                </Link>
+            </div>
 
             {procedureDetails && (
-                <>
-                    <h1 className={styles["procedures-item-details-h1"]}>Procedure Details:</h1>
+                <article className={styles.card}>
+                    <header className={styles.cardHeader}>
+                        <div className={styles.iconCircle}>
+                            <i className="fa-solid fa-file-medical"></i>
+                        </div>
+                        <h1 className={styles.title}>{procedureDetails.name}</h1>
+                        <p className={styles.subtitle}>Procedure Details</p>
+                    </header>
 
-                    <section className={styles["procedures-item-details"]}>
-                        <div className={styles["procedures-item-details-card"]} key={procedureDetails.id}>
-                            <div className={styles["procedures-item-details-content"]}>
-                                <h2><i className="fa-solid fa-calendar-days"></i> {formatDate(procedureDetails.date)}</h2>
-                                <p><i className="fa-solid fa-file-signature"></i> Procedure Name: {procedureDetails.name}</p>
-                                <p><i className="fa-solid fa-clock"></i> Hour: {formatTime(procedureDetails.date)}</p>
-                                <p><i className="fa-solid fa-pen"></i> ID: {procedureDetails.id}</p>
-                                <p><i className="fa-solid fa-pen"></i> Animal ID: {procedureDetails.animalId}</p>
-                                <p><i className="fa-solid fa-file-signature"></i> Animal Name: {procedureDetails.animalName}</p>
-                                <p><i className="fa-solid fa-id-badge"></i> Staff Profile ID: {procedureDetails.staffProfileId}</p>
-                                <p><i className="fa-solid fa-file-signature"></i> Staff Member Name: {procedureDetails.staffMemberName}</p>
-                                <p><i className="fa-solid fa-comment"></i> Description: {procedureDetails.description}</p>
-
-                                <div className={styles["procedures-item-details-actions"]}>
-                                    <Link to={`/staff-area/procedures/${id}/edit`} className={styles["procedures-item-details-edit-btn"]}>Edit</Link>
-                                    <button onClick={handleDelete} className={`${styles["procedures-item-details-delete-btn"]}`}>Delete</button>
-                                </div>
-                                <Link to="/staff-area/procedures" className={styles["procedures-item-details-back-link"]}>← Back to All Procedures</Link>
+                    <div className={styles.cardBody}>
+                        <div className={styles.detailRow}>
+                            <div className={styles.iconBox}>
+                                <i className="fa-solid fa-calendar-days"></i>
+                            </div>
+                            <div className={styles.detailText}>
+                                <span className={styles.label}>Date</span>
+                                <span className={styles.value}>{formatDate(procedureDetails.date)}</span>
                             </div>
                         </div>
-                    </section>
-                </>
+
+                        <div className={styles.detailRow}>
+                            <div className={styles.iconBox}>
+                                <i className="fa-solid fa-clock"></i>
+                            </div>
+                            <div className={styles.detailText}>
+                                <span className={styles.label}>Time</span>
+                                <span className={styles.value}>{formatTime(procedureDetails.date)}</span>
+                            </div>
+                        </div>
+
+                        <div className={styles.detailRow}>
+                            <div className={styles.iconBox}>
+                                <i className="fa-solid fa-paw"></i>
+                            </div>
+                            <div className={styles.detailText}>
+                                <span className={styles.label}>Animal</span>
+                                <span className={styles.value}>{procedureDetails.animalName} (ID: {procedureDetails.animalId})</span>
+                            </div>
+                        </div>
+
+                        <div className={styles.detailRow}>
+                            <div className={styles.iconBox}>
+                                <i className="fa-solid fa-user-doctor"></i>
+                            </div>
+                            <div className={styles.detailText}>
+                                <span className={styles.label}>Staff Member</span>
+                                <span className={styles.value}>{procedureDetails.staffMemberName} (ID: {procedureDetails.staffProfileId})</span>
+                            </div>
+                        </div>
+
+                        <div className={`${styles.detailRow} ${styles.descriptionRow}`}>
+                            <div className={styles.iconBox}>
+                                <i className="fa-solid fa-comment-medical"></i>
+                            </div>
+                            <div className={styles.detailText}>
+                                <span className={styles.label}>Description</span>
+                                <p className={styles.description}>{procedureDetails.description}</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <footer className={styles.cardFooter}>
+                        <Link
+                            to={`/staff-area/procedures/${id}/edit`}
+                            className={styles.editBtn}
+                        >
+                            <i className="fa-solid fa-pen-to-square"></i> Edit
+                        </Link>
+                        <button
+                            onClick={handleDelete}
+                            className={styles.deleteBtn}
+                            disabled={deleting}
+                        >
+                            <i className="fa-solid fa-trash"></i> {deleting ? "Deleting..." : "Delete"}
+                        </button>
+                    </footer>
+                </article>
             )}
-        </>
+        </div>
     );
 };
 

@@ -135,7 +135,7 @@ const PrescriptionsEdit: React.FC = () => {
     }, [id]);
 
     return (
-        <div className={styles.container}>
+        <div className={styles.pageContainer}>
             {(isLoading || formLoading) && (
                 <div className={styles.spinnerOverlay}>
                     <Spinner />
@@ -161,39 +161,43 @@ const PrescriptionsEdit: React.FC = () => {
                     </header>
 
                     <form onSubmit={onSubmit} noValidate className={styles.form}>
-                        {([
-                            {
-                                name: "id",
-                                label: "Prescription ID",
-                                type: "number",
-                                icon: "fa-hashtag",
-                                placeholder: "Enter the prescription ID",
-                            },
-                            {
-                                name: "description",
-                                label: "Description",
-                                type: "text",
-                                icon: "fa-comment-medical",
-                                placeholder: "Enter the new description",
-                            }
-                        ] as const).map(({ name, label, type, icon, placeholder }) => (
-                            <div className={styles.formGroup} key={name}>
-                                <label htmlFor={name}>
-                                    <i className={`fa-solid ${icon}`}></i> {label}
-                                </label>
+                        <div className={styles.formGroup}>
+                            <label htmlFor="id">Prescription ID</label>
+                            <div className={styles.inputWrapper}>
+                                <i className={`fa-solid fa-hashtag ${styles.inputIcon}`}></i>
                                 <input
-                                    type={type}
-                                    id={name}
-                                    name={name}
-                                    value={values[name] ?? ""}
+                                    type="number"
+                                    id="id"
+                                    name="id"
+                                    value={values.id ?? ""}
                                     onChange={handleChange}
-                                    className={`${styles.input} ${inputClass(name)}`}
-                                    placeholder={placeholder}
+                                    className={`${styles.input} ${inputClass("id")}`}
+                                    placeholder="Enter the prescription ID"
                                     autoComplete="off"
+                                    readOnly
                                 />
-                                {errors[name] && <span className={styles.errorMsg}>{errors[name]}</span>}
                             </div>
-                        ))}
+                            {errors.id && <span className={styles.errorMsg}>{errors.id}</span>}
+                        </div>
+
+                        <div className={styles.formGroup}>
+                            <label htmlFor="description">Description</label>
+                            <div className={styles.inputWrapper}>
+                                <i className={`fa-solid fa-comment-medical ${styles.inputIcon}`}></i>
+                                <input
+                                    type="text"
+                                    id="description"
+                                    name="description"
+                                    value={values.description ?? ""}
+                                    onChange={handleChange}
+                                    className={`${styles.input} ${inputClass("description")}`}
+                                    placeholder="Enter the new description"
+                                    autoComplete="off"
+                                    required
+                                />
+                            </div>
+                            {errors.description && <span className={styles.errorMsg}>{errors.description}</span>}
+                        </div>
 
                         <div className={styles.actionGroup}>
                             <button

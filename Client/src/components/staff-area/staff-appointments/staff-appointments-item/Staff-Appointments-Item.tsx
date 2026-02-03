@@ -73,7 +73,7 @@ const StaffAppointmentsItem: React.FC = () => {
             <section className={styles.filterSection}>
                 <div className={styles.filterGroup}>
                     <div className={styles.filterItem}>
-                        <label htmlFor="ownerId"><i className="fa-solid fa-id-badge"></i> Owner ID</label>
+                        <label htmlFor="ownerId"><i className="fa-solid fa-user"></i> Owner ID</label>
                         <input id="ownerId" type="text" value={ownerId} onChange={(e) => setOwnerId(e.target.value)} placeholder="Search by ID" />
                     </div>
 

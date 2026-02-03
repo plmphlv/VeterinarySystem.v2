@@ -69,7 +69,7 @@ const PrescriptionsCreate: React.FC = () => {
 
             const payload: CreatePrescriptionRequest = {
                 ...values,
-                animalId: values.animalId ?? null,  
+                animalId: values.animalId ?? null,
             };
 
             await createPrescription(payload);
@@ -86,18 +86,18 @@ const PrescriptionsCreate: React.FC = () => {
     const { values, changeHandler, onSubmit, changeValues } = useForm(initialValues, createPrescriptionHandler);
 
     const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
-            const { name, value, type } = e.target;
-            const fieldName = name as keyof CreatePrescriptionRequest;
-    
-            let parsedValue: string | number | null = value;
-            if (type === "number") parsedValue = value === "" ? null : Number(value);
-            else if (fieldName === "animalId") parsedValue = value === "" ? null : Number(value);
-    
-            changeValues({ ...values, [fieldName]: parsedValue });
-    
-            const errorMsg = validateField(fieldName, parsedValue ?? "", { ...values, [fieldName]: parsedValue });
-            setErrors(prev => ({ ...prev, [fieldName]: errorMsg || undefined }));
-        };
+        const { name, value, type } = e.target;
+        const fieldName = name as keyof CreatePrescriptionRequest;
+
+        let parsedValue: string | number | null = value;
+        if (type === "number") parsedValue = value === "" ? null : Number(value);
+        else if (fieldName === "animalId") parsedValue = value === "" ? null : Number(value);
+
+        changeValues({ ...values, [fieldName]: parsedValue });
+
+        const errorMsg = validateField(fieldName, parsedValue ?? "", { ...values, [fieldName]: parsedValue });
+        setErrors(prev => ({ ...prev, [fieldName]: errorMsg || undefined }));
+    };
 
     const inputClass = (field: keyof CreatePrescriptionRequest) => {
         if (errors[field]) return styles.errorInput;
@@ -110,7 +110,7 @@ const PrescriptionsCreate: React.FC = () => {
     }, []);
 
     return (
-        <div className={styles.container}>
+        <div className={styles.pageContainer}>
             {(formLoading || userLoading) && (
                 <div className={styles.spinnerOverlay}>
                     <Spinner />
@@ -125,7 +125,7 @@ const PrescriptionsCreate: React.FC = () => {
                 />
             )}
 
-            <article className={styles.card}>
+            <section className={styles.card}>
                 <header className={styles.cardHeader}>
                     <div className={styles.iconCircle}>
                         <i className="fa-solid fa-file-medical"></i>
@@ -136,38 +136,40 @@ const PrescriptionsCreate: React.FC = () => {
 
                 <form onSubmit={onSubmit} noValidate className={styles.form}>
                     <div className={styles.formGroup}>
-                        <label htmlFor="animalId">
-                            <i className="fa-solid fa-paw"></i> Animal ID
-                        </label>
-                        <input
-                            type="number"
-                            id="animalId"
-                            name="animalId"
-                            value={values.animalId ?? ""}
-                            onChange={handleChange}
-                            className={`${styles.input} ${inputClass("animalId")}`}
-                            placeholder="Enter animal ID"
-                            autoComplete="off"
-                            required
-                        />
+                        <label htmlFor="animalId">Animal ID</label>
+                        <div className={styles.inputWrapper}>
+                            <i className={`fa-solid fa-paw ${styles.inputIcon}`}></i>
+                            <input
+                                type="number"
+                                id="animalId"
+                                name="animalId"
+                                value={values.animalId ?? ""}
+                                onChange={handleChange}
+                                className={`${styles.input} ${inputClass("animalId")}`}
+                                placeholder="Enter animal ID"
+                                autoComplete="off"
+                                required
+                            />
+                        </div>
                         {errors.animalId && <span className={styles.errorMsg}>{errors.animalId}</span>}
                     </div>
 
                     <div className={styles.formGroup}>
-                        <label htmlFor="description">
-                            <i className="fa-solid fa-pen"></i> Description
-                        </label>
-                        <input
-                            type="text"
-                            id="description"
-                            name="description"
-                            value={values.description ?? ""}
-                            onChange={handleChange}
-                            className={`${styles.input} ${inputClass("description")}`}
-                            placeholder="Enter prescription details"
-                            autoComplete="off"
-                            required
-                        />
+                        <label htmlFor="description">Description</label>
+                        <div className={styles.inputWrapper}>
+                            <i className={`fa-solid fa-pen ${styles.inputIcon}`}></i>
+                            <input
+                                type="text"
+                                id="description"
+                                name="description"
+                                value={values.description ?? ""}
+                                onChange={handleChange}
+                                className={`${styles.input} ${inputClass("description")}`}
+                                placeholder="Enter description"
+                                autoComplete="off"
+                                required
+                            />
+                        </div>
                         {errors.description && <span className={styles.errorMsg}>{errors.description}</span>}
                     </div>
 
@@ -188,7 +190,7 @@ const PrescriptionsCreate: React.FC = () => {
                         </Link>
                     </div>
                 </form>
-            </article>
+            </section>
         </div>
     );
 };

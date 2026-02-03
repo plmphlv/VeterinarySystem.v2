@@ -14,22 +14,27 @@ const StaffProfiles: React.FC = () => {
     const isSuperAdministrator = role === "SuperAdministrator";
 
     return (
-        <>
-            <h1 className={styles["staff-profiles-h1"]}>Staff Profiles:</h1>
+        <section className={styles.container}>
+            <header className={styles.header}>
+                <h1 className={styles.title}>Staff Profiles</h1>
+                <p className={styles.subtitle}>Manage veterinary staff and administrators</p>
+            </header>
 
-            <div className={styles["staff-profiles-div"]}>
+            <div className={styles.contentWrapper}>
                 <StaffProfilesItem />
             </div>
 
             {isSuperAdministrator && (
-                <Link
-                    to="/staff-area/staff-profiles/add"
-                    className={styles["staff-profiles-add-btn"]}
-                >
-                    <i className="fa-solid fa-plus"></i> Add Staff
-                </Link>
+                <div className={styles.ctaWrapper}>
+                    <Link
+                        to="/staff-area/staff-profiles/add"
+                        className={styles.addBtn}
+                    >
+                        <i className="fa-solid fa-user-plus"></i> Add Staff
+                    </Link>
+                </div>
             )}
-        </>
+        </section>
     );
 };
 

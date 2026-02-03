@@ -120,7 +120,7 @@ const PrescriptionsItem: React.FC = () => {
                     </div>
 
                     <div className={styles.filterItem}>
-                        <label htmlFor="animalId"><i className="fa-solid fa-id-badge"></i> Animal ID</label>
+                        <label htmlFor="animalId"><i className="fa-solid fa-paw"></i> Animal ID</label>
                         <input
                             type="number"
                             id="animalId"

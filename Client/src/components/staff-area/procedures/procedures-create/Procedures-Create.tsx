@@ -119,9 +119,9 @@ const ProceduresCreate: React.FC = () => {
     };
 
     const inputClass = (field: keyof CreateProcedureRequest) => {
-        if (errors[field]) return `${styles.input} ${styles.error}`;
-        if (values[field] && !errors[field]) return `${styles.input} ${styles.success}`;
-        return styles.input;
+        if (errors[field]) return styles.errorInput;
+        if (values[field] && !errors[field]) return styles.successInput;
+        return "";
     };
 
     useEffect(() => {
@@ -129,152 +129,143 @@ const ProceduresCreate: React.FC = () => {
     }, []);
 
     return (
-        <>
+        <div className={styles.pageContainer}>
             {(formLoading || userLoading) && (
-                <div className="spinner-overlay">
+                <div className={styles.spinnerOverlay}>
                     <Spinner />
                 </div>
             )}
 
-            <section className={styles["procedures-create"]}>
-                <div className={styles["procedures-create-container"]}>
-                    <h2>Create Procedure</h2>
+            {dialog && (
+                <Dialog
+                    message={dialog.message}
+                    type={dialog.type}
+                    onClose={() => setDialog(null)}
+                />
+            )}
 
-                    <form onSubmit={onSubmit} noValidate>
-                        <div className={styles["procedures-create-form-group"]}>
-                            <label htmlFor="name">
-                                <i className="fa-solid fa-pen"></i> Name:
-                            </label>
+            <section className={styles.card}>
+                <header className={styles.cardHeader}>
+                    <h1>Create Procedure</h1>
+                    <p>Log a new medical procedure</p>
+                </header>
 
+                <form onSubmit={onSubmit} noValidate className={styles.form}>
+                    <div className={styles.formGroup}>
+                        <label htmlFor="name">Procedure Name</label>
+                        <div className={styles.inputWrapper}>
+                            <i className={`fa-solid fa-file-signature ${styles.inputIcon}`}></i>
                             <input
                                 type="text"
                                 id="name"
                                 name="name"
                                 value={values.name ?? ""}
                                 onChange={handleChange}
-                                className={inputClass("name")}
-                                placeholder="Enter name"
+                                className={`${styles.input} ${inputClass("name")}`}
+                                placeholder="Enter procedure name"
                                 autoComplete="off"
                                 required
                             />
-
-                            {errors.name && (
-                                <p className={styles["error-text"]}>{errors.name}</p>
-                            )}
                         </div>
+                        {errors.name && <span className={styles.errorMsg}>{errors.name}</span>}
+                    </div>
 
-                        <div className={styles["procedures-create-form-group"]}>
-                            <label htmlFor="description">
-                                <i className="fa-solid fa-pen"></i> Description:
-                            </label>
-
+                    <div className={styles.formGroup}>
+                        <label htmlFor="description">Description</label>
+                        <div className={styles.inputWrapper}>
+                            <i className={`fa-solid fa-pen ${styles.inputIcon}`}></i>
                             <input
                                 type="text"
                                 id="description"
                                 name="description"
                                 value={values.description ?? ""}
                                 onChange={handleChange}
-                                className={inputClass("description")}
-                                placeholder="Enter description"
+                                className={`${styles.input} ${inputClass("description")}`}
+                                placeholder="Enter details about the procedure"
                                 autoComplete="off"
                                 required
                             />
-
-                            {errors.description && (
-                                <p className={styles["error-text"]}>{errors.description}</p>
-                            )}
                         </div>
+                        {errors.description && <span className={styles.errorMsg}>{errors.description}</span>}
+                    </div>
 
-                        <div className={styles["procedures-create-form-group"]}>
-                            <label htmlFor="date">
-                                <i className="fa-solid fa-pen"></i> Date of procedure:
-                            </label>
-
+                    <div className={styles.formGroup}>
+                        <label htmlFor="date">Date</label>
+                        <div className={styles.inputWrapper}>
+                            <i className={`fa-solid fa-calendar-days ${styles.inputIcon}`}></i>
                             <input
                                 type="datetime-local"
                                 id="date"
                                 name="date"
                                 value={values.date ?? ""}
                                 onChange={handleChange}
-                                className={`${styles["procedures-create-form-group"]} ${inputClass("date")}`}
-                                placeholder="Select date"
-                                autoComplete="off"
+                                className={`${styles.input} ${inputClass("date")}`}
                                 min={getTomorrowDatetimeLocal()}
                                 required
                             />
-                            {errors.date && <p className={styles["error-text"]}>{errors.date}</p>}
+                        </div>
+                        {errors.date && <span className={styles.errorMsg}>{errors.date}</span>}
+                    </div>
+
+                    <div className={styles.formRow}>
+                        <div className={styles.formGroup}>
+                            <label htmlFor="animalId">Animal ID</label>
+                            <div className={styles.inputWrapper}>
+                                <i className={`fa-solid fa-paw ${styles.inputIcon}`}></i>
+                                <input
+                                    type="number"
+                                    id="animalId"
+                                    name="animalId"
+                                    value={values.animalId ?? ""}
+                                    onChange={handleChange}
+                                    className={`${styles.input} ${inputClass("animalId")}`}
+                                    placeholder="Animal ID"
+                                    autoComplete="off"
+                                    required
+                                />
+                            </div>
+                            {errors.animalId && <span className={styles.errorMsg}>{errors.animalId}</span>}
                         </div>
 
-                        <div className={styles["procedures-create-form-group"]}>
-                            <label htmlFor="animalId">
-                                <i className="fa-solid fa-pen"></i> Animal ID:
-                            </label>
-
-                            <input
-                                type="number"
-                                id="animalId"
-                                name="animalId"
-                                value={values.animalId ?? ""}
-                                onChange={handleChange}
-                                className={inputClass("animalId")}
-                                placeholder="Enter animal ID"
-                                autoComplete="off"
-                                required
-                            />
-
-                            {errors.animalId && (
-                                <p className={styles["error-text"]}>{errors.animalId}</p>
-                            )}
+                        <div className={styles.formGroup}>
+                            <label htmlFor="staffId">Staff ID</label>
+                            <div className={styles.inputWrapper}>
+                                <i className={`fa-solid fa-user-doctor ${styles.inputIcon}`}></i>
+                                <input
+                                    type="text"
+                                    id="staffId"
+                                    name="staffId"
+                                    value={values.staffId ?? ""}
+                                    onChange={handleChange}
+                                    className={`${styles.input} ${inputClass("staffId")}`}
+                                    placeholder="Staff ID"
+                                    autoComplete="off"
+                                    required
+                                />
+                            </div>
+                            {errors.staffId && <span className={styles.errorMsg}>{errors.staffId}</span>}
                         </div>
+                    </div>
 
-                        <div className={styles["procedures-create-form-group"]}>
-                            <label htmlFor="staffId">
-                                <i className="fa-solid fa-pen"></i> Staff ID:
-                            </label>
-
-                            <input
-                                type="text"
-                                id="staffId"
-                                name="staffId"
-                                value={values.staffId ?? ""}
-                                onChange={handleChange}
-                                className={inputClass("staffId")}
-                                placeholder="Enter staff ID"
-                                autoComplete="off"
-                                required
-                            />
-
-                            {errors.staffId && (
-                                <p className={styles["error-text"]}>{errors.staffId}</p>
-                            )}
-                        </div>
-
+                    <div className={styles.actionGroup}>
                         <button
                             type="submit"
-                            className={styles["procedures-create-btn-small"]}
+                            className={styles.submitBtn}
                             disabled={formLoading}
                         >
-                            Create
+                            <i className="fa-solid fa-plus"></i> Create
                         </button>
 
                         <Link
                             to="/staff-area/procedures"
-                            className={styles["procedures-cancel-btn"]}
+                            className={styles.cancelBtn}
                         >
-                            Cancel
+                            <i className="fa-solid fa-xmark"></i> Cancel
                         </Link>
-                    </form>
-                </div>
-
-                {dialog && (
-                    <Dialog
-                        message={dialog.message}
-                        type={dialog.type}
-                        onClose={() => setDialog(null)}
-                    />
-                )}
+                    </div>
+                </form>
             </section>
-        </>
+        </div>
     );
 };
 

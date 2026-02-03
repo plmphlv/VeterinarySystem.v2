@@ -127,7 +127,7 @@ const AnimalTypesAdd: React.FC = () => {
     }, []);
 
     return (
-        <div className={styles.container}>
+        <div className={styles.pageContainer}>
             {(formLoading || userLoading) && (
                 <div className={styles.spinnerOverlay}>
                     <Spinner />
@@ -142,31 +142,29 @@ const AnimalTypesAdd: React.FC = () => {
                 />
             )}
 
-            <article className={styles.card}>
+            <section className={styles.card}>
                 <header className={styles.cardHeader}>
-                    <div className={styles.iconCircle}>
-                        <i className="fa-solid fa-paw"></i>
-                    </div>
-                    <h1 className={styles.title}>Add a New Animal Type</h1>
-                    <p className={styles.subtitle}>Create a new animal category</p>
+                    <h1>Add Animal Type</h1>
+                    <p>Define a new category for animals</p>
                 </header>
 
                 <form onSubmit={onSubmit} noValidate className={styles.form}>
                     <div className={styles.formGroup}>
-                        <label htmlFor="typeName">
-                            <i className="fa-solid fa-tag"></i> Type Name
-                        </label>
-                        <input
-                            type="text"
-                            id="typeName"
-                            name="typeName"
-                            value={values.typeName ?? ""}
-                            onChange={handleChange}
-                            className={`${styles.input} ${inputClass("typeName")}`}
-                            placeholder="Enter animal type name"
-                            autoComplete="off"
-                            required
-                        />
+                        <label htmlFor="typeName">Type Name</label>
+                        <div className={styles.inputWrapper}>
+                            <i className={`fa-solid fa-tag ${styles.inputIcon}`}></i>
+                            <input
+                                type="text"
+                                id="typeName"
+                                name="typeName"
+                                value={values.typeName ?? ""}
+                                onChange={handleChange}
+                                className={`${styles.input} ${inputClass("typeName")}`}
+                                placeholder="Enter animal type name"
+                                autoComplete="off"
+                                required
+                            />
+                        </div>
                         {errors.typeName && <span className={styles.errorMsg}>{errors.typeName}</span>}
                     </div>
 
@@ -187,7 +185,7 @@ const AnimalTypesAdd: React.FC = () => {
                         </Link>
                     </div>
                 </form>
-            </article>
+            </section>
         </div>
     );
 };

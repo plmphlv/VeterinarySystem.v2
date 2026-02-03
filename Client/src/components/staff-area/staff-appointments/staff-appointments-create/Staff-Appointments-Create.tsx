@@ -119,7 +119,7 @@ const StaffAppointmentsCreate: React.FC = () => {
     }, []);
 
     return (
-        <div className={styles.container}>
+        <div className={styles.pageContainer}>
             {(formLoading || userLoading) && (
                 <div className={styles.spinnerOverlay}>
                     <Spinner />
@@ -134,85 +134,88 @@ const StaffAppointmentsCreate: React.FC = () => {
                 />
             )}
 
-            <article className={styles.card}>
+            <section className={styles.card}>
                 <header className={styles.cardHeader}>
-                    <div className={styles.iconCircle}>
-                        <i className="fa-solid fa-calendar-check"></i>
-                    </div>
-                    <h1 className={styles.title}>Create Appointment</h1>
-                    <p className={styles.subtitle}>Schedule a new appointment for a client</p>
+                    <h1>Create Appointment</h1>
+                    <p>Schedule a new appointment for a client</p>
                 </header>
 
                 <form onSubmit={onSubmit} noValidate className={styles.form}>
                     <div className={styles.formGroup}>
-                        <label htmlFor="date">
-                            <i className="fa-solid fa-calendar"></i> Date & Time
-                        </label>
-                        <input
-                            type="datetime-local"
-                            id="date"
-                            name="date"
-                            value={values.date ?? ""}
-                            onChange={handleChange}
-                            className={`${styles.input} ${inputClass("date")}`}
-                            min={getTomorrowDatetimeLocal()}
-                            required
-                        />
+                        <label htmlFor="date">Date & Time</label>
+                        <div className={styles.inputWrapper}>
+                            <i className={`fa-solid fa-calendar-days ${styles.inputIcon}`}></i>
+                            <input
+                                type="datetime-local"
+                                id="date"
+                                name="date"
+                                value={values.date ?? ""}
+                                onChange={handleChange}
+                                className={`${styles.input} ${inputClass("date")}`}
+                                min={getTomorrowDatetimeLocal()}
+                                required
+                            />
+                        </div>
                         {errors.date && <span className={styles.errorMsg}>{errors.date}</span>}
                     </div>
 
                     <div className={styles.formGroup}>
-                        <label htmlFor="description">
-                            <i className="fa-solid fa-pen"></i> Description
-                        </label>
-                        <input
-                            type="text"
-                            id="description"
-                            name="description"
-                            value={values.description ?? ""}
-                            onChange={handleChange}
-                            className={`${styles.input} ${inputClass("description")}`}
-                            placeholder="Enter appointment description"
-                            autoComplete="off"
-                            required
-                        />
+                        <label htmlFor="description">Description</label>
+                        <div className={styles.inputWrapper}>
+                            <i className={`fa-solid fa-pen ${styles.inputIcon}`}></i>
+                            <input
+                                type="text"
+                                id="description"
+                                name="description"
+                                value={values.description ?? ""}
+                                onChange={handleChange}
+                                className={`${styles.input} ${inputClass("description")}`}
+                                placeholder="Enter appointment description"
+                                autoComplete="off"
+                                required
+                            />
+                        </div>
                         {errors.description && <span className={styles.errorMsg}>{errors.description}</span>}
                     </div>
 
-                    <div className={styles.formGroup}>
-                        <label htmlFor="staffId">
-                            <i className="fa-solid fa-user-doctor"></i>Staff ID
-                        </label>
-                        <input
-                            type="text"
-                            id="staffId"
-                            name="staffId"
-                            value={values.staffId ?? ""}
-                            onChange={handleChange}
-                            className={`${styles.input} ${inputClass("staffId")}`}
-                            placeholder="Enter staff ID"
-                            autoComplete="off"
-                            required
-                        />
-                        {errors.staffId && <span className={styles.errorMsg}>{errors.staffId}</span>}
-                    </div>
+                    <div className={styles.formRow}>
+                        <div className={styles.formGroup}>
+                            <label htmlFor="staffId">Staff ID</label>
+                            <div className={styles.inputWrapper}>
+                                <i className={`fa-solid fa-user-doctor ${styles.inputIcon}`}></i>
+                                <input
+                                    type="text"
+                                    id="staffId"
+                                    name="staffId"
+                                    value={values.staffId ?? ""}
+                                    onChange={handleChange}
+                                    className={`${styles.input} ${inputClass("staffId")}`}
+                                    placeholder="Staff ID"
+                                    autoComplete="off"
+                                    required
+                                />
+                            </div>
+                            {errors.staffId && <span className={styles.errorMsg}>{errors.staffId}</span>}
+                        </div>
 
-                    <div className={styles.formGroup}>
-                        <label htmlFor="ownerId">
-                            <i className="fa-solid fa-id-badge"></i> Owner ID
-                        </label>
-                        <input
-                            type="text"
-                            id="ownerId"
-                            name="ownerId"
-                            value={values.ownerId ?? ""}
-                            onChange={handleChange}
-                            className={`${styles.input} ${inputClass("ownerId")}`}
-                            placeholder="Enter owner ID"
-                            autoComplete="off"
-                            required
-                        />
-                        {errors.ownerId && <span className={styles.errorMsg}>{errors.ownerId}</span>}
+                        <div className={styles.formGroup}>
+                            <label htmlFor="ownerId">Owner ID</label>
+                            <div className={styles.inputWrapper}>
+                                <i className={`fa-solid fa-user ${styles.inputIcon}`}></i>
+                                <input
+                                    type="text"
+                                    id="ownerId"
+                                    name="ownerId"
+                                    value={values.ownerId ?? ""}
+                                    onChange={handleChange}
+                                    className={`${styles.input} ${inputClass("ownerId")}`}
+                                    placeholder="Owner ID"
+                                    autoComplete="off"
+                                    required
+                                />
+                            </div>
+                            {errors.ownerId && <span className={styles.errorMsg}>{errors.ownerId}</span>}
+                        </div>
                     </div>
 
                     <div className={styles.actionGroup}>
@@ -232,7 +235,7 @@ const StaffAppointmentsCreate: React.FC = () => {
                         </Link>
                     </div>
                 </form>
-            </article>
+            </section>
         </div>
     );
 };
