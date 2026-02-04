@@ -1,84 +1,141 @@
-@mixin fade-in {
-    opacity: 1;
-    animation-name: fadeInOpacity;
-    animation-iteration-count: 1;
-    animation-timing-function: ease-in;
-    animation-duration: 2s;
-}
-
-@keyframes fadeInOpacity {
-    0% {
-        opacity: 0;
-    }
-
-    100% {
-        opacity: 1;
-    }
-}
-
-.error-section {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    padding: 60px 20px;
+.container {
+    width: 100%;
     min-height: 100vh;
-}
-
-.error-container {
-    animation: fadeInOpacity 1s;
     display: flex;
-    flex-direction: row;
-    align-items: center;
     justify-content: center;
-    max-width: 1200px;
+    align-items: center;
+    padding: 8rem 1.5rem 3rem;
+    position: relative;
+    background-image: url('/images/veterinary-hospital.png');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+}
+
+.container::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.6);
+    z-index: 1;
+}
+
+.card {
+    position: relative;
+    z-index: 2;
+    background: rgba(255, 255, 255, 0.75);
     width: 100%;
-    gap: 40px;
+    max-width: 550px;
+    border-radius: 20px;
+    box-shadow: 0 15px 40px rgba(0, 0, 0, 0.2);
+    padding: 3.5rem 2rem;
+    border: 1px solid rgba(78, 197, 180, 0.1);
+    animation: fadeUp 0.8s ease-out forwards;
+    opacity: 0;
     text-align: center;
-    flex-wrap: wrap-reverse;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 }
 
-.error-content {
-    flex: 1;
-    min-width: 300px;
+.iconCircle {
+    width: 80px;
+    height: 80px;
+    background-color: #fff0f0;
+    border: 2px solid #ff6b6b;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 2.5rem;
+    color: #ff6b6b;
+    margin-bottom: 1.5rem;
+    box-shadow: 0 4px 15px rgba(255, 107, 107, 0.2);
 }
 
-.error-code {
-    font-size: 96px;
-    color: red;
-    font-weight: bold;
-}
-
-.error-message {
-    font-size: 32px;
+.errorCode {
+    font-size: 5rem;
+    font-weight: 900;
     color: #4EC5B4;
-    margin-top: 10px;
+    margin: 0;
+    line-height: 1;
+    text-shadow: 2px 2px 0px #eaf8f6;
 }
 
-.error-description {
-    font-size: 18px;
-    margin: 20px 0;
-    color: #555;
+.errorMessage {
+    font-size: 1.8rem;
+    color: #333;
+    margin: 0.5rem 0 1.5rem;
+    font-weight: 700;
+}
+
+.description {
+    font-size: 1.1rem;
+    color: #666;
     line-height: 1.6;
-}
-
-.error-button {
-    display: inline-block;
-    background-color: #4EC5B4;
-    color: white;
-    padding: 12px 24px;
-    border-radius: 8px;
-    text-decoration: none;
-    transition: background 0.3s ease;
-    font-weight: 500;
-}
-
-.error-button:hover {
-    background-color: #3aa89b;
-    transition: 0.3s ease-in;
-}
-
-.error-image img {
+    margin-bottom: 2.5rem;
     max-width: 400px;
-    width: 100%;
-    height: auto;
+}
+
+.primaryBtn {
+    background-color: #4EC5B4;
+    color: #fff;
+    font-size: 1.1rem;
+    font-weight: 700;
+    padding: 1rem 2.5rem;
+    border-radius: 50px;
+    text-decoration: none;
+    box-shadow: 0 4px 15px rgba(78, 197, 180, 0.4);
+    transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    border: 2px solid transparent;
+    display: inline-block;
+    max-width: 100%;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    animation: invitePulse 2s infinite ease-in-out;
+}
+
+.primaryBtn:hover {
+    animation: none;
+}
+
+@media (min-width: 1025px) {
+    .primaryBtn:hover {
+        background-color: #fff;
+        color: #4EC5B4;
+        border-color: #4EC5B4;
+        box-shadow: 0 6px 20px rgba(78, 197, 180, 0.6);
+        transform: scale(1.05);
+    }
+}
+
+@media (max-width: 768px) {
+    .card {
+        padding: 2.5rem 1.5rem;
+    }
+
+    .errorCode {
+        font-size: 4rem;
+    }
+
+    .errorMessage {
+        font-size: 1.5rem;
+    }
+
+    .primaryBtn {
+        width: 100%;
+        justify-content: center;
+    }
+}
+
+@keyframes fadeUp {
+    from {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
 }

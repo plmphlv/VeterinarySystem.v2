@@ -20,7 +20,7 @@ const Prescriptions: React.FC = () => {
                     to="/staff-area/prescriptions/create" 
                     className={styles.primaryBtn}
                 >
-                    <i className="fa-solid fa-plus"></i> Create a Prescription
+                    <i className="fa-solid fa-plus"></i> Create a New Prescription
                 </Link>
             </div>
         </section>

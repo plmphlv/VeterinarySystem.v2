@@ -29,13 +29,11 @@ const StaffProfilesAdd: React.FC = () => {
     const { addStaffProfile, cancelAddStaffProfile } = useAddStaffProfile();
     const navigate = useNavigate();
 
-    /* ================= ROLE GUARD ================= */
-
     const decodedData = getJwtDecodedData();
 
     const role =
         decodedData?.[
-            "http://schemas.microsoft.com/ws/2008/06/identity/claims/role"
+        "http://schemas.microsoft.com/ws/2008/06/identity/claims/role"
         ];
 
     useEffect(() => {
@@ -47,8 +45,6 @@ const StaffProfilesAdd: React.FC = () => {
     if (role !== "SuperAdministrator") {
         return null;
     }
-
-    /* ================================================= */
 
     const validateField = (
         field: keyof AddStaffProfileRequest,
@@ -104,6 +100,10 @@ const StaffProfilesAdd: React.FC = () => {
                 message: "Staff profile added successfully!",
                 type: "success",
             });
+            setTimeout(
+                () => navigate(`/staff-area/staff-profiles`),
+                1500
+            );
         } catch {
             setDialog({
                 message: "Failed adding staff profile.",
@@ -111,10 +111,6 @@ const StaffProfilesAdd: React.FC = () => {
             });
         } finally {
             setFormLoading(false);
-            setTimeout(
-                () => navigate(`/staff-area/staff-profiles`),
-                1500
-            );
         }
     };
 
@@ -145,10 +141,10 @@ const StaffProfilesAdd: React.FC = () => {
     };
 
     const inputClass = (field: keyof AddStaffProfileRequest) => {
-        if (errors[field]) return `${styles.input} ${styles.error}`;
+        if (errors[field]) return styles.errorInput;
         if (values[field] && !errors[field])
-            return `${styles.input} ${styles.success}`;
-        return styles.input;
+            return styles.successInput;
+        return "";
     };
 
     useEffect(() => {
@@ -156,76 +152,71 @@ const StaffProfilesAdd: React.FC = () => {
     }, [cancelAddStaffProfile]);
 
     return (
-        <>
+        <div className={styles.pageContainer}>
             {(formLoading || userLoading) && (
-                <div className="spinner-overlay">
+                <div className={styles.spinnerOverlay}>
                     <Spinner />
                 </div>
             )}
 
-            <section className={styles["staff-profiles-add"]}>
-                <div className={styles["staff-profiles-add-container"]}>
-                    <h2>Add Staff Profile</h2>
+            {dialog && (
+                <Dialog
+                    message={dialog.message}
+                    type={dialog.type}
+                    onClose={() => setDialog(null)}
+                />
+            )}
 
-                    <form onSubmit={onSubmit} noValidate>
-                        <div
-                            className={
-                                styles["staff-profiles-add-form-group"]
-                            }
-                        >
-                            <label htmlFor="userId">
-                                <i className="fa-solid fa-pen"></i> User ID:
-                            </label>
+            <section className={styles.card}>
+                <header className={styles.cardHeader}>
+                    <div className={styles.iconCircle}>
+                        <i className="fa-solid fa-user-plus"></i>
+                    </div>
+                    <h1 className={styles.title}>Add a Staff Profile</h1>
+                    <p className={styles.subtitle}>Register a new staff member</p>
+                </header>
 
+                <form onSubmit={onSubmit} noValidate className={styles.form}>
+                    <div className={styles.formGroup}>
+                        <label htmlFor="userId">
+                            User ID
+                        </label>
+                        <div className={styles.inputWrapper}>
+                            <i className={`fa-solid fa-id-badge ${styles.inputIcon}`}></i>
                             <input
                                 type="text"
                                 id="userId"
                                 name="userId"
                                 value={values.userId ?? ""}
                                 onChange={handleChange}
-                                className={inputClass("userId")}
+                                className={`${styles.input} ${inputClass("userId")}`}
                                 placeholder="Enter user ID"
                                 autoComplete="off"
                                 required
                             />
-
-                            {errors.userId && (
-                                <p className={styles["error-text"]}>
-                                    {errors.userId}
-                                </p>
-                            )}
                         </div>
+                        {errors.userId && <span className={styles.errorMsg}>{errors.userId}</span>}
+                    </div>
 
+                    <div className={styles.actionGroup}>
                         <button
                             type="submit"
-                            className={
-                                styles["staff-profiles-add-btn-small"]
-                            }
+                            className={styles.submitBtn}
                             disabled={formLoading}
                         >
-                            Add
+                            <i className="fa-solid fa-plus"></i> Add Profile
                         </button>
 
                         <Link
                             to="/staff-area/staff-profiles"
-                            className={
-                                styles["staff-profiles-add-cancel-btn"]
-                            }
+                            className={styles.cancelBtn}
                         >
-                            Cancel
+                            <i className="fa-solid fa-xmark"></i> Cancel
                         </Link>
-                    </form>
-                </div>
-
-                {dialog && (
-                    <Dialog
-                        message={dialog.message}
-                        type={dialog.type}
-                        onClose={() => setDialog(null)}
-                    />
-                )}
+                    </div>
+                </form>
             </section>
-        </>
+        </div>
     );
 };
 

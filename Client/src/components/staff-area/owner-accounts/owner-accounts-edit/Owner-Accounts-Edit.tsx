@@ -165,7 +165,7 @@ const OwnerAccountsEdit: React.FC = () => {
                         <div className={styles.iconCircle}>
                             <i className="fa-solid fa-user-pen"></i>
                         </div>
-                        <h1 className={styles.title}>Edit Owner Account</h1>
+                        <h1 className={styles.title}>Edit an Owner Account</h1>
                         <p className={styles.subtitle}>Update client information</p>
                     </header>
 

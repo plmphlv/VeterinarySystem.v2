@@ -19,7 +19,7 @@ const OwnerAccounts: React.FC = () => {
                     to="/staff-area/owner-accounts/create" 
                     className={styles.primaryBtn}
                 >
-                    <i className="fa-solid fa-plus"></i> Create an Owner Account
+                    <i className="fa-solid fa-plus"></i> Create a New Owner Account
                 </Link>
             </div>
         </section>

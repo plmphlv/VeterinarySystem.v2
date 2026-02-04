@@ -171,7 +171,7 @@ const ProceduresEdit: React.FC = () => {
                     <div className={styles.iconCircle}>
                         <i className="fa-solid fa-file-pen"></i>
                     </div>
-                    <h1 className={styles.title}>Edit Procedure</h1>
+                    <h1 className={styles.title}>Edit a Procedure</h1>
                     <p className={styles.subtitle}>Update medical procedure details</p>
                 </header>
 

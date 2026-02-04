@@ -124,7 +124,7 @@ const AppointmentsCreateRequest: React.FC = () => {
 
             <section className={styles.card}>
                 <header className={styles.cardHeader}>
-                    <h1>Request Appointment</h1>
+                    <h1>Request an Appointment</h1>
                     <p>Schedule a new visit for your pet</p>
                 </header>
 

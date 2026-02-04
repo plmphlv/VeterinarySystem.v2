@@ -9,10 +9,14 @@ const Dialog: React.FC<DialogProps> = ({ message, type, onClose }) => {
     }, [onClose]);
 
     const typeClass = type === "success" ? styles.success : styles.error;
+    const iconClass = type === "success" ? "fa-circle-check" : "fa-circle-exclamation";
 
     return (
         <div className={`${styles.dialog} ${typeClass}`} onClick={onClose}>
-            <span>{message}</span>
+            <div className={styles.iconWrapper}>
+                <i className={`fa-solid ${iconClass}`}></i>
+            </div>
+            <p className={styles.message}>{message}</p>
         </div>
     );
 };

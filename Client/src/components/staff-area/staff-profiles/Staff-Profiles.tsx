@@ -30,7 +30,7 @@ const StaffProfiles: React.FC = () => {
                         to="/staff-area/staff-profiles/add"
                         className={styles.addBtn}
                     >
-                        <i className="fa-solid fa-user-plus"></i> Add Staff
+                        <i className="fa-solid fa-user-plus"></i> Add a Staff Profile
                     </Link>
                 </div>
             )}

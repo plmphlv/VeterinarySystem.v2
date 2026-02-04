@@ -144,7 +144,7 @@ const StaffAppointmentsUpdateRequest: React.FC = () => {
 
             <section className={styles["staff-appointments-update-request"]}>
                 <div className={styles["staff-appointments-update-request-container"]}>
-                    <h2>Update Appointment Request</h2>
+                    <h2>Update an Appointment Request</h2>
                     <form onSubmit={onSubmit} noValidate>
                         <div className={styles["staff-appointments-update-request-form-group"]}>
                             <label htmlFor="date"><i className="fa-solid fa-calendar-days"></i> Date of appointment:</label>

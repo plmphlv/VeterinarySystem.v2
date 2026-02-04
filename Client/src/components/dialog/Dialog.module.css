@@ -1,41 +1,77 @@
-@mixin fade-in {
-    opacity: 1;
-    animation-name: fadeInOpacity;
-    animation-iteration-count: 1;
-    animation-timing-function: ease-in;
-    animation-duration: 2s;
-}
-
-@keyframes fadeInOpacity {
+@keyframes slideUpFade {
     0% {
         opacity: 0;
+        transform: translate(-50%, 20px);
     }
 
     100% {
         opacity: 1;
+        transform: translate(-50%, 0);
     }
 }
 
 .dialog {
     position: fixed;
-    bottom: 50px;
+    bottom: 30px;
     left: 50%;
     transform: translateX(-50%);
-    padding: 12px 20px;
-    border-radius: 6px;
-    color: white;
-    font-family: sans-serif;
-    font-size: 16px;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
-    z-index: 1000;
-    animation: fadeInOpacity 1s;
+    background-color: #fff;
+    padding: 1rem 1.5rem;
+    border-radius: 12px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+    z-index: 2000;
+    display: flex;
+    align-items: center;
+    gap: 1rem;
     cursor: pointer;
+    min-width: 300px;
+    max-width: 90%;
+    border-left: 6px solid transparent;
+    animation: slideUpFade 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
+    transition: transform 0.2s ease;
+}
+
+.iconWrapper {
+    font-size: 1.5rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.message {
+    margin: 0;
+    font-size: 1rem;
+    font-weight: 500;
+    color: #333;
+    line-height: 1.4;
 }
 
 .success {
-    background-color: #4caf50;
+    border-left-color: #48d889;
+}
+
+.success .iconWrapper {
+    color: #48d889;
 }
 
 .error {
-    background-color: #f44336;
+    border-left-color: #ff6b6b;
+}
+
+.error .iconWrapper {
+    color: #ff6b6b;
+}
+
+@media (min-width: 1025px) {
+    .dialog:hover {
+        transform: translate(-50%, -3px);
+    }
+}
+
+@media (max-width: 768px) {
+    .dialog {
+        width: 90%;
+        bottom: 20px;
+        padding: 1rem;
+    }
 }

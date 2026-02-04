@@ -136,7 +136,7 @@ const StaffAppointmentsCreate: React.FC = () => {
 
             <section className={styles.card}>
                 <header className={styles.cardHeader}>
-                    <h1>Create Appointment</h1>
+                    <h1>Create an Appointment</h1>
                     <p>Schedule a new appointment for a client</p>
                 </header>
 

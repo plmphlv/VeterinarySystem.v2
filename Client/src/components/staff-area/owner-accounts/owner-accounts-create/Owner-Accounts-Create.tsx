@@ -139,7 +139,7 @@ const OwnerAccountsCreate: React.FC = () => {
 
             <article className={styles.card}>
                 <header className={styles.cardHeader}>
-                    <h1>Create Owner Account</h1>
+                    <h1>Create an Owner Account</h1>
                     <p>Register a new pet owner in the system</p>
                 </header>
 

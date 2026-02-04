@@ -96,10 +96,16 @@ const StaffProfilesItemDetails: React.FC = () => {
         };
     }, []);
 
-    if (loading) return <Spinner />;
+    if (loading) {
+        return (
+            <div className={styles.spinnerOverlay}>
+                <Spinner />
+            </div>
+        );
+    }
 
     return (
-        <>
+        <div className={styles.container}>
             {error && showError && (
                 <Dialog
                     message={error}
@@ -108,46 +114,76 @@ const StaffProfilesItemDetails: React.FC = () => {
                 />
             )}
 
+            {dialog && (
+                <Dialog
+                    message={dialog.message}
+                    type={dialog.type}
+                    onClose={() => setDialog(null)}
+                />
+            )}
+
+            <div className={styles.navWrapper}>
+                <Link to="/staff-area/staff-profiles" className={styles.backLink}>
+                    &larr; Back to Staff Profiles
+                </Link>
+            </div>
+
             {staffProfileDetails && (
-                <>
-                    <h1 className={styles["staff-profiles-item-details-h1"]}>Staff Profile Details</h1>
+                <article className={styles.card}>
+                    <header className={styles.cardHeader}>
+                        <div className={styles.iconCircle}>
+                            <i className="fa-solid fa-user-doctor"></i>
+                        </div>
+                        <h1 className={styles.title}>{staffProfileDetails.name}</h1>
+                        <p className={styles.subtitle}>Staff Member Details</p>
+                    </header>
 
-                    <div className={styles["staff-profiles-item-details-container"]}>
-                        <div className={styles["staff-profiles-item-details-card"]}>
-                            <div className={styles.avatar}>
-                                {staffProfileDetails.name[0]}
+                    <div className={styles.cardBody}>
+                        <div className={styles.detailRow}>
+                            <div className={styles.iconBox}>
+                                <i className="fa-solid fa-id-badge"></i>
                             </div>
+                            <div className={styles.detailText}>
+                                <span className={styles.label}>Profile ID</span>
+                                <span className={styles.value}>{staffProfileDetails.id}</span>
+                            </div>
+                        </div>
 
-                            <div className={styles.field}>
-                                <label><i className="fa-solid fa-id-badge"></i> ID:</label>
-                                <span>{staffProfileDetails.id}</span>
+                        <div className={styles.detailRow}>
+                            <div className={styles.iconBox}>
+                                <i className="fa-solid fa-signature"></i>
                             </div>
+                            <div className={styles.detailText}>
+                                <span className={styles.label}>Full Name</span>
+                                <span className={styles.value}>{staffProfileDetails.name}</span>
+                            </div>
+                        </div>
 
-                            <div className={styles.field}>
-                                <label><i className="fa-solid fa-user"></i> Name:</label>
-                                <span>{staffProfileDetails.name}</span>
+                        <div className={styles.detailRow}>
+                            <div className={styles.iconBox}>
+                                <i className="fa-solid fa-phone"></i>
                             </div>
-
-                            <div className={styles.field}>
-                                <label><i className="fa-solid fa-phone"></i> Phone Number:</label>
-                                <span>{staffProfileDetails.phoneNumber}</span>
+                            <div className={styles.detailText}>
+                                <span className={styles.label}>Phone Number</span>
+                                <span className={styles.value}>{staffProfileDetails.phoneNumber}</span>
                             </div>
-
-                            {isSuperAdministrator && (
-                            <div className={styles["staff-profiles-item-details-btns"]}>
-                                <button
-                                    onClick={handleDelete}
-                                    className={`${styles["action-btn"]} ${styles["delete-btn"]}`}
-                                >
-                                    Delete
-                                </button>
-                            </div>
-                            )}
                         </div>
                     </div>
-                </>
+
+                    {isSuperAdministrator && (
+                        <footer className={styles.cardFooter}>
+                            <button
+                                onClick={handleDelete}
+                                className={styles.deleteBtn}
+                                disabled={deleting}
+                            >
+                                <i className="fa-solid fa-trash"></i> {deleting ? "Deleting..." : "Delete Profile"}
+                            </button>
+                        </footer>
+                    )}
+                </article>
             )}
-        </>
+        </div>
     );
 };
 

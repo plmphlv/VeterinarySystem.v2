@@ -164,7 +164,7 @@ const ChangePassword: React.FC = () => {
 
                         <div className={styles.formGroup} key="confirmNewPassword">
                             <label htmlFor="confirmNewPassword">
-                                <i className="fa-solid fa-check"></i> Confirm New Password
+                                <i className="fa-solid fa-check-double"></i> Confirm New Password
                             </label>
                             <input
                                 type="password"

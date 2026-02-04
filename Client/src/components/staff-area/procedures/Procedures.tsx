@@ -38,7 +38,7 @@ const Procedures: React.FC = () => {
                             to="/staff-area/procedures/create"
                             className={styles.primaryBtn}
                         >
-                            <i className="fa-solid fa-plus"></i> Create New Procedure
+                            <i className="fa-solid fa-plus"></i> Create a New Procedure
                         </Link>
                     </div>
                 </>

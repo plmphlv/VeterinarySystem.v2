@@ -159,7 +159,7 @@ const MyPetsAdd: React.FC = () => {
 
             <section className={styles.card}>
                 <header className={styles.cardHeader}>
-                    <h1>Add New Pet</h1>
+                    <h1>Add a Pet</h1>
                     <p>Enter your pet's details below</p>
                 </header>
 

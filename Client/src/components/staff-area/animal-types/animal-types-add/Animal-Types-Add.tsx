@@ -144,7 +144,7 @@ const AnimalTypesAdd: React.FC = () => {
 
             <section className={styles.card}>
                 <header className={styles.cardHeader}>
-                    <h1>Add Animal Type</h1>
+                    <h1>Add an Animal Type</h1>
                     <p>Define a new category for animals</p>
                 </header>
 

@@ -141,7 +141,7 @@ const AppointmentsUpdateRequest: React.FC = () => {
 
             <section className={styles.card}>
                 <header className={styles.cardHeader}>
-                    <h1>Update Appointment</h1>
+                    <h1>Update an Appointment</h1>
                     <p>Modify your request details below</p>
                 </header>
 

@@ -186,7 +186,7 @@ const StaffAppointmentsEdit: React.FC = () => {
                     <div className={styles.iconCircle}>
                         <i className="fa-solid fa-pen-to-square"></i>
                     </div>
-                    <h1 className={styles.title}>Edit Appointment</h1>
+                    <h1 className={styles.title}>Edit an Appointment</h1>
                     <p className={styles.subtitle}>Update appointment details</p>
                 </header>
 

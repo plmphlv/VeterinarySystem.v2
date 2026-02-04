@@ -146,7 +146,7 @@ const ProceduresCreate: React.FC = () => {
 
             <section className={styles.card}>
                 <header className={styles.cardHeader}>
-                    <h1>Create Procedure</h1>
+                    <h1>Create a Procedure</h1>
                     <p>Log a new medical procedure</p>
                 </header>
 

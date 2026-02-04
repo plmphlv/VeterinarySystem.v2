@@ -130,7 +130,7 @@ const PrescriptionsCreate: React.FC = () => {
                     <div className={styles.iconCircle}>
                         <i className="fa-solid fa-file-medical"></i>
                     </div>
-                    <h1 className={styles.title}>Create Prescription</h1>
+                    <h1 className={styles.title}>Create a Prescription</h1>
                     <p className={styles.subtitle}>Issue a new prescription for an animal</p>
                 </header>
 
