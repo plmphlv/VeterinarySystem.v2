@@ -5,6 +5,8 @@ import AuthGuard from "./components/guards/AuthGuard";
 import GuestGuard from "./components/guards/GuestGuard";
 import StaffGuard from "./components/guards/StaffGuard";
 
+import ScrollToTop from "./components/scroll-to-top/Scroll-to-Top";
+
 import Header from "./components/header/Header";
 import Home from "./components/home/Home";
 import About from "./components/about/About";
@@ -54,6 +56,10 @@ import ProceduresEdit from "./components/staff-area/procedures/procedures-edit/P
 import StaffProfiles from "./components/staff-area/staff-profiles/Staff-Profiles";
 import StaffProfilesItemDetails from "./components/staff-area/staff-profiles/staff-profiles-item-details/Staff-Profiles-Item-Details";
 import StaffProfilesAdd from "./components/staff-area/staff-profiles/staff-profiles-create/Staff-Profiles-Add";
+import Templates from "./components/staff-area/templates/Templates";
+import TemplatesItemDetails from "./components/staff-area/templates/templates-item-details/Templates-Item-Details";
+import TemplatesCreate from "./components/staff-area/templates/templates-create/Templates-Create";
+import TemplatesEdit from "./components/staff-area/templates/templates-edit/Templates-Edit";
 import Logout from "./components/logout/Logout";
 import Error from "./components/error/Error";
 import Footer from "./components/footer/Footer";
@@ -61,6 +67,7 @@ import Footer from "./components/footer/Footer";
 function App() {
   return (
     <UserProvider>
+      <ScrollToTop />
       <Header />
       <Routes>
         <Route path="/" element={<Home />}></Route>
@@ -114,6 +121,10 @@ function App() {
             <Route path="/staff-area/staff-profiles" element={<StaffProfiles />}></Route>
             <Route path="/staff-area/staff-profiles/:id/details" element={<StaffProfilesItemDetails />}></Route>
             <Route path="/staff-area/staff-profiles/add" element={<StaffProfilesAdd />}></Route>
+            <Route path="/staff-area/templates" element={<Templates />}></Route>
+            <Route path="/staff-area/templates/:id/details" element={<TemplatesItemDetails />}></Route>
+            <Route path="/staff-area/templates/create" element={<TemplatesCreate />}></Route>
+            <Route path="/staff-area/templates/:id/edit" element={<TemplatesEdit />}></Route>
           </Route>
           <Route path="/logout" element={<Logout />}></Route>
         </Route>

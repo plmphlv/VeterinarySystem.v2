@@ -26,7 +26,7 @@
 .card {
     background: #FFF;
     width: 100%;
-    max-width: 500px;
+    max-width: 600px;
     border-radius: 20px;
     box-shadow: 0 10px 40px rgba(0, 0, 0, 0.08);
     padding: 2.5rem;
@@ -41,6 +41,18 @@
     margin-bottom: 2rem;
 }
 
+.cardHeader h1 {
+    font-size: 1.8rem;
+    color: #4EC5B4;
+    margin-bottom: 0.5rem;
+    font-weight: 800;
+}
+
+.cardHeader p {
+    color: #666;
+    font-size: 1rem;
+}
+
 .iconCircle {
     width: 70px;
     height: 70px;
@@ -52,18 +64,6 @@
     font-size: 1.8rem;
     color: #4EC5B4;
     margin: 0 auto 1.5rem;
-}
-
-.title {
-    font-size: 1.8rem;
-    color: #333;
-    font-weight: 800;
-    margin-bottom: 0.5rem;
-}
-
-.subtitle {
-    font-size: 1rem;
-    color: #666;
 }
 
 .form {
@@ -121,15 +121,48 @@
     transition: all 0.3s ease;
 }
 
-.selectInput {
-    appearance: none;
-    cursor: pointer;
+.readOnly {
+    background-color: #f0f0f0;
+    color: #777;
+    cursor: not-allowed;
+    border-color: #e0e0e0;
 }
 
-.input:focus {
+.textareaIcon {
+    position: absolute;
+    top: 1rem;
+    left: 1rem;
+    color: #888;
+    font-size: 1.1rem;
+    z-index: 1;
+    pointer-events: none;
+}
+
+.textarea {
+    width: 100%;
+    padding: 0.8rem 1rem 0.8rem 2.8rem;
+    border-radius: 12px;
+    border: 2px solid #eee;
+    background-color: #fafafa;
+    font-size: 1rem;
+    color: #333;
+    outline: none;
+    transition: all 0.3s ease;
+    resize: vertical;
+    font-family: inherit;
+    min-height: 120px;
+}
+
+.textarea:focus,
+.input:focus:not(.readOnly) {
     border-color: #4EC5B4;
     background-color: #fff;
     box-shadow: 0 4px 12px rgba(78, 197, 180, 0.1);
+}
+
+.selectInput {
+    appearance: none;
+    cursor: pointer;
 }
 
 .errorInput {
@@ -175,9 +208,9 @@
 }
 
 .submitBtn {
-    background-color: #4EC5B4;
-    color: #fff;
-    box-shadow: 0 4px 15px rgba(78, 197, 180, 0.3);
+    background-color: #fff;
+    border: 2px solid #3aa698;
+    color: #3aa698;
 }
 
 .cancelBtn {
@@ -189,8 +222,9 @@
 @media (min-width: 1025px) {
     .submitBtn:hover {
         background-color: #3aa698;
-        transform: translateY(-2px);
+        color: #fff;
         box-shadow: 0 6px 20px rgba(78, 197, 180, 0.5);
+        transform: translateY(-2px);
     }
 
     .cancelBtn:hover {
@@ -204,10 +238,6 @@
 @media (max-width: 768px) {
     .pageContainer {
         padding: 9rem 1rem 2rem;
-    }
-
-    .card {
-        padding: 2rem;
     }
 
     .formRow {

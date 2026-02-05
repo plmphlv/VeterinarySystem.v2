@@ -43,6 +43,7 @@ const MyPetsAdd: React.FC = () => {
             }
         };
         fetchAnimalTypes();
+        return () => cancelGetAnimalTypes();
     }, []);
 
     const validateField = (field: keyof AddAnimalRequest, value: string | number, allValues: AddAnimalRequest): string | undefined => {
@@ -110,7 +111,34 @@ const MyPetsAdd: React.FC = () => {
             setDialog({ message: "Pet added successfully!", type: "success" });
             setTimeout(() => navigate(`/my-pets`), 1500);
         } catch (error: any) {
-            setDialog({ message: "Adding pet failed.", type: "error" });
+            const status = error?.status || error?.response?.status;
+            const message =
+                error?.message ||
+                error?.response?.data?.message ||
+                "An unexpected error occurred.";
+
+            if (status === 400) {
+                if (message.toLowerCase().includes("passport")) {
+                    setErrors(prev => ({
+                        ...prev,
+                        passportNumber: message
+                    }));
+                } else if (message.toLowerCase().includes("chip")) {
+                    setErrors(prev => ({
+                        ...prev,
+                        chipNumber: message
+                    }));
+                } else {
+                    setDialog({ message, type: "error" });
+                }
+                return;
+            }
+
+            setDialog({
+                message: "Server error. Please try again later.",
+                type: "error"
+            });
+
         } finally {
             setFormLoading(false);
         }
@@ -139,7 +167,6 @@ const MyPetsAdd: React.FC = () => {
     };
 
     useEffect(() => () => cancelAddAnimal(), []);
-    useEffect(() => () => cancelGetAnimalTypes(), []);
 
     return (
         <div className={styles.pageContainer}>
@@ -159,8 +186,11 @@ const MyPetsAdd: React.FC = () => {
 
             <section className={styles.card}>
                 <header className={styles.cardHeader}>
-                    <h1>Add a Pet</h1>
-                    <p>Enter your pet's details below</p>
+                    <div className={styles.iconCircle}>
+                        <i className="fa-solid fa-paw"></i>
+                    </div>
+                    <h1 className={styles.title}>Add a Pet</h1>
+                    <p className={styles.subtitle}>Enter your pet's details below</p>
                 </header>
 
                 <form onSubmit={onSubmit} noValidate className={styles.form}>

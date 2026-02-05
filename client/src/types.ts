@@ -749,14 +749,6 @@ export interface GetTemplateDetailsResponse {
     content: string;
 }
 
-export interface GetTemplateDetailsResponse {
-    name: string;
-    type: string;
-    isActive: boolean;
-    id: number;
-    content: string;
-}
-
 export interface CreateTemplateRequest {
     name: string;
     type: string;
@@ -787,5 +779,7 @@ export interface DeleteTemplateRequest {
 export interface DeleteTemplateResponse {
     message: string;
 }
+
+export type GetAllTemplatesRequestFieldErrors = Partial<Record<keyof GetAllTemplatesRequest, string>>;
 
 // Templates types end

@@ -4,7 +4,7 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    padding: 8rem 1.5rem 3rem;
+    padding: 10rem 1.5rem 3rem;
     position: relative;
 }
 
@@ -39,16 +39,29 @@
     margin-bottom: 2rem;
 }
 
-.cardHeader h1 {
+.iconCircle {
+    width: 70px;
+    height: 70px;
+    background-color: #eaf8f6;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
     font-size: 1.8rem;
     color: #4EC5B4;
-    margin-bottom: 0.5rem;
-    font-weight: 800;
+    margin: 0 auto 1.5rem;
 }
 
-.cardHeader p {
-    color: #666;
+.title {
+    font-size: 1.8rem;
+    color: #333;
+    font-weight: 800;
+    margin-bottom: 0.5rem;
+}
+
+.subtitle {
     font-size: 1rem;
+    color: #666;
 }
 
 .form {

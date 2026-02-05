@@ -141,8 +141,11 @@ const AppointmentsUpdateRequest: React.FC = () => {
 
             <section className={styles.card}>
                 <header className={styles.cardHeader}>
-                    <h1>Update an Appointment</h1>
-                    <p>Modify your request details below</p>
+                    <div className={styles.iconCircle}>
+                        <i className="fa-solid fa-pen-to-square"></i>
+                    </div>
+                    <h1 className={styles.title}>Update Appointment</h1>
+                    <p className={styles.subtitle}>Modify your request details below</p>
                 </header>
 
                 <form onSubmit={onSubmit} noValidate className={styles.form}>

@@ -1,6 +1,6 @@
 import { useEffect, useRef } from "react";
 import http from "../utils/request";
-import type { CreateTemplateRequest, CreateTemplateResponse, DeleteTemplateRequest, EditTemplateRequest, EditTemplateResponse, GetAllTemplatesRequest, GetTemplateDetailsRequest, Template } from "../types";
+import type { CreateTemplateRequest, CreateTemplateResponse, DeleteTemplateRequest, EditTemplateRequest, EditTemplateResponse, GetAllTemplatesRequest, GetTemplateDetailsRequest, GetTemplateDetailsResponse, Template } from "../types";
 
 const baseUrl = `${import.meta.env.VITE_BASE_API_URL}/Templates`;
 
@@ -45,7 +45,7 @@ export const useGetTemplateDetails = () => {
         abortControllerRef.current?.abort();
         abortControllerRef.current = new AbortController();
 
-        return http.get<GetTemplateDetailsRequest>(
+        return http.get<GetTemplateDetailsResponse>(
             `${baseUrl}/${id}`,
             { signal: abortControllerRef.current.signal }
         );

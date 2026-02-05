@@ -24,6 +24,7 @@ const MyPetsEdit: React.FC = () => {
     const { id } = useParams();
     const [errors, setErrors] = useState<EditAnimalFieldErrors>({});
     const [formLoading, setFormLoading] = useState(false);
+    const [typesLoaded, setTypesLoaded] = useState(false);
     const [isLoading, setLoading] = useState(false);
     const [dialog, setDialog] = useState<{ message: string; type: "success" | "error" } | null>(null);
     const [animalTypes, setAnimalTypes] = useState<AnimalType[]>([]);
@@ -39,10 +40,15 @@ const MyPetsEdit: React.FC = () => {
             try {
                 const types = await getAnimalTypes();
                 setAnimalTypes(types || []);
+                setTypesLoaded(true);
             } catch {
-                setDialog({ message: "An error occurred while fetching animal types.", type: "error" });
+                setDialog({
+                    message: "Failed to load animal types.",
+                    type: "error"
+                });
             }
         };
+
         fetchAnimalTypes();
         return () => cancelGetAnimalTypes();
     }, []);
@@ -134,39 +140,53 @@ const MyPetsEdit: React.FC = () => {
 
     const inputClass = (field: keyof EditAnimalRequest) => {
         if (errors[field]) return styles.errorInput;
-        if (values[field] && !errors[field]) return styles.successInput;
-        return "";
+        if (values[field] !== null && values[field] !== "" && !errors[field]) {
+            return styles.successInput;
+        }
     };
 
-    useEffect(() => cancelEditAnimal, []);
+    useEffect(() => {
+        return () => cancelEditAnimal();
+    }, []);
 
     useEffect(() => {
-        if (!id) return;
+        if (!id || !typesLoaded) return;
+
         const fetchDetails = async () => {
             try {
                 setLoading(true);
                 const details = await getAnimalDetails(Number(id));
-                if (details) {
-                    const mapped: EditAnimalRequest = {
-                        id: Number(id),
-                        name: details.name,
-                        age: details.age,
-                        weight: details.weight,
-                        passportNumber: details.passportNumber,
-                        chipNumber: details.chipNumber,
-                        animalTypeId: animalTypes.find(t => t.value === details.animalType)?.id ?? 0,
-                    };
-                    changeValues(mapped);
-                }
+
+                if (!details) return;
+
+                const typeId =
+                    animalTypes.find(t => t.value === details.animalType)?.id ?? 0;
+
+                changeValues({
+                    id: Number(id),
+                    name: details.name,
+                    age: details.age,
+                    weight: details.weight,
+                    passportNumber: details.passportNumber,
+                    chipNumber: details.chipNumber,
+                    animalTypeId: typeId,
+                });
             } catch (err: any) {
-                setDialog({ message: err.title || "An error occurred while fetching animal details.", type: "error" });
-            } finally {
+                if (err?.name === "AbortError") return;
+
+                setDialog({
+                    message: "Unable to load pet details.",
+                    type: "error"
+                });
+            }
+            finally {
                 setLoading(false);
             }
         };
+
         fetchDetails();
         return () => cancelGetAnimalDetails();
-    }, [id, animalTypes]);
+    }, [id, typesLoaded]);
 
     return (
         <div className={styles.pageContainer}>

@@ -1,11 +1,10 @@
-/* Footer */
-
 .footer {
     width: 100%;
     padding: 40px 0;
     background-color: #4EC5B4;
     margin-top: auto;
     position: relative;
+    overflow: hidden;
 }
 
 .footer::before {
@@ -29,15 +28,16 @@
     height: 100%;
     background: linear-gradient(90deg, transparent, rgba(255, 255, 255, .4), transparent);
     transition: .5s;
+    pointer-events: none;
 }
 
-.footer .socials {
+.socials {
     text-align: center;
     padding-bottom: 25px;
     color: #fff;
 }
 
-.footer .socials a {
+.socialLink {
     font-size: 24px;
     color: inherit;
     border: 1px solid #fff;
@@ -49,24 +49,24 @@
     border-radius: 50%;
     margin: 0 8px;
     opacity: 0.75;
+    transition: all 0.3s ease;
 }
 
-.footer ul {
+.list {
     margin-top: 0;
     padding: 0;
     list-style: none;
-    font-size: 18;
     line-height: 1.6;
     margin-bottom: 0;
     text-align: center;
 }
 
-.footer ul li {
+.list li {
     display: inline-block;
     padding: 0 15px;
 }
 
-.footer ul li a {
+.footerLink {
     font-size: 1.15rem;
     font-weight: 500;
     color: #fff;
@@ -74,7 +74,7 @@
     text-decoration: none;
 }
 
-.footer ul li a::after {
+.footerLink::after {
     content: '';
     position: absolute;
     width: 100%;
@@ -87,57 +87,33 @@
     transition: transform 0.3s ease-out;
 }
 
-.footer .copyright {
+.copyright {
     margin-top: 15px;
     text-align: center;
     font-size: 16px;
     color: #000;
+    font-weight: 500;
+}
+
+.footerLink:hover::after {
+    transform-origin: left;
+    transform: scaleX(1);
+}
+
+.footerLink.active::after {
+    transform-origin: left;
+    transform: scaleX(1);
 }
 
 @media(min-width: 1025px) {
-    .footer .socials a:hover {
+    .socialLink:hover {
         color: #000;
-        transition: 0.7s ease;
-    }
-
-    .footer a:hover::after {
-        transform-origin: left;
-        transform: scaleX(1);
-    }
-
-    .footer a.active::after {
-        transform-origin: left;
-        transform: scaleX(1);
+        background-color: #fff;
+        opacity: 1;
+        transition: 0.3s ease;
     }
 
     .footer:hover::after {
         left: -100%;
     }
-
-    .footer.active::after {
-        left: -100%;
-    }
 }
-
-@media (hover: none) and (pointer: coarse) {
-    .footer .socials a:hover {
-        color: #000;
-        transition: 0.7s ease;
-    }
-
-    .footer a:hover::before {
-        transform-origin: left;
-        transform: scaleX(1);
-    }
-
-    .footer a.active::before {
-        transform-origin: left;
-        transform: scaleX(1);
-    }
-
-    .footer.active::after {
-        left: 100%;
-    }
-}
-
-/* Footer */

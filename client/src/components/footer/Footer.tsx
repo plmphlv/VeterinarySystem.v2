@@ -1,7 +1,8 @@
 import type React from "react";
-import { NavLink } from "react-router";
+import { NavLink, Link } from "react-router";
 import { useUserContext } from "../../contexts/UserContext";
 import { getJwtDecodedData } from "../../utils/getJwtDecodedData";
+import styles from "./Footer.module.css";
 
 const Footer: React.FC = () => {
     const { isSuccessful } = useUserContext();
@@ -9,75 +10,80 @@ const Footer: React.FC = () => {
 
     const role = decodedData?.["http://schemas.microsoft.com/ws/2008/06/identity/claims/role"];
 
+    // Helper за класовете на линковете
+    const linkClasses = ({ isActive }: { isActive: boolean }) =>
+        isActive ? `${styles.footerLink} ${styles.active}` : styles.footerLink;
+
     return (
-        <section className="footer">
-            <div className="socials">
-                <NavLink to="#"><i className="fa-brands fa-facebook-f"></i></NavLink>
-                <NavLink to="#"><i className="fa-brands fa-instagram"></i></NavLink>
-                <NavLink to="#"><i className="fa-brands fa-linkedin"></i></NavLink>
-                <NavLink to="#"><i className="fa-brands fa-youtube"></i></NavLink>
+        <section className={styles.footer}>
+            <div className={styles.socials}>
+                {/* Social links usually don't need NavLink active state, so Link is fine */}
+                <Link to="#" className={styles.socialLink}><i className="fa-brands fa-facebook-f"></i></Link>
+                <Link to="#" className={styles.socialLink}><i className="fa-brands fa-instagram"></i></Link>
+                <Link to="#" className={styles.socialLink}><i className="fa-brands fa-linkedin"></i></Link>
+                <Link to="#" className={styles.socialLink}><i className="fa-brands fa-youtube"></i></Link>
             </div>
 
-            <ul className="list">
+            <ul className={styles.list}>
                 <li>
-                    <NavLink to="/">Home</NavLink>
+                    <NavLink to="/" className={linkClasses}>Home</NavLink>
                 </li>
                 <li>
-                    <NavLink to="/about">About</NavLink>
+                    <NavLink to="/about" className={linkClasses}>About</NavLink>
                 </li>
                 <li>
-                    <NavLink to="/contact">Contact</NavLink>
+                    <NavLink to="/contact" className={linkClasses}>Contact</NavLink>
                 </li>
                 <li>
-                    <NavLink to="/services">Services</NavLink>
+                    <NavLink to="/services" className={linkClasses}>Services</NavLink>
                 </li>
 
                 {isSuccessful ? (
                     <>
                         <li>
-                            <NavLink to="/appointments">Appointments</NavLink>
+                            <NavLink to="/appointments" className={linkClasses}>Appointments</NavLink>
                         </li>
                         <li>
-                            <NavLink to="/my-pets">My Pets</NavLink>
+                            <NavLink to="/my-pets" className={linkClasses}>My Pets</NavLink>
                         </li>
                         <li>
-                            <NavLink to="/profile">Profile</NavLink>
+                            <NavLink to="/profile" className={linkClasses}>Profile</NavLink>
                         </li>
 
                         {role === "SuperAdministrator" && (
                             <>
                                 <li>
-                                    <NavLink to="/staff-area">Staff Area</NavLink>
+                                    <NavLink to="/staff-area" className={linkClasses}>Staff Area</NavLink>
                                 </li>
                                 <li>
-                                    <NavLink to="/administration">Administration</NavLink>
+                                    <NavLink to="/administration" className={linkClasses}>Administration</NavLink>
                                 </li>
                             </>
                         )}
 
                         {role === "StaffMember" && (
                             <li>
-                                <NavLink to="/staff-area">Staff Area</NavLink>
+                                <NavLink to="/staff-area" className={linkClasses}>Staff Area</NavLink>
                             </li>
                         )}
 
                         <li>
-                            <NavLink to="/logout">Logout</NavLink>
+                            <NavLink to="/logout" className={linkClasses}>Logout</NavLink>
                         </li>
                     </>
                 ) : (
                     <>
                         <li>
-                            <NavLink to="/login">Login</NavLink>
+                            <NavLink to="/login" className={linkClasses}>Login</NavLink>
                         </li>
                         <li>
-                            <NavLink to="/register">Register</NavLink>
+                            <NavLink to="/register" className={linkClasses}>Register</NavLink>
                         </li>
                     </>
                 )}
             </ul>
 
-            <p className="copyright">
+            <p className={styles.copyright}>
                 Veteriq @ 2025
             </p>
         </section>

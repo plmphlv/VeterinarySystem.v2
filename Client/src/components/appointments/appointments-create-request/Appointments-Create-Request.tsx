@@ -124,8 +124,11 @@ const AppointmentsCreateRequest: React.FC = () => {
 
             <section className={styles.card}>
                 <header className={styles.cardHeader}>
-                    <h1>Request an Appointment</h1>
-                    <p>Schedule a new visit for your pet</p>
+                    <div className={styles.iconCircle}>
+                        <i className="fa-solid fa-paper-plane"></i>
+                    </div>
+                    <h1 className={styles.title}>Request an Appointment</h1>
+                    <p className={styles.subtitle}>Schedule a new visit for your pet</p>
                 </header>
 
                 <form onSubmit={onSubmit} noValidate className={styles.form}>
@@ -152,7 +155,6 @@ const AppointmentsCreateRequest: React.FC = () => {
                         <div className={styles.inputWrapper}>
                             <i className={`fa-solid fa-pen ${styles.inputIcon}`}></i>
                             <input
-                                type="text"
                                 id="description"
                                 name="description"
                                 value={values.description ?? ""}

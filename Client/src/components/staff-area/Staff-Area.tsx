@@ -11,8 +11,8 @@ const StaffArea: React.FC = () => {
             </header>
 
             <div className={styles.grid}>
-                <article 
-                    className={styles.card} 
+                <article
+                    className={styles.card}
                     style={{ animationDelay: '0s' }}
                 >
                     <div className={styles.imageWrapper}>
@@ -26,7 +26,7 @@ const StaffArea: React.FC = () => {
                     </div>
                 </article>
 
-                <article 
+                <article
                     className={styles.card}
                     style={{ animationDelay: '0.1s' }}
                 >
@@ -41,7 +41,7 @@ const StaffArea: React.FC = () => {
                     </div>
                 </article>
 
-                <article 
+                <article
                     className={styles.card}
                     style={{ animationDelay: '0.2s' }}
                 >
@@ -56,7 +56,7 @@ const StaffArea: React.FC = () => {
                     </div>
                 </article>
 
-                <article 
+                <article
                     className={styles.card}
                     style={{ animationDelay: '0.3s' }}
                 >
@@ -71,7 +71,7 @@ const StaffArea: React.FC = () => {
                     </div>
                 </article>
 
-                <article 
+                <article
                     className={styles.card}
                     style={{ animationDelay: '0.4s' }}
                 >
@@ -86,7 +86,7 @@ const StaffArea: React.FC = () => {
                     </div>
                 </article>
 
-                <article 
+                <article
                     className={styles.card}
                     style={{ animationDelay: '0.5s' }}
                 >
@@ -96,6 +96,21 @@ const StaffArea: React.FC = () => {
                     <div className={styles.content}>
                         <h2>Staff Profiles</h2>
                         <Link to="/staff-area/staff-profiles" className={styles.actionBtn}>
+                            Make Changes
+                        </Link>
+                    </div>
+                </article>
+
+                <article
+                    className={styles.card}
+                    style={{ animationDelay: '0.5s' }}
+                >
+                    <div className={styles.imageWrapper}>
+                        <img src="/images/templates.png" alt="Templates" />
+                    </div>
+                    <div className={styles.content}>
+                        <h2>Templates</h2>
+                        <Link to="/staff-area/templates" className={styles.actionBtn}>
                             Make Changes
                         </Link>
                     </div>
