@@ -109,7 +109,7 @@ const ProceduresItemDetails: React.FC = () => {
                 <article className={styles.card}>
                     <header className={styles.cardHeader}>
                         <div className={styles.iconCircle}>
-                            <i className="fa-solid fa-file-medical"></i>
+                            <i className="fa-solid fa-stethoscope"></i>
                         </div>
                         <h1 className={styles.title}>{procedureDetails.name}</h1>
                         <p className={styles.subtitle}>Procedure Details</p>

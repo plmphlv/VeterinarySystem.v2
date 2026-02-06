@@ -1,13 +1,13 @@
-import { Link, useNavigate } from "react-router";
+import { Link } from "react-router";
 import { useEffect, useState } from "react";
 import { useGetUserData } from "../../../../hooks/useGetUserData";
 import Spinner from "../../../spinner/Spinner";
 import Dialog from "../../../dialog/Dialog";
 import type { AnimalType, GetAllAnimalsErrors } from "../../../../types";
 import { useDeleteAnimalType, useGetAnimalTypes } from "../../../../api/animalTypesAPI";
-import styles from "./Animal-Type-Item.module.css";
+import styles from "./Animal-Types-Item.module.css";
 
-const AnimalTypeItem: React.FC = () => {
+const AnimalTypesItem: React.FC = () => {
     const { getAnimalTypes, cancelGetAnimalTypes } = useGetAnimalTypes();
     const [errors, setErrors] = useState<GetAllAnimalsErrors>({});
 
@@ -17,8 +17,6 @@ const AnimalTypeItem: React.FC = () => {
     const [animalTypes, setAnimalTypes] = useState<AnimalType[]>([]);
     const [loading, setLoading] = useState(true);
 
-
-    const navigate = useNavigate();
     const { deleteAnimalType, cancelDeleteAnimalType } = useDeleteAnimalType();
     const [deleting, setDeleting] = useState(false);
 
@@ -76,10 +74,7 @@ const AnimalTypeItem: React.FC = () => {
             });
 
             setTimeout(() => {
-                // Refresh or redirect (here we just refetch or navigate)
-                // For simplicity, navigating to same page or parent triggers re-render if handled
                 window.location.reload(); 
-                // Or better: update local state instead of reload/navigate
             }, 1500);
         } catch {
             setDialog({
@@ -143,4 +138,4 @@ const AnimalTypeItem: React.FC = () => {
     );
 };
 
-export default AnimalTypeItem;
+export default AnimalTypesItem;

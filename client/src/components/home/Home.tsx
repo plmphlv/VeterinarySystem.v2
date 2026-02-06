@@ -44,11 +44,11 @@ const Home: React.FC = () => {
             <div className={styles.actionWrapper}>
               {userData ? (
                 <Link to="/appointments" className={styles.primaryBtn}>
-                Get Started
+                <i className="fa-solid fa-share"></i> Get Started
                 </Link>
               ) : (
                 <Link to="/login" className={styles.primaryBtn}>
-                Get Started
+               <i className="fa-solid fa-share"></i> Get Started
                 </Link>
               )}
             </div>

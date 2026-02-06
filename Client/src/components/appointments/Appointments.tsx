@@ -25,7 +25,7 @@ const Appointments: React.FC = () => {
             ) : (
                 <>
                     <header className={styles.header}>
-                        <h1 className={styles.title}>My Appointments</h1>
+                        <h1 className={styles.title}>My Appointments Requests</h1>
                         <p className={styles.subtitle}>Track and manage your scheduled visits.</p>
                     </header>
 

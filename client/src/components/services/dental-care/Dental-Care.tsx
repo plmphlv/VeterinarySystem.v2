@@ -50,12 +50,12 @@ const DentalCare: React.FC = () => {
                             <li>Reduces risk of heart, liver, and kidney disease</li>
                         </ul>
                     </section>
-
+{/* 
                     <div className={styles.actionArea}>
                         <Link to="/appointments/request-appointment" className={styles.primaryBtn}>
                             Book a Dental Appointment
                         </Link>
-                    </div>
+                    </div> */}
                 </div>
             </article>
         </section>

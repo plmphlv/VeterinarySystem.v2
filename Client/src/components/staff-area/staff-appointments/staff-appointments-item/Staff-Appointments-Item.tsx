@@ -114,32 +114,30 @@ const StaffAppointmentsItem: React.FC = () => {
             {appointments.length > 0 && (!errors || Object.keys(errors).length === 0) ? (
                 <section className={styles.grid}>
                     {appointments.map((appointment, index) => (
-                        <article
-                            className={styles.card}
+                        <Link
+                            to={`/staff-area/appointments/${appointment.id}/details`}
                             key={appointment.id}
+                            className={styles.cardLink}
                             style={{ animationDelay: `${index * 0.1}s` }}
                         >
-                            <div className={styles.cardHeader}>
-                                <div className={styles.statusBadge}>
-                                    {formatStatus(appointment.status)}
+                            <article className={styles.card}>
+                                <div className={styles.cardHeader}>
+                                    <div className={styles.statusBadge}>
+                                        {formatStatus(appointment.status)}
+                                    </div>
                                 </div>
-                            </div>
-                            <div className={styles.cardBody}>
-                                <div className={styles.infoRow}>
-                                    <i className="fa-solid fa-calendar-days"></i>
-                                    <span>{formatDate(appointment.date)}</span>
+                                <div className={styles.cardBody}>
+                                    <div className={styles.infoRow}>
+                                        <i className="fa-solid fa-calendar-days"></i>
+                                        <span>{formatDate(appointment.date)}</span>
+                                    </div>
+                                    <div className={styles.infoRow}>
+                                        <i className="fa-solid fa-clock"></i>
+                                        <span>{formatTime(appointment.date)}</span>
+                                    </div>
                                 </div>
-                                <div className={styles.infoRow}>
-                                    <i className="fa-solid fa-clock"></i>
-                                    <span>{formatTime(appointment.date)}</span>
-                                </div>
-                            </div>
-                            <div className={styles.cardFooter}>
-                                <Link to={`/staff-area/appointments/${appointment.id}/details`} className={styles.detailsBtn}>
-                                    More Details
-                                </Link>
-                            </div>
-                        </article>
+                            </article>
+                        </Link>
                     ))}
                 </section>
             ) : (

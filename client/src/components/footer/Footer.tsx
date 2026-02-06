@@ -10,14 +10,12 @@ const Footer: React.FC = () => {
 
     const role = decodedData?.["http://schemas.microsoft.com/ws/2008/06/identity/claims/role"];
 
-    // Helper за класовете на линковете
     const linkClasses = ({ isActive }: { isActive: boolean }) =>
         isActive ? `${styles.footerLink} ${styles.active}` : styles.footerLink;
 
     return (
         <section className={styles.footer}>
             <div className={styles.socials}>
-                {/* Social links usually don't need NavLink active state, so Link is fine */}
                 <Link to="#" className={styles.socialLink}><i className="fa-brands fa-facebook-f"></i></Link>
                 <Link to="#" className={styles.socialLink}><i className="fa-brands fa-instagram"></i></Link>
                 <Link to="#" className={styles.socialLink}><i className="fa-brands fa-linkedin"></i></Link>
@@ -84,7 +82,7 @@ const Footer: React.FC = () => {
             </ul>
 
             <p className={styles.copyright}>
-                Veteriq @ 2025
+                Veteriq @ 2025 - 2026. All rights reserved.
             </p>
         </section>
     );

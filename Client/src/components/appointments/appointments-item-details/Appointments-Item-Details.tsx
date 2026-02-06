@@ -111,7 +111,7 @@ const AppointmentsItemDetails: React.FC = () => {
                         <div className={styles.statusBadge}>
                             {formatStatus(appointmentDetails.appointmentStatus)}
                         </div>
-                        <h1 className={styles.cardTitle}>Appointment Details</h1>
+                        <h1 className={styles.cardTitle}>Appointment Request Details</h1>
                     </header>
 
                     <div className={styles.cardBody}>

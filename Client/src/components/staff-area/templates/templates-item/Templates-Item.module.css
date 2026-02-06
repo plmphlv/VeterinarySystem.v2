@@ -118,6 +118,14 @@
     width: 100%;
 }
 
+.cardLink {
+    text-decoration: none;
+    color: inherit;
+    display: block;
+    opacity: 0;
+    animation: fadeUp 0.6s ease-out forwards;
+}
+
 .card {
     background: #FFF;
     border-radius: 16px;
@@ -125,10 +133,10 @@
     overflow: hidden;
     transition: transform 0.3s ease, box-shadow 0.3s ease;
     border: 1px solid rgba(78, 197, 180, 0.1);
-    opacity: 0;
-    animation: fadeUp 0.6s ease-out forwards;
     display: flex;
     flex-direction: column;
+    height: 100%;
+    cursor: pointer;
 }
 
 .cardHeader {
@@ -141,6 +149,27 @@
     text-align: center;
     gap: 0.5rem;
     position: relative;
+}
+
+.iconCircle {
+    width: 60px;
+    height: 60px;
+    background-color: #eaf8f6;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 1.5rem;
+    color: #4EC5B4;
+    margin-bottom: 0.5rem;
+}
+
+.cardTitle {
+    font-size: 1.3rem;
+    color: #333;
+    font-weight: 700;
+    margin: 0;
+    transition: color 0.3s ease;
 }
 
 .statusBadge {
@@ -163,26 +192,6 @@
     color: #fa5252;
 }
 
-.iconCircle {
-    width: 60px;
-    height: 60px;
-    background-color: #eaf8f6;
-    border-radius: 50%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    font-size: 1.5rem;
-    color: #4EC5B4;
-    margin-bottom: 0.5rem;
-}
-
-.cardTitle {
-    font-size: 1.3rem;
-    color: #333;
-    font-weight: 700;
-    margin: 0;
-}
-
 .cardBody {
     padding: 1.5rem;
     flex-grow: 1;
@@ -203,41 +212,6 @@
 .infoRow i {
     color: #4EC5B4;
     font-size: 1.1rem;
-}
-
-.cardFooter {
-    padding: 1.5rem;
-    padding-top: 0;
-    text-align: center;
-}
-
-.detailsBtn {
-    position: relative;
-    color: #4EC5B4;
-    font-weight: 700;
-    text-decoration: none;
-    padding: 0.6rem 1.5rem;
-    border: 2px solid #4EC5B4;
-    border-radius: 50px;
-    transition: all 0.3s ease;
-    display: inline-flex;
-    justify-content: center;
-    align-items: center;
-    gap: 0.5rem;
-    overflow: hidden;
-    z-index: 1;
-}
-
-.detailsBtn::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 0%;
-    height: 100%;
-    background-color: #4EC5B4;
-    transition: width 0.3s ease;
-    z-index: -1;
 }
 
 .emptyState {
@@ -267,17 +241,13 @@
 }
 
 @media (min-width: 1025px) {
-    .card:hover {
+    .cardLink:hover .card {
         transform: translateY(-8px);
-        box-shadow: 0 20px 40px rgba(78, 197, 180, 0.15);
+        box-shadow: 0 15px 35px rgba(78, 197, 180, 0.4);
     }
 
-    .detailsBtn:hover {
-        color: #FFF;
-    }
-
-    .detailsBtn:hover::before {
-        width: 100%;
+    .cardLink:hover .cardTitle {
+        color: #4EC5B4;
     }
 }
 

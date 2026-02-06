@@ -96,7 +96,7 @@ const StaffAppointmentsCreate: React.FC = () => {
 
     const { values, changeHandler, onSubmit, changeValues } = useForm(initialValues, createAppointmentHandler);
 
-    const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
+    const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>) => {
         const { name, value } = e.target;
         const fieldName = name as keyof StaffCreateAppointmentRequest;
 
@@ -136,8 +136,11 @@ const StaffAppointmentsCreate: React.FC = () => {
 
             <section className={styles.card}>
                 <header className={styles.cardHeader}>
-                    <h1>Create an Appointment</h1>
-                    <p>Schedule a new appointment for a client</p>
+                    <div className={styles.iconCircle}>
+                        <i className="fa-solid fa-calendar-plus"></i>
+                    </div>
+                    <h1 className={styles.title}>Create Appointment</h1>
+                    <p className={styles.subtitle}>Schedule a new appointment for a client</p>
                 </header>
 
                 <form onSubmit={onSubmit} noValidate className={styles.form}>
@@ -162,16 +165,15 @@ const StaffAppointmentsCreate: React.FC = () => {
                     <div className={styles.formGroup}>
                         <label htmlFor="description">Description</label>
                         <div className={styles.inputWrapper}>
-                            <i className={`fa-solid fa-pen ${styles.inputIcon}`}></i>
-                            <input
-                                type="text"
+                            <i className={`fa-solid fa-align-left ${styles.textareaIcon}`}></i>
+                            <textarea
                                 id="description"
                                 name="description"
                                 value={values.description ?? ""}
                                 onChange={handleChange}
-                                className={`${styles.input} ${inputClass("description")}`}
-                                placeholder="Enter appointment description"
-                                autoComplete="off"
+                                className={`${styles.textarea} ${inputClass("description")}`}
+                                placeholder="Enter appointment details..."
+                                rows={5}
                                 required
                             />
                         </div>

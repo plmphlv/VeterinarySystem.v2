@@ -144,8 +144,11 @@ const AnimalTypesAdd: React.FC = () => {
 
             <section className={styles.card}>
                 <header className={styles.cardHeader}>
-                    <h1>Add an Animal Type</h1>
-                    <p>Define a new category for animals</p>
+                    <div className={styles.iconCircle}>
+                        <i className="fa-solid fa-layer-group"></i>
+                    </div>
+                    <h1 className={styles.title}>Add an Animal Type</h1>
+                    <p className={styles.subtitle}>Define a new category for animals</p>
                 </header>
 
                 <form onSubmit={onSubmit} noValidate className={styles.form}>

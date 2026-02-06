@@ -2,8 +2,8 @@ import { Link } from "react-router";
 import Dialog from "../../dialog/Dialog";
 import { useGetUserData } from "../../../hooks/useGetUserData";
 import { useState } from "react";
-import AnimalTypeItem from "./animal-type-item/Animal-Type-Item";
 import styles from "./Animal-Types.module.css";
+import AnimalTypesItem from "./animal-types-item/Animal-Types-Item";
 
 const AnimalTypes: React.FC = () => {
     const { error } = useGetUserData();
@@ -19,6 +19,12 @@ const AnimalTypes: React.FC = () => {
                 />
             ) : (
                 <>
+                    <div className={styles.navWrapper}>
+                        <Link to="/staff-area" className={styles.backLink}>
+                            &larr; Back to Staff Area
+                        </Link>
+                    </div>
+
                     <header className={styles.header}>
                         <h1 className={styles.title}>Animal Types</h1>
                         <p className={styles.subtitle}>Manage the list of animal types available in the system</p>
@@ -26,14 +32,14 @@ const AnimalTypes: React.FC = () => {
 
                     <div className={styles.contentWrapper}>
                         <ul className={styles.list}>
-                            <AnimalTypeItem />
+                            <AnimalTypesItem />
                         </ul>
                     </div>
 
                     <div className={styles.ctaWrapper}>
                         <Link 
                             to="/staff-area/animal-types/add" 
-                            className={styles.primaryBtn}
+                            className={styles.addBtn}
                         >
                             <i className="fa-solid fa-plus"></i> Add a New Animal Type
                         </Link>

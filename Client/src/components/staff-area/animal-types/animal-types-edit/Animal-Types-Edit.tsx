@@ -82,15 +82,15 @@ const AnimalTypesEdit: React.FC = () => {
         const errorMsg = !value.trim()
             ? "Type name is required."
             : value.trim().length < 2
-            ? "Type name must be at least 2 characters."
-            : undefined;
+                ? "Type name must be at least 2 characters."
+                : undefined;
 
         setErrors(prev => ({ ...prev, [fieldName]: errorMsg }));
     };
 
     const inputClass = (field: keyof EditAnimalTypeRequest) => {
         if (errors[field]) return styles.errorInput;
-        if (values[field] && !errors[field]) return styles.successInput;
+        if (values[field] && !errors[field] && field !== "id") return styles.successInput;
         return "";
     };
 
@@ -114,11 +114,29 @@ const AnimalTypesEdit: React.FC = () => {
 
             <section className={styles.card}>
                 <header className={styles.cardHeader}>
-                    <h1>Edit an Animal Type</h1>
-                    <p>Update the animal category name</p>
+                    <div className={styles.iconCircle}>
+                        <i className="fa-solid fa-pen-to-square"></i>
+                    </div>
+                    <h1 className={styles.title}>Edit an Animal Type</h1>
+                    <p className={styles.subtitle}>Update the animal category name</p>
                 </header>
 
                 <form onSubmit={onSubmit} noValidate className={styles.form}>
+                    <div className={styles.formGroup}>
+                        <label htmlFor="id">ID</label>
+                        <div className={styles.inputWrapper}>
+                            <i className={`fa-solid fa-hashtag ${styles.inputIcon}`}></i>
+                            <input
+                                type="text"
+                                id="id"
+                                name="id"
+                                value={values.id}
+                                className={`${styles.input} ${styles.readOnly}`}
+                                readOnly
+                            />
+                        </div>
+                    </div>
+
                     <div className={styles.formGroup}>
                         <label htmlFor="typeName">Type Name</label>
                         <div className={styles.inputWrapper}>
@@ -127,7 +145,7 @@ const AnimalTypesEdit: React.FC = () => {
                                 type="text"
                                 id="typeName"
                                 name="typeName"
-                                value={values.typeName ?? ""}
+                                value={values.typeName}
                                 onChange={handleChange}
                                 className={`${styles.input} ${inputClass("typeName")}`}
                                 placeholder="Edit type name"
@@ -146,8 +164,9 @@ const AnimalTypesEdit: React.FC = () => {
                         >
                             <i className="fa-solid fa-check"></i> Save
                         </button>
+
                         <Link
-                            to={`/staff-area/animal-types`}
+                            to="/staff-area/animal-types"
                             className={styles.cancelBtn}
                         >
                             <i className="fa-solid fa-xmark"></i> Cancel

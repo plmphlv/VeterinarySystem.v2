@@ -5,6 +5,12 @@ import styles from "./Owner-Accounts.module.css";
 const OwnerAccounts: React.FC = () => {
     return (
         <section className={styles.container}>
+            <div className={styles.navWrapper}>
+                <Link to="/staff-area" className={styles.backLink}>
+                    &larr; Back to Staff Area
+                </Link>
+            </div>
+
             <header className={styles.header}>
                 <h1 className={styles.title}>Owner Accounts</h1>
                 <p className={styles.subtitle}>Manage client profiles and information</p>

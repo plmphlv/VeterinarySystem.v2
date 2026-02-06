@@ -67,30 +67,30 @@ const Services: React.FC = () => {
 
       <div className={styles.grid}>
         {servicesData.map((service, index) => (
-          <article
+          <Link
+            to={service.link}
             key={service.id}
-            className={styles.card}
+            className={styles.cardLink}
             style={{ animationDelay: `${index * 0.1}s` }}
           >
-            <div className={styles.imageWrapper}>
-              <img src={service.image} alt={service.title} loading="lazy" />
-            </div>
-            <div className={styles.content}>
-              <h2>{service.title}</h2>
-              <p>{service.description}</p>
-              <Link to={service.link} className={styles.learnMoreBtn}>
-                Learn More
-              </Link>
-            </div>
-          </article>
+            <article className={styles.card}>
+              <div className={styles.imageWrapper}>
+                <img src={service.image} alt={service.title} loading="lazy" />
+              </div>
+              <div className={styles.content}>
+                <h2>{service.title}</h2>
+                <p>{service.description}</p>
+              </div>
+            </article>
+          </Link>
         ))}
       </div>
 
-      <div className={styles.ctaWrapper}>
+      {/* <div className={styles.ctaWrapper}>
         <Link to="/appointments/request-appointment" className={styles.primaryBtn}>
           Request an Appointment
         </Link>
-      </div>
+      </div> */}
     </section>
   );
 };

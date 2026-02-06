@@ -26,12 +26,14 @@
 .card {
     background: #FFF;
     width: 100%;
-    max-width: 500px;
+    max-width: 600px;
     border-radius: 20px;
     box-shadow: 0 10px 40px rgba(0, 0, 0, 0.08);
     padding: 2.5rem;
     border: 1px solid rgba(78, 197, 180, 0.1);
     animation: fadeUp 0.6s ease-out forwards;
+    display: flex;
+    flex-direction: column;
 }
 
 .cardHeader {
@@ -70,6 +72,15 @@
     gap: 1.2rem;
 }
 
+.formRow {
+    display: flex;
+    gap: 1rem;
+}
+
+.formRow > div {
+    flex: 1;
+}
+
 .formGroup {
     display: flex;
     flex-direction: column;
@@ -98,9 +109,10 @@
     pointer-events: none;
 }
 
+/* Input Styles */
 .input {
     width: 100%;
-    padding: 0.8rem 1rem 0.8rem 2.8rem; /* Space for the icon */
+    padding: 0.8rem 1rem 0.8rem 2.8rem;
     border-radius: 12px;
     border: 2px solid #eee;
     background-color: #fafafa;
@@ -110,15 +122,49 @@
     transition: all 0.3s ease;
 }
 
-.selectInput {
-    appearance: none;
-    cursor: pointer;
+/* Textarea Styles */
+.textareaIcon {
+    position: absolute;
+    top: 1rem;
+    left: 1rem;
+    color: #888;
+    font-size: 1.1rem;
+    z-index: 1;
+    pointer-events: none;
 }
 
-.input:focus {
+.textarea {
+    width: 100%;
+    padding: 0.8rem 1rem 0.8rem 2.8rem;
+    border-radius: 12px;
+    border: 2px solid #eee;
+    background-color: #fafafa;
+    font-size: 1rem;
+    color: #333;
+    outline: none;
+    transition: all 0.3s ease;
+    resize: vertical;
+    font-family: inherit;
+    min-height: 100px;
+}
+
+.input:focus:not(.readOnly),
+.textarea:focus {
     border-color: #4EC5B4;
     background-color: #fff;
     box-shadow: 0 4px 12px rgba(78, 197, 180, 0.1);
+}
+
+.readOnly {
+    background-color: #f0f0f0;
+    color: #777;
+    cursor: not-allowed;
+    border-color: #e0e0e0;
+}
+
+.selectInput {
+    appearance: none;
+    cursor: pointer;
 }
 
 .errorInput {
@@ -195,6 +241,11 @@
 @media (max-width: 768px) {
     .pageContainer {
         padding: 9rem 1rem 2rem;
+    }
+
+    .formRow {
+        flex-direction: column;
+        gap: 1.2rem;
     }
 
     .actionGroup {

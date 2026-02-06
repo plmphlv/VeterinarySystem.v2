@@ -104,7 +104,7 @@ const ProceduresCreate: React.FC = () => {
 
     const { values, changeHandler, onSubmit, changeValues } = useForm(initialValues, createProcedureHandler);
 
-    const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
+    const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>) => {
         const { name, value, type } = e.target;
         const fieldName = name as keyof CreateProcedureRequest;
 
@@ -146,8 +146,11 @@ const ProceduresCreate: React.FC = () => {
 
             <section className={styles.card}>
                 <header className={styles.cardHeader}>
-                    <h1>Create a Procedure</h1>
-                    <p>Log a new medical procedure</p>
+                    <div className={styles.iconCircle}>
+                        <i className="fa-solid fa-notes-medical"></i>
+                    </div>
+                    <h1 className={styles.title}>Create a Procedure</h1>
+                    <p className={styles.subtitle}>Log a new medical procedure</p>
                 </header>
 
                 <form onSubmit={onSubmit} noValidate className={styles.form}>
@@ -173,16 +176,15 @@ const ProceduresCreate: React.FC = () => {
                     <div className={styles.formGroup}>
                         <label htmlFor="description">Description</label>
                         <div className={styles.inputWrapper}>
-                            <i className={`fa-solid fa-pen ${styles.inputIcon}`}></i>
-                            <input
-                                type="text"
+                            <i className={`fa-solid fa-align-left ${styles.textareaIcon}`}></i>
+                            <textarea
                                 id="description"
                                 name="description"
                                 value={values.description ?? ""}
                                 onChange={handleChange}
-                                className={`${styles.input} ${inputClass("description")}`}
+                                className={`${styles.textarea} ${inputClass("description")}`}
                                 placeholder="Enter details about the procedure"
-                                autoComplete="off"
+                                rows={5}
                                 required
                             />
                         </div>

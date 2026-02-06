@@ -56,11 +56,11 @@ const GeneralCheckup: React.FC = () => {
                         </ul>
                     </section>
 
-                    <div className={styles.actionArea}>
+                    {/* <div className={styles.actionArea}>
                         <Link to="/appointments/request-appointment" className={styles.primaryBtn}>
                             Book a Check-up
                         </Link>
-                    </div>
+                    </div> */}
                 </div>
             </article>
         </section>

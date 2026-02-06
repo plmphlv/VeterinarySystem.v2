@@ -51,12 +51,12 @@ const Surgery: React.FC = () => {
                             <li>Continuous monitoring during recovery</li>
                         </ul>
                     </section>
-
+{/* 
                     <div className={styles.actionArea}>
                         <Link to="/appointments/request-appointment" className={styles.primaryBtn}>
                             Book a Surgery Consultation
                         </Link>
-                    </div>
+                    </div> */}
                 </div>
             </article>
         </section>

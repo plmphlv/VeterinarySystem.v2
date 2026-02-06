@@ -1,21 +1,3 @@
-@mixin fade-in {
-    opacity: 1;
-    animation-name: fadeInOpacity;
-    animation-iteration-count: 1;
-    animation-timing-function: ease-in;
-    animation-duration: 2s;
-}
-
-@keyframes fadeInOpacity {
-    0% {
-        opacity: 0;
-    }
-
-    100% {
-        opacity: 1;
-    }
-}
-
 .wrapper {
     width: 100%;
     display: flex;
@@ -126,12 +108,19 @@
 
 .grid {
     display: grid;
-    /* justify-content: center will align items centrally if they don't fill the row */
     grid-template-columns: repeat(auto-fit, minmax(300px, 350px));
     justify-content: center;
     gap: 2rem;
     padding: 10px;
     width: 100%;
+}
+
+.cardLink {
+    text-decoration: none;
+    color: inherit;
+    display: block;
+    opacity: 0;
+    animation: fadeUp 0.6s ease-out forwards;
 }
 
 .card {
@@ -141,10 +130,10 @@
     overflow: hidden;
     transition: transform 0.3s ease, box-shadow 0.3s ease;
     border: 1px solid rgba(78, 197, 180, 0.1);
-    opacity: 0;
-    animation: fadeUp 0.6s ease-out forwards;
     display: flex;
     flex-direction: column;
+    cursor: pointer;
+    height: 100%;
 }
 
 .cardHeader {
@@ -193,46 +182,12 @@
     gap: 0.8rem;
     color: #555;
     font-size: 1.05rem;
+    transition: color 0.3s ease;
 }
 
 .infoRow i {
     color: #4EC5B4;
     font-size: 1.1rem;
-}
-
-.cardFooter {
-    padding: 1.5rem;
-    padding-top: 0;
-    text-align: center;
-}
-
-.detailsBtn {
-    position: relative;
-    color: #4EC5B4;
-    font-weight: 700;
-    text-decoration: none;
-    padding: 0.6rem 1.5rem;
-    border: 2px solid #4EC5B4;
-    border-radius: 50px;
-    transition: all 0.3s ease;
-    display: inline-flex;
-    justify-content: center;
-    align-items: center;
-    gap: 0.5rem;
-    overflow: hidden;
-    z-index: 1;
-}
-
-.detailsBtn::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 0%;
-    height: 100%;
-    background-color: #4EC5B4;
-    transition: width 0.3s ease;
-    z-index: -1;
 }
 
 .emptyState {
@@ -262,21 +217,13 @@
 }
 
 @media (min-width: 1025px) {
-    .card:hover {
+    .cardLink:hover .card {
         transform: translateY(-8px);
-        box-shadow: 0 20px 40px rgba(78, 197, 180, 0.15);
+        box-shadow: 0 15px 35px rgba(78, 197, 180, 0.4);
     }
 
-    .card:hover h2 {
+    .cardLink:hover h2 {
         color: #4EC5B4;
-    }
-
-    .detailsBtn:hover {
-        color: #FFF;
-    }
-
-    .detailsBtn:hover::before {
-        width: 100%;
     }
 }
 
@@ -307,7 +254,6 @@
         opacity: 0;
         transform: translateY(20px);
     }
-
     to {
         opacity: 1;
         transform: translateY(0);

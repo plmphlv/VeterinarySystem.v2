@@ -24,6 +24,12 @@ const Procedures: React.FC = () => {
                 />
             ) : (
                 <>
+                    <div className={styles.navWrapper}>
+                        <Link to="/staff-area" className={styles.backLink}>
+                            &larr; Back to Staff Area
+                        </Link>
+                    </div>
+
                     <header className={styles.header}>
                         <h1 className={styles.title}>All Procedures</h1>
                         <p className={styles.subtitle}>Manage medical procedures and records</p>

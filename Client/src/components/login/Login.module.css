@@ -37,7 +37,7 @@
 .card {
     position: relative;
     z-index: 2;
-    background: rgba(255, 255, 255, 0.75);
+    background: rgba(255, 255, 255, 0.85);
     backdrop-filter: blur(10px);
     width: 100%;
     max-width: 450px;
@@ -45,6 +45,7 @@
     box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2);
     padding: 3rem 2.5rem;
     animation: fadeUp 0.8s ease-out forwards;
+    border: 1px solid rgba(255, 255, 255, 0.6);
 }
 
 .cardHeader {
@@ -52,9 +53,22 @@
     margin-bottom: 2.5rem;
 }
 
+.iconCircle {
+    width: 70px;
+    height: 70px;
+    background-color: #eaf8f6;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 1.8rem;
+    color: #4EC5B4;
+    margin: 0 auto 1.5rem;
+}
+
 .cardHeader h1 {
     font-size: 2rem;
-    color: #4EC5B4;
+    color: #333;
     margin-bottom: 0.5rem;
     font-weight: 800;
 }
@@ -92,7 +106,7 @@
 .inputIcon {
     position: absolute;
     left: 1rem;
-    color: #444;
+    color: #888;
     font-size: 1.1rem;
     z-index: 1;
     pointer-events: none;

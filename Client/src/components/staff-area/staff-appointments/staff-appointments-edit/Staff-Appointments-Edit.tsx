@@ -115,7 +115,7 @@ const StaffAppointmentsEdit: React.FC = () => {
 
     const { values, onSubmit, changeValues } = useForm(initialValues, editAppointmentHandler);
 
-    const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
+    const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>) => {
         const { name, value, type } = e.target;
         const fieldName = name as keyof StaffEditAppointmentRequest;
         const parsedValue = type === "number" ? Number(value) : value;
@@ -186,11 +186,26 @@ const StaffAppointmentsEdit: React.FC = () => {
                     <div className={styles.iconCircle}>
                         <i className="fa-solid fa-pen-to-square"></i>
                     </div>
-                    <h1 className={styles.title}>Edit an Appointment</h1>
+                    <h1 className={styles.title}>Edit Appointment</h1>
                     <p className={styles.subtitle}>Update appointment details</p>
                 </header>
 
                 <form onSubmit={onSubmit} noValidate className={styles.form}>
+                    <div className={styles.formGroup}>
+                        <label htmlFor="id">ID</label>
+                        <div className={styles.inputWrapper}>
+                            <i className={`fa-solid fa-hashtag ${styles.inputIcon}`}></i>
+                            <input
+                                type="number"
+                                id="id"
+                                name="id"
+                                value={values.id}
+                                className={`${styles.input} ${styles.readOnly}`}
+                                readOnly
+                            />
+                        </div>
+                    </div>
+
                     <div className={styles.formGroup}>
                         <label htmlFor="date">Date</label>
                         <div className={styles.inputWrapper}>
@@ -212,75 +227,60 @@ const StaffAppointmentsEdit: React.FC = () => {
                     <div className={styles.formGroup}>
                         <label htmlFor="description">Description</label>
                         <div className={styles.inputWrapper}>
-                            <i className={`fa-solid fa-pen ${styles.inputIcon}`}></i>
-                            <input
-                                type="text"
+                            <i className={`fa-solid fa-align-left ${styles.textareaIcon}`}></i>
+                            <textarea
                                 id="description"
                                 name="description"
                                 value={values.description}
                                 onChange={handleChange}
-                                className={`${styles.input} ${inputClass("description")}`}
+                                className={`${styles.textarea} ${inputClass("description")}`}
+                                placeholder="Edit description..."
+                                rows={5}
                                 required
                             />
                         </div>
                         {errors.description && <span className={styles.errorMsg}>{errors.description}</span>}
                     </div>
 
-                    <div className={styles.formGroup}>
-                        <label htmlFor="staffId">Staff ID</label>
-                        <div className={styles.inputWrapper}>
-                            <i className={`fa-solid fa-user-doctor ${styles.inputIcon}`}></i>
-                            <input
-                                type="text"
-                                id="staffId"
-                                name="staffId"
-                                value={values.staffId}
-                                onChange={handleChange}
-                                className={`${styles.input} ${inputClass("staffId")}`}
-                                required
-                            />
+                    <div className={styles.formRow}>
+                        <div className={styles.formGroup}>
+                            <label htmlFor="staffId">Staff ID</label>
+                            <div className={styles.inputWrapper}>
+                                <i className={`fa-solid fa-user-doctor ${styles.inputIcon}`}></i>
+                                <input
+                                    type="text"
+                                    id="staffId"
+                                    name="staffId"
+                                    value={values.staffId}
+                                    onChange={handleChange}
+                                    className={`${styles.input} ${inputClass("staffId")}`}
+                                    placeholder="Enter Staff ID"
+                                    required
+                                />
+                            </div>
+                            {errors.staffId && <span className={styles.errorMsg}>{errors.staffId}</span>}
                         </div>
-                        {errors.staffId && <span className={styles.errorMsg}>{errors.staffId}</span>}
-                    </div>
 
-                    <div className={styles.formGroup}>
-                        <label htmlFor="id">ID</label>
-                        <div className={styles.inputWrapper}>
-                            <i className={`fa-solid fa-hashtag ${styles.inputIcon}`}></i>
-                            <input
-                                type="number"
-                                id="id"
-                                name="id"
-                                value={values.id}
-                                onChange={handleChange}
-                                className={`${styles.input} ${inputClass("id")}`}
-                                required
-                                readOnly
-                            />
+                        <div className={styles.formGroup}>
+                            <label htmlFor="status">Status</label>
+                            <div className={styles.inputWrapper}>
+                                <i className={`fa-solid fa-flag ${styles.inputIcon}`}></i>
+                                <select
+                                    id="status"
+                                    name="status"
+                                    value={values.status}
+                                    onChange={handleChange}
+                                    className={`${styles.input} ${styles.selectInput} ${inputClass("status")}`}
+                                >
+                                    <option value="Pending_Review">Pending review</option>
+                                    <option value="Confirmed">Confirmed</option>
+                                    <option value="Completed">Completed</option>
+                                    <option value="Cancelled">Cancelled</option>
+                                    <option value="Missed">Missed</option>
+                                </select>
+                            </div>
+                            {errors.status && <span className={styles.errorMsg}>{errors.status}</span>}
                         </div>
-                        {errors.id && <span className={styles.errorMsg}>{errors.id}</span>}
-                    </div>
-
-                    <div className={styles.formGroup}>
-                        <label htmlFor="status">Status</label>
-                        <div className={styles.inputWrapper}>
-                            <i className={`fa-solid fa-flag ${styles.inputIcon}`}></i>
-                            <select
-                                id="status"
-                                name="status"
-                                value={values.status}
-                                onChange={handleChange}
-                                className={`${styles.input} ${styles.selectInput} ${inputClass("status")}`}
-                                required
-                            >
-                                <option value="Pending_Review">Pending review</option>
-                                <option value="Confirmed">Confirmed</option>
-                                <option value="Completed">Completed</option>
-                                <option value="Cancelled">Cancelled</option>
-                                <option value="Missed">Missed</option>
-                            </select>
-                        </div>
-                        {errors.status && <span className={styles.errorMsg}>{errors.status}</span>}
                     </div>
 
                     <div className={styles.actionGroup}>
@@ -293,7 +293,7 @@ const StaffAppointmentsEdit: React.FC = () => {
                         </button>
 
                         <Link
-                            to="/staff-area/appointments"
+                            to={`/staff-area/appointments/${id}/details`}
                             className={styles.cancelBtn}
                         >
                             <i className="fa-solid fa-xmark"></i> Cancel

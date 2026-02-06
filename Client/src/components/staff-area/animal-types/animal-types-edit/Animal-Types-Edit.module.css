@@ -32,6 +32,8 @@
     padding: 2.5rem;
     border: 1px solid rgba(78, 197, 180, 0.1);
     animation: fadeUp 0.6s ease-out forwards;
+    display: flex;
+    flex-direction: column;
 }
 
 .cardHeader {
@@ -49,6 +51,19 @@
 .cardHeader p {
     color: #666;
     font-size: 1rem;
+}
+
+.iconCircle {
+    width: 70px;
+    height: 70px;
+    background-color: #eaf8f6;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 1.8rem;
+    color: #4EC5B4;
+    margin: 0 auto 1.5rem;
 }
 
 .form {
@@ -97,10 +112,17 @@
     transition: all 0.3s ease;
 }
 
-.input:focus {
+.input:focus:not(.readOnly) {
     border-color: #4EC5B4;
     background-color: #fff;
     box-shadow: 0 4px 12px rgba(78, 197, 180, 0.1);
+}
+
+.readOnly {
+    background-color: #f0f0f0;
+    color: #777;
+    cursor: not-allowed;
+    border-color: #e0e0e0;
 }
 
 .errorInput {
@@ -190,7 +212,7 @@
 @keyframes fadeUp {
     from {
         opacity: 0;
-        transform: translateY(30px);
+        transform: translateY(20px);
     }
     to {
         opacity: 1;

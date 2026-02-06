@@ -24,6 +24,12 @@ const StaffAppointments: React.FC = () => {
                 />
             ) : (
                 <>
+                    <div className={styles.navWrapper}>
+                        <Link to="/staff-area" className={styles.backLink}>
+                            &larr; Back to Staff Area
+                        </Link>
+                    </div>
+
                     <header className={styles.header}>
                         <h1 className={styles.title}>All Appointment Requests</h1>
                         <p className={styles.subtitle}>Manage incoming requests from pet owners</p>

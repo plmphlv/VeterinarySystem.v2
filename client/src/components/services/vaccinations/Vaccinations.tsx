@@ -52,12 +52,12 @@ const Vaccinations: React.FC = () => {
                             <li>Safe environment for other pets and family members</li>
                         </ul>
                     </section>
-
+{/* 
                     <div className={styles.actionArea}>
                         <Link to="/appointments/request-appointment" className={styles.primaryBtn}>
                             Book a Vaccination
                         </Link>
-                    </div>
+                    </div> */}
                 </div>
             </article>
         </section>

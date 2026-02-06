@@ -4,6 +4,7 @@
     flex-direction: column;
     gap: 2rem;
     position: relative;
+    align-items: center;
 }
 
 .spinnerOverlay {
@@ -112,6 +113,14 @@
     width: 100%;
 }
 
+.cardLink {
+    text-decoration: none;
+    color: inherit;
+    display: block;
+    opacity: 0;
+    animation: fadeUp 0.6s ease-out forwards;
+}
+
 .card {
     background: #FFF;
     border-radius: 16px;
@@ -119,10 +128,10 @@
     overflow: hidden;
     transition: transform 0.3s ease, box-shadow 0.3s ease;
     border: 1px solid rgba(78, 197, 180, 0.1);
-    opacity: 0;
-    animation: fadeUp 0.6s ease-out forwards;
     display: flex;
     flex-direction: column;
+    height: 100%;
+    cursor: pointer;
 }
 
 .cardHeader {
@@ -145,12 +154,13 @@
 }
 
 .cardBody {
-    padding: 1.5rem;
+    padding: 2rem;
     flex-grow: 1;
     display: flex;
     flex-direction: column;
     gap: 1rem;
     align-items: center;
+    text-align: center;
 }
 
 .infoRow {
@@ -159,47 +169,12 @@
     gap: 0.8rem;
     color: #555;
     font-size: 1.05rem;
+    transition: color 0.3s ease;
 }
 
 .infoRow i {
     color: #4EC5B4;
     font-size: 1.2rem;
-}
-
-.cardFooter {
-    padding: 1.5rem;
-    padding-top: 0;
-    text-align: center;
-}
-
-.detailsBtn {
-    position: relative;
-    color: #4EC5B4;
-    font-weight: 700;
-    text-decoration: none;
-    padding: 0.6rem 1.5rem;
-    border: 2px solid #4EC5B4;
-    border-radius: 50px;
-    transition: all 0.3s ease;
-    display: inline-flex;
-    justify-content: center;
-    align-items: center;
-    gap: 0.5rem;
-    overflow: hidden;
-    z-index: 1;
-    max-width: 70%;
-}
-
-.detailsBtn::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 0%;
-    height: 100%;
-    background-color: #4EC5B4;
-    transition: width 0.3s ease;
-    z-index: -1;
 }
 
 .emptyState {
@@ -229,17 +204,13 @@
 }
 
 @media (min-width: 1025px) {
-    .card:hover {
+    .cardLink:hover .card {
         transform: translateY(-8px);
-        box-shadow: 0 20px 40px rgba(78, 197, 180, 0.15);
+        box-shadow: 0 15px 35px rgba(78, 197, 180, 0.5);
     }
 
-    .detailsBtn:hover {
-        color: #FFF;
-    }
-
-    .detailsBtn:hover::before {
-        width: 100%;
+    .cardLink:hover .infoRow {
+        color: #4EC5B4;
     }
 }
 
@@ -270,7 +241,6 @@
         opacity: 0;
         transform: translateY(20px);
     }
-
     to {
         opacity: 1;
         transform: translateY(0);

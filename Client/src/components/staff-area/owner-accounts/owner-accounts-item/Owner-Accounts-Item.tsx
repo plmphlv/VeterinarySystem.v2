@@ -131,38 +131,32 @@ const OwnerAccountsItem: React.FC = () => {
             {!loading && ownerAccounts.length > 0 ? (
                 <section className={styles.grid}>
                     {ownerAccounts.map((owner, index) => (
-                        <article 
-                            className={styles.card} 
+                        <Link 
+                            to={`/staff-area/owner-accounts/${owner.id}/details`} 
                             key={owner.id}
+                            className={styles.cardLink}
                             style={{ animationDelay: `${index * 0.1}s` }}
                         >
-                            <div className={styles.cardHeader}>
-                                <div className={styles.iconCircle}>
-                                    <i className="fa-solid fa-user"></i>
+                            <article className={styles.card}>
+                                <div className={styles.cardHeader}>
+                                    <div className={styles.iconCircle}>
+                                        <i className="fa-solid fa-user"></i>
+                                    </div>
+                                    <h2>{owner.fullName}</h2>
                                 </div>
-                                <h2>{owner.fullName}</h2>
-                            </div>
-                            
-                            <div className={styles.cardBody}>
-                                <div className={styles.infoRow}>
-                                    <i className="fa-solid fa-id-badge"></i> 
-                                    <span>ID: {owner.id}</span>
+                                
+                                <div className={styles.cardBody}>
+                                    <div className={styles.infoRow}>
+                                        <i className="fa-solid fa-id-badge"></i> 
+                                        <span>ID: {owner.id}</span>
+                                    </div>
+                                    <div className={styles.infoRow}>
+                                        <i className="fa-solid fa-phone"></i>
+                                        <span>{owner.phoneNumber}</span>
+                                    </div>
                                 </div>
-                                <div className={styles.infoRow}>
-                                    <i className="fa-solid fa-phone"></i>
-                                    <span>{owner.phoneNumber}</span>
-                                </div>
-                            </div>
-
-                            <div className={styles.cardFooter}>
-                                <Link
-                                    to={`/staff-area/owner-accounts/${owner.id}/details`}
-                                    className={styles.detailsBtn}
-                                >
-                                    More Details
-                                </Link>
-                            </div>
-                        </article>
+                            </article>
+                        </Link>
                     ))}
                 </section>
             ) : (

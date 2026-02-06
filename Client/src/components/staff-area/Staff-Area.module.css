@@ -49,6 +49,14 @@
     margin-bottom: 2rem;
 }
 
+.cardLink {
+    text-decoration: none;
+    color: inherit;
+    display: block;
+    opacity: 0;
+    animation: fadeUp 0.8s ease-out forwards;
+}
+
 .card {
     background: #ffffff;
     border-radius: 20px;
@@ -57,10 +65,9 @@
     border: 1px solid rgba(78, 197, 180, 0.1);
     display: flex;
     flex-direction: column;
-    
-    opacity: 0; 
-    animation: fadeUp 0.8s ease-out forwards;
     transition: transform 0.3s ease, box-shadow 0.3s ease;
+    height: 100%;
+    cursor: pointer;
 }
 
 .imageWrapper {
@@ -95,41 +102,18 @@
     transition: color 0.3s ease;
 }
 
-.actionBtn {
-    background-color: #4EC5B4;
-    color: #fff;
-    font-size: 1rem;
-    font-weight: 600;
-    padding: 0.8rem 2rem;
-    border-radius: 50px;
-    text-decoration: none;
-    box-shadow: 0 4px 15px rgba(78, 197, 180, 0.3);
-    transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-    border: 2px solid transparent;
-    display: inline-block;
-    margin-top: auto;
-}
-
 @media (min-width: 1025px) {
-    .card:hover {
+    .cardLink:hover .card {
         transform: translateY(-8px);
-        box-shadow: 0 20px 40px rgba(78, 197, 180, 0.15);
+        box-shadow: 0 15px 35px rgba(78, 197, 180, 0.5);
     }
 
-    .card:hover h2 {
+    .cardLink:hover h2 {
         color: #4EC5B4;
     }
 
-    .card:hover .imageWrapper img {
+    .cardLink:hover .imageWrapper img {
         transform: scale(1.08);
-    }
-
-    .actionBtn:hover {
-        background-color: #fff;
-        color: #4EC5B4;
-        border-color: #4EC5B4;
-        box-shadow: 0 6px 20px rgba(78, 197, 180, 0.5);
-        transform: scale(1.05);
     }
 }
 
@@ -142,10 +126,6 @@
         font-size: 2rem;
     }
 
-    .actionBtn {
-        width: 60%;
-    }
-    
     .grid {
         gap: 1.5rem;
     }
@@ -156,6 +136,7 @@
         opacity: 0;
         transform: translateY(30px);
     }
+
     to {
         opacity: 1;
         transform: translateY(0);
@@ -167,6 +148,7 @@
         opacity: 0;
         transform: translateY(-20px);
     }
+
     to {
         opacity: 1;
         transform: translateY(0);

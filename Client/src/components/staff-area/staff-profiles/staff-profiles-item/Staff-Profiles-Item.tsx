@@ -127,34 +127,28 @@ const StaffProfilesItem: React.FC = () => {
             {staffProfiles.length > 0 ? (
                 <section className={styles.grid}>
                     {staffProfiles.map((staffProfile, index) => (
-                        <article
-                            className={styles.card}
+                        <Link
+                            to={`/staff-area/staff-profiles/${staffProfile.id}/details`}
                             key={staffProfile.id}
+                            className={styles.cardLink}
                             style={{ animationDelay: `${index * 0.1}s` }}
                         >
-                            <div className={styles.cardHeader}>
-                                <div className={styles.iconCircle}>
-                                    <i className="fa-solid fa-user-doctor"></i>
+                            <article className={styles.card}>
+                                <div className={styles.cardHeader}>
+                                    <div className={styles.iconCircle}>
+                                        <i className="fa-solid fa-user-doctor"></i>
+                                    </div>
+                                    <h2 className={styles.cardTitle}>{staffProfile.name}</h2>
                                 </div>
-                                <h2 className={styles.cardTitle}>{staffProfile.name}</h2>
-                            </div>
 
-                            <div className={styles.cardBody}>
-                                <div className={styles.infoRow}>
-                                    <i className="fa-solid fa-id-badge"></i>
-                                    <span>ID: {staffProfile.id}</span>
+                                <div className={styles.cardBody}>
+                                    <div className={styles.infoRow}>
+                                        <i className="fa-solid fa-id-badge"></i>
+                                        <span>ID: {staffProfile.id}</span>
+                                    </div>
                                 </div>
-                            </div>
-
-                            <div className={styles.cardFooter}>
-                                <Link
-                                    to={`/staff-area/staff-profiles/${staffProfile.id}/details`}
-                                    className={styles.detailsBtn}
-                                >
-                                    More Details
-                                </Link>
-                            </div>
-                        </article>
+                            </article>
+                        </Link>
                     ))}
                 </section>
             ) : (

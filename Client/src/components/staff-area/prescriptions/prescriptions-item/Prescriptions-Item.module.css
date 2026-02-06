@@ -1,21 +1,3 @@
-@mixin fade-in {
-    opacity: 1;
-    animation-name: fadeInOpacity;
-    animation-iteration-count: 1;
-    animation-timing-function: ease-in;
-    animation-duration: 2s;
-}
-
-@keyframes fadeInOpacity {
-    0% {
-        opacity: 0;
-    }
-
-    100% {
-        opacity: 1;
-    }
-}
-
 .wrapper {
     width: 100%;
     display: flex;
@@ -126,12 +108,20 @@
 
 .grid {
     display: grid;
-    /* Changed from auto-fill to auto-fit and added justify-content: center */
+    /* justify-content: center will align items centrally if they don't fill the row */
     grid-template-columns: repeat(auto-fit, minmax(340px, 380px));
     justify-content: center;
     gap: 2rem;
     padding: 10px;
     width: 100%;
+}
+
+.cardLink {
+    text-decoration: none;
+    color: inherit;
+    display: block;
+    opacity: 0;
+    animation: fadeUp 0.6s ease-out forwards;
 }
 
 .prescriptionCard {
@@ -144,11 +134,9 @@
     position: relative;
     transition: transform 0.3s ease, box-shadow 0.3s ease;
     border: 1px solid #f0f0f0;
-    opacity: 0;
-    animation: fadeUp 0.6s ease-out forwards;
-    max-width: 400px;
-    /* Optional: limit width if it stretches too much */
     width: 100%;
+    height: 100%;
+    cursor: pointer;
 }
 
 .prescriptionCard::before {
@@ -174,9 +162,10 @@
     font-family: 'Georgia', serif;
     font-size: 42px;
     font-weight: bold;
-    color: #4EC5B4;
+    color: #444;
     line-height: 1;
     opacity: 0.8;
+    transition: 0.3s ease;
 }
 
 .headerInfo {
@@ -236,43 +225,6 @@
     flex-direction: column;
 }
 
-.actions {
-    display: flex;
-    justify-content: center;
-    margin-bottom: 16px;
-}
-
-.detailsBtn {
-    position: relative;
-    color: #4EC5B4;
-    padding: 10px 20px;
-    font-size: 14px;
-    font-weight: 600;
-    text-decoration: none;
-    padding: 0.6rem 1.5rem;
-    border: 2px solid #4EC5B4;
-    border-radius: 50px;
-    transition: all 0.3s ease;
-    display: inline-flex;
-    justify-content: center;
-    align-items: center;
-    gap: 0.5rem;
-    overflow: hidden;
-    z-index: 1;
-}
-
-.detailsBtn::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 0%;
-    height: 100%;
-    background-color: #4EC5B4;
-    transition: width 0.3s ease;
-    z-index: -1;
-}
-
 .signatureLine {
     border-top: 1px solid #aaa;
     padding-top: 8px;
@@ -322,17 +274,13 @@
 }
 
 @media (min-width: 1025px) {
-    .prescriptionCard:hover {
+    .cardLink:hover .prescriptionCard {
         transform: translateY(-8px);
         box-shadow: 0 20px 40px rgba(78, 197, 180, 0.15);
     }
 
-    .detailsBtn:hover {
-        color: #FFF;
-    }
-
-    .detailsBtn:hover::before {
-        width: 100%;
+    .cardLink:hover .rxSymbol {
+        color: #4EC5B4;
     }
 }
 
@@ -363,7 +311,6 @@
         opacity: 0;
         transform: translateY(20px);
     }
-
     to {
         opacity: 1;
         transform: translateY(0);

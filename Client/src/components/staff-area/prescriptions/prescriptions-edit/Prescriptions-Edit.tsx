@@ -82,7 +82,7 @@ const PrescriptionsEdit: React.FC = () => {
 
     const { values, changeHandler, onSubmit, changeValues } = useForm(initialValues, editPrescriptionHandler);
 
-    const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
+    const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>) => {
         const { name, value, type } = e.target;
         const fieldName = name as keyof EditPrescriptionRequest;
 
@@ -150,7 +150,7 @@ const PrescriptionsEdit: React.FC = () => {
                 />
             )}
 
-            {id ? (
+            {values.id ? (
                 <article className={styles.card}>
                     <header className={styles.cardHeader}>
                         <div className={styles.iconCircle}>
@@ -171,7 +171,7 @@ const PrescriptionsEdit: React.FC = () => {
                                     name="id"
                                     value={values.id ?? ""}
                                     onChange={handleChange}
-                                    className={`${styles.input} ${inputClass("id")}`}
+                                    className={`${styles.input} ${styles.readOnly}`}
                                     placeholder="Enter the prescription ID"
                                     autoComplete="off"
                                     readOnly
@@ -183,16 +183,15 @@ const PrescriptionsEdit: React.FC = () => {
                         <div className={styles.formGroup}>
                             <label htmlFor="description">Description</label>
                             <div className={styles.inputWrapper}>
-                                <i className={`fa-solid fa-comment-medical ${styles.inputIcon}`}></i>
-                                <input
-                                    type="text"
+                                <i className={`fa-solid fa-align-left ${styles.textareaIcon}`}></i>
+                                <textarea
                                     id="description"
                                     name="description"
                                     value={values.description ?? ""}
                                     onChange={handleChange}
-                                    className={`${styles.input} ${inputClass("description")}`}
-                                    placeholder="Enter the new description"
-                                    autoComplete="off"
+                                    className={`${styles.textarea} ${inputClass("description")}`}
+                                    placeholder="Enter the new description..."
+                                    rows={6}
                                     required
                                 />
                             </div>
@@ -217,9 +216,9 @@ const PrescriptionsEdit: React.FC = () => {
                         </div>
                     </form>
                 </article>
-            ) : !isLoading && !id ? (
-                <p className={styles.noData}>No user data found.</p>
-            ) : null}
+            ) : !isLoading && (
+                <p className={styles.noData}>No prescription found.</p>
+            )}
         </div>
     );
 };

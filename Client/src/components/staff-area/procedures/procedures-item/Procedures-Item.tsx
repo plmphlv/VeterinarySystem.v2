@@ -3,7 +3,7 @@ import { useEffect, useState } from "react";
 import { useGetUserData } from "../../../../hooks/useGetUserData";
 import Spinner from "../../../spinner/Spinner";
 import Dialog from "../../../dialog/Dialog";
-import { formatDate, formatStatus, formatTime } from "../../../../utils/formatDetails";
+import { formatDate, formatTime } from "../../../../utils/formatDetails";
 import styles from "./Procedures-Item.module.css";
 import { useGetAllProcedures } from "../../../../api/proceduresAPI";
 import type { GetAllProceduresErrors, Procedure } from "../../../../types";
@@ -150,38 +150,35 @@ const ProceduresItem: React.FC = () => {
                 </div>
             </section>
 
-            {procedures.length > 0 && (!errors || Object.keys(errors).length === 0) ? (
+            {!loading && procedures.length > 0 ? (
                 <section className={styles.grid}>
                     {procedures.map((procedure, index) => (
-                        <article
-                            className={styles.card}
+                        <Link 
+                            to={`/staff-area/procedures/${procedure.id}/details`}
                             key={procedure.id}
+                            className={styles.cardLink}
                             style={{ animationDelay: `${index * 0.1}s` }}
                         >
-                            <div className={styles.cardHeader}>
-                                <div className={styles.iconCircle}>
-                                    <i className="fa-solid fa-stethoscope"></i>
+                            <article className={styles.card}>
+                                <div className={styles.cardHeader}>
+                                    <div className={styles.iconCircle}>
+                                        <i className="fa-solid fa-stethoscope"></i>
+                                    </div>
+                                    <h2>{procedure.name}</h2>
                                 </div>
-                                <h2>{procedure.name}</h2>
-                            </div>
 
-                            <div className={styles.cardBody}>
-                                <div className={styles.infoRow}>
-                                    <i className="fa-solid fa-calendar-days"></i>
-                                    <span>{formatDate(procedure.date)}</span>
+                                <div className={styles.cardBody}>
+                                    <div className={styles.infoRow}>
+                                        <i className="fa-solid fa-calendar-days"></i>
+                                        <span>{formatDate(procedure.date)}</span>
+                                    </div>
+                                    <div className={styles.infoRow}>
+                                        <i className="fa-solid fa-clock"></i>
+                                        <span>{formatTime(procedure.date)}</span>
+                                    </div>
                                 </div>
-                                <div className={styles.infoRow}>
-                                    <i className="fa-solid fa-clock"></i>
-                                    <span>{formatTime(procedure.date)}</span>
-                                </div>
-                            </div>
-
-                            <div className={styles.cardFooter}>
-                                <Link to={`/staff-area/procedures/${procedure.id}/details`} className={styles.detailsBtn}>
-                                    More Details
-                                </Link>
-                            </div>
-                        </article>
+                            </article>
+                        </Link>
                     ))}
                 </section>
             ) : (

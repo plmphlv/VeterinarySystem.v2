@@ -54,12 +54,12 @@ const PetNutritionCounseling: React.FC = () => {
                             <li>Tailored plans for different life stages</li>
                         </ul>
                     </section>
-
+{/* 
                     <div className={styles.actionArea}>
                         <Link to="/appointments/request-appointment" className={styles.primaryBtn}>
                             Book a Nutrition Counseling Session
                         </Link>
-                    </div>
+                    </div> */}
                 </div>
             </article>
         </section>

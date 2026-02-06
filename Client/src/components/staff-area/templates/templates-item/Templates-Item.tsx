@@ -7,12 +7,9 @@ import { useGetAllTemplates } from "../../../../api/templatesAPI";
 import Spinner from "../../../spinner/Spinner";
 import Dialog from "../../../dialog/Dialog";
 import styles from "./Templates-Item.module.css";
-import { useGetUserData } from "../../../../hooks/useGetUserData";
 
 const TemplatesItem: React.FC = () => {
-    const { userData, isLoading, error } = useGetUserData();
     const { getAllTemplates, cancelGetAllTemplates } = useGetAllTemplates();
-    const [showError, setShowError] = useState(true);
     const [errors, setErrors] = useState<GetAllTemplatesRequestFieldErrors>({});
 
     const [dialog, setDialog] = useState<{ message: string; type: "success" | "error" } | null>(null);
@@ -60,8 +57,6 @@ const TemplatesItem: React.FC = () => {
     }, [name, type, statusFilter]);
 
     useEffect(() => {
-        fetchTemplates();
-
         return () => {
             cancelGetAllTemplates();
         };
@@ -137,41 +132,35 @@ const TemplatesItem: React.FC = () => {
             {templates.length > 0 ? (
                 <section className={styles.grid}>
                     {templates.map((template, index) => (
-                        <article
-                            className={styles.card}
+                        <Link
+                            to={`/staff-area/templates/${template.id}/details`}
                             key={template.id}
+                            className={styles.cardLink}
                             style={{ animationDelay: `${index * 0.1}s` }}
                         >
-                            <div className={styles.cardHeader}>
-                                <div className={styles.iconCircle}>
-                                    <i className="fa-solid fa-file-lines"></i>
+                            <article className={styles.card}>
+                                <div className={styles.cardHeader}>
+                                    <div className={styles.iconCircle}>
+                                        <i className="fa-solid fa-file-lines"></i>
+                                    </div>
+                                    <h2 className={styles.cardTitle}>{template.name}</h2>
+                                    <span className={`${styles.statusBadge} ${template.isActive ? styles.active : styles.inactive}`}>
+                                        {template.isActive ? "Active" : "Inactive"}
+                                    </span>
                                 </div>
-                                <h2 className={styles.cardTitle}>{template.name}</h2>
-                                <span className={`${styles.statusBadge} ${template.isActive ? styles.active : styles.inactive}`}>
-                                    {template.isActive ? "Active" : "Inactive"}
-                                </span>
-                            </div>
 
-                            <div className={styles.cardBody}>
-                                <div className={styles.infoRow}>
-                                    <i className="fa-solid fa-tag"></i>
-                                    <span>Type: {template.type}</span>
+                                <div className={styles.cardBody}>
+                                    <div className={styles.infoRow}>
+                                        <i className="fa-solid fa-tag"></i>
+                                        <span>Type: {template.type}</span>
+                                    </div>
+                                    <div className={styles.infoRow}>
+                                        <i className="fa-solid fa-calendar"></i>
+                                        <span>Created: {new Date(template.createdAt).toLocaleDateString()}</span>
+                                    </div>
                                 </div>
-                                <div className={styles.infoRow}>
-                                    <i className="fa-solid fa-calendar"></i>
-                                    <span>Created: {new Date(template.createdAt).toLocaleDateString()}</span>
-                                </div>
-                            </div>
-
-                            <div className={styles.cardFooter}>
-                                <Link
-                                    to={`/staff-area/templates/${template.id}/details`}
-                                    className={styles.detailsBtn}
-                                >
-                                    View Details
-                                </Link>
-                            </div>
-                        </article>
+                            </article>
+                        </Link>
                     ))}
                 </section>
             ) : (
@@ -186,14 +175,6 @@ const TemplatesItem: React.FC = () => {
                             : "There are no templates available yet."}
                     </p>
                 </div>
-            )}
-
-            {error && showError && (
-                <Dialog
-                    message={error}
-                    type="error"
-                    onClose={() => setShowError(false)}
-                />
             )}
         </div>
     );

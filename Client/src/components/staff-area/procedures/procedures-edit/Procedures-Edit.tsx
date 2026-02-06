@@ -98,7 +98,7 @@ const ProceduresEdit: React.FC = () => {
 
     const { values, changeHandler, onSubmit, changeValues } = useForm(initialValues, editProcedureHandler);
 
-    const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
+    const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>) => {
         const { name, value, type } = e.target;
         const fieldName = name as keyof EditProcedureRequest;
 
@@ -152,7 +152,7 @@ const ProceduresEdit: React.FC = () => {
 
     return (
         <div className={styles.pageContainer}>
-            {(formLoading || userLoading) && (
+            {(formLoading || userLoading || isLoading) && (
                 <div className={styles.spinnerOverlay}>
                     <Spinner />
                 </div>
@@ -169,13 +169,30 @@ const ProceduresEdit: React.FC = () => {
             <section className={styles.card}>
                 <header className={styles.cardHeader}>
                     <div className={styles.iconCircle}>
-                        <i className="fa-solid fa-file-pen"></i>
+                        <i className="fa-solid fa-pen-to-square"></i>
                     </div>
                     <h1 className={styles.title}>Edit a Procedure</h1>
                     <p className={styles.subtitle}>Update medical procedure details</p>
                 </header>
 
                 <form onSubmit={onSubmit} noValidate className={styles.form}>
+                    <div className={styles.formGroup}>
+                        <label htmlFor="id">ID</label>
+                        <div className={styles.inputWrapper}>
+                            <i className={`fa-solid fa-hashtag ${styles.inputIcon}`}></i>
+                            <input
+                                type="number"
+                                id="id"
+                                name="id"
+                                value={values.id}
+                                onChange={handleChange}
+                                className={`${styles.input} ${styles.readOnly}`}
+                                placeholder="ID"
+                                readOnly
+                            />
+                        </div>
+                    </div>
+
                     <div className={styles.formGroup}>
                         <label htmlFor="name">Procedure Name</label>
                         <div className={styles.inputWrapper}>
@@ -184,10 +201,10 @@ const ProceduresEdit: React.FC = () => {
                                 type="text"
                                 id="name"
                                 name="name"
-                                value={values.name ?? ""}
+                                value={values.name}
                                 onChange={handleChange}
                                 className={`${styles.input} ${inputClass("name")}`}
-                                placeholder="Enter new name"
+                                placeholder="Enter procedure name"
                                 autoComplete="off"
                                 required
                             />
@@ -198,16 +215,15 @@ const ProceduresEdit: React.FC = () => {
                     <div className={styles.formGroup}>
                         <label htmlFor="description">Description</label>
                         <div className={styles.inputWrapper}>
-                            <i className={`fa-solid fa-align-left ${styles.inputIcon}`}></i>
-                            <input
-                                type="text"
+                            <i className={`fa-solid fa-align-left ${styles.textareaIcon}`}></i>
+                            <textarea
                                 id="description"
                                 name="description"
-                                value={values.description ?? ""}
+                                value={values.description}
                                 onChange={handleChange}
-                                className={`${styles.input} ${inputClass("description")}`}
-                                placeholder="Enter new description"
-                                autoComplete="off"
+                                className={`${styles.textarea} ${inputClass("description")}`}
+                                placeholder="Enter description..."
+                                rows={5}
                                 required
                             />
                         </div>
@@ -222,7 +238,7 @@ const ProceduresEdit: React.FC = () => {
                                 type="datetime-local"
                                 id="date"
                                 name="date"
-                                value={values.date ?? ""}
+                                value={values.date}
                                 onChange={handleChange}
                                 className={`${styles.input} ${inputClass("date")}`}
                                 min={getTomorrowDatetimeLocal()}
@@ -230,26 +246,6 @@ const ProceduresEdit: React.FC = () => {
                             />
                         </div>
                         {errors.date && <span className={styles.errorMsg}>{errors.date}</span>}
-                    </div>
-
-                    <div className={styles.formGroup}>
-                        <label htmlFor="id">ID</label>
-                        <div className={styles.inputWrapper}>
-                            <i className={`fa-solid fa-hashtag ${styles.inputIcon}`}></i>
-                            <input
-                                type="number"
-                                id="id"
-                                name="id"
-                                value={values.id ?? ""}
-                                onChange={handleChange}
-                                className={`${styles.input} ${inputClass("id")}`}
-                                placeholder="Enter ID"
-                                autoComplete="off"
-                                readOnly
-                                required
-                            />
-                        </div>
-                        {errors.id && <span className={styles.errorMsg}>{errors.id}</span>}
                     </div>
 
                     <div className={styles.actionGroup}>

@@ -86,7 +86,7 @@ const AppointmentsCreateRequest: React.FC = () => {
 
     const { values, changeValues, onSubmit } = useForm(initialValues, createAppointmentRequestHandler);
 
-    const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
+    const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>) => {
         const { name, value } = e.target;
         const fieldName = name as keyof CreateAppointmentRequest;
 
@@ -125,7 +125,7 @@ const AppointmentsCreateRequest: React.FC = () => {
             <section className={styles.card}>
                 <header className={styles.cardHeader}>
                     <div className={styles.iconCircle}>
-                        <i className="fa-solid fa-paper-plane"></i>
+                        <i className="fa-solid fa-calendar-plus"></i>
                     </div>
                     <h1 className={styles.title}>Request an Appointment</h1>
                     <p className={styles.subtitle}>Schedule a new visit for your pet</p>
@@ -153,15 +153,15 @@ const AppointmentsCreateRequest: React.FC = () => {
                     <div className={styles.formGroup}>
                         <label htmlFor="description">Description</label>
                         <div className={styles.inputWrapper}>
-                            <i className={`fa-solid fa-pen ${styles.inputIcon}`}></i>
-                            <input
+                            <i className={`fa-solid fa-align-left ${styles.textareaIcon}`}></i>
+                            <textarea
                                 id="description"
                                 name="description"
                                 value={values.description ?? ""}
                                 onChange={handleChange}
-                                className={`${styles.input} ${inputClass("description")}`}
+                                className={`${styles.textarea} ${inputClass("description")}`}
                                 placeholder="E.g. Annual vaccination..."
-                                autoComplete="off"
+                                rows={5}
                                 required
                             />
                         </div>

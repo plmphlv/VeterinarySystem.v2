@@ -118,6 +118,10 @@ const Login: React.FC = () => {
 
                 <div className={styles.card}>
                     <div className={styles.cardHeader}>
+                        {/* Добавен iconCircle тук */}
+                        <div className={styles.iconCircle}>
+                            <i className="fa-solid fa-right-to-bracket"></i>
+                        </div>
                         <h1>Welcome Back</h1>
                         <p>Please enter your details to sign in</p>
                     </div>
@@ -126,7 +130,7 @@ const Login: React.FC = () => {
                         <div className={styles.formGroup}>
                             <label htmlFor="IdentifyingCredential">Email or Username</label>
                             <div className={styles.inputWrapper}>
-                                <i className={`fa-solid fa-envelope ${styles.inputIcon}`}></i>
+                                <i className={`fa-solid fa-user ${styles.inputIcon}`}></i>
                                 <input
                                     type="text"
                                     id="IdentifyingCredential"

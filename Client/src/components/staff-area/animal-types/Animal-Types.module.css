@@ -10,6 +10,23 @@
     min-height: 80vh;
 }
 
+.navWrapper {
+    width: 100%;
+    display: flex;
+    justify-content: flex-start;
+    animation: fadeInDown 0.6s ease-out forwards;
+}
+
+.backLink {
+    display: inline-flex;
+    align-items: center;
+    color: #666;
+    text-decoration: none;
+    font-weight: 600;
+    font-size: 1rem;
+    transition: color 0.3s ease, transform 0.3s ease;
+}
+
 .header {
     text-align: center;
     margin-bottom: 1rem;
@@ -69,7 +86,7 @@
     opacity: 0;
 }
 
-.primaryBtn {
+.addBtn {
     background-color: #4EC5B4;
     color: #fff;
     font-size: 1.1rem;
@@ -90,12 +107,17 @@
     animation: invitePulse 2s infinite ease-in-out;
 }
 
-.primaryBtn:hover {
+.addBtn:hover {
     animation: none;
 }
 
 @media (min-width: 1025px) {
-    .primaryBtn:hover {
+    .backLink:hover {
+        color: #4EC5B4;
+        transform: translateX(-5px);
+    }
+
+    .addBtn:hover {
         background-color: #fff;
         color: #4EC5B4;
         border-color: #4EC5B4;
@@ -113,8 +135,9 @@
         font-size: 2rem;
     }
     
-    .primaryBtn {
-        width: auto;
+    .addBtn {
+        width: 100%;
+        justify-content: center;
     }
     
     .contentWrapper {

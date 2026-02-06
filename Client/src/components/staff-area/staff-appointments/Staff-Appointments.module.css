@@ -2,12 +2,29 @@
     width: 100%;
     max-width: 1280px;
     margin: 0 auto;
-    padding: 9rem 1.5rem 3rem;
+    padding: 8rem 1.5rem 3rem;
     display: flex;
     flex-direction: column;
     align-items: center;
     gap: 2rem;
     min-height: 80vh;
+}
+
+.navWrapper {
+    width: 100%;
+    display: flex;
+    justify-content: flex-start;
+    animation: fadeInDown 0.6s ease-out forwards;
+}
+
+.backLink {
+    display: inline-flex;
+    align-items: center;
+    color: #666;
+    text-decoration: none;
+    font-weight: 600;
+    font-size: 1rem;
+    transition: color 0.3s ease, transform 0.3s ease;
 }
 
 .header {
@@ -82,6 +99,11 @@
 }
 
 @media (min-width: 1025px) {
+    .backLink:hover {
+        color: #4EC5B4;
+        transform: translateX(-5px);
+    }
+
     .primaryBtn:hover {
         background-color: #fff;
         color: #4EC5B4;

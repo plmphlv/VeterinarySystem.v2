@@ -176,46 +176,41 @@ const PrescriptionsItem: React.FC = () => {
             {!loading && prescriptions.length > 0 ? (
                 <section className={styles.grid}>
                     {prescriptions.map((p, index) => (
-                        <div 
-                            key={p.id} 
-                            className={styles.prescriptionCard}
-                            style={{ animationDelay: `${index * 0.1}s` } as React.CSSProperties}
+                        <Link 
+                            to={`/staff-area/prescriptions/${p.id}/details`}
+                            key={p.id}
+                            className={styles.cardLink}
+                            style={{ animationDelay: `${index * 0.1}s` }}
                         >
-                            <div className={styles.cardHeader}>
-                                <span className={styles.rxSymbol}>Rx</span>
-                                <div className={styles.headerInfo}>
-                                    <span className={styles.headerTitle}>Prescription No.</span>
-                                    <span className={styles.prescriptionNumber}>#{p.number}</span>
-                                </div>
-                            </div>
-                            
-                            <div className={styles.cardBody}>
-                                <div className={styles.fieldGroup}>
-                                    <span className={styles.label}>Internal ID</span>
-                                    <span className={styles.value}>{p.id}</span>
+                            <div className={styles.prescriptionCard}>
+                                <div className={styles.cardHeader}>
+                                    <span className={styles.rxSymbol}>Rx</span>
+                                    <div className={styles.headerInfo}>
+                                        <span className={styles.headerTitle}>Prescription No.</span>
+                                        <span className={styles.prescriptionNumber}>#{p.number}</span>
+                                    </div>
                                 </div>
                                 
-                                <div className={styles.fieldGroup}>
-                                    <span className={styles.label}>Date Issued</span>
-                                    <span className={styles.value}>{p.issueDate}</span>
+                                <div className={styles.cardBody}>
+                                    <div className={styles.fieldGroup}>
+                                        <span className={styles.label}>Internal ID</span>
+                                        <span className={styles.value}>{p.id}</span>
+                                    </div>
+                                    
+                                    <div className={styles.fieldGroup}>
+                                        <span className={styles.label}>Date Issued</span>
+                                        <span className={styles.value}>{p.issueDate}</span>
+                                    </div>
                                 </div>
-                            </div>
 
-                            <div className={styles.cardFooter}>
-                                <div className={styles.actions}>
-                                    <Link 
-                                        to={`/staff-area/prescriptions/${p.id}/details`}
-                                        className={styles.detailsBtn}
-                                    >
-                                        More Details
-                                    </Link>
-                                </div>
-                                <div className={styles.signatureLine}>
-                                    <span className={styles.staffName}>{p.staffName}</span>
-                                    <span className={styles.signatureLabel}>Veterinarian Signature</span>
+                                <div className={styles.cardFooter}>
+                                    <div className={styles.signatureLine}>
+                                        <span className={styles.staffName}>{p.staffName}</span>
+                                        <span className={styles.signatureLabel}>Veterinarian Signature</span>
+                                    </div>
                                 </div>
                             </div>
-                        </div>
+                        </Link>
                     ))}
                 </section>
             ) : (

@@ -48,6 +48,14 @@
     margin-bottom: 2rem;
 }
 
+.cardLink {
+    text-decoration: none;
+    color: inherit;
+    display: block;
+    opacity: 0;
+    animation: fadeUp 0.8s ease-out forwards;
+}
+
 .card {
     background: #FFF;
     border-radius: 16px;
@@ -55,10 +63,10 @@
     box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
     display: flex;
     flex-direction: column;
-    opacity: 0;
-    animation: fadeUp 0.8s ease-out forwards;
     transition: transform 0.3s ease, box-shadow 0.3s ease;
     border: 1px solid rgba(78, 197, 180, 0.1);
+    height: 100%;
+    cursor: pointer;
 }
 
 .imageWrapper {
@@ -100,36 +108,7 @@
     flex-grow: 1;
 }
 
-.learnMoreBtn {
-    position: relative;
-    color: #4EC5B4;
-    font-weight: 700;
-    text-decoration: none;
-    padding: 0.6rem 1.5rem;
-    border: 2px solid #4EC5B4;
-    border-radius: 50px;
-    transition: all 0.3s ease;
-    display: inline-flex;
-    align-items: center;
-    gap: 0.5rem;
-    overflow: hidden;
-    z-index: 1;
-    max-width: 70%;
-}
-
-.learnMoreBtn::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 0%;
-    height: 100%;
-    background-color: #4EC5B4;
-    transition: width 0.3s ease;
-    z-index: -1;
-}
-
-.ctaWrapper {
+/* .ctaWrapper {
     display: flex;
     justify-content: center;
     width: 100%;
@@ -159,37 +138,29 @@
 
 .primaryBtn:hover {
     animation: none;
-}
+} */
 
 @media (min-width: 1025px) {
-    .card:hover {
+    .cardLink:hover .card {
         transform: translateY(-8px);
-        box-shadow: 0 20px 40px rgba(78, 197, 180, 0.15);
+        box-shadow: 0 15px 35px rgba(78, 197, 180, 0.5);
     }
 
-    .card:hover .imageWrapper img {
+    .cardLink:hover .imageWrapper img {
         transform: scale(1.08);
     }
 
-    .card:hover h2 {
+    .cardLink:hover h2 {
         color: #4EC5B4;
     }
 
-    .learnMoreBtn:hover {
-        color: #FFF;
-    }
-
-    .learnMoreBtn:hover::before {
-        width: 100%;
-    }
-
-    .primaryBtn:hover {
+    /* .primaryBtn:hover {
         background-color: #fff;
         color: #4EC5B4;
         border-color: #4EC5B4;
         box-shadow: 0 6px 20px rgba(78, 197, 180, 0.6);
         transform: scale(1.05);
-    }
+    } */
 }
 
 @media (max-width: 768px) {
@@ -206,12 +177,12 @@
         gap: 1.5rem;
     }
     
-    .primaryBtn {
+    /* .primaryBtn {
         width: auto;
-    }
+    } */
 }
 
-@keyframes invitePulse {
+/* @keyframes invitePulse {
     0% {
         transform: scale(1);
         box-shadow: 0 4px 15px rgba(78, 197, 180, 0.4);
@@ -224,7 +195,7 @@
         transform: scale(1);
         box-shadow: 0 4px 15px rgba(78, 197, 180, 0.4);
     }
-}
+} */
 
 @keyframes fadeUp {
     from {

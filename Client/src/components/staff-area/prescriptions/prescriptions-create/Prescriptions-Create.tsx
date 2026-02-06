@@ -85,7 +85,7 @@ const PrescriptionsCreate: React.FC = () => {
 
     const { values, changeHandler, onSubmit, changeValues } = useForm(initialValues, createPrescriptionHandler);
 
-    const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
+    const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>) => {
         const { name, value, type } = e.target;
         const fieldName = name as keyof CreatePrescriptionRequest;
 
@@ -157,16 +157,15 @@ const PrescriptionsCreate: React.FC = () => {
                     <div className={styles.formGroup}>
                         <label htmlFor="description">Description</label>
                         <div className={styles.inputWrapper}>
-                            <i className={`fa-solid fa-pen ${styles.inputIcon}`}></i>
-                            <input
-                                type="text"
+                            <i className={`fa-solid fa-align-left ${styles.textareaIcon}`}></i>
+                            <textarea
                                 id="description"
                                 name="description"
                                 value={values.description ?? ""}
                                 onChange={handleChange}
-                                className={`${styles.input} ${inputClass("description")}`}
-                                placeholder="Enter description"
-                                autoComplete="off"
+                                className={`${styles.textarea} ${inputClass("description")}`}
+                                placeholder="Enter prescription details..."
+                                rows={6}
                                 required
                             />
                         </div>

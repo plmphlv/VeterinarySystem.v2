@@ -56,11 +56,11 @@ const EmergencyServices: React.FC = () => {
                         </ul>
                     </section>
 
-                    <div className={styles.actionArea}>
+                    {/* <div className={styles.actionArea}>
                         <Link to="/appointments/request-appointment" className={styles.primaryBtn}>
                             Book an Emergency Consultation
                         </Link>
-                    </div>
+                    </div> */}
                 </div>
             </article>
         </section>

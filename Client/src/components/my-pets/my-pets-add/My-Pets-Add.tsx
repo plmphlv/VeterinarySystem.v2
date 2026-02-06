@@ -217,7 +217,7 @@ const MyPetsAdd: React.FC = () => {
                         <div className={styles.formGroup}>
                             <label htmlFor="age">Age</label>
                             <div className={styles.inputWrapper}>
-                                <i className={`fa-solid fa-calendar ${styles.inputIcon}`}></i>
+                                <i className={`fa-solid fa-calendar-days ${styles.inputIcon}`}></i>
                                 <input
                                     type="number"
                                     id="age"
@@ -262,7 +262,6 @@ const MyPetsAdd: React.FC = () => {
                                 className={`${styles.input} ${styles.selectInput} ${inputClass("animalTypeId")}`}
                                 required
                             >
-                                <option value={0}>-- Select Type --</option>
                                 {animalTypes.map(type => (
                                     <option key={type.id} value={type.id}>{type.value}</option>
                                 ))}

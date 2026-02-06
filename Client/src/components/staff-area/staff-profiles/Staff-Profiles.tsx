@@ -15,6 +15,12 @@ const StaffProfiles: React.FC = () => {
 
     return (
         <section className={styles.container}>
+            <div className={styles.navWrapper}>
+                <Link to="/staff-area" className={styles.backLink}>
+                    &larr; Back to Staff Area
+                </Link>
+            </div>
+
             <header className={styles.header}>
                 <h1 className={styles.title}>Staff Profiles</h1>
                 <p className={styles.subtitle}>Manage veterinary staff and administrators</p>

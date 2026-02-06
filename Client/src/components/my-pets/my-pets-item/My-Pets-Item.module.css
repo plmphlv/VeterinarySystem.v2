@@ -31,6 +31,14 @@
     padding: 1rem 0;
 }
 
+.cardLink {
+    text-decoration: none;
+    color: inherit;
+    display: block;
+    opacity: 0;
+    animation: fadeUp 0.6s ease-out forwards;
+}
+
 .card {
     background: #ffffff;
     border-radius: 16px;
@@ -38,10 +46,10 @@
     overflow: hidden;
     transition: transform 0.3s ease, box-shadow 0.3s ease;
     border: 1px solid rgba(78, 197, 180, 0.1);
-    opacity: 0;
-    animation: fadeUp 0.6s ease-out forwards;
     display: flex;
     flex-direction: column;
+    height: 100%;
+    cursor: pointer;
 }
 
 .cardHeader {
@@ -87,43 +95,12 @@
 .type {
     font-size: 1rem;
     color: #666;
-    margin-bottom: 1.5rem;
+    margin-bottom: 0;
     background-color: #f0f0f0;
     padding: 0.3rem 0.8rem;
     border-radius: 20px;
     font-weight: 600;
     text-transform: capitalize;
-}
-
-.detailsBtn {
-    position: relative;
-    color: #4EC5B4;
-    font-weight: 700;
-    text-decoration: none;
-    padding: 0.6rem 1.5rem;
-    border: 2px solid #4EC5B4;
-    border-radius: 50px;
-    transition: all 0.3s ease;
-    display: inline-flex;
-    justify-content: center;
-    align-items: center;
-    gap: 0.5rem;
-    overflow: hidden;
-    z-index: 1;
-    max-width: 70%;
-    margin-top: auto;
-}
-
-.detailsBtn::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 0%;
-    height: 100%;
-    background-color: #4EC5B4;
-    transition: width 0.3s ease;
-    z-index: -1;
 }
 
 .emptyState {
@@ -154,21 +131,13 @@
 }
 
 @media(min-width: 1025px) {
-    .card:hover {
+    .cardLink:hover .card {
         transform: translateY(-8px);
-        box-shadow: 0 20px 40px rgba(78, 197, 180, 0.15);
+        box-shadow: 0 15px 35px rgba(78, 197, 180, 0.5);
     }
 
-    .card:hover h2 {
+    .cardLink:hover h2 {
         color: #4EC5B4;
-    }
-
-    .detailsBtn:hover {
-        color: #FFF;
-    }
-
-    .detailsBtn:hover::before {
-        width: 100%;
     }
 }
 

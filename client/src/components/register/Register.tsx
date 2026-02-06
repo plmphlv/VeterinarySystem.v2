@@ -181,6 +181,10 @@ const Register: React.FC = () => {
 
                 <div className={styles.card}>
                     <div className={styles.cardHeader}>
+                        {/* Добавен iconCircle */}
+                        <div className={styles.iconCircle}>
+                            <i className="fa-solid fa-user-plus"></i>
+                        </div>
                         <h1>Create an Account</h1>
                         <p>Join us and manage your pets easily</p>
                     </div>

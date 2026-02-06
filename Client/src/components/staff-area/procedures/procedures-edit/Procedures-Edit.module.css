@@ -26,7 +26,7 @@
 .card {
     background: #FFF;
     width: 100%;
-    max-width: 500px;
+    max-width: 600px;
     border-radius: 20px;
     box-shadow: 0 10px 40px rgba(0, 0, 0, 0.08);
     padding: 2.5rem;
@@ -82,9 +82,7 @@
     font-size: 0.95rem;
     font-weight: 700;
     color: #444;
-    display: flex;
-    align-items: center;
-    gap: 0.5rem;
+    margin-left: 0.5rem;
 }
 
 .inputWrapper {
@@ -114,10 +112,43 @@
     transition: all 0.3s ease;
 }
 
-.input:focus {
+.textareaIcon {
+    position: absolute;
+    top: 1rem;
+    left: 1rem;
+    color: #888;
+    font-size: 1.1rem;
+    z-index: 1;
+    pointer-events: none;
+}
+
+.textarea {
+    width: 100%;
+    padding: 0.8rem 1rem 0.8rem 2.8rem;
+    border-radius: 12px;
+    border: 2px solid #eee;
+    background-color: #fafafa;
+    font-size: 1rem;
+    color: #333;
+    outline: none;
+    transition: all 0.3s ease;
+    resize: vertical;
+    font-family: inherit;
+    min-height: 120px;
+}
+
+.input:focus:not(.readOnly),
+.textarea:focus {
     border-color: #4EC5B4;
     background-color: #fff;
     box-shadow: 0 4px 12px rgba(78, 197, 180, 0.1);
+}
+
+.readOnly {
+    background-color: #f0f0f0;
+    color: #777;
+    cursor: not-allowed;
+    border-color: #e0e0e0;
 }
 
 .errorInput {

@@ -81,29 +81,26 @@ const MyPetsItem: React.FC = () => {
             {animals.length > 0 ? (
                 <section className={styles.grid}>
                     {animals.map((animal, index) => (
-                        <article 
+                        <Link 
+                            to={`/my-pets/${animal.id}/details`}
                             key={animal.id} 
-                            className={styles.card}
+                            className={styles.cardLink}
                             style={{ animationDelay: `${index * 0.1}s` }}
                         >
-                            <div className={styles.cardHeader}>
-                                <div className={styles.iconWrapper}>
-                                    <i className="fa-solid fa-paw"></i>
+                            <article className={styles.card}>
+                                <div className={styles.cardHeader}>
+                                    <div className={styles.iconWrapper}>
+                                        <i className="fa-solid fa-paw"></i>
+                                    </div>
                                 </div>
-                            </div>
-                            <div className={styles.cardContent}>
-                                <h2>{animal.name}</h2>
-                                <p className={styles.type}>
-                                    {animal.animalType}
-                                </p>
-                                <Link
-                                    to={`/my-pets/${animal.id}/details`}
-                                    className={styles.detailsBtn}
-                                >
-                                    More Details
-                                </Link>
-                            </div>
-                        </article>
+                                <div className={styles.cardContent}>
+                                    <h2>{animal.name}</h2>
+                                    <p className={styles.type}>
+                                        {animal.animalType}
+                                    </p>
+                                </div>
+                            </article>
+                        </Link>
                     ))}
                 </section>
             ) : (

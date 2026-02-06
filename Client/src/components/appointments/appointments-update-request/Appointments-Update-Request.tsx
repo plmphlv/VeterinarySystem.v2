@@ -81,7 +81,7 @@ const AppointmentsUpdateRequest: React.FC = () => {
 
     const { values, onSubmit, changeValues } = useForm(initialValues, updateAppointmentRequestHandler);
 
-    const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
+    const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>) => {
         const { name, value } = e.target;
         const fieldName = name as keyof UpdateAppointmentRequest;
 
@@ -144,7 +144,7 @@ const AppointmentsUpdateRequest: React.FC = () => {
                     <div className={styles.iconCircle}>
                         <i className="fa-solid fa-pen-to-square"></i>
                     </div>
-                    <h1 className={styles.title}>Update Appointment</h1>
+                    <h1 className={styles.title}>Update an Appointment Request</h1>
                     <p className={styles.subtitle}>Modify your request details below</p>
                 </header>
 
@@ -170,16 +170,15 @@ const AppointmentsUpdateRequest: React.FC = () => {
                     <div className={styles.formGroup}>
                         <label htmlFor="description">Description</label>
                         <div className={styles.inputWrapper}>
-                            <i className={`fa-solid fa-pen ${styles.inputIcon}`}></i>
-                            <input
-                                type="text"
+                            <i className={`fa-solid fa-align-left ${styles.textareaIcon}`}></i>
+                            <textarea
                                 id="description"
                                 name="description"
                                 value={values.description ?? ""}
                                 onChange={handleChange}
-                                className={`${styles.input} ${inputClass("description")}`}
+                                className={`${styles.textarea} ${inputClass("description")}`}
                                 placeholder="Reason for change..."
-                                autoComplete="off"
+                                rows={5}
                                 required
                             />
                         </div>

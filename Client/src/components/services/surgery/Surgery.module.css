@@ -94,7 +94,7 @@
     padding: 2rem;
     border-radius: 12px;
     border-left: 5px solid #4EC5B4;
-    margin-bottom: 2.5rem;
+    /* margin-bottom: 2.5rem; */
 }
 
 .expectationsList {
@@ -124,7 +124,7 @@
     font-size: 1.1rem;
 }
 
-.actionArea {
+/* .actionArea {
     display: flex;
     justify-content: center;
     margin-top: 1rem;
@@ -146,7 +146,7 @@
 
 .primaryBtn:hover {
     animation: none;
-}
+} */
 
 @media (min-width: 1025px) {
     .backLink:hover {
@@ -158,13 +158,13 @@
         transform: scale(1.05);
     }
 
-    .primaryBtn:hover {
+    /* .primaryBtn:hover {
         background-color: #fff;
         color: #4EC5B4;
         border-color: #4EC5B4;
         box-shadow: 0 6px 20px rgba(78, 197, 180, 0.6);
         transform: scale(1.05);
-    }
+    } */
 }
 
 @media (max-width: 768px) {
@@ -188,13 +188,13 @@
         grid-template-columns: 1fr;
     }
 
-    .primaryBtn {
+    /* .primaryBtn {
         width: 100%;
         text-align: center;
-    }
+    } */
 }
 
-@keyframes invitePulse {
+/* @keyframes invitePulse {
     0% {
         transform: scale(1);
         box-shadow: 0 4px 15px rgba(78, 197, 180, 0.4);
@@ -207,7 +207,7 @@
         transform: scale(1);
         box-shadow: 0 4px 15px rgba(78, 197, 180, 0.4);
     }
-}
+} */
 
 @keyframes fadeUp {
     from {
