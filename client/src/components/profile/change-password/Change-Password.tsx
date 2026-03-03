@@ -5,6 +5,7 @@ import { useChangePassword } from "../../../api/authAPI";
 import { useForm } from "../../../hooks/useForm";
 import Spinner from "../../spinner/Spinner";
 import styles from "./Change-Password.module.css";
+import Dialog from "../../dialog/Dialog";
 
 const initialValues: ChangePasswordRequest = {
     currentPassword: "",
@@ -70,11 +71,11 @@ const ChangePassword: React.FC = () => {
             setErrors({});
             await changePassword(values);
             setDialog({ message: "Password changed successfully!", type: "success" });
+            setTimeout(() => navigate(`/profile`), 1500);
         } catch (err: any) {
             setDialog({ message: err?.message || "Password change failed.", type: "error" });
         } finally {
             setIsLoading(false);
-            setTimeout(() => navigate(`/profile`), 1500);
         }
     };
 
@@ -93,59 +94,103 @@ const ChangePassword: React.FC = () => {
     };
 
     const inputClass = (field: keyof ChangePasswordRequest) => {
-        if (errors[field]) return `${styles["input"]} ${styles.error}`;
-        if (values[field] && !errors[field]) return `${styles["input"]} ${styles.success}`;
-        return styles["input"];
+        if (errors[field]) return styles.errorInput;
+        if (values[field] && !errors[field]) return styles.successInput;
+        return "";
     };
 
     useEffect(() => cancelChangePassword, []);
 
     return (
-        <>
+        <div className={styles.container}>
             {isLoading && (
-                <div className="spinner-overlay">
+                <div className={styles.spinnerOverlay}>
                     <Spinner />
                 </div>
             )}
 
-            <h1 className={styles["change-password-h1"]}>Change Password</h1>
+            {dialog && (
+                <Dialog
+                    message={dialog.message}
+                    type={dialog.type}
+                    onClose={() => setDialog(null)}
+                />
+            )}
 
-            <div className={styles["change-password-container"]}>
-                <div className={styles["change-password-card"]}>
-                    <form onSubmit={onSubmit} noValidate>
-                        {([
-                            { name: "currentPassword", label: "Current Password", type: "password", icon: "fa-key", placeholder: "Enter your current password" },
-                            { name: "newPassword", label: "New Password", type: "password", icon: "fa-key", placeholder: "Create a new password" },
-                            { name: "confirmNewPassword", label: "Confirm New Password", type: "password", icon: "fa-key", placeholder: "Confirm your new password" },
-                        ] as const).map(({ name, label, type, icon, placeholder }) => (
-                            <div className={styles["change-password-field"]} key={name}>
-                                <label htmlFor={name}>
-                                    <i className={`fa-solid ${icon}`}></i> {label}:
-                                </label>
-                                <input
-                                    type={type}
-                                    id={name}
-                                    name={name}
-                                    value={values[name]}
-                                    onChange={handleChange}
-                                    className={inputClass(name)}
-                                    placeholder={placeholder}
-                                    autoComplete="off"
-                                />
-                                {errors[name] && <p className={styles["error-text"]}>{errors[name]}</p>}
-                            </div>
-                        ))}
+            <article className={styles.card}>
+                <header className={styles.cardHeader}>
+                    <div className={styles.iconCircle}>
+                        <i className="fa-solid fa-lock"></i>
+                    </div>
+                    <h1 className={styles.title}>Change Password</h1>
+                    <p className={styles.subtitle}>Secure your account with a new password</p>
+                </header>
 
-                        <div className={styles["change-password-btns"]}>
-                            <button className={styles["change-password-save-btn"]} type="submit" disabled={isLoading}>Save</button>
-                            <Link to="/profile" className={styles["change-password-cancel-btn"]}>Cancel</Link>
+                <form onSubmit={onSubmit} noValidate className={styles.form}>
+                    <div className={styles.contentBody}>
+                        <div className={styles.formGroup} key="currentPassword">
+                            <label htmlFor="currentPassword">
+                                <i className="fa-solid fa-key"></i> Current Password
+                            </label>
+                            <input
+                                type="password"
+                                id="confirmNewPassword"
+                                name="confirmNewPassword"
+                                value={values.currentPassword}
+                                onChange={handleChange}
+                                className={`${styles.input} ${inputClass("currentPassword")}`}
+                                placeholder="Current password"
+                                autoComplete="off"
+                            />
+                            {errors.currentPassword && <span className={styles.errorMsg}>{errors.currentPassword}</span>}
                         </div>
 
-                        {dialog && <div className={`dialog ${dialog.type}`}>{dialog.message}</div>}
-                    </form>
-                </div>
-            </div>
-        </>
+                        <div className={styles.formGroup} key="newPassword">
+                            <label htmlFor="newPassword">
+                                <i className="fa-solid fa-key"></i> New Password
+                            </label>
+                            <input
+                                type="password"
+                                id="newPassword"
+                                name="newPassword"
+                                value={values.newPassword}
+                                onChange={handleChange}
+                                className={`${styles.input} ${inputClass("newPassword")}`}
+                                placeholder="New password"
+                                autoComplete="off"
+                            />
+                            {errors.confirmNewPassword && <span className={styles.errorMsg}>{errors.confirmNewPassword}</span>}
+                        </div>
+
+                        <div className={styles.formGroup} key="confirmNewPassword">
+                            <label htmlFor="confirmNewPassword">
+                                <i className="fa-solid fa-check-double"></i> Confirm New Password
+                            </label>
+                            <input
+                                type="password"
+                                id="confirmNewPassword"
+                                name="confirmNewPassword"
+                                value={values.confirmNewPassword}
+                                onChange={handleChange}
+                                className={`${styles.input} ${inputClass("confirmNewPassword")}`}
+                                placeholder="Confirm new password"
+                                autoComplete="off"
+                            />
+                            {errors.confirmNewPassword && <span className={styles.errorMsg}>{errors.confirmNewPassword}</span>}
+                        </div>
+                    </div>
+
+                    <div className={styles.actionGroup}>
+                        <button className={styles.saveBtn} type="submit" disabled={isLoading}>
+                            <i className="fa-solid fa-check"></i> Save
+                        </button>
+                        <Link to="/profile" className={styles.cancelBtn}>
+                            <i className="fa-solid fa-xmark"></i> Cancel
+                        </Link>
+                    </div>
+                </form>
+            </article>
+        </div >
     );
 };
 

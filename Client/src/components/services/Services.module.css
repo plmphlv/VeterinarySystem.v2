@@ -1,113 +1,220 @@
-@mixin fade-in {
-    opacity: 1;
-    animation-name: fadeInOpacity;
-    animation-iteration-count: 1;
-    animation-timing-function: ease-in;
-    animation-duration: 2s;
-}
-
-@keyframes fadeInOpacity {
-    0% {
-        opacity: 0;
-    }
-
-    100% {
-        opacity: 1;
-    }
-}
-
-.services-h1 {
-    animation: fadeInOpacity 1s;
-    margin-top: 3rem;
-    text-align: center;
-    background-color: #4EC5B4;
-    color: #fff;
-    padding: 0.3em 1em;
-    border-radius: 1em;
-}
-
-.services {
-    animation: fadeInOpacity 1s;
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-    gap: 2rem;
-    padding: 60px 15px;
-    max-width: 1200px;
+.container {
     width: 100%;
-}
-
-.services-item-card {
-    background-color: #ffffff;
-    border-radius: 10px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    overflow: hidden;
-    transition: transform 0.3s ease;
-}
-
-.services-item-card img {
-    width: 100%;
-    height: 200px;
-    object-fit: cover;
-}
-
-.services-item-card .content {
-    padding: 1.5rem;
+    max-width: 1280px;
+    margin: 0 auto;
+    padding: 8rem 1.5rem 4rem;
     display: flex;
     flex-direction: column;
     align-items: center;
+    gap: 3rem;
+}
+
+.header {
     text-align: center;
+    max-width: 700px;
+    animation: fadeInDown 0.8s ease-out forwards;
 }
 
-.services-item-card h2 {
+.title {
+    font-size: 2.5rem;
     color: #4EC5B4;
-    margin-bottom: 0.5rem;
-}
-
-.services-item-card p {
-    font-size: 0.95rem;
+    font-weight: 800;
     margin-bottom: 1rem;
+    position: relative;
+    display: inline-block;
 }
 
-.services-learn-more-btn {
-    margin-top: 0.5rem;
-    display: inline-block;
+.title::after {
+    content: '';
+    display: block;
+    width: 60%;
+    height: 4px;
+    background-color: #4EC5B4;
+    margin: 0.5rem auto 0;
+    border-radius: 2px;
+}
+
+.subtitle {
+    font-size: 1.1rem;
+    color: #666;
+    line-height: 1.6;
+}
+
+.grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+    gap: 2.5rem;
+    width: 100%;
+    margin-bottom: 2rem;
+}
+
+.cardLink {
+    text-decoration: none;
+    color: inherit;
+    display: block;
+    opacity: 0;
+    animation: fadeUp 0.8s ease-out forwards;
+}
+
+.card {
+    background: #FFF;
+    border-radius: 16px;
+    overflow: hidden;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+    display: flex;
+    flex-direction: column;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    border: 1px solid rgba(78, 197, 180, 0.1);
+    height: 100%;
+    cursor: pointer;
+}
+
+.imageWrapper {
+    width: 100%;
+    height: 220px;
+    overflow: hidden;
+    position: relative;
+}
+
+.imageWrapper img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.6s ease;
+}
+
+.content {
+    padding: 2rem;
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
+    text-align: center;
+    align-items: center;
+}
+
+.content h2 {
+    font-size: 1.5rem;
+    color: #333;
+    margin-bottom: 1rem;
+    font-weight: 700;
+    transition: color 0.3s ease;
+}
+
+.content p {
+    font-size: 1rem;
+    color: #555;
+    line-height: 1.6;
+    margin-bottom: 1.5rem;
+    flex-grow: 1;
+}
+
+/* .ctaWrapper {
+    display: flex;
+    justify-content: center;
+    width: 100%;
+    margin-top: 1rem;
+    animation: fadeUp 1s ease-out 0.6s forwards;
+    opacity: 0;
+}
+
+.primaryBtn {
     background-color: #4EC5B4;
     color: #fff;
-    padding: 0.5rem 1rem;
-    border: none;
-    border-radius: 5px;
+    font-size: 1.1rem;
+    font-weight: 700;
+    padding: 1rem 2.5rem;
+    border-radius: 50px;
     text-decoration: none;
-    transition: background-color 0.7s ease;
+    box-shadow: 0 4px 15px rgba(78, 197, 180, 0.4);
+    transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    border: 2px solid transparent;
+    display: inline-block;
+    max-width: 100%;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    animation: invitePulse 2s infinite ease-in-out;
 }
 
-.services-request-appointment-btn {
-    background-color: #48d889;
-    font-weight: bold;
-    color: #fff;
-    text-decoration: none;
-    border: none;
-    margin-bottom: 3rem;
-    padding: 0.8rem 2rem;
-    border-radius: 25px;
-    font-size: 1rem;
-    cursor: pointer;
-    transition: background 0.7s ease;
-    animation: fadeInOpacity 1s;
-}
+.primaryBtn:hover {
+    animation: none;
+} */
 
 @media (min-width: 1025px) {
-    .services-request-appointment-btn:hover {
-        background-color: #2f8a58;
-        transition: 0.3s ease-in;
+    .cardLink:hover .card {
+        transform: translateY(-8px);
+        box-shadow: 0 15px 35px rgba(78, 197, 180, 0.5);
     }
 
-    .services-item-card:hover {
-        transform: translateY(-5px);
-        box-shadow: 0 6px 16px rgba(0, 0, 0, 0.12);
+    .cardLink:hover .imageWrapper img {
+        transform: scale(1.08);
     }
 
-    .services-learn-more-btn:hover {
-        background-color: #2a796f;
-        transition: 0.3s ease-in;
+    .cardLink:hover h2 {
+        color: #4EC5B4;
+    }
+
+    /* .primaryBtn:hover {
+        background-color: #fff;
+        color: #4EC5B4;
+        border-color: #4EC5B4;
+        box-shadow: 0 6px 20px rgba(78, 197, 180, 0.6);
+        transform: scale(1.05);
+    } */
+}
+
+@media (max-width: 768px) {
+    .container {
+        padding: 9rem 1rem 3rem;
+    }
+
+    .title {
+        font-size: 2rem;
+    }
+
+    .grid {
+        grid-template-columns: 1fr;
+        gap: 1.5rem;
+    }
+    
+    /* .primaryBtn {
+        width: auto;
+    } */
+}
+
+/* @keyframes invitePulse {
+    0% {
+        transform: scale(1);
+        box-shadow: 0 4px 15px rgba(78, 197, 180, 0.4);
+    }
+    50% {
+        transform: scale(1.05);
+        box-shadow: 0 10px 25px rgba(78, 197, 180, 0.6);
+    }
+    100% {
+        transform: scale(1);
+        box-shadow: 0 4px 15px rgba(78, 197, 180, 0.4);
+    }
+} */
+
+@keyframes fadeUp {
+    from {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes fadeInDown {
+    from {
+        opacity: 0;
+        transform: translateY(-20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
     }
 }

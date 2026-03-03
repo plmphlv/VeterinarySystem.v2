@@ -1,8 +1,8 @@
+import React, { useState } from "react";
 import { Link } from "react-router";
 import { useGetUserData } from "../../hooks/useGetUserData";
 import AppointmentsItem from "./appointments-item/Appointments-Item";
 import Dialog from "../dialog/Dialog";
-import { useState } from "react";
 import Spinner from "../spinner/Spinner";
 import styles from "./Appointments.module.css";
 
@@ -15,7 +15,7 @@ const Appointments: React.FC = () => {
     }
 
     return (
-        <>
+        <section className={styles.container}>
             {error && showError ? (
                 <Dialog
                     message={error}
@@ -24,23 +24,26 @@ const Appointments: React.FC = () => {
                 />
             ) : (
                 <>
-                    <h1 className={styles["appointments-h1"]}>
-                        My Appointments Requests:
-                    </h1>
+                    <header className={styles.header}>
+                        <h1 className={styles.title}>My Appointments Requests</h1>
+                        <p className={styles.subtitle}>Track and manage your scheduled visits.</p>
+                    </header>
 
-                    <div className={styles["appointments-div"]}>
+                    <div className={styles.contentWrapper}>
                         <AppointmentsItem />
                     </div>
 
-                    <Link
-                        to="/appointments/request-appointment"
-                        className={styles["appointments-request-appointment-btn"]}
-                    >
-                        Request New Appointment
-                    </Link>
+                    <div className={styles.ctaWrapper}>
+                        <Link
+                            to="/appointments/request-appointment"
+                            className={styles.primaryBtn}
+                        >
+                            Request an Appointment
+                        </Link>
+                    </div>
                 </>
             )}
-        </>
+        </section>
     );
 };
 

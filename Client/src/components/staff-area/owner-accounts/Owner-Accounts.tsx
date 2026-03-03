@@ -4,20 +4,31 @@ import styles from "./Owner-Accounts.module.css";
 
 const OwnerAccounts: React.FC = () => {
     return (
-        <>
-            <h1 className={styles["owner-accounts-h1"]}>Owner Accounts:</h1>
+        <section className={styles.container}>
+            <div className={styles.navWrapper}>
+                <Link to="/staff-area" className={styles.backLink}>
+                    &larr; Back to Staff Area
+                </Link>
+            </div>
 
-            <div className={styles["owner-accounts-div"]}>
+            <header className={styles.header}>
+                <h1 className={styles.title}>Owner Accounts</h1>
+                <p className={styles.subtitle}>Manage client profiles and information</p>
+            </header>
+
+            <div className={styles.contentWrapper}>
                 <OwnerAccountsItem />
             </div>
 
-            <Link 
-                to="/staff-area/owner-accounts/create-owner-account" 
-                className={styles["owner-accounts-create-btn"]}
-            >
-                <i className="fa-solid fa-plus"></i> Create Owner Account
-            </Link>
-        </>
+            <div className={styles.ctaWrapper}>
+                <Link 
+                    to="/staff-area/owner-accounts/create" 
+                    className={styles.primaryBtn}
+                >
+                    <i className="fa-solid fa-plus"></i> Create a New Owner Account
+                </Link>
+            </div>
+        </section>
     );
 }
 

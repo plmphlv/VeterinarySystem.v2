@@ -108,8 +108,8 @@ const OwnerAccountsEdit: React.FC = () => {
     };
 
     const inputClass = (field: keyof EditOwnerAccountRequest) => {
-        if (errors[field]) return styles.error;
-        if (values[field] && !errors[field]) return styles.success;
+        if (errors[field]) return styles.errorInput;
+        if (values[field] && !errors[field]) return styles.successInput;
         return "";
     };
 
@@ -142,137 +142,131 @@ const OwnerAccountsEdit: React.FC = () => {
         fetchOwnerAccountDetails();
         return () => cancelGetOwnerAccountDetails();
     }, [id]);
+
     return (
-        <>
-            {(isLoading) && (
-                <div className="spinner-overlay">
+        <div className={styles.pageContainer}>
+            {(isLoading || formLoading) && (
+                <div className={styles.spinnerOverlay}>
                     <Spinner />
                 </div>
             )}
 
-            <h1 className={styles["owner-accounts-edit-h1"]}>
-                Edit Profile
-            </h1>
+            {dialog && (
+                <Dialog
+                    message={dialog.message}
+                    type={dialog.type}
+                    onClose={() => setDialog(null)}
+                />
+            )}
 
             {id ? (
-                <div className={styles["owner-accounts-edit-container"]}>
-                    <div className={styles["owner-accounts-edit-card"]}>
-                        <form onSubmit={onSubmit} noValidate>
-                            {([
-                                {
-                                    name: "firstName",
-                                    label: "First Name",
-                                    type: "text",
-                                    icon: "fa-pen",
-                                    placeholder: "Enter your first name",
-                                },
-                                {
-                                    name: "lastName",
-                                    label: "Last Name",
-                                    type: "text",
-                                    icon: "fa-pen",
-                                    placeholder: "Enter your last name",
-                                },
-                                {
-                                    name: "phoneNumber",
-                                    label: "Phone Number",
-                                    type: "tel",
-                                    icon: "fa-phone",
-                                    placeholder:
-                                        "Enter your phone number",
-                                },
-                                {
-                                    name: "address",
-                                    label: "Address (Optional)",
-                                    type: "text",
-                                    icon: "fa-map-marker-alt",
-                                    placeholder:
-                                        "Enter your address",
-                                },
-                            ] as const).map(
-                                ({
-                                    name,
-                                    label,
-                                    type,
-                                    icon,
-                                    placeholder,
-                                }) => (
-                                    <div
-                                        className={
-                                            styles[
-                                            "owner-accounts-edit-field"
-                                            ]
-                                        }
-                                        key={name}
-                                    >
-                                        <label htmlFor={name}>
-                                            <i
-                                                className={`fa-solid ${icon}`}
-                                            ></i>{" "}
-                                            {label}:
-                                        </label>
+                <article className={styles.card}>
+                    <header className={styles.cardHeader}>
+                        <div className={styles.iconCircle}>
+                            <i className="fa-solid fa-user-pen"></i>
+                        </div>
+                        <h1 className={styles.title}>Edit an Owner Account</h1>
+                        <p className={styles.subtitle}>Update client information</p>
+                    </header>
 
-                                        <input
-                                            type={type}
-                                            id={name}
-                                            name={name}
-                                            value={values[name] ?? ""}
-                                            onChange={handleChange}
-                                            className={inputClass(name)}
-                                            placeholder={placeholder}
-                                            autoComplete="off"
-                                            required={
-                                                name !== "address"
-                                            }
-                                        />
-
-                                        {errors[name] && (
-                                            <p
-                                                className={
-                                                    styles["error-text"]
-                                                }
-                                            >
-                                                {errors[name]}
-                                            </p>
-                                        )}
-                                    </div>
-                                )
-                            )}
-
-                            <div
-                                className={
-                                    styles["owner-accounts-edit-btns"]
-                                }
-                            >
-                                <button
-                                    className={
-                                        styles[
-                                        "owner-accounts-edit-save-btn"
-                                        ]
-                                    }
-                                    type="submit"
-                                    disabled={isLoading}
-                                >
-                                    Save
-                                </button>
-
-                                <Link to={`/staff-area/owner-accounts/${id}/details`} className={styles["owner-accounts-edit-cancel-btn"]}>Cancel</Link>
-                            </div>
-
-                            {dialog && (
-                                <Dialog
-                                    message={dialog.message}
-                                    type={dialog.type}
-                                    onClose={() => setDialog(null)}
+                    <form onSubmit={onSubmit} noValidate className={styles.form}>
+                        <div className={styles.formGroup}>
+                            <label htmlFor="firstName">First Name</label>
+                            <div className={styles.inputWrapper}>
+                                <i className={`fa-solid fa-file-signature ${styles.inputIcon}`}></i>
+                                <input
+                                    type="text"
+                                    id="firstName"
+                                    name="firstName"
+                                    value={values.firstName ?? ""}
+                                    onChange={handleChange}
+                                    className={`${styles.input} ${inputClass("firstName")}`}
+                                    placeholder="Enter first name"
+                                    autoComplete="off"
+                                    required
                                 />
-                            )}
-                        </form>
-                    </div>
-                </div>
-            ) : !isLoading && !id ? (
-                <p className={styles["owner-accounts-edit-no-user-data"]}>No user data found.</p>
-            ) : null}
-        </>
+                            </div>
+                            {errors.firstName && <span className={styles.errorMsg}>{errors.firstName}</span>}
+                        </div>
+
+                        <div className={styles.formGroup}>
+                            <label htmlFor="lastName">Last Name</label>
+                            <div className={styles.inputWrapper}>
+                                <i className={`fa-solid fa-file-signature ${styles.inputIcon}`}></i>
+                                <input
+                                    type="text"
+                                    id="lastName"
+                                    name="lastName"
+                                    value={values.lastName ?? ""}
+                                    onChange={handleChange}
+                                    className={`${styles.input} ${inputClass("lastName")}`}
+                                    placeholder="Enter last name"
+                                    autoComplete="off"
+                                    required
+                                />
+                            </div>
+                            {errors.lastName && <span className={styles.errorMsg}>{errors.lastName}</span>}
+                        </div>
+
+                        <div className={styles.formGroup}>
+                            <label htmlFor="phoneNumber">Phone Number</label>
+                            <div className={styles.inputWrapper}>
+                                <i className={`fa-solid fa-phone ${styles.inputIcon}`}></i>
+                                <input
+                                    type="tel"
+                                    id="phoneNumber"
+                                    name="phoneNumber"
+                                    value={values.phoneNumber ?? ""}
+                                    onChange={handleChange}
+                                    className={`${styles.input} ${inputClass("phoneNumber")}`}
+                                    placeholder="Enter phone number"
+                                    autoComplete="off"
+                                    required
+                                />
+                            </div>
+                            {errors.phoneNumber && <span className={styles.errorMsg}>{errors.phoneNumber}</span>}
+                        </div>
+
+                        <div className={styles.formGroup}>
+                            <label htmlFor="address">Address (Optional)</label>
+                            <div className={styles.inputWrapper}>
+                                <i className={`fa-solid fa-map-marker-alt ${styles.inputIcon}`}></i>
+                                <input
+                                    type="text"
+                                    id="address"
+                                    name="address"
+                                    value={values.address ?? ""}
+                                    onChange={handleChange}
+                                    className={`${styles.input} ${inputClass("address")}`}
+                                    placeholder="Enter address"
+                                    autoComplete="off"
+                                />
+                            </div>
+                            {errors.address && <span className={styles.errorMsg}>{errors.address}</span>}
+                        </div>
+
+                        <div className={styles.actionGroup}>
+                            <button
+                                type="submit"
+                                className={styles.saveBtn}
+                                disabled={isLoading || formLoading}
+                            >
+                                <i className="fa-solid fa-check"></i> Save
+                            </button>
+
+                            <Link
+                                to={`/staff-area/owner-accounts/${id}/details`}
+                                className={styles.cancelBtn}
+                            >
+                                <i className="fa-solid fa-xmark"></i> Cancel
+                            </Link>
+                        </div>
+                    </form>
+                </article>
+            ) : (
+                !isLoading && !id && <p className={styles.noData}>No user data found.</p>
+            )}
+        </div>
     );
 };
 

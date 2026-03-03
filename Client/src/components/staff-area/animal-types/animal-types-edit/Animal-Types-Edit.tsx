@@ -1,7 +1,7 @@
 import type React from "react";
 import { Link, useNavigate, useParams } from "react-router";
 import { useEffect, useState } from "react";
-import type { AnimalType, EditAnimalTypeRequest, EditAnimalTypeRequestFieldErrors } from "../../../../types";
+import type { EditAnimalTypeRequest, EditAnimalTypeRequestFieldErrors } from "../../../../types";
 import { useEditAnimalType, useGetAnimalTypes } from "../../../../api/animalTypesAPI";
 import { useForm } from "../../../../hooks/useForm";
 import { useGetUserData } from "../../../../hooks/useGetUserData";
@@ -26,7 +26,7 @@ const AnimalTypesEdit: React.FC = () => {
     const { editAnimalType, cancelEditAnimalType } = useEditAnimalType();
     const navigate = useNavigate();
 
-    const { values, changeHandler, onSubmit, changeValues } = useForm(initialValues, async (values) => {
+    const editHandler = async (values: EditAnimalTypeRequest) => {
         const validationErrors: EditAnimalTypeRequestFieldErrors = {};
         if (!values.typeName || values.typeName.trim().length < 2) {
             validationErrors.typeName = "Type name must be at least 2 characters.";
@@ -51,19 +51,27 @@ const AnimalTypesEdit: React.FC = () => {
         } finally {
             setFormLoading(false);
         }
-    });
+    };
+
+    const { values, onSubmit, changeValues } = useForm(initialValues, editHandler);
 
     useEffect(() => {
         const fetchAnimalTypes = async () => {
             setLoading(true);
-            const types = await getAnimalTypes();
-            const current = types?.find(t => t.id === Number(id));
-            if (current) {
-                changeValues({ id: current.id, typeName: current.value });
+            try {
+                const types = await getAnimalTypes();
+                const current = types?.find(t => t.id === Number(id));
+                if (current) {
+                    changeValues({ id: current.id, typeName: current.value });
+                }
+            } catch {
+                setDialog({ message: "Error fetching details", type: "error" });
+            } finally {
+                setLoading(false);
             }
-            setLoading(false);
         };
         fetchAnimalTypes();
+        return () => cancelGetAnimalTypes();
     }, [id]);
 
     const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -74,62 +82,99 @@ const AnimalTypesEdit: React.FC = () => {
         const errorMsg = !value.trim()
             ? "Type name is required."
             : value.trim().length < 2
-            ? "Type name must be at least 2 characters."
-            : undefined;
+                ? "Type name must be at least 2 characters."
+                : undefined;
 
         setErrors(prev => ({ ...prev, [fieldName]: errorMsg }));
     };
 
     const inputClass = (field: keyof EditAnimalTypeRequest) => {
-        if (errors[field]) return styles.error;
-        if (values[field] && !errors[field]) return styles.success;
+        if (errors[field]) return styles.errorInput;
+        if (values[field] && !errors[field] && field !== "id") return styles.successInput;
         return "";
     };
 
     useEffect(() => cancelEditAnimalType, []);
 
     return (
-        <>
+        <div className={styles.pageContainer}>
             {(formLoading || userLoading || isLoading) && (
-                <div className="spinner-overlay">
+                <div className={styles.spinnerOverlay}>
                     <Spinner />
                 </div>
             )}
 
-            <section className={styles["animal-types-edit"]}>
-                <div className={styles["animal-types-edit-container"]}>
-                    <h2>Edit Animal Type</h2>
-                    <form onSubmit={onSubmit} noValidate>
-                        <div className={styles["animal-types-edit-form-group"]}>
-                            <label htmlFor="typeName">
-                                <i className="fa-solid fa-pen"></i> Type Name:
-                            </label>
+            {dialog && (
+                <Dialog
+                    message={dialog.message}
+                    type={dialog.type}
+                    onClose={() => setDialog(null)}
+                />
+            )}
+
+            <section className={styles.card}>
+                <header className={styles.cardHeader}>
+                    <div className={styles.iconCircle}>
+                        <i className="fa-solid fa-pen-to-square"></i>
+                    </div>
+                    <h1 className={styles.title}>Edit an Animal Type</h1>
+                    <p className={styles.subtitle}>Update the animal category name</p>
+                </header>
+
+                <form onSubmit={onSubmit} noValidate className={styles.form}>
+                    <div className={styles.formGroup}>
+                        <label htmlFor="id">ID</label>
+                        <div className={styles.inputWrapper}>
+                            <i className={`fa-solid fa-hashtag ${styles.inputIcon}`}></i>
+                            <input
+                                type="text"
+                                id="id"
+                                name="id"
+                                value={values.id}
+                                className={`${styles.input} ${styles.readOnly}`}
+                                readOnly
+                            />
+                        </div>
+                    </div>
+
+                    <div className={styles.formGroup}>
+                        <label htmlFor="typeName">Type Name</label>
+                        <div className={styles.inputWrapper}>
+                            <i className={`fa-solid fa-tag ${styles.inputIcon}`}></i>
                             <input
                                 type="text"
                                 id="typeName"
                                 name="typeName"
-                                value={values.typeName ?? ""}
+                                value={values.typeName}
                                 onChange={handleChange}
-                                className={inputClass("typeName")}
+                                className={`${styles.input} ${inputClass("typeName")}`}
                                 placeholder="Edit type name"
                                 autoComplete="off"
                                 required
                             />
-                            {errors.typeName && <p className={styles["error-text"]}>{errors.typeName}</p>}
                         </div>
+                        {errors.typeName && <span className={styles.errorMsg}>{errors.typeName}</span>}
+                    </div>
 
-                        <button type="submit" className={styles["animal-types-edit-save-btn"]} disabled={formLoading}>
-                            Save
+                    <div className={styles.actionGroup}>
+                        <button
+                            type="submit"
+                            className={styles.submitBtn}
+                            disabled={formLoading}
+                        >
+                            <i className="fa-solid fa-check"></i> Save
                         </button>
-                        <Link to={`/staff-area/animal-types`} className={styles["animal-types-edit-cancel-btn"]}>
-                            Cancel
-                        </Link>
-                    </form>
-                </div>
 
-                {dialog && <Dialog message={dialog.message} type={dialog.type} onClose={() => setDialog(null)} />}
+                        <Link
+                            to="/staff-area/animal-types"
+                            className={styles.cancelBtn}
+                        >
+                            <i className="fa-solid fa-xmark"></i> Cancel
+                        </Link>
+                    </div>
+                </form>
             </section>
-        </>
+        </div>
     );
 };
 

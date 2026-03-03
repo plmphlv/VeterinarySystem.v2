@@ -1,73 +1,232 @@
-@mixin fade-in {
-    opacity: 1;
-    animation-name: fadeInOpacity;
-    animation-iteration-count: 1;
-    animation-timing-function: ease-in;
-    animation-duration: 2s;
+.pageContainer {
+    width: 100%;
+    max-width: 1000px;
+    margin: 0 auto;
+    padding: 8rem 1.5rem 3rem;
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
 }
 
-@keyframes fadeInOpacity {
-    0% {
-        opacity: 0;
-    }
-
-    100% {
-        opacity: 1;
-    }
+.navigationWrapper {
+    animation: fadeInDown 0.6s ease-out forwards;
 }
 
-.service {
-    padding: 0px 15px;
+.backLink {
+    display: inline-flex;
+    align-items: center;
+    color: #666;
+    text-decoration: none;
+    font-weight: 600;
+    font-size: 1rem;
+    transition: color 0.3s ease, transform 0.3s ease;
 }
 
-.service-content {
-    max-width: 600px;
-    animation: fadeInOpacity 1s;
-    text-align: center;
-    margin: 2rem auto;
-    background-color: #f9f9f9;
-    border-radius: 10px;
+.card {
+    background: #FFF;
+    border-radius: 20px;
+    overflow: hidden;
+    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.05);
+    border: 1px solid rgba(78, 197, 180, 0.1);
+    opacity: 0;
+    animation: fadeUp 0.8s ease-out 0.2s forwards;
+    display: flex;
+    flex-direction: column;
+}
+
+.imageHeader {
+    width: 100%;
+    height: 350px;
+    position: relative;
+    overflow: hidden;
+}
+
+.heroImage {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.8s ease;
+}
+
+.titleOverlay {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    background: linear-gradient(to top, rgba(0, 0, 0, 0.7), transparent);
+    padding: 3rem 2rem 1.5rem;
+    color: #FFF;
+}
+
+.titleOverlay h1 {
+    font-size: 2.5rem;
+    font-weight: 800;
+    margin: 0;
+    text-shadow: 0 2px 4px rgba(0,0,0,0.3);
+}
+
+.contentBody {
+    padding: 3rem;
+}
+
+.textSection {
+    margin-bottom: 2.5rem;
+}
+
+.textSection h2,
+.benefitsSection h2 {
+    color: #4EC5B4;
+    font-size: 1.5rem;
+    font-weight: 700;
+    margin-bottom: 1rem;
+    display: flex;
+    align-items: center;
+}
+
+.textSection p {
+    color: #555;
+    line-height: 1.8;
+    font-size: 1.05rem;
+}
+
+.benefitsSection {
+    background-color: rgba(78, 197, 180, 0.05);
     padding: 2rem;
+    border-radius: 12px;
+    border-left: 5px solid #4EC5B4;
+    /* margin-bottom: 2.5rem; */
 }
 
-.service-h1 {
-    margin-bottom: 2rem;
-    animation: fadeInOpacity 1s;
+.benefitsList {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem;
+}
+
+.benefitsList li {
+    position: relative;
+    padding-left: 2rem;
+    color: #444;
+    font-weight: 600;
+    line-height: 1.5;
+}
+
+.benefitsList li::before {
+    content: '✔';
+    position: absolute;
+    left: 0;
+    top: 0;
+    color: #4EC5B4;
+    font-weight: 900;
+    font-size: 1.1rem;
+}
+
+/* .actionArea {
+    display: flex;
+    justify-content: center;
+    margin-top: 1rem;
+}
+
+.primaryBtn {
     background-color: #4EC5B4;
     color: #fff;
-    padding: 0.3em 1em;
-    border-radius: 1em;
-}
-
-.service-content img {
-    width: 100%;
-    border-radius: 10px;
-    margin-bottom: 1.5rem;
-}
-
-.service-content h2 {
-    color: #4EC5B4;
-    margin-bottom: 1rem;
-}
-
-.service-content p {
-    margin-bottom: 1rem;
-}
-
-.service-back-link {
-    display: inline-block;
-    margin-top: 2rem;
-    background-color: #4EC5B4;
-    color: white;
-    padding: 0.5rem 1rem;
-    border-radius: 5px;
+    font-size: 1.1rem;
+    font-weight: 700;
+    padding: 1rem 3rem;
+    border-radius: 50px;
     text-decoration: none;
-    transition: background-color 0.7s ease;
+    box-shadow: 0 4px 15px rgba(78, 197, 180, 0.4);
+    transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    border: 2px solid transparent;
+    animation: invitePulse 2s infinite ease-in-out;
 }
+
+.primaryBtn:hover {
+    animation: none;
+} */
 
 @media (min-width: 1025px) {
-    .service-back-link:hover {
-        background-color: #2a796f;
-        transition: 0.3s ease-in;
+    .backLink:hover {
+        color: #4EC5B4;
+        transform: translateX(-5px);
+    }
+
+    .card:hover .heroImage {
+        transform: scale(1.05);
+    }
+/* 
+    .primaryBtn:hover {
+        background-color: #fff;
+        color: #4EC5B4;
+        border-color: #4EC5B4;
+        box-shadow: 0 6px 20px rgba(78, 197, 180, 0.6);
+        transform: scale(1.05);
+    } */
+}
+
+@media (max-width: 768px) {
+    .pageContainer {
+        padding: 9rem 1rem 2rem;
+    }
+
+    .imageHeader {
+        height: 250px;
+    }
+
+    .titleOverlay h1 {
+        font-size: 1.8rem;
+    }
+
+    .contentBody {
+        padding: 1.5rem;
+    }
+
+    .benefitsList {
+        grid-template-columns: 1fr;
+    }
+
+    /* .primaryBtn {
+        width: 100%;
+        text-align: center;
+    } */
+}
+
+/* @keyframes invitePulse {
+    0% {
+        transform: scale(1);
+        box-shadow: 0 4px 15px rgba(78, 197, 180, 0.4);
+    }
+    50% {
+        transform: scale(1.05);
+        box-shadow: 0 10px 25px rgba(78, 197, 180, 0.6);
+    }
+    100% {
+        transform: scale(1);
+        box-shadow: 0 4px 15px rgba(78, 197, 180, 0.4);
+    }
+} */
+
+@keyframes fadeUp {
+    from {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes fadeInDown {
+    from {
+        opacity: 0;
+        transform: translateY(-20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
     }
 }

@@ -20,12 +20,13 @@ const OwnerAccountDelete: React.FC = () => {
     const doDelete = async () => {
       const confirmed = window.confirm("Are you sure you want to delete this owner account?");
       if (!confirmed) {
+        navigate(`/staff-area/owner-accounts/${id}/details`);
         return;
       }
 
       try {
         setLoading(true);
-        
+
         await deleteOwnerAccount({ id });
         setDialog({ message: "Owner account deleted successfully.", type: "success" });
       } catch (err) {

@@ -1,0 +1,142 @@
+.container {
+    width: 100%;
+    max-width: 1280px;
+    margin: 0 auto;
+    padding: 8rem 1.5rem 3rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 2rem;
+    min-height: 80vh;
+}
+
+.navWrapper {
+    width: 100%;
+    display: flex;
+    justify-content: flex-start;
+    animation: fadeInDown 0.6s ease-out forwards;
+}
+
+.backLink {
+    display: inline-flex;
+    align-items: center;
+    color: #666;
+    text-decoration: none;
+    font-weight: 600;
+    font-size: 1rem;
+    transition: color 0.3s ease, transform 0.3s ease;
+}
+
+.header {
+    text-align: center;
+    margin-bottom: 1rem;
+    animation: fadeInDown 0.8s ease-out forwards;
+}
+
+.title {
+    font-size: 2.5rem;
+    color: #4EC5B4;
+    font-weight: 800;
+    margin-bottom: 0.5rem;
+    position: relative;
+    display: inline-block;
+}
+
+.title::after {
+    content: '';
+    display: block;
+    width: 60%;
+    height: 4px;
+    background-color: #4EC5B4;
+    margin: 0.5rem auto 0;
+    border-radius: 2px;
+}
+
+.subtitle {
+    font-size: 1.1rem;
+    color: #666;
+}
+
+.contentWrapper {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.ctaWrapper {
+    display: flex;
+    justify-content: center;
+    width: 100%;
+    margin-top: 1rem;
+    animation: fadeUp 1s ease-out 0.6s forwards;
+    opacity: 0;
+}
+
+.addBtn {
+    background-color: #4EC5B4;
+    color: #fff;
+    font-size: 1.1rem;
+    font-weight: 700;
+    padding: 1rem 2.5rem;
+    border-radius: 50px;
+    text-decoration: none;
+    box-shadow: 0 4px 15px rgba(78, 197, 180, 0.4);
+    transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    border: 2px solid transparent;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+@media (min-width: 1025px) {
+    .backLink:hover {
+        color: #4EC5B4;
+        transform: translateX(-5px);
+    }
+
+    .addBtn:hover {
+        background-color: #fff;
+        color: #4EC5B4;
+        border-color: #4EC5B4;
+        box-shadow: 0 6px 20px rgba(78, 197, 180, 0.6);
+        transform: scale(1.05);
+    }
+}
+
+@media (max-width: 768px) {
+    .container {
+        padding: 9rem 1rem 2rem;
+    }
+
+    .title {
+        font-size: 2rem;
+    }
+    
+    .addBtn {
+        width: 100%;
+        justify-content: center;
+    }
+}
+
+@keyframes fadeUp {
+    from {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes fadeInDown {
+    from {
+        opacity: 0;
+        transform: translateY(-20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}

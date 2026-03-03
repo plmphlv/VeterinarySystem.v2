@@ -7,6 +7,7 @@ import { useForm } from "../../../../hooks/useForm";
 import Spinner from "../../../spinner/Spinner";
 import Dialog from "../../../dialog/Dialog";
 import styles from "./Staff-Appointments-Update-Request.module.css";
+import { isoToDatetimeLocal } from "../../../../utils/formatDetails";
 
 const initialValues: UpdateAppointmentRequest = {
     date: "",
@@ -73,7 +74,7 @@ const StaffAppointmentsUpdateRequest: React.FC = () => {
         try {
             const payload: UpdateAppointmentRequest = {
                 ...values,
-                date: new Date(values.date).toISOString(),
+                date: values.date
             };
 
             await updateAppointmentRequest(payload);
@@ -117,7 +118,7 @@ const StaffAppointmentsUpdateRequest: React.FC = () => {
                 if (details) {
                     const mapped: UpdateAppointmentRequest = {
                         description: details.description,
-                        date: new Date(details.date).toISOString().slice(0, 16),
+                        date: isoToDatetimeLocal(details.date),
                         id: Number(id),
                     };
                     changeValues(mapped);
@@ -143,10 +144,10 @@ const StaffAppointmentsUpdateRequest: React.FC = () => {
 
             <section className={styles["staff-appointments-update-request"]}>
                 <div className={styles["staff-appointments-update-request-container"]}>
-                    <h2>Update Appointment Request</h2>
+                    <h2>Update an Appointment Request</h2>
                     <form onSubmit={onSubmit} noValidate>
                         <div className={styles["staff-appointments-update-request-form-group"]}>
-                            <label htmlFor="date">Date of appointment:</label>
+                            <label htmlFor="date"><i className="fa-solid fa-calendar-days"></i> Date of appointment:</label>
                             <input
                                 type="datetime-local"
                                 id="date"
@@ -160,7 +161,7 @@ const StaffAppointmentsUpdateRequest: React.FC = () => {
                         </div>
 
                         <div className={styles["staff-appointments-update-request-form-group"]}>
-                            <label htmlFor="description">Description:</label>
+                            <label htmlFor="description"><i className="fa-solid fa-pen"></i> Description:</label>
                             <input
                                 type="text"
                                 id="description"

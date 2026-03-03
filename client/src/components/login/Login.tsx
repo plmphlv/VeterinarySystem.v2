@@ -90,9 +90,9 @@ const Login: React.FC = () => {
     };
 
     const inputClass = (field: keyof LoginRequest) => {
-        if (errors[field]) return `${styles.input} ${styles.error}`;
-        if (values[field] && !errors[field]) return `${styles.input} ${styles.success}`;
-        return styles.input;
+        if (errors[field]) return styles.errorInput;
+        if (values[field] && !errors[field]) return styles.successInput;
+        return "";
     };
 
     useEffect(() => {
@@ -102,73 +102,80 @@ const Login: React.FC = () => {
     return (
         <>
             {isLoading && (
-                <div className="spinner-overlay">
+                <div className={styles.spinnerOverlay}>
                     <Spinner />
                 </div>
             )}
 
-            <section className={styles.login}>
-                <div className={styles["login-container"]}>
-                    <h2>Login</h2>
+            <section className={styles.loginPage}>
+                {dialog && (
+                    <Dialog 
+                        message={dialog.message} 
+                        type={dialog.type} 
+                        onClose={() => setDialog(null)} 
+                    />
+                )}
 
-                    <form onSubmit={onSubmit} noValidate>
-                        {([
-                            {
-                                name: "IdentifyingCredential",
-                                label: "Email Address or Username",
-                                type: "text",
-                                icon: "fa-envelope",
-                                placeholder: "Enter your email or username"
-                            },
-                            {
-                                name: "password",
-                                label: "Password",
-                                type: "password",
-                                icon: "fa-key",
-                                placeholder: "Enter your password"
-                            }
-                        ] as const).map(({ name, label, type, icon, placeholder }) => (
-                            <div className={styles["login-form-group"]} key={name}>
-                                <label htmlFor={name}>
-                                    <i className={`fa-solid ${icon}`}></i> {label}:
-                                </label>
+                <div className={styles.card}>
+                    <div className={styles.cardHeader}>
+                        {/* Добавен iconCircle тук */}
+                        <div className={styles.iconCircle}>
+                            <i className="fa-solid fa-right-to-bracket"></i>
+                        </div>
+                        <h1>Welcome Back</h1>
+                        <p>Please enter your details to sign in</p>
+                    </div>
 
+                    <form onSubmit={onSubmit} noValidate className={styles.form}>
+                        <div className={styles.formGroup}>
+                            <label htmlFor="IdentifyingCredential">Email or Username</label>
+                            <div className={styles.inputWrapper}>
+                                <i className={`fa-solid fa-user ${styles.inputIcon}`}></i>
                                 <input
-                                    type={type}
-                                    id={name}
-                                    name={name}
-                                    value={values[name]}
+                                    type="text"
+                                    id="IdentifyingCredential"
+                                    name="IdentifyingCredential"
+                                    value={values.IdentifyingCredential}
                                     onChange={handleChange}
-                                    className={inputClass(name)}
-                                    placeholder={placeholder}
+                                    className={`${styles.input} ${inputClass("IdentifyingCredential")}`}
+                                    placeholder="Enter your email or username"
                                     autoComplete="off"
                                 />
-
-                                {errors[name] && <p className={styles["error-text"]}>{errors[name]}</p>}
                             </div>
-                        ))}
+                            {errors.IdentifyingCredential && <p className={styles.errorMsg}>{errors.IdentifyingCredential}</p>}
+                        </div>
 
-                        <button
-                            type="submit"
-                            className={styles["login-btn"]}
+                        <div className={styles.formGroup}>
+                            <label htmlFor="password">Password</label>
+                            <div className={styles.inputWrapper}>
+                                <i className={`fa-solid fa-key ${styles.inputIcon}`}></i>
+                                <input
+                                    type="password"
+                                    id="password"
+                                    name="password"
+                                    value={values.password}
+                                    onChange={handleChange}
+                                    className={`${styles.input} ${inputClass("password")}`}
+                                    placeholder="Enter your password"
+                                    autoComplete="off"
+                                />
+                            </div>
+                            {errors.password && <p className={styles.errorMsg}>{errors.password}</p>}
+                        </div>
+
+                        <button 
+                            type="submit" 
+                            className={styles.loginBtn}
                             disabled={isLoading}
                         >
-                            Login
+                            Sign In
                         </button>
                     </form>
 
-                    <div className={styles["login-bottom-text"]}>
-                        Don't have an account? <Link to="/register">Register</Link>
+                    <div className={styles.footer}>
+                        <p>Don't have an account? <Link to="/register">Register here</Link></p>
                     </div>
                 </div>
-
-                {dialog && (
-                    <Dialog
-                        message={dialog.message}
-                        type={dialog.type}
-                        onClose={() => setDialog(null)}
-                    />
-                )}
             </section>
         </>
     );

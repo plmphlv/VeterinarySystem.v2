@@ -29,14 +29,11 @@ export const formatDate = (isoDate: string) => {
 
 export const formatTime = (isoDate: string) => {
     const date = new Date(isoDate);
-    let hours = date.getHours() + 2;
+
+    const hours = date.getHours().toString().padStart(2, "0");
     const minutes = date.getMinutes().toString().padStart(2, "0");
 
-    const ampm = hours >= 12 ? "PM" : "AM";
-    hours = hours % 12 || 12;
-    const formattedHours = hours.toString().padStart(2, "0");
-
-    return `${formattedHours}:${minutes} ${ampm}`;
+    return `${hours}:${minutes}`;
 };
 
 // UTC (ISO) → datetime-local (local time)
@@ -61,4 +58,11 @@ export const isoToDatetimeLocal = (isoString: string): string => {
 // datetime-local (local time) → ISO (UTC)
 export const datetimeLocalToIso = (localDate: string): string => {
     return new Date(localDate).toISOString();
+};
+
+export const getTomorrowDatetimeLocal = () => {
+    const d = new Date();
+    d.setDate(d.getDate() + 1);
+    d.setSeconds(0, 0);
+    return d.toISOString().slice(0, 16);
 };

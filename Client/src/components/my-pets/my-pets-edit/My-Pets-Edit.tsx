@@ -24,11 +24,12 @@ const MyPetsEdit: React.FC = () => {
     const { id } = useParams();
     const [errors, setErrors] = useState<EditAnimalFieldErrors>({});
     const [formLoading, setFormLoading] = useState(false);
+    const [typesLoaded, setTypesLoaded] = useState(false);
     const [isLoading, setLoading] = useState(false);
     const [dialog, setDialog] = useState<{ message: string; type: "success" | "error" } | null>(null);
     const [animalTypes, setAnimalTypes] = useState<AnimalType[]>([]);
 
-    const { userData, isLoading: userLoading } = useGetUserData();
+    const { isLoading: userLoading } = useGetUserData();
     const { getAnimalDetails, cancelGetAnimalDetails } = useGetAnimalDetails();
     const { editAnimal, cancelEditAnimal } = useEditAnimal();
     const { getAnimalTypes, cancelGetAnimalTypes } = useGetAnimalTypes();
@@ -39,10 +40,15 @@ const MyPetsEdit: React.FC = () => {
             try {
                 const types = await getAnimalTypes();
                 setAnimalTypes(types || []);
+                setTypesLoaded(true);
             } catch {
-                setDialog({ message: "An error occurred while fetching animal types.", type: "error" });
+                setDialog({
+                    message: "Failed to load animal types.",
+                    type: "error"
+                });
             }
         };
+
         fetchAnimalTypes();
         return () => cancelGetAnimalTypes();
     }, []);
@@ -111,7 +117,7 @@ const MyPetsEdit: React.FC = () => {
             await editAnimal(payload);
             setDialog({ message: "Pet edited successfully!", type: "success" });
             setTimeout(() => navigate(`/my-pets/${id}/details`), 1500);
-        } catch {
+        } catch (error: any) {
             setDialog({ message: "Editing pet failed.", type: "error" });
         } finally {
             setFormLoading(false);
@@ -133,94 +139,198 @@ const MyPetsEdit: React.FC = () => {
     };
 
     const inputClass = (field: keyof EditAnimalRequest) => {
-        if (errors[field]) return `${styles["input"]} ${styles.error}`;
-        if (values[field] && !errors[field]) return `${styles["input"]} ${styles.success}`;
-        return styles["input"];
+        if (errors[field]) return styles.errorInput;
+        if (values[field] !== null && values[field] !== "" && !errors[field]) {
+            return styles.successInput;
+        }
     };
 
-    useEffect(() => cancelEditAnimal, []);
+    useEffect(() => {
+        return () => cancelEditAnimal();
+    }, []);
 
     useEffect(() => {
-        if (!id) return;
+        if (!id || !typesLoaded) return;
+
         const fetchDetails = async () => {
             try {
                 setLoading(true);
                 const details = await getAnimalDetails(Number(id));
-                if (details) {
-                    const mapped: EditAnimalRequest = {
-                        id: Number(id),
-                        name: details.name,
-                        age: details.age,
-                        weight: details.weight,
-                        passportNumber: details.passportNumber,
-                        chipNumber: details.chipNumber,
-                        animalTypeId: animalTypes.find(t => t.value === details.animalType)?.id ?? 0,
-                    };
-                    changeValues(mapped);
-                }
+
+                if (!details) return;
+
+                const typeId =
+                    animalTypes.find(t => t.value === details.animalType)?.id ?? 0;
+
+                changeValues({
+                    id: Number(id),
+                    name: details.name,
+                    age: details.age,
+                    weight: details.weight,
+                    passportNumber: details.passportNumber,
+                    chipNumber: details.chipNumber,
+                    animalTypeId: typeId,
+                });
             } catch (err: any) {
-                console.log(err);
-                setDialog({ message: err.title || "An error occurred while fetching animal details.", type: "error" });
-            } finally {
+                if (err?.name === "AbortError") return;
+
+                setDialog({
+                    message: "Unable to load pet details.",
+                    type: "error"
+                });
+            }
+            finally {
                 setLoading(false);
             }
         };
+
         fetchDetails();
         return () => cancelGetAnimalDetails();
-    }, [id, animalTypes]);
+    }, [id, typesLoaded]);
 
     return (
-        <>
+        <div className={styles.pageContainer}>
             {(formLoading || userLoading || isLoading) && (
-                <div className="spinner-overlay"><Spinner /></div>
+                <div className={styles.spinnerOverlay}><Spinner /></div>
             )}
 
-            <section className={styles["my-pets-edit"]}>
-                <div className={styles["my-pets-edit-container"]}>
-                    <h2>Edit Pet</h2>
-                    <form onSubmit={onSubmit} noValidate>
-                        {["name", "age", "weight", "passportNumber", "chipNumber"].map(field => (
-                            <div className={styles["my-pets-edit-form-group"]} key={field}>
-                                <label htmlFor={field}>{field === "name" ? "Name:" : field.charAt(0).toUpperCase() + field.slice(1) + ":"}</label>
-                                <input
-                                    id={field}
-                                    name={field}
-                                    type={field === "age" || field === "weight" ? "number" : "text"}
-                                    value={values[field as keyof EditAnimalRequest] ?? ""}
-                                    onChange={handleChange}
-                                    className={inputClass(field as keyof EditAnimalRequest)}
-                                    placeholder={`Enter new pet's ${field}`}
-                                />
-                                {errors[field as keyof EditAnimalRequest] && <p className={styles["error-text"]}>{errors[field as keyof EditAnimalRequest]}</p>}
-                            </div>
-                        ))}
+            {dialog && (
+                <Dialog
+                    message={dialog.message}
+                    type={dialog.type}
+                    onClose={() => setDialog(null)}
+                />
+            )}
 
-                        <div className={styles["my-pets-edit-form-group"]}>
-                            <label htmlFor="animalTypeId">Animal Type:</label>
+            <section className={styles.card}>
+                <header className={styles.cardHeader}>
+                    <h1>Edit a Pet</h1>
+                    <p>Update your pet's details below</p>
+                </header>
+
+                <form onSubmit={onSubmit} noValidate className={styles.form}>
+                    <div className={styles.formGroup}>
+                        <label htmlFor="name">Name</label>
+                        <div className={styles.inputWrapper}>
+                            <i className={`fa-solid fa-file-signature ${styles.inputIcon}`}></i>
+                            <input
+                                id="name"
+                                name="name"
+                                type="text"
+                                value={values.name ?? ""}
+                                onChange={handleChange}
+                                className={`${styles.input} ${inputClass("name")}`}
+                                placeholder="Enter pet's name"
+                                autoComplete="off"
+                                required
+                            />
+                        </div>
+                        {errors.name && <span className={styles.errorMsg}>{errors.name}</span>}
+                    </div>
+
+                    <div className={styles.formRow}>
+                        <div className={styles.formGroup}>
+                            <label htmlFor="age">Age</label>
+                            <div className={styles.inputWrapper}>
+                                <i className={`fa-solid fa-calendar-days ${styles.inputIcon}`}></i>
+                                <input
+                                    id="age"
+                                    name="age"
+                                    type="number"
+                                    value={values.age ?? ""}
+                                    onChange={handleChange}
+                                    className={`${styles.input} ${inputClass("age")}`}
+                                    placeholder="Optional"
+                                />
+                            </div>
+                            {errors.age && <span className={styles.errorMsg}>{errors.age}</span>}
+                        </div>
+
+                        <div className={styles.formGroup}>
+                            <label htmlFor="weight">Weight (kg)</label>
+                            <div className={styles.inputWrapper}>
+                                <i className={`fa-solid fa-weight-scale ${styles.inputIcon}`}></i>
+                                <input
+                                    id="weight"
+                                    name="weight"
+                                    type="number"
+                                    value={values.weight ?? ""}
+                                    onChange={handleChange}
+                                    className={`${styles.input} ${inputClass("weight")}`}
+                                    placeholder="Required"
+                                    required
+                                />
+                            </div>
+                            {errors.weight && <span className={styles.errorMsg}>{errors.weight}</span>}
+                        </div>
+                    </div>
+
+                    <div className={styles.formGroup}>
+                        <label htmlFor="animalTypeId">Animal Type</label>
+                        <div className={styles.inputWrapper}>
+                            <i className={`fa-solid fa-tag ${styles.inputIcon}`}></i>
                             <select
                                 id="animalTypeId"
                                 name="animalTypeId"
                                 value={values.animalTypeId}
                                 onChange={handleChange}
-                                className={inputClass("animalTypeId")}
+                                className={`${styles.input} ${styles.selectInput} ${inputClass("animalTypeId")}`}
                                 required
                             >
-                                <option value={0}>-- Select new animal type --</option>
+                                <option value={0}>-- Select Type --</option>
                                 {animalTypes.map(type => (
                                     <option key={type.id} value={type.id}>{type.value}</option>
                                 ))}
                             </select>
-                            {errors.animalTypeId && <p className={styles["error-text"]}>{errors.animalTypeId}</p>}
                         </div>
+                        {errors.animalTypeId && <span className={styles.errorMsg}>{errors.animalTypeId}</span>}
+                    </div>
 
-                        <button type="submit" className={styles["my-pets-edit-pet-btn"]} disabled={formLoading}>Save</button>
-                        <Link to={`/my-pets/${id}/details`} className={styles["my-pets-edit-cancel-btn"]}>Cancel</Link>
-                    </form>
-                </div>
+                    <div className={styles.formGroup}>
+                        <label htmlFor="passportNumber">Passport Number</label>
+                        <div className={styles.inputWrapper}>
+                            <i className={`fa-solid fa-passport ${styles.inputIcon}`}></i>
+                            <input
+                                id="passportNumber"
+                                name="passportNumber"
+                                type="text"
+                                value={values.passportNumber ?? ""}
+                                onChange={handleChange}
+                                className={`${styles.input} ${inputClass("passportNumber")}`}
+                                placeholder="Optional"
+                            />
+                        </div>
+                        {errors.passportNumber && <span className={styles.errorMsg}>{errors.passportNumber}</span>}
+                    </div>
+
+                    <div className={styles.formGroup}>
+                        <label htmlFor="chipNumber">Chip Number</label>
+                        <div className={styles.inputWrapper}>
+                            <i className={`fa-solid fa-microchip ${styles.inputIcon}`}></i>
+                            <input
+                                id="chipNumber"
+                                name="chipNumber"
+                                type="text"
+                                value={values.chipNumber ?? ""}
+                                onChange={handleChange}
+                                className={`${styles.input} ${inputClass("chipNumber")}`}
+                                placeholder="Optional"
+                            />
+                        </div>
+                        {errors.chipNumber && <span className={styles.errorMsg}>{errors.chipNumber}</span>}
+                    </div>
+
+                    <div className={styles.actionGroup}>
+                        <button type="submit" className={styles.submitBtn} disabled={formLoading}>
+                            <i className="fa-solid fa-check"></i> Save Changes
+                        </button>
+                        <Link to={`/my-pets/${id}/details`} className={styles.cancelBtn}>
+                            <i className="fa-solid fa-xmark"></i> Cancel
+                        </Link>
+                    </div>
+                </form>
             </section>
-
-            {dialog && <Dialog message={dialog.message} type={dialog.type} onClose={() => setDialog(null)} />}
-        </>
+        </div>
     );
 };
 

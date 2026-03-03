@@ -43,6 +43,7 @@ const MyPetsAdd: React.FC = () => {
             }
         };
         fetchAnimalTypes();
+        return () => cancelGetAnimalTypes();
     }, []);
 
     const validateField = (field: keyof AddAnimalRequest, value: string | number, allValues: AddAnimalRequest): string | undefined => {
@@ -109,14 +110,41 @@ const MyPetsAdd: React.FC = () => {
 
             setDialog({ message: "Pet added successfully!", type: "success" });
             setTimeout(() => navigate(`/my-pets`), 1500);
-        } catch {
-            setDialog({ message: "Adding pet failed.", type: "error" });
+        } catch (error: any) {
+            const status = error?.status || error?.response?.status;
+            const message =
+                error?.message ||
+                error?.response?.data?.message ||
+                "An unexpected error occurred.";
+
+            if (status === 400) {
+                if (message.toLowerCase().includes("passport")) {
+                    setErrors(prev => ({
+                        ...prev,
+                        passportNumber: message
+                    }));
+                } else if (message.toLowerCase().includes("chip")) {
+                    setErrors(prev => ({
+                        ...prev,
+                        chipNumber: message
+                    }));
+                } else {
+                    setDialog({ message, type: "error" });
+                }
+                return;
+            }
+
+            setDialog({
+                message: "Server error. Please try again later.",
+                type: "error"
+            });
+
         } finally {
             setFormLoading(false);
         }
     };
 
-    const { values, changeHandler, onSubmit, changeValues } = useForm(initialValues, addAnimalHandler);
+    const { values, onSubmit, changeValues } = useForm(initialValues, addAnimalHandler);
 
     const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
         const { name, value, type } = e.target;
@@ -133,84 +161,160 @@ const MyPetsAdd: React.FC = () => {
     };
 
     const inputClass = (field: keyof AddAnimalRequest) => {
-        if (errors[field]) return `${styles["input"]} ${styles.error}`;
-        if (values[field] && !errors[field]) return `${styles["input"]} ${styles.success}`;
-        return styles["input"];
+        if (errors[field]) return styles.errorInput;
+        if (values[field] && !errors[field]) return styles.successInput;
+        return "";
     };
 
     useEffect(() => () => cancelAddAnimal(), []);
-    useEffect(() => () => cancelGetAnimalTypes(), []);
 
     return (
-        <>
+        <div className={styles.pageContainer}>
             {(formLoading || userLoading) && (
-                <div className="spinner-overlay">
+                <div className={styles.spinnerOverlay}>
                     <Spinner />
                 </div>
             )}
 
-            <section className={styles["my-pets-add"]}>
-                <div className={styles["my-pets-add-container"]}>
-                    <h2>Add New Pet</h2>
-                    <form onSubmit={onSubmit} noValidate>
-                        <div className={styles["my-pets-add-form-group"]}>
-                            <label htmlFor="name"><i className="fa-solid fa-pen"></i> Name:</label>
+            {dialog && (
+                <Dialog
+                    message={dialog.message}
+                    type={dialog.type}
+                    onClose={() => setDialog(null)}
+                />
+            )}
+
+            <section className={styles.card}>
+                <header className={styles.cardHeader}>
+                    <div className={styles.iconCircle}>
+                        <i className="fa-solid fa-paw"></i>
+                    </div>
+                    <h1 className={styles.title}>Add a Pet</h1>
+                    <p className={styles.subtitle}>Enter your pet's details below</p>
+                </header>
+
+                <form onSubmit={onSubmit} noValidate className={styles.form}>
+                    <div className={styles.formGroup}>
+                        <label htmlFor="name">Name</label>
+                        <div className={styles.inputWrapper}>
+                            <i className={`fa-solid fa-file-signature ${styles.inputIcon}`}></i>
                             <input
                                 type="text"
                                 id="name"
                                 name="name"
                                 value={values.name ?? ""}
                                 onChange={handleChange}
-                                className={inputClass("name")}
+                                className={`${styles.input} ${inputClass("name")}`}
                                 placeholder="Enter pet's name"
                                 autoComplete="off"
                                 required
                             />
-                            {errors.name && <p className={styles["error-text"]}>{errors.name}</p>}
+                        </div>
+                        {errors.name && <span className={styles.errorMsg}>{errors.name}</span>}
+                    </div>
+
+                    <div className={styles.formRow}>
+                        <div className={styles.formGroup}>
+                            <label htmlFor="age">Age</label>
+                            <div className={styles.inputWrapper}>
+                                <i className={`fa-solid fa-calendar-days ${styles.inputIcon}`}></i>
+                                <input
+                                    type="number"
+                                    id="age"
+                                    name="age"
+                                    value={values.age ?? ""}
+                                    onChange={handleChange}
+                                    className={`${styles.input} ${inputClass("age")}`}
+                                    placeholder="Optional"
+                                />
+                            </div>
+                            {errors.age && <span className={styles.errorMsg}>{errors.age}</span>}
                         </div>
 
-                        {/* Останалите input полета се повтарят със същия pattern */}
-                        <div className={styles["my-pets-add-form-group"]}>
-                            <label htmlFor="age"><i className="fa-solid fa-calendar"></i> Age:</label>
-                            <input type="number" id="age" name="age" value={values.age ?? ""} onChange={handleChange} className={inputClass("age")} placeholder="Enter pet's age (optional)" />
-                            {errors.age && <p className={styles["error-text"]}>{errors.age}</p>}
+                        <div className={styles.formGroup}>
+                            <label htmlFor="weight">Weight (kg)</label>
+                            <div className={styles.inputWrapper}>
+                                <i className={`fa-solid fa-weight-scale ${styles.inputIcon}`}></i>
+                                <input
+                                    type="number"
+                                    id="weight"
+                                    name="weight"
+                                    value={values.weight ?? ""}
+                                    onChange={handleChange}
+                                    className={`${styles.input} ${inputClass("weight")}`}
+                                    placeholder="Required"
+                                    required
+                                />
+                            </div>
+                            {errors.weight && <span className={styles.errorMsg}>{errors.weight}</span>}
                         </div>
+                    </div>
 
-                        <div className={styles["my-pets-add-form-group"]}>
-                            <label htmlFor="weight"><i className="fa-solid fa-weight"></i> Weight:</label>
-                            <input type="number" id="weight" name="weight" value={values.weight ?? ""} onChange={handleChange} className={inputClass("weight")} placeholder="Enter pet's weight" required />
-                            {errors.weight && <p className={styles["error-text"]}>{errors.weight}</p>}
-                        </div>
-
-                        <div className={styles["my-pets-add-form-group"]}>
-                            <label htmlFor="passportNumber"><i className="fa-solid fa-passport"></i> Passport Number:</label>
-                            <input type="text" id="passportNumber" name="passportNumber" value={values.passportNumber ?? ""} onChange={handleChange} className={inputClass("passportNumber")} placeholder="Enter pet's passport number (optional)" />
-                            {errors.passportNumber && <p className={styles["error-text"]}>{errors.passportNumber}</p>}
-                        </div>
-
-                        <div className={styles["my-pets-add-form-group"]}>
-                            <label htmlFor="chipNumber"><i className="fa-solid fa-microchip"></i> Chip Number:</label>
-                            <input type="text" id="chipNumber" name="chipNumber" value={values.chipNumber ?? ""} onChange={handleChange} className={inputClass("chipNumber")} placeholder="Enter pet's chip number (optional)" />
-                            {errors.chipNumber && <p className={styles["error-text"]}>{errors.chipNumber}</p>}
-                        </div>
-
-                        <div className={styles["my-pets-add-form-group"]}>
-                            <label htmlFor="animalTypeId"><i className="fa-solid fa-paw"></i> Animal Type:</label>
-                            <select id="animalTypeId" name="animalTypeId" value={values.animalTypeId} onChange={handleChange} className={inputClass("animalTypeId")} required>
-                                <option value={0}>-- Select animal type --</option>
-                                {animalTypes.map(type => <option key={type.id} value={type.id}>{type.value}</option>)}
+                    <div className={styles.formGroup}>
+                        <label htmlFor="animalTypeId">Animal Type</label>
+                        <div className={styles.inputWrapper}>
+                            <i className={`fa-solid fa-tag ${styles.inputIcon}`}></i>
+                            <select
+                                id="animalTypeId"
+                                name="animalTypeId"
+                                value={values.animalTypeId}
+                                onChange={handleChange}
+                                className={`${styles.input} ${styles.selectInput} ${inputClass("animalTypeId")}`}
+                                required
+                            >
+                                {animalTypes.map(type => (
+                                    <option key={type.id} value={type.id}>{type.value}</option>
+                                ))}
                             </select>
-                            {errors.animalTypeId && <p className={styles["error-text"]}>{errors.animalTypeId}</p>}
                         </div>
+                        {errors.animalTypeId && <span className={styles.errorMsg}>{errors.animalTypeId}</span>}
+                    </div>
 
-                        <button type="submit" className={styles["add-pet-btn"]} disabled={formLoading}>Add</button>
-                        <Link to="/my-pets" className={styles["cancel-add-pet-btn"]}>Cancel</Link>
-                    </form>
-                </div>
+                    <div className={styles.formGroup}>
+                        <label htmlFor="passportNumber">Passport Number</label>
+                        <div className={styles.inputWrapper}>
+                            <i className={`fa-solid fa-passport ${styles.inputIcon}`}></i>
+                            <input
+                                type="text"
+                                id="passportNumber"
+                                name="passportNumber"
+                                value={values.passportNumber ?? ""}
+                                onChange={handleChange}
+                                className={`${styles.input} ${inputClass("passportNumber")}`}
+                                placeholder="Optional"
+                            />
+                        </div>
+                        {errors.passportNumber && <span className={styles.errorMsg}>{errors.passportNumber}</span>}
+                    </div>
 
-                {dialog && <Dialog message={dialog.message} type={dialog.type} onClose={() => setDialog(null)} />}
+                    <div className={styles.formGroup}>
+                        <label htmlFor="chipNumber">Chip Number</label>
+                        <div className={styles.inputWrapper}>
+                            <i className={`fa-solid fa-microchip ${styles.inputIcon}`}></i>
+                            <input
+                                type="text"
+                                id="chipNumber"
+                                name="chipNumber"
+                                value={values.chipNumber ?? ""}
+                                onChange={handleChange}
+                                className={`${styles.input} ${inputClass("chipNumber")}`}
+                                placeholder="Optional"
+                            />
+                        </div>
+                        {errors.chipNumber && <span className={styles.errorMsg}>{errors.chipNumber}</span>}
+                    </div>
+
+                    <div className={styles.actionGroup}>
+                        <button type="submit" className={styles.submitBtn} disabled={formLoading}>
+                            <i className="fa-solid fa-plus"></i> Add Pet
+                        </button>
+                        <Link to="/my-pets" className={styles.cancelBtn}>
+                            <i className="fa-solid fa-xmark"></i> Cancel
+                        </Link>
+                    </div>
+                </form>
             </section>
-        </>
+        </div>
     );
 };
 

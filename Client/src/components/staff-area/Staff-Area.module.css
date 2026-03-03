@@ -1,93 +1,156 @@
-@mixin fade-in {
-    opacity: 1;
-    animation-name: fadeInOpacity;
-    animation-iteration-count: 1;
-    animation-timing-function: ease-in;
-    animation-duration: 2s;
+.container {
+    width: 100%;
+    max-width: 1280px;
+    margin: 0 auto;
+    padding: 8rem 1.5rem 3rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 2rem;
+    min-height: 80vh;
 }
 
-@keyframes fadeInOpacity {
-    0% {
-        opacity: 0;
-    }
-
-    100% {
-        opacity: 1;
-    }
-}
-
-.staff-area-h1 {
-    animation: fadeInOpacity 1s;
-    margin-top: 3rem;
+.header {
     text-align: center;
-    background-color: #4EC5B4;
-    color: #fff;
-    padding: 0.3em 1em;
-    border-radius: 1em;
+    margin-bottom: 1rem;
+    animation: fadeInDown 0.8s ease-out forwards;
 }
 
-.staff-area {
-    animation: fadeInOpacity 1s;
+.title {
+    font-size: 2.5rem;
+    color: #4EC5B4;
+    font-weight: 800;
+    margin-bottom: 0.5rem;
+    position: relative;
+    display: inline-block;
+}
+
+.title::after {
+    content: '';
+    display: block;
+    width: 60%;
+    height: 4px;
+    background-color: #4EC5B4;
+    margin: 0.5rem auto 0;
+    border-radius: 2px;
+}
+
+.subtitle {
+    font-size: 1.1rem;
+    color: #666;
+}
+
+.grid {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-    gap: 2rem;
-    padding: 60px 15px;
-    max-width: 1200px;
+    gap: 2.5rem;
     width: 100%;
+    padding: 1rem 0;
+    margin-bottom: 2rem;
 }
 
-.staff-area-card {
-    background-color: #ffffff;
-    border-radius: 10px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+.cardLink {
+    text-decoration: none;
+    color: inherit;
+    display: block;
+    opacity: 0;
+    animation: fadeUp 0.8s ease-out forwards;
+}
+
+.card {
+    background: #ffffff;
+    border-radius: 20px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
     overflow: hidden;
-    transition: transform 0.3s ease;
+    border: 1px solid rgba(78, 197, 180, 0.1);
+    display: flex;
+    flex-direction: column;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    height: 100%;
+    cursor: pointer;
 }
 
-.staff-area-card img {
+.imageWrapper {
     width: 100%;
-    height: 200px;
-    object-fit: cover;
+    height: 220px;
+    overflow: hidden;
+    position: relative;
 }
 
-.staff-area-card .content {
-    padding: 1.5rem;
+.imageWrapper img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.6s ease;
+}
+
+.content {
+    padding: 2rem;
     display: flex;
     flex-direction: column;
     align-items: center;
     text-align: center;
+    flex-grow: 1;
+    gap: 1.5rem;
 }
 
-.staff-area-card h2 {
-    color: #4EC5B4;
-    margin-bottom: 0.5rem;
+.content h2 {
+    color: #333;
+    font-size: 1.5rem;
+    font-weight: 700;
+    margin: 0;
+    transition: color 0.3s ease;
 }
 
-.staff-area-card p {
-    font-size: 0.95rem;
-    margin-bottom: 1rem;
-}
-
-.staff-area-make-changes-btn {
-    margin-top: 0.5rem;
-    display: inline-block;
-    background-color: #4EC5B4;
-    color: #fff;
-    padding: 0.5rem 1rem;
-    border: none;
-    border-radius: 5px;
-    text-decoration: none;
-    transition: background-color 0.7s ease;
-}
-
-@media(min-width: 1025px) {
-    .staff-area-card:hover {
-        transform: translateY(-5px);
-        box-shadow: 0 6px 16px rgba(0, 0, 0, 0.12);
+@media (min-width: 1025px) {
+    .cardLink:hover .card {
+        transform: translateY(-8px);
+        box-shadow: 0 15px 35px rgba(78, 197, 180, 0.5);
     }
 
-    .staff-area-make-changes-btn:hover {
-        background-color: #2a796f;
-        transition: 0.3s ease-in;
+    .cardLink:hover h2 {
+        color: #4EC5B4;
+    }
+
+    .cardLink:hover .imageWrapper img {
+        transform: scale(1.08);
+    }
+}
+
+@media (max-width: 768px) {
+    .container {
+        padding: 9rem 1rem 2rem;
+    }
+
+    .title {
+        font-size: 2rem;
+    }
+
+    .grid {
+        gap: 1.5rem;
+    }
+}
+
+@keyframes fadeUp {
+    from {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes fadeInDown {
+    from {
+        opacity: 0;
+        transform: translateY(-20px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
     }
 }

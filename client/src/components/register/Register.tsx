@@ -120,21 +120,16 @@ const Register: React.FC = () => {
         } catch (err: any) {
             if (err.status === 400) {
                 setDialog({ message: err.errors.RegisterCommand[0] || "Registration failed.", type: "error" });
-                changeValues({
-                    ...values,
-                    password: "",
-                    confirmPassword: ""
-                });
-                return;
             } else if (err.status === 500) {
                 setDialog({ message: "Registration failed, please try again later.", type: "error" });
-                changeValues({
-                    ...values,
-                    password: "",
-                    confirmPassword: ""
-                });
-                return;
+            } else {
+                 setDialog({ message: "Registration failed.", type: "error" });
             }
+             changeValues({
+                ...values,
+                password: "",
+                confirmPassword: ""
+            });
         } finally {
             setIsLoading(false);
         }
@@ -156,9 +151,9 @@ const Register: React.FC = () => {
     };
 
     const inputClass = (field: keyof RegisterRequest) => {
-        if (errors[field]) return `${styles.input} ${styles.error}`;
-        if (values[field] && !errors[field]) return `${styles.input} ${styles.success}`;
-        return styles.input;
+        if (errors[field]) return styles.errorInput;
+        if (values[field] && !errors[field]) return styles.successInput;
+        return "";
     };
 
     useEffect(() => {
@@ -170,61 +165,12 @@ const Register: React.FC = () => {
     return (
         <>
             {isLoading && (
-                <div className="spinner-overlay">
+                <div className={styles.spinnerOverlay}>
                     <Spinner />
                 </div>
             )}
 
-            <section className={styles.register}>
-                <div className={styles["register-container"]}>
-                    <h2>Register</h2>
-
-                    <form onSubmit={onSubmit} noValidate>
-                        {([
-                            { name: "userName", label: "Username", type: "text", icon: "fa-user", placeholder: "Enter your username" },
-                            { name: "email", label: "Email Address", type: "email", icon: "fa-envelope", placeholder: "Enter your email" },
-                            { name: "firstName", label: "First Name", type: "text", icon: "fa-pen", placeholder: "Enter your first name" },
-                            { name: "lastName", label: "Last Name", type: "text", icon: "fa-pen", placeholder: "Enter your last name" },
-                            { name: "phoneNumber", label: "Phone Number", type: "tel", icon: "fa-phone", placeholder: "Enter your phone number" },
-                            { name: "password", label: "Password", type: "password", icon: "fa-key", placeholder: "Create a password" },
-                            { name: "confirmPassword", label: "Confirm Password", type: "password", icon: "fa-key", placeholder: "Confirm your password" },
-                        ] as const).map(({ name, label, type, icon, placeholder }) => (
-                            <div className={styles["register-form-group"]} key={name}>
-                                <label htmlFor={name}>
-                                    <i className={`fa-solid ${icon}`}></i> {label}:
-                                </label>
-
-                                <input
-                                    type={type}
-                                    id={name}
-                                    name={name}
-                                    value={values[name]}
-                                    onChange={handleChange}
-                                    className={inputClass(name)}
-                                    placeholder={placeholder}
-                                    autoComplete="off"
-                                />
-
-                                {errors[name] && (
-                                    <p className={styles["error-text"]}>{errors[name]}</p>
-                                )}
-                            </div>
-                        ))}
-
-                        <button
-                            type="submit"
-                            className={styles["register-btn"]}
-                            disabled={isLoading}
-                        >
-                            Register
-                        </button>
-                    </form>
-
-                    <div className={styles["register-bottom-text"]}>
-                        Already registered? <Link to="/login">Login</Link>
-                    </div>
-                </div>
-
+            <section className={styles.registerPage}>
                 {dialog && (
                     <Dialog
                         message={dialog.message}
@@ -232,6 +178,59 @@ const Register: React.FC = () => {
                         onClose={() => setDialog(null)}
                     />
                 )}
+
+                <div className={styles.card}>
+                    <div className={styles.cardHeader}>
+                        {/* Добавен iconCircle */}
+                        <div className={styles.iconCircle}>
+                            <i className="fa-solid fa-user-plus"></i>
+                        </div>
+                        <h1>Create an Account</h1>
+                        <p>Join us and manage your pets easily</p>
+                    </div>
+
+                    <form onSubmit={onSubmit} noValidate className={styles.form}>
+                        {([
+                            { name: "userName", label: "Username", type: "text", icon: "fa-signature", placeholder: "Enter your username" },
+                            { name: "email", label: "Email Address", type: "email", icon: "fa-envelope", placeholder: "Enter your email" },
+                            { name: "firstName", label: "First Name", type: "text", icon: "fa-file-signature", placeholder: "Enter your first name" },
+                            { name: "lastName", label: "Last Name", type: "text", icon: "fa-file-signature", placeholder: "Enter your last name" },
+                            { name: "phoneNumber", label: "Phone Number", type: "tel", icon: "fa-phone", placeholder: "Enter your phone number" },
+                            { name: "password", label: "Password", type: "password", icon: "fa-key", placeholder: "Create a password" },
+                            { name: "confirmPassword", label: "Confirm Password", type: "password", icon: "fa-check-double", placeholder: "Confirm your password" },
+                        ] as const).map(({ name, label, type, icon, placeholder }) => (
+                            <div className={styles.formGroup} key={name}>
+                                <label htmlFor={name}>{label}</label>
+                                <div className={styles.inputWrapper}>
+                                    <i className={`fa-solid ${icon} ${styles.inputIcon}`}></i>
+                                    <input
+                                        type={type}
+                                        id={name}
+                                        name={name}
+                                        value={values[name]}
+                                        onChange={handleChange}
+                                        className={`${styles.input} ${inputClass(name)}`}
+                                        placeholder={placeholder}
+                                        autoComplete="off"
+                                    />
+                                </div>
+                                {errors[name] && <p className={styles.errorMsg}>{errors[name]}</p>}
+                            </div>
+                        ))}
+
+                        <button
+                            type="submit"
+                            className={styles.registerBtn}
+                            disabled={isLoading}
+                        >
+                            Register
+                        </button>
+                    </form>
+
+                    <div className={styles.footer}>
+                        <p>Already have an account? <Link to="/login">Login here</Link></p>
+                    </div>
+                </div>
             </section>
         </>
     );

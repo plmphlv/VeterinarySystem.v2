@@ -1,0 +1,300 @@
+.container {
+    width: 100%;
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 8rem 1.5rem 3rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1.5rem;
+    min-height: 80vh;
+    position: relative;
+    animation: fadeIn 0.8s ease-out;
+}
+
+.spinnerOverlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(255, 255, 255, 0.8);
+    backdrop-filter: blur(4px);
+    z-index: 50;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 16px;
+}
+
+.navWrapper {
+    width: 100%;
+    max-width: 700px;
+    animation: fadeInDown 0.6s ease-out forwards;
+}
+
+.backLink {
+    display: inline-flex;
+    align-items: center;
+    color: #666;
+    text-decoration: none;
+    font-weight: 600;
+    font-size: 1rem;
+    transition: color 0.3s ease, transform 0.3s ease;
+}
+
+.prescriptionCard {
+    background-color: #FFF;
+    width: 100%;
+    max-width: 700px;
+    border-radius: 8px;
+    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.1), 0 5px 15px rgba(0, 0, 0, 0.05);
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    position: relative;
+    border: 1px solid #f0f0f0;
+    margin-bottom: 1rem;
+    opacity: 0;
+    animation: fadeUp 0.8s ease-out 0.2s forwards;
+}
+
+.prescriptionCard::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 10px;
+    background-color: #4EC5B4;
+}
+
+.cardHeader {
+    padding: 40px 40px 20px 40px;
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    border-bottom: 2px dashed #e0e0e0;
+}
+
+.rxSymbol {
+    font-family: 'Georgia', serif;
+    font-size: 64px;
+    font-weight: bold;
+    color: #4EC5B4;
+    line-height: 1;
+    opacity: 0.8;
+}
+
+.headerInfo {
+    text-align: right;
+}
+
+.headerTitle {
+    display: block;
+    font-size: 12px;
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+    color: #888;
+    margin-bottom: 8px;
+}
+
+.prescriptionNumber {
+    font-family: 'Courier New', monospace;
+    font-weight: bold;
+    font-size: 24px;
+    color: #333;
+}
+
+.cardBody {
+    padding: 30px 40px;
+    flex-grow: 1;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 24px;
+}
+
+.fullWidth {
+    grid-column: 1 / -1;
+}
+
+.fieldGroup {
+    display: flex;
+    flex-direction: column;
+}
+
+.label {
+    font-size: 11px;
+    text-transform: uppercase;
+    color: #999;
+    font-weight: 600;
+    margin-bottom: 4px;
+    letter-spacing: 0.5px;
+}
+
+.value {
+    font-size: 16px;
+    color: #2c3e50;
+    font-weight: 500;
+    line-height: 1.5;
+}
+
+.cardFooter {
+    padding: 30px 40px 40px 40px;
+    background-image: radial-gradient(#e0e0e0 1px, transparent 1px);
+    background-size: 12px 12px;
+    background-color: #fafafa;
+    display: flex;
+    flex-direction: column;
+}
+
+.actions {
+    display: flex;
+    justify-content: center;
+    gap: 1rem;
+    width: 100%;
+    max-width: 700px;
+    animation: fadeUp 0.8s ease-out 0.4s forwards;
+    opacity: 0;
+}
+
+.editBtn,
+.deleteBtn {
+    padding: 0.8rem 2rem;
+    border-radius: 50px;
+    font-weight: 700;
+    font-size: 1rem;
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    border: none;
+    outline: none;
+}
+
+.editBtn {
+    background-color: #fff;
+    border: 2px solid #f39c12;
+    color: #f39c12;
+}
+
+.deleteBtn {
+    background-color: #fff;
+    border: 2px solid #e74c3c;
+    color: #e74c3c;
+}
+
+.signatureLine {
+    align-self: flex-end;
+    border-top: 1px solid #aaa;
+    padding-top: 12px;
+    margin-top: 10px;
+    display: flex;
+    flex-direction: column;
+    min-width: 200px;
+    text-align: center;
+}
+
+.signatureLabel {
+    font-size: 11px;
+    color: #888;
+    font-style: italic;
+}
+
+.staffName {
+    font-family: 'Cursive', sans-serif;
+    font-size: 20px;
+    color: #4EC5B4;
+    font-weight: bold;
+    margin-bottom: 4px;
+}
+
+.errorMessage {
+    text-align: center;
+    color: #e74c3c;
+    margin-top: 50px;
+    font-size: 18px;
+}
+
+@media (min-width: 1025px) {
+    .backLink:hover {
+        color: #4EC5B4;
+        transform: translateX(-5px);
+    }
+
+    .editBtn:hover {
+        background-color: #f39c12;
+        color: #fff;
+        box-shadow: 0 4px 15px rgba(243, 156, 18, 0.4);
+        transform: translateY(-2px);
+    }
+
+    .deleteBtn:hover {
+        background-color: #e74c3c;
+        color: #fff;
+        box-shadow: 0 4px 15px rgba(231, 76, 60, 0.4);
+        transform: translateY(-2px);
+    }
+}
+
+@media (max-width: 600px) {
+    .container {
+        padding: 9rem 1rem 2rem;
+    }
+
+    .cardBody {
+        grid-template-columns: 1fr;
+    }
+
+    .cardHeader {
+        flex-direction: column;
+        gap: 20px;
+    }
+
+    .headerInfo {
+        text-align: left;
+    }
+
+    .signatureLine {
+        align-self: center;
+        width: 100%;
+    }
+
+    .actions {
+        flex-direction: column;
+    }
+
+    .editBtn, .deleteBtn {
+        width: 100%;
+        justify-content: center;
+    }
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+@keyframes fadeUp {
+    from {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes fadeInDown {
+    from {
+        opacity: 0;
+        transform: translateY(-20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}

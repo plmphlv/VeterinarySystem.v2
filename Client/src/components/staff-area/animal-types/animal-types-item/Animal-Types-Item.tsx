@@ -4,10 +4,10 @@ import { useGetUserData } from "../../../../hooks/useGetUserData";
 import Spinner from "../../../spinner/Spinner";
 import Dialog from "../../../dialog/Dialog";
 import type { AnimalType, GetAllAnimalsErrors } from "../../../../types";
-import { useGetAnimalTypes } from "../../../../api/animalTypesAPI";
-import styles from "./Animal-Type-Item.module.css";
+import { useDeleteAnimalType, useGetAnimalTypes } from "../../../../api/animalTypesAPI";
+import styles from "./Animal-Types-Item.module.css";
 
-const AnimalTypeItem: React.FC = () => {
+const AnimalTypesItem: React.FC = () => {
     const { getAnimalTypes, cancelGetAnimalTypes } = useGetAnimalTypes();
     const [errors, setErrors] = useState<GetAllAnimalsErrors>({});
 
@@ -16,6 +16,9 @@ const AnimalTypeItem: React.FC = () => {
     const [dialog, setDialog] = useState<{ message: string; type: "success" | "error" } | null>(null);
     const [animalTypes, setAnimalTypes] = useState<AnimalType[]>([]);
     const [loading, setLoading] = useState(true);
+
+    const { deleteAnimalType, cancelDeleteAnimalType } = useDeleteAnimalType();
+    const [deleting, setDeleting] = useState(false);
 
     useEffect(() => {
         if (!userData?.id) return;
@@ -50,49 +53,89 @@ const AnimalTypeItem: React.FC = () => {
         };
     }, []);
 
+    const handleDelete = async (id: number) => {
+
+        if (!id) return;
+
+        const confirmed = window.confirm(
+            "Are you sure you want to delete this animal type?"
+        );
+
+        if (!confirmed) return;
+
+        try {
+            setDeleting(true);
+
+            await deleteAnimalType({ id: Number(id) });
+
+            setDialog({
+                message: "Animal type deleted successfully.",
+                type: "success",
+            });
+
+            setTimeout(() => {
+                window.location.reload(); 
+            }, 1500);
+        } catch {
+            setDialog({
+                message: "Failed to delete animal type.",
+                type: "error",
+            });
+        } finally {
+            setDeleting(false);
+        }
+    };
+
+    useEffect(() => {
+        return () => {
+            cancelDeleteAnimalType();
+        };
+    }, []);
+
     return (
         <>
             {loading && (
-                <div className="spinner-overlay">
+                <div className={styles.spinnerOverlay}>
                     <Spinner />
                 </div>
             )}
 
-            {error && showError && (
+            {dialog && (
                 <Dialog
-                    message={error}
-                    type="error"
-                    onClose={() => setShowError(false)}
+                    message={dialog.message}
+                    type={dialog.type}
+                    onClose={() => setDialog(null)}
                 />
             )}
 
             {animalTypes.length > 0 ? (
                 <>
                     {animalTypes.map((animalType) => (
-                        <li key={animalType.id} className={styles["animal-types-item"]}>
-                            {animalType.value}
-                            <div className={styles["animal-types-btns"]}>
-                                <Link 
-                                    to={`/staff-area/animal-types/${animalType.id}/edit`} 
-                                    className={styles["animal-types-edit-btn"]}
+                        <li key={animalType.id} className={styles.item}>
+                            <span className={styles.typeName}>{animalType.value}</span>
+                            <div className={styles.actions}>
+                                <Link
+                                    to={`/staff-area/animal-types/${animalType.id}/edit`}
+                                    className={styles.editBtn}
                                 >
-                                    Edit
+                                    <i className="fa-solid fa-pen"></i> Edit
                                 </Link>
-                                <Link 
-                                    to={`/staff-area/animal-types/${animalType.id}/delete`} 
-                                    className={styles["animal-types-delete-btn"]}
-                                >
-                                    Delete
-                                </Link>
+                                <button onClick={() => handleDelete(animalType.id)} className={styles.deleteBtn}>
+                                    <i className="fa-solid fa-trash"></i> Delete
+                                </button>
                             </div>
                         </li>
                     ))}
                 </>
             ) : (
-                <h1 className={styles["no-animal-types-h1"]}>No Animal Types Found.</h1>
+                <div className={styles.emptyState}>
+                    <i className="fa-solid fa-paw"></i>
+                    <h2>No Animal Types Found</h2>
+                    <p>Start by adding a new one above.</p>
+                </div>
             )}
         </>
     );
 };
 
-export default AnimalTypeItem;
+export default AnimalTypesItem;

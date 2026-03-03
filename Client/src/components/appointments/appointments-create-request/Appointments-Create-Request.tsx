@@ -8,6 +8,7 @@ import { useForm } from "../../../hooks/useForm";
 import { useCreateRequestAppointment } from "../../../api/appointmentsAPI";
 import { getJwtDecodedData } from "../../../utils/getJwtDecodedData";
 import styles from "./Appointments-Create-Request.module.css";
+import { getTomorrowDatetimeLocal } from "../../../utils/formatDetails";
 
 const initialValues: CreateAppointmentRequest = {
     date: "",
@@ -68,7 +69,7 @@ const AppointmentsCreateRequest: React.FC = () => {
 
             const payload: CreateAppointmentRequest = {
                 ...values,
-                date: new Date(values.date).toISOString(),
+                date: values.date,
             };
 
             const response = await createRequestAppointment(payload);
@@ -85,7 +86,7 @@ const AppointmentsCreateRequest: React.FC = () => {
 
     const { values, changeValues, onSubmit } = useForm(initialValues, createAppointmentRequestHandler);
 
-    const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
+    const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>) => {
         const { name, value } = e.target;
         const fieldName = name as keyof CreateAppointmentRequest;
 
@@ -96,8 +97,8 @@ const AppointmentsCreateRequest: React.FC = () => {
     };
 
     const inputClass = (field: keyof CreateAppointmentRequest) => {
-        if (errors[field]) return "error";
-        if (values[field] && !errors[field]) return "success";
+        if (errors[field]) return styles.errorInput;
+        if (values[field] && !errors[field]) return styles.successInput;
         return "";
     };
 
@@ -106,54 +107,12 @@ const AppointmentsCreateRequest: React.FC = () => {
     }, []);
 
     return (
-        <>
+        <div className={styles.pageContainer}>
             {formLoading && (
-                <div className="spinner-overlay">
+                <div className={styles.spinnerOverlay}>
                     <Spinner />
                 </div>
             )}
-
-            <section className={styles["appointments-create-request"]}>
-                <div className={styles["appointments-create-request-container"]}>
-                    <h2>Request Appointment</h2>
-                    <form onSubmit={onSubmit} noValidate>
-                        <div className={styles["appointments-create-request-form-group"]}>
-                            <label htmlFor="date">Date of appointment:</label>
-                            <input
-                                type="datetime-local"
-                                id="date"
-                                name="date"
-                                value={values.date ?? ""}
-                                onChange={handleChange}
-                                className={`${styles["appointments-create-request-form-group"]} ${inputClass("date")}`}
-                                required
-                            />
-                            {errors.date && <p className={styles["error-text"]}>{errors.date}</p>}
-                        </div>
-
-                        <div className={styles["appointments-create-request-form-group"]}>
-                            <label htmlFor="description">Description:</label>
-                            <input
-                                type="text"
-                                id="description"
-                                name="description"
-                                value={values.description ?? ""}
-                                onChange={handleChange}
-                                className={`${styles["appointments-create-request-form-group"]} ${inputClass("description")}`}
-                                placeholder="Enter appointment description"
-                                autoComplete="off"
-                                required
-                            />
-                            {errors.description && <p className={styles["error-text"]}>{errors.description}</p>}
-                        </div>
-
-                        <button type="submit" className={styles["appointments-create-request-btn"]} disabled={formLoading}>
-                            Request
-                        </button>
-                        <Link to="/appointments" className={styles["appointments-create-request-cancel-btn"]}>Cancel</Link>
-                    </form>
-                </div>
-            </section>
 
             {dialog && (
                 <Dialog
@@ -162,7 +121,64 @@ const AppointmentsCreateRequest: React.FC = () => {
                     onClose={() => setDialog(null)}
                 />
             )}
-        </>
+
+            <section className={styles.card}>
+                <header className={styles.cardHeader}>
+                    <div className={styles.iconCircle}>
+                        <i className="fa-solid fa-calendar-plus"></i>
+                    </div>
+                    <h1 className={styles.title}>Request an Appointment</h1>
+                    <p className={styles.subtitle}>Schedule a new visit for your pet</p>
+                </header>
+
+                <form onSubmit={onSubmit} noValidate className={styles.form}>
+                    <div className={styles.formGroup}>
+                        <label htmlFor="date">Date & Time</label>
+                        <div className={styles.inputWrapper}>
+                            <i className={`fa-solid fa-calendar-days ${styles.inputIcon}`}></i>
+                            <input
+                                type="datetime-local"
+                                id="date"
+                                name="date"
+                                value={values.date ?? ""}
+                                onChange={handleChange}
+                                className={`${styles.input} ${inputClass("date")}`}
+                                min={getTomorrowDatetimeLocal()}
+                                required
+                            />
+                        </div>
+                        {errors.date && <span className={styles.errorMsg}>{errors.date}</span>}
+                    </div>
+
+                    <div className={styles.formGroup}>
+                        <label htmlFor="description">Description</label>
+                        <div className={styles.inputWrapper}>
+                            <i className={`fa-solid fa-align-left ${styles.textareaIcon}`}></i>
+                            <textarea
+                                id="description"
+                                name="description"
+                                value={values.description ?? ""}
+                                onChange={handleChange}
+                                className={`${styles.textarea} ${inputClass("description")}`}
+                                placeholder="E.g. Annual vaccination..."
+                                rows={5}
+                                required
+                            />
+                        </div>
+                        {errors.description && <span className={styles.errorMsg}>{errors.description}</span>}
+                    </div>
+
+                    <div className={styles.actionGroup}>
+                        <button type="submit" className={styles.submitBtn} disabled={formLoading}>
+                            <i className="fa-solid fa-paper-plane"></i> Send Request
+                        </button>
+                        <Link to="/appointments" className={styles.cancelBtn}>
+                            <i className="fa-solid fa-xmark"></i> Cancel
+                        </Link>
+                    </div>
+                </form>
+            </section>
+        </div>
     );
 };
 
